@@ -27,6 +27,7 @@ const ClaimEgg = () => {
   const { getNftState, getLotteryState, getNftByType } = useWeb3Utils();
 
   const [nftState, setNftState] = useState<NftState | null>(null);
+  const [canSummonEgg, setCanSummonEgg] = useState(false);
 
   const handleKeepNFT = async () => {
     setMyNfts(await getNFTs());
@@ -73,6 +74,13 @@ const ClaimEgg = () => {
       const { isEggClaimed, eggMint, eggHatchedAt } = await getNftState(
         collectable.mintAddress
       );
+
+      const { totalMinted, maxPlayers } = await getLotteryState();
+
+      if (totalMinted === maxPlayers) {
+        setCanSummonEgg(true);
+      }
+
       setNftState({ isEggClaimed, eggHatchedAt, eggMint });
     })();
   }, []);
@@ -133,8 +141,11 @@ const ClaimEgg = () => {
             </button>
             <div className=" flex flex-col justify-start  gap-2">
               <button
+                disabled={!canSummonEgg}
                 onClick={handleSummonEgg}
-                className="bg-summon-egg-btn w-full h-full md:h-[86px] md:w-[237px] relative bg-contain bg-no-repeat group z-40 rounded-2xl"
+                className={`bg-summon-egg-btn w-full h-full md:h-[86px] md:w-[237px] relative bg-contain bg-no-repeat group z-40 rounded-2xl ${
+                  canSummonEgg ? " cursor-pointer" : " cursor-not-allowed"
+                }`}
               >
                 <span className="absolute inset-0 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20 transition duration-200 z-50"></span>
                 <span className=" absolute inset-0 w-full h-full grid place-content-center font-patrick-hand text-3xl  leading-none text-white z-60">

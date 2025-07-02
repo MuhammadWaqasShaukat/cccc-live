@@ -4,6 +4,7 @@ import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { useWallet, Wallet } from "@solana/wallet-adapter-react";
 import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js";
 import { useMemo } from "react";
+import { Buffer } from "buffer";
 
 import IDL from "../constants/solana_lottery.json";
 import { FulFilledState } from "../types/Nft";
