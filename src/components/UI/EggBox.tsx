@@ -1,13 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { CottonCandyContext } from "../../providers/ContextProvider";
-import { Metadata, PublicKey } from "@metaplex-foundation/js";
 import useWeb3Utils from "../../hooks/useWeb3Utils";
 import { FulFilledState } from "../../types/Nft";
 
-const EggBox: React.FC<{ egg: Metadata; nftMint: string }> = ({
-  egg,
-  nftMint,
-}) => {
+const EggBox: React.FC<{ egg: any; nftMint: string }> = ({ egg, nftMint }) => {
   const ctx = useContext(CottonCandyContext);
 
   const [fulfilledState, setFulFilledState] = useState<FulFilledState | null>(
@@ -17,7 +13,7 @@ const EggBox: React.FC<{ egg: Metadata; nftMint: string }> = ({
   const handleEggClicked = () => {
     ctx.setCollectiable(egg);
     ctx.setCurrentModal("crack-egg");
-    ctx.setNftMint(new PublicKey(nftMint));
+    ctx.setNftMint(nftMint);
   };
 
   const { getEggFulFilledState } = useWeb3Utils();
@@ -38,8 +34,11 @@ const EggBox: React.FC<{ egg: Metadata; nftMint: string }> = ({
   }, []);
 
   useEffect(() => {
-    (async () => await getEggState())();
-  }, [egg]);
+    if (egg.mintAddress !== ctx.refreshNftState) return;
+    (async () => {
+      (async () => await getEggState())();
+    })();
+  }, [ctx.refreshNftState]);
 
   const imageSrc =
     fulfilledState?.status === "pending"

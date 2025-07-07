@@ -14,27 +14,22 @@ const ClaimEgg = () => {
     collectable,
     setCurrentModal,
     setIsLoading,
-    setShouldRefresh,
-    getNftToEggMap,
-    setMyNfts,
-    getNFTs,
     myEggs,
     getEggNFTs,
     setNftMint,
     setBookmark,
+    setRefreshNftState,
   } = useContext(CottonCandyContext);
   const { ClaimNFT, HatchNFT } = useProgramInstructions();
-  const { getNftState, getLotteryState, getNftByType } = useWeb3Utils();
+  const { getNftState, getLotteryState } = useWeb3Utils();
 
   const [nftState, setNftState] = useState<NftState | null>(null);
   const [canSummonEgg, setCanSummonEgg] = useState(false);
 
   const handleKeepNFT = async () => {
-    setMyNfts(await getNFTs());
     setCurrentModal(null);
     setCollectiable(null);
     setNftState(null);
-    setShouldRefresh(true);
   };
 
   const handleSummonEgg = async () => {
@@ -42,20 +37,16 @@ const ClaimEgg = () => {
       try {
         setCurrentModal(null);
         setIsLoading(true);
-        // setMyNfts(await getNFTs());
         await ClaimNFT(collectable.mintAddress);
         const { eggMint } = await getNftState(collectable.mintAddress);
         await HatchNFT(eggMint, collectable.mintAddress);
-        const { nft: NFT_COLLECTION } = await getLotteryState();
-        const nfts = await getNftByType("Nft", NFT_COLLECTION);
-        getNftToEggMap(nfts);
       } catch (error: any) {
         console.error("Error : ", error.message);
         setIsLoading(false);
       } finally {
         setIsLoading(false);
+        setRefreshNftState(collectable.mintAddress);
         setCollectiable(null);
-        setShouldRefresh(true);
       }
     }
 
@@ -80,10 +71,13 @@ const ClaimEgg = () => {
       if (totalMinted === maxPlayers) {
         setCanSummonEgg(true);
       }
-
       setNftState({ isEggClaimed, eggHatchedAt, eggMint });
     })();
   }, []);
+
+  if (nftState === null) {
+    return null;
+  }
 
   return (
     <Modal onBackgroundClick={handleKeepNFT}>

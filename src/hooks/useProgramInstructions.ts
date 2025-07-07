@@ -15,6 +15,8 @@ import * as anchor from "@coral-xyz/anchor";
 import IDL from "../constants/solana_lottery.json";
 import useWeb3Utils from "./useWeb3Utils";
 import { networkStateAccountAddress, Orao } from "@orao-network/solana-vrf";
+import { useContext } from "react";
+import { CottonCandyContext } from "../providers/ContextProvider";
 
 const MPL_TOKEN_METADATA_PROGRAM_ID = new PublicKey(
   import.meta.env.VITE_APP_MPL_TOKEN_METADATA_PROGRAM_ID
@@ -24,8 +26,10 @@ const encode = (str: string) => Buffer.from(str);
 
 const useProgramInstructions = () => {
   const { publicKey, wallet } = useWallet();
+  const ctx = useContext(CottonCandyContext);
 
-  const { getProvider, connection, getConnectedWallet } = useWeb3Utils();
+  const { getProvider, connection, getConnectedWallet, getEggFulFilledState } =
+    useWeb3Utils();
 
   //********************************************************
   //                    BUY NFT
@@ -164,6 +168,8 @@ const useProgramInstructions = () => {
           },
           "confirmed"
         );
+
+        ctx.setMyNfts([]);
       } catch (error: any) {
         console.error(`Failed to mint NFT ${i + 1}:`, error);
         if (error instanceof anchor.AnchorError) {
@@ -182,7 +188,7 @@ const useProgramInstructions = () => {
   //                    CLAIM NFT
   //********************************************************
 
-  const ClaimNFT = async (nftAddress: PublicKey) => {
+  const ClaimNFT = async (nftAddress: string) => {
     const connectedWallet = await getConnectedWallet(wallet!);
 
     const provider = await getProvider(connection);
@@ -267,7 +273,7 @@ const useProgramInstructions = () => {
         eggMetadataAccount: eggMetadataAccount.toBase58(),
         eggMasterEdition: eggMasterEdition.toBase58(),
         eggNftMint: nftMintKeypair.publicKey.toBase58(),
-        nftMint: nftAddress.toBase58(),
+        nftMint: nftAddress,
         tokenMetadataProgram: MPL_TOKEN_METADATA_PROGRAM_ID,
       });
 
@@ -368,6 +374,8 @@ const useProgramInstructions = () => {
           tokenMetadataProgram: MPL_TOKEN_METADATA_PROGRAM_ID,
         })
         .rpc({ commitment: "confirmed" });
+
+      ctx.setMyEggs([]);
     } catch (err: any) {
       console.error("Hatch failed:", err);
     }
@@ -424,6 +432,11 @@ const useProgramInstructions = () => {
           tokenMetadataProgram: MPL_TOKEN_METADATA_PROGRAM_ID,
         })
         .rpc({ commitment: "confirmed" });
+
+      const { status, lotteryStatus } = await getEggFulFilledState(
+        eggMintAddress.toBase58()
+      );
+      ctx.setCrackedEggStatus({ status, lotteryStatus });
     } catch (err: any) {
       console.error("Fulfill hatching failed:", err);
     }

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { CottonCandyContext } from "../providers/ContextProvider";
 import Modal from "./UI/Modal";
 import useProgramInstructions from "../hooks/useProgramInstructions";
-import { Metadata } from "@metaplex-foundation/js";
+import { PublicKey } from "@metaplex-foundation/js";
 import useWeb3Utils from "../hooks/useWeb3Utils";
 import { motion } from "framer-motion";
 
@@ -11,13 +11,12 @@ const CrackEgg = () => {
   const { FulfillHatching } = useProgramInstructions();
   const { getNftState, getLotteryState, connection } = useWeb3Utils();
   const [shouldCrack, setShouldCrack] = useState(false);
-  const { mintAddress: eggMintAddress } = ctx.collectable as Metadata;
+  const { mintAddress: eggMintAddress } = ctx.collectable || {};
   const [time, setTime] = useState<{ hours: number; minutes: number } | null>(
     null
   );
 
   const handleKeepEgg = async () => {
-    ctx.setMyEggs(await ctx.getEggNFTs());
     ctx.setCurrentModal(null);
     ctx.setNftMint(null);
   };
@@ -27,14 +26,18 @@ const CrackEgg = () => {
       ctx.setCurrentModal(null);
       ctx.setIsLoading(true);
       if (eggMintAddress && ctx.nftMint) {
-        await FulfillHatching(eggMintAddress, ctx.nftMint);
+        await FulfillHatching(
+          new PublicKey(eggMintAddress),
+          new PublicKey(ctx.nftMint)
+        );
       }
+
+      ctx.setRefreshNftState(eggMintAddress);
     } catch (error: any) {
       console.error("Error : ", error.message);
       ctx.setIsLoading(false);
     } finally {
       ctx.setIsLoading(false);
-      ctx.setShouldRefresh(true);
     }
   };
 

@@ -1,5 +1,5 @@
 import { AnchorProvider, Program } from "@coral-xyz/anchor";
-import { Metadata, Metaplex } from "@metaplex-foundation/js";
+import { Metadata } from "@metaplex-foundation/js";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { useWallet, Wallet } from "@solana/wallet-adapter-react";
 import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js";
@@ -60,25 +60,37 @@ const useWeb3Utils = () => {
   ): Promise<Metadata[]> => {
     if (!connected || !publicKey) return [];
     let nfts: any[] = [];
-    const walletAddress = new PublicKey(publicKey);
-    const metaplex = new Metaplex(connection);
+    const apiUrl = import.meta.env.VITE_API_URL;
 
-    nfts = await metaplex.nfts().findAllByOwner({ owner: walletAddress });
+    const url = `${apiUrl}?owner=${publicKey}&type=${type}&collection=${collection}`;
+    nfts = await fetchNFTs(url);
 
-    const filtered = nfts.filter(
-      (nft) =>
-        nft.name === type && nft.collection?.address.toBase58?.() === collection
-    );
-
-    return filtered;
+    let sorted = nfts.sort((a, b) => a.address.localeCompare(b.address));
+    return sorted;
   };
 
-  const getNftState = async (mintAddress: PublicKey) => {
+  const fetchNFTs = async (url: string) => {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) {
+        throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`);
+      }
+      const data = await res.json();
+      const nfts = data;
+      console.log("Fetched NFTs:", nfts);
+      return nfts;
+    } catch (error) {
+      console.error("Error fetching NFTs:", error);
+      return [];
+    }
+  };
+
+  const getNftState = async (mintAddress: string) => {
     const provider = await getProvider(connection);
     const program = new Program(IDL as any, provider);
 
     const [nftStatePda] = PublicKey.findProgramAddressSync(
-      [Buffer.from("nft-state"), mintAddress.toBuffer()],
+      [Buffer.from("nft-state"), new PublicKey(mintAddress).toBuffer()],
       program.programId
     );
     //@ts-ignore
@@ -121,7 +133,7 @@ const useWeb3Utils = () => {
   };
 
   const getEggFulFilledState = async (
-    eggMintAddress: PublicKey
+    eggMintAddress: string
   ): Promise<FulFilledState> => {
     const provider = await getProvider(connection);
     const program = new Program(IDL as any, provider);
@@ -129,7 +141,7 @@ const useWeb3Utils = () => {
     if (!publicKey) return {} as FulFilledState;
 
     const [eggStatePda] = PublicKey.findProgramAddressSync(
-      [publicKey.toBuffer(), eggMintAddress.toBuffer()],
+      [publicKey.toBuffer(), new PublicKey(eggMintAddress).toBuffer()],
       program.programId
     );
 

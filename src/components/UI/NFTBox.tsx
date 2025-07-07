@@ -1,11 +1,11 @@
-import { Metadata } from "@metaplex-foundation/js";
 import { CottonCandyContext } from "../../providers/ContextProvider";
 import { useContext, useEffect, useState } from "react";
 import useWeb3Utils from "../../hooks/useWeb3Utils";
 import { NftState } from "../../types/NFTCardTypes";
 
-const NFTBox: React.FC<Metadata> = (nft) => {
-  const { setCollectiable, setCurrentModal } = useContext(CottonCandyContext);
+const NFTBox: React.FC<any> = (nft) => {
+  const { setCollectiable, setCurrentModal, refreshNftState } =
+    useContext(CottonCandyContext);
   const { getNftState } = useWeb3Utils();
 
   const [nftState, setNftState] = useState<NftState | null>(null);
@@ -26,6 +26,16 @@ const NFTBox: React.FC<Metadata> = (nft) => {
       setNftState({ isEggClaimed, eggHatchedAt, eggMint });
     })();
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      if (nft.mintAddress !== refreshNftState) return;
+      const { isEggClaimed, eggMint, eggHatchedAt } = await getNftState(
+        nft.mintAddress
+      );
+      setNftState({ isEggClaimed, eggHatchedAt, eggMint });
+    })();
+  }, [refreshNftState]);
 
   const imageSrc =
     uri === "https://example.com/nft.json"

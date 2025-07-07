@@ -17,8 +17,6 @@ const MintSection = () => {
     ctx.setBookmark(newChapter);
   };
 
-  
-
   return (
     <div className=" relative" id="mint-section" ref={ctx.mintSectionRef}>
       <span className="bg-mint-section-stripe-pattern h-8 block bg-repeat-x bg-cover z-10 -m-[2px]"></span>
@@ -75,7 +73,7 @@ const MintSection = () => {
                   source={ANIMATION_WEBM_SOURCES["HorseAnimation"]}
                 />
 
-                {ctx.lotteryState.ended ? (
+                {/* {ctx.lotteryState.ended ? (
                   <div className="p-5 md:p-0 flex flex-col gap-6 justify-center items-start h-full">
                     <p className="font-patrick-hand-sc text-center uppercase text-2xl">
                       All your NFTs have been minted!{" "}
@@ -96,13 +94,13 @@ const MintSection = () => {
                       <span className="text-center font-patrick-hand-sc text-black/80 block text-xl"></span>
                     )}
                   </div>
-                ) : (
-                  <div className="md:bg-none bg-mint-controls bg-cover p-5 md:p-0 flex flex-col justify-around items-start h-[40%] md:h-full w-[90%] md:w-auto">
-                    <Expiration />
-                    <Price />
-                    <Counter />
-                  </div>
-                )}
+                ) : ( */}
+                <div className="md:bg-none bg-mint-controls bg-cover p-5 md:p-0 flex flex-col justify-around items-start h-[40%] md:h-full w-[90%] md:w-auto">
+                  <Expiration />
+                  <Price />
+                  <Counter />
+                </div>
+                {/* )} */}
               </div>
             </div>
           )}

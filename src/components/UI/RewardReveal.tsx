@@ -1,69 +1,55 @@
-import { useEffect, useState } from "react";
-import { motion, useAnimation } from "framer-motion";
+import { useContext, useEffect } from "react";
+import { motion } from "framer-motion";
+import Modal from "./Modal";
+import { CottonCandyContext } from "../../providers/ContextProvider";
 
 const RewardReveal = () => {
-  const step1Controls = useAnimation();
-  const crack1Controls = useAnimation();
+  const { crackedEggStatus, setCrackedEggStatus } =
+    useContext(CottonCandyContext);
 
-  const [currentStep, setCurrentStep] = useState<"step1" | "crack1" | "final">(
-    "step1"
-  );
+  const imgSrc =
+    crackedEggStatus && crackedEggStatus.lotteryStatus == "won"
+      ? "./images/animations/results/win.png"
+      : "./images/animations/results/lost.png";
 
-  // Step 1: Tilt Right
+  const handleClose = () => {
+    setCrackedEggStatus(null);
+  };
+
   useEffect(() => {
-    if (currentStep === "step1") {
-      step1Controls
-        .start({
-          rotate: 20,
-          transition: { duration: 0.6, ease: "easeInOut" },
-        })
-        .then(() => {
-          setCurrentStep("crack1");
-        });
-    }
-
-    if (currentStep === "crack1") {
-      crack1Controls
-        .start({
-          rotate: -20,
-          transition: { duration: 0.6, ease: "easeInOut" },
-        })
-        .then(() => {
-          setCurrentStep("final");
-        });
-    }
-  }, [currentStep, step1Controls, crack1Controls]);
+    return () => handleClose();
+  }, []);
 
   return (
-    <div className="relative h-full w-full grid place-content-center m-96">
-      {currentStep === "step1" && (
-        <motion.img
-          src="./images/animations/results/step-1.png"
-          alt="egg-upperpart"
-          className="absolute object-contain"
-          initial={{ rotate: 0 }}
-          animate={step1Controls}
-        />
-      )}
+    <Modal onBackgroundClick={() => {}}>
+      <div className="flex flex-col justify-center items-center  w-full h-full bg-claim-egg-bg bg-cover bg-no-repeat bg-center p-4 gap-9 z-50">
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{
+            type: "spring",
+            stiffness: 100,
+            damping: 15,
+            duration: 0.5,
+          }}
+          className="w-full flex justify-center"
+        >
+          <img className="w-[400px] h-auto rounded-2xl" src={imgSrc} alt="" />
+        </motion.div>
 
-      {currentStep === "crack1" && (
-        <motion.img
-          src="./images/animations/results/crack-1.png"
-          alt="egg-crack-1"
-          className="absolute object-contain"
-          initial={{ rotate: 20 }} // carry over from previous
-          animate={crack1Controls}
-        />
-      )}
-
-      {currentStep === "final" && (
-        <img
-          src="./images/animations/results/crack-1.png"
-          alt="egg-crack-2"
-          className="absolute object-contain"
-        />
-      )}
-    </div>
+        <div className=" flex flex-row justify-between items-start gap-9">
+          <button
+            onClick={handleClose}
+            className="bg-mint-section-btn w-full h-full md:h-[86px] md:w-[191px] relative bg-contain bg-no-repeat group z-40"
+          >
+            <span className="absolute inset-0 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20 transition duration-200 z-50"></span>
+            <span className=" absolute inset-0 w-full h-full grid place-content-center font-patrick-hand text-3xl leading-none text-white z-60">
+              Close
+            </span>
+          </button>
+        </div>
+      </div>
+    </Modal>
   );
 };
 

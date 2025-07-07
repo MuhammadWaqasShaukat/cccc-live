@@ -52,8 +52,7 @@ const MintButton = () => {
 
     const newNft = await getNewBoughtNft();
 
-    if (newNft) {
-      // setNewlyBought(newNft[0]);
+    if (newNft.length > 0) {
       ctx.setCollectiable(newNft[0]);
       ctx.setCurrentModal("claim-egg");
       ctx.setBookmark("nfts");

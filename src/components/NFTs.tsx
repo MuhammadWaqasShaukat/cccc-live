@@ -1,38 +1,15 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import NFTBox from "./UI/NFTBox";
 import { CottonCandyContext } from "../providers/ContextProvider";
 
 export const NFTs = () => {
-  // const [nfts, setNfts] = useState<Metadata[]>([]);
   const ctx = useContext(CottonCandyContext);
 
-  // async function getNFTs() {
-  //   try {
-  //     ctx.setIsLoading(true);
-  //     const nfts = await ctx.getNFTs();
-  //     setNfts(nfts);
-  //   } catch (error: any) {
-  //     console.error("Error", error.message);
-  //   } finally {
-  //     ctx.setIsLoading(false);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   if (ctx.shouldRefersh) {
-  //     (async () => {
-  //       await getNFTs();
-  //       ctx.setShouldRefresh(false);
-  //     })();
-  //   }
-  // }, [ctx.shouldRefersh]);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     await getNFTs();
-  //     ctx.setShouldRefresh(false);
-  //   })();
-  // }, []);
+  useEffect(() => {
+    if (ctx.myNfts.length === 0) {
+      (async () => ctx.setMyNfts(await ctx.getNFTs()))();
+    }
+  }, []);
 
   return (
     <div className=" flex flex-row justify-between items-center gap-24 h-full">
@@ -40,7 +17,7 @@ export const NFTs = () => {
       <div className=" h-[530px] flex-1 md:block hidden space-y-2 mb-8">
         <h2 className="font-patrick-hand-sc text-4xl">Your NFTs</h2>
         {ctx.myNfts.length > 0 && (
-          <div className="grid grid-cols-3 gap-3 pr-6 overflow-y-auto h-[90%]">
+          <div className="grid grid-cols-3 gap-4 pr-6 overflow-y-auto h-[90%] scrollbar-thumb-teal-900">
             {ctx.myNfts.map((nft, index) => (
               <NFTBox key={index} {...nft} />
             ))}

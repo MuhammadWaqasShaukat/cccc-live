@@ -10,6 +10,7 @@ import { Modals } from "../types/modalProps";
 import { Metadata } from "@metaplex-foundation/js";
 import { NftState } from "../types/NFTCardTypes";
 import { BookMark } from "../types/BookMarks";
+import { FulFilledState } from "../types/Nft";
 
 type LotteryState = {
   clamable: boolean;
@@ -30,8 +31,8 @@ interface CottonCandyContextType {
   currentModal: Modals | null;
   setCurrentModal: (modal: Modals | null) => void;
 
-  collectable: Metadata | null;
-  setCollectiable: (collectiable: Metadata | null) => void;
+  collectable: any | null;
+  setCollectiable: (collectiable: any | null) => void;
 
   nftState: NftState | undefined | null;
   setNftState: (nftState: NftState | undefined | null) => void;
@@ -39,14 +40,11 @@ interface CottonCandyContextType {
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
 
-  nftMint: PublicKey | null;
-  setNftMint: (nftMint: PublicKey | null) => void;
+  nftMint: string | null;
+  setNftMint: (nftMint: string | null) => void;
 
   nextCrackAvailabilty: number;
   setNextCrackAvailability: (nextCrackAvailabilty: number) => void;
-
-  shouldRefersh: boolean;
-  setShouldRefresh: (shouldRefresh: boolean) => void;
 
   bookmark: BookMark;
   setBookmark: (bookmark: BookMark) => void;
@@ -54,16 +52,22 @@ interface CottonCandyContextType {
   nftToEggMap: Record<string, string>;
   setNftToEggMap: (a: Record<string, string>) => void;
 
-  getNftToEggMap: (nfts: Metadata[]) => void;
+  getNftToEggMap: (nfts: any[]) => void;
 
-  myNfts: Metadata[];
-  setMyNfts: (myNfts: Metadata[]) => void;
+  myNfts: any[];
+  setMyNfts: (myNfts: any[]) => void;
 
-  myEggs: Metadata[];
-  setMyEggs: (myEggs: Metadata[]) => void;
+  myEggs: any[];
+  setMyEggs: (myEggs: any[]) => void;
 
-  getNFTs: () => Promise<Metadata[]>;
-  getEggNFTs: () => Promise<Metadata[]>;
+  getNFTs: () => Promise<any[]>;
+  getEggNFTs: () => Promise<any[]>;
+
+  refreshNftState?: string;
+  setRefreshNftState: (mintAddress: string) => void;
+
+  crackedEggStatus: FulFilledState | null | undefined;
+  setCrackedEggStatus: (state: FulFilledState | null | undefined) => void;
 }
 
 const defaultLotteryState: LotteryState = {
@@ -90,21 +94,22 @@ export const CottonCandyContextProvider: React.FC<
   const [priceChangeTimeStamp] = useState<string>("");
   const mintSectionRef = useRef<HTMLDivElement | null>(null);
   const [currentModal, setCurrentModal] = useState<Modals | null>(null);
-  const [collectable, setCollectiable] = useState<Metadata | null>(null);
+  const [collectable, setCollectiable] = useState<any | null>(null);
   const [nftState, setNftState] = useState<NftState | undefined | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [nftMint, setNftMint] = useState<PublicKey | null>(null);
+  const [nftMint, setNftMint] = useState<string | null>(null);
+  const [refreshNftState, setRefreshNftState] = useState<string>("");
   const [nextCrackAvailabilty, setNextCrackAvailability] = useState<number>(
     Date.now()
   );
-
+  const [crackedEggStatus, setCrackedEggStatus] = useState<
+    FulFilledState | null | undefined
+  >();
   const [myNfts, setMyNfts] = useState<Metadata[]>([]);
   const [myEggs, setMyEggs] = useState<Metadata[]>([]);
 
   const [nftToEggMap, setNftToEggMap] = useState<Record<string, string>>({});
   const [bookmark, setBookmark] = useState<BookMark>("mint");
-
-  const [shouldRefersh, setShouldRefresh] = useState(false);
 
   const [lotteryState, setLotteryState] =
     useState<LotteryState>(defaultLotteryState);
@@ -120,7 +125,7 @@ export const CottonCandyContextProvider: React.FC<
 
   const { wallet, connected } = useWallet();
 
-  const getNftToEggMap = async (nfts: Metadata[]) => {
+  const getNftToEggMap = async (nfts: any[]) => {
     const _nftToEggMap: Record<string, string> = {};
 
     for (let i = 0; i < nfts.length; i++) {
@@ -128,12 +133,10 @@ export const CottonCandyContextProvider: React.FC<
         const { eggMint, eggHatchedAt } = await getNftState(
           nfts[i].mintAddress
         );
-        const nftMint = nfts[i].mintAddress.toBase58();
-
+        const nftMint = nfts[i].mintAddress;
         if (nextCrackAvailabilty && nextCrackAvailabilty > eggHatchedAt) {
           setNextCrackAvailability(eggHatchedAt);
         }
-
         _nftToEggMap[eggMint?.toBase58()] = nftMint;
       } catch (error: any) {
         console.log("NFT State", error.message);
@@ -216,16 +219,26 @@ export const CottonCandyContextProvider: React.FC<
       calculatePrice();
     }, 5000);
     calculatePrice();
-
     return () => clearInterval(interval);
   }, [connection]);
 
   React.useEffect(() => {
     (async () => {
-      setMyNfts(await getNFTs());
+      if (!connected) return;
       setMyEggs(await getEggNFTs());
     })();
   }, [connected]);
+
+  React.useEffect(() => {
+    (async () => {
+      if (!connected) return;
+      setMyNfts(await getNFTs());
+    })();
+  }, [connected]);
+
+  React.useEffect(() => {
+    if (myNfts.length > 0) getNftToEggMap(myNfts);
+  }, [myNfts, myEggs]);
 
   const value: CottonCandyContextType = {
     price,
@@ -248,8 +261,6 @@ export const CottonCandyContextProvider: React.FC<
     setNftMint,
     setNextCrackAvailability,
     nextCrackAvailabilty,
-    shouldRefersh,
-    setShouldRefresh,
     bookmark,
     setBookmark,
     nftToEggMap,
@@ -262,6 +273,12 @@ export const CottonCandyContextProvider: React.FC<
     setMyEggs,
     myEggs,
     getEggNFTs,
+
+    refreshNftState,
+    setRefreshNftState,
+
+    crackedEggStatus,
+    setCrackedEggStatus,
   };
 
   return (

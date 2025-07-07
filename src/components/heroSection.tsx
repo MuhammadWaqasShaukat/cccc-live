@@ -44,6 +44,14 @@ const HeroSection = () => {
       }
     } else {
       await disconnect();
+      ctx.setCollectiable(null);
+      ctx.setMyEggs([]);
+      ctx.setMyNfts([]);
+      ctx.setNftToEggMap({});
+      ctx.setCurrentModal(null);
+      ctx.setNftMint(null);
+      ctx.setRefreshNftState("");
+      ctx.setBookmark("mint");
     }
   };
 

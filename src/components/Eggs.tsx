@@ -1,59 +1,14 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import EggBox from "./UI/EggBox";
-import { Metadata } from "@metaplex-foundation/js";
 import { CottonCandyContext } from "../providers/ContextProvider";
 
-// const EggCrackCountDown = ({
-//   nextCrackAvailabilty,
-// }: {
-//   nextCrackAvailabilty: number;
-// }) => {
-//   const now = Math.floor(Date.now() / 1000);
-//   const diffInSeconds = Math.abs(nextCrackAvailabilty - now);
-
-//   const hours = Math.floor(diffInSeconds / 3600);
-//   const minutes = Math.floor((diffInSeconds % 3600) / 60);
-
-//   console.log(minutes, hours, diffInSeconds);
-
-//   return (
-//     <div className=" font-patrick-hand-sc inline-block text-2xl">
-//       {hours}
-//       <span className="text-lg">H</span> {minutes}
-//       <span className="text-lg">M</span>
-//     </div>
-//   );
-// };
-
 const Eggs = () => {
-  const [eggs, setEggs] = useState<Metadata[]>([]);
   const ctx = useContext(CottonCandyContext);
 
-  async function getNFTEggs() {
-    try {
-      ctx.setIsLoading(true);
-      const eggs = await ctx.getEggNFTs();
-      setEggs(eggs);
-    } catch (error: any) {
-      console.error("Error", error.message);
-    } finally {
-      ctx.setIsLoading(false);
-    }
-  }
-
   useEffect(() => {
-    if (ctx.shouldRefersh) {
-      (async () => {
-        await getNFTEggs();
-        ctx.setShouldRefresh(false);
-      })();
+    if (ctx.myEggs.length === 0) {
+      (async () => ctx.setMyEggs(await ctx.getEggNFTs()))();
     }
-  }, [ctx.shouldRefersh]);
-
-  useEffect(() => {
-    (async () => {
-      await getNFTEggs();
-    })();
   }, []);
 
   return (
@@ -64,23 +19,15 @@ const Eggs = () => {
           <h2 className="font-patrick-hand-sc text-4xl uppercase font-medium">
             Your Eggs
           </h2>
-          {/* <div className=" flex flex-row justify-start items-center">
-            <p className="font-patrick-hand-sc text-2xl uppercase">
-              next crack available in:
-            </p>
-            <EggCrackCountDown
-              nextCrackAvailabilty={ctx.nextCrackAvailabilty}
-            />
-          </div> */}
         </div>
-        {eggs.length > 0 && (
-          <div className="grid grid-cols-3 gap-2 pr-6 overflow-y-auto h-[90%]">
-            {eggs.map((egg) => {
+        {ctx.myEggs.length > 0 && (
+          <div className="grid grid-cols-3 gap-4 pr-6 overflow-y-auto h-[90%]">
+            {ctx.myEggs.map((egg) => {
               return (
                 <EggBox
-                  key={ctx.nftToEggMap[egg.mintAddress.toBase58()]}
+                  key={ctx.nftToEggMap[egg.mintAddress as any]}
                   egg={egg}
-                  nftMint={ctx.nftToEggMap[egg.mintAddress.toBase58()]}
+                  nftMint={ctx.nftToEggMap[egg.mintAddress as any]}
                 />
               );
             })}

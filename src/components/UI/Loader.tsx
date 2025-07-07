@@ -16,7 +16,7 @@ const Loader = () => {
         transition={{
           rotate: {
             repeat: Infinity,
-            repeatType: "mirror",
+            repeatType: "loop",
             ease: "linear",
             duration: 2,
           },
