@@ -11,6 +11,7 @@ import { Metadata } from "@metaplex-foundation/js";
 import { NftState } from "../types/NFTCardTypes";
 import { BookMark } from "../types/BookMarks";
 import { FulFilledState } from "../types/Nft";
+import { Nav } from "../types/Nav";
 
 type LotteryState = {
   clamable: boolean;
@@ -68,6 +69,9 @@ interface CottonCandyContextType {
 
   crackedEggStatus: FulFilledState | null | undefined;
   setCrackedEggStatus: (state: FulFilledState | null | undefined) => void;
+
+  activeMenu: Nav;
+  setActiveMenu: (menu: Nav) => void;
 }
 
 const defaultLotteryState: LotteryState = {
@@ -110,6 +114,7 @@ export const CottonCandyContextProvider: React.FC<
 
   const [nftToEggMap, setNftToEggMap] = useState<Record<string, string>>({});
   const [bookmark, setBookmark] = useState<BookMark>("mint");
+  const [activeMenu, setActiveMenu] = useState<Nav>("none");
 
   const [lotteryState, setLotteryState] =
     useState<LotteryState>(defaultLotteryState);
@@ -279,6 +284,9 @@ export const CottonCandyContextProvider: React.FC<
 
     crackedEggStatus,
     setCrackedEggStatus,
+
+    activeMenu,
+    setActiveMenu,
   };
 
   return (

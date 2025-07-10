@@ -4,7 +4,7 @@ import React from "react";
 
 interface BookMarkProps {
   active: boolean;
-  onClick: () => void;
+  onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
   children: React.ReactNode;
 }
 

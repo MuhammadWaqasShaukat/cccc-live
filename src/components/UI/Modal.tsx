@@ -22,7 +22,7 @@ const Modal = ({
   return (
     <div
       onClick={() => onBackgroundClick() ?? ctx.setCurrentModal(null)}
-      className=" w-full h-full bg-black/40 flex flex-col justify-center items-center fixed top-0 left-0 right-0 z-40"
+      className=" w-full h-full bg-black/70 flex flex-col justify-center items-center fixed top-0 left-0 right-0 z-40"
     >
       {children}
     </div>

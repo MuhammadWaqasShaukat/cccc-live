@@ -1,8 +1,7 @@
-import TopBar from "../components/topbar";
 import HeroSection from "../components/heroSection";
 import AboutSection from "../components/aboutSection";
 import MintSection from "../components/mintSection";
-import SocialSection from "../components/socialSection";
+// import SocialSection from "../components/socialSection";
 import ClaimEgg from "../components/ClaimEgg";
 import { CottonCandyContext } from "../providers/ContextProvider";
 import { useContext, useEffect } from "react";
@@ -20,11 +19,16 @@ const Home = () => {
 
   return (
     <>
-      <TopBar />
       <HeroSection />
-      <AboutSection />
-      <MintSection />
-      <SocialSection />
+      {/* <AboutSection /> */}
+      {/* <MintSection /> */}
+      {/* <SocialSection /> */}
+
+      {/* pages  */}
+
+      {ctx.activeMenu === "about" && <AboutSection />}
+      {ctx.activeMenu === "mint" && <MintSection />}
+
       {ctx.currentModal === "claim-egg" && <ClaimEgg />}
       {ctx.currentModal === "crack-egg" && <CrackEgg />}
       {ctx.currentModal === "reward-reveal" && <RewardReveal />}
