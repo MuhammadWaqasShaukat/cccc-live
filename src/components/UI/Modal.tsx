@@ -19,12 +19,27 @@ const Modal = ({
     };
   }, []);
 
+  const handleBackDropClicked = () => {
+    if (typeof onBackgroundClick === "function") {
+      onBackgroundClick();
+    } else {
+      ctx.setCurrentModal(null);
+    }
+  };
+
   return (
-    <div
-      onClick={() => onBackgroundClick() ?? ctx.setCurrentModal(null)}
-      className=" w-full h-full bg-black/70 flex flex-col justify-center items-center fixed top-0 left-0 right-0 z-40"
-    >
-      {children}
+    <div className=" w-full h-full  flex flex-col justify-center items-center  absolute top-0 left-0 right-0">
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          handleBackDropClicked();
+        }}
+        className="z-50 w-full bg-black/70 h-full absolute top-0 left-0"
+      ></div>
+      <div className="z-[51] flex flex-col justify-center items-center">
+        {children}
+      </div>
     </div>
   );
 };

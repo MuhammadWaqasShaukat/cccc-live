@@ -10,12 +10,16 @@ const Counter = () => {
     <div className="flex flex-row w-full justify-between items-center gap-[14px]">
       <div className="flex flex-row justify-between p-5 items-center bg-[#FFFFFF99] w-full md:w-[191px] rounded-[7px] box-border min-w-[8rem] md:min-w-0 h-14 md:h-auto">
         <button
-          disabled={ctx.count === 1 || ctx.lotteryState.ended ? true : false}
+          disabled={
+            ctx.count === 1 || ctx.lotteryState.ended
+              ? true
+              : false || !connected
+          }
           type="button"
-          className="h-[26px] w-[26px] bg-[#B69772] hover:bg-[#9F8362] active:bg-[#816A4F]  rounded-full  flex flex-row justify-center items-center"
+          className="h-[26px] w-[26px] bg-[#B69772] disabled:bg-[#B69772] disabled:hover:bg-[#B69772]  hover:bg-[#9F8362] active:bg-[#816A4F]  rounded-full  flex flex-row justify-center items-center"
           onClick={() => {
             if (ctx.count === 1) return;
-            ctx.setCount!(ctx.count - 1);
+            ctx.setCount((prev: number) => prev - 1);
           }}
         >
           <span className="text-[29px] text-white font-patrick-hand-sc -mt-2">
@@ -26,9 +30,9 @@ const Counter = () => {
           {ctx.count}
         </span>
         <button
-          disabled={!connected}
+          disabled={!connected || ctx.lotteryState.ended ? true : false}
           type="button"
-          className="h-[26px] w-[26px] bg-[#B69772]  hover:bg-[#9F8362] active:bg-[#816A4F]    rounded-full flex flex-row justify-center items-center"
+          className="h-[26px] w-[26px] bg-[#B69772]  disabled:bg-[#B69772] disabled:hover:bg-[#B69772]  hover:bg-[#9F8362] active:bg-[#816A4F]    rounded-full flex flex-row justify-center items-center"
           onClick={() => {
             ctx.setCount!(ctx.count + 1);
           }}

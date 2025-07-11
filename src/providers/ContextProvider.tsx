@@ -22,7 +22,7 @@ type LotteryState = {
 interface CottonCandyContextType {
   price: number;
   count: number;
-  setCount: (count: number) => void;
+  setCount: React.Dispatch<React.SetStateAction<number>>;
   setPrice: (price: number) => void;
   priceChangeTimeStamp: string;
   mintSectionRef: React.RefObject<HTMLDivElement> | null;
@@ -220,25 +220,30 @@ export const CottonCandyContextProvider: React.FC<
   }
 
   React.useEffect(() => {
+    if (!connected) return;
+
     const interval = setInterval(() => {
       calculatePrice();
     }, 5000);
     calculatePrice();
     return () => clearInterval(interval);
-  }, [connection]);
+  }, [connection, connected]);
 
   React.useEffect(() => {
     (async () => {
       if (!connected) return;
       setMyEggs(await getEggNFTs());
     })();
-  }, [connected]);
 
-  React.useEffect(() => {
     (async () => {
       if (!connected) return;
       setMyNfts(await getNFTs());
     })();
+
+    if (!connected) {
+      setActiveMenu("none");
+      setLotteryState(defaultLotteryState);
+    }
   }, [connected]);
 
   React.useEffect(() => {

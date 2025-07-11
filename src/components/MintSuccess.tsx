@@ -1,9 +1,9 @@
 import { Link } from "wouter";
 
-const MintSuccess = () => {
+const MintSuccess = ({handleClose}:{handleClose: (stata:boolean)=>void}) => {
   return (
     <div className="border-11 border border-black flex flex-row justify-between items-center bg-white max-w-[880px] relative ">
-      <button className=" size-11 absolute top-4 right-4">
+      <button className=" size-11 absolute top-4 right-4" onClick={()=>handleClose(false)}>
         <span className="font-patrick-hand text-4xl uppercase">x</span>
       </button>
 

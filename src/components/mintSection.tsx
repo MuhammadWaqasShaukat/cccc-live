@@ -29,7 +29,13 @@ const MintSection = () => {
       {/* <div className=" relative" id="mint-section" ref={ctx.mintSectionRef}> */}
       {/* <span className="bg-mint-section-stripe-pattern h-8 block bg-repeat-x bg-cover z-10 -m-[2px]"></span> */}
       {/* <div className=" lg:h-[1348px] h-screen w-screen relative bg-mint-section bg-no-repeat bg-cover flex flex-col md:justify-center justify-start items-center"> */}
-      <div className="md:bg-mint-section-book md:h-[768px] w-full md:w-[1163px] md:pl-[170px] md:pr-[150px] md:py-[110px] h-full z-10 relative">
+      <div
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+        className="md:bg-mint-section-book  md:h-[768px] w-full md:w-[1163px] md:pl-[170px] md:pr-[150px] md:py-[110px] h-full z-50 relative"
+      >
         {/* nav */}
 
         <div className=" flex flex-col absolute right-0 gap-7">
@@ -99,13 +105,13 @@ const MintSection = () => {
                     <p className="font-patrick-hand-sc text-center uppercase text-2xl">
                       All your NFTs have been minted!{" "}
                       {ctx.lotteryState.clamable &&
-                      ctx.lotteryState.myClaimedNfts > 0
+                        ctx.lotteryState.myClaimedNfts > 0
                         ? "you can claim them now!"
                         : "You might have claimed them already!"}
                       .
                     </p>
                     {ctx.lotteryState.clamable &&
-                    ctx.lotteryState.myClaimedNfts > 0 ? (
+                      ctx.lotteryState.myClaimedNfts > 0 ? (
                       <button className=" bg-[#51C947] w-full px-16 py-3">
                         <span className=" w-full h-full grid place-content-center font-patrick-hand text-xl leading-none text-white z-30">
                           Claim

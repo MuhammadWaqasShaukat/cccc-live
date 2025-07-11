@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { CottonCandyContext } from "../providers/ContextProvider";
 import Modal from "./UI/Modal";
 import useProgramInstructions from "../hooks/useProgramInstructions";
@@ -15,6 +15,16 @@ const CrackEgg = () => {
   const [time, setTime] = useState<{ hours: number; minutes: number } | null>(
     null
   );
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [crackpoints, setCrackPoints] = useState(0);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
 
   const handleKeepEgg = async () => {
     ctx.setCurrentModal(null);
@@ -22,6 +32,33 @@ const CrackEgg = () => {
   };
 
   const handleCrackEgg = async () => {
+    if (crackpoints < 100000) {
+      setCrackPoints((prev: number) => prev + 1);
+
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+
+      timeoutRef.current = setTimeout(() => {
+        intervalRef.current = setInterval(() => {
+          setCrackPoints((prev) => {
+            if (prev <= 1) {
+              clearInterval(intervalRef.current!);
+              intervalRef.current = null;
+              return 0;
+            }
+            return prev - 1;
+          });
+        }, 500);
+      }, 30000);
+      return;
+    }
+
     try {
       ctx.setCurrentModal(null);
       ctx.setIsLoading(true);
@@ -98,10 +135,18 @@ const CrackEgg = () => {
           className="w-full flex justify-center"
         >
           <img
-            className="w-[462px] h-auto rounded-2xl"
+            className="w-[350px] h-auto rounded-2xl"
             src={`./images/egg.png`}
             alt=""
           />
+
+          {
+            <div className=" absolute h-1/2 z-50 flex flex-col justify-center items-center">
+              <span className=" text-6xl font-patrick-hand">
+                {crackpoints} / {10000}
+              </span>
+            </div>
+          }
         </motion.div>
         <div className=" flex flex-row justify-between items-start gap-9">
           <button
