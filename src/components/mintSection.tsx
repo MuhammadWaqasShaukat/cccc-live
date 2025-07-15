@@ -1,5 +1,4 @@
 import Price from "./UI/Price";
-import Expiration from "./UI/Expiration";
 import Counter from "./UI/Counter";
 import { MouseEvent, useContext } from "react";
 import { CottonCandyContext } from "../providers/ContextProvider";
@@ -10,6 +9,8 @@ import Eggs from "./Eggs";
 import { BookMark } from "../types/BookMarks";
 import Bookmark from "./UI/bookmark";
 import Modal from "./UI/Modal";
+import Remaining from "./UI/Remaining";
+import MintButton from "./UI/MintButton";
 
 const MintSection = () => {
   const ctx = useContext(CottonCandyContext);
@@ -34,11 +35,11 @@ const MintSection = () => {
           e.preventDefault();
           e.stopPropagation();
         }}
-        className="md:bg-mint-section-book  md:h-[768px] w-full md:w-[1163px] md:pl-[170px] md:pr-[150px] md:py-[110px] h-full z-50 relative"
+        className="md:bg-mint-section-book  md:h-[768px] w-full md:w-[1163px] md:pl-[170px] md:pr-[150px] md:py-[100px] h-full z-50 relative"
       >
         {/* nav */}
 
-        <div className=" flex flex-col absolute right-0 gap-7">
+        <div className=" flex flex-col absolute -right-7 gap-7">
           <Bookmark
             active={ctx.bookmark === "mint"}
             onClick={(e: MouseEvent) => {
@@ -46,8 +47,10 @@ const MintSection = () => {
               e.stopPropagation();
               handleBookmarkChange("mint");
             }}
+            className="bg-bm-mint "
+            disabledClasss="bg-bm-mint-1"
           >
-            Mint
+            <span className="sr-only ">Mint</span>
           </Bookmark>
           <Bookmark
             active={ctx.bookmark === "nfts"}
@@ -57,8 +60,10 @@ const MintSection = () => {
               handleBookmarkChange("nfts");
               return;
             }}
+            className="bg-bm-nft"
+            disabledClasss="bg-bm-nft-1"
           >
-            NFTs
+            <span className="sr-only">NFTs</span>
           </Bookmark>
           <Bookmark
             active={ctx.bookmark === "eggs"}
@@ -67,15 +72,17 @@ const MintSection = () => {
               e.stopPropagation();
               handleBookmarkChange("eggs");
             }}
+            className="bg-bm-egg"
+            disabledClasss="bg-bm-egg-1"
           >
-            Eggs
+            <span className="sr-only">Eggs</span>
           </Bookmark>
         </div>
 
         {ctx.bookmark === "mint" && (
-          <div className=" flex flex-row justify-between items-center gap-20 h-full">
+          <div className=" flex flex-row justify-between items-start gap-20 h-full ">
             {/*left page*/}
-            <div className=" h-[500px] flex-1 md:block hidden ">
+            <div className=" h-[530px] flex-1 md:block hidden ">
               <AnimatedElement
                 className=" h-[500px] flex-1 md:block hidden"
                 source={ANIMATION_WEBM_SOURCES["HorseAnimation"]}
@@ -83,22 +90,80 @@ const MintSection = () => {
             </div>
 
             {/*right page  */}
-            <div className=" md:h-[500px] flex-1 flex flex-col h-full w-full justify-between items-center">
-              <div className="flex flex-row md:justify-start justify-center w-[90%] md:w-full center md:bg-none bg-mint-section-heading bg-cover bg-bottom md:p-0 p-2 ">
+            <div className=" md:h-[530px]  flex-1 flex flex-col h-full w-full justify-between items-center gap-7">
+              <div className="flex  flex-row md:justify-start justify-end w-[90%] md:w-full items-end md:bg-none bg-mint-section-heading bg-cover bg-bottom md:p-0 p-2 ">
                 <img
-                  src="./images/section-mint/m.png"
+                  src="./images/letter-m-mint.png"
                   alt=""
                   className="h-[70%] md:h-auto"
                 />
-                <h3 className=" font-patrick-hand-sc md:text-[48px] text-[34px] uppercase ">
-                  int your own
+                <h3 className=" font-patrick-hand-sc md:text-[40px] text-[34px] uppercase ">
+                  inting is Live!
                 </h3>
               </div>
 
-              <AnimatedElement
+              {/* <AnimatedElement
                 className="md:hidden flex flex-row justify-center w-[60%]"
                 source={ANIMATION_WEBM_SOURCES["HorseAnimation"]}
-              />
+              /> */}
+
+              <div className=" flex flex-row justify-between items-start w-full">
+                <Remaining />
+                <Price />
+              </div>
+
+              <div className="flex flex-row justify-between items-center w-full">
+                <div className="flex-1">
+                  <h2 className="font-patrick-hand-sc text-2xl text-black  ">
+                    Quantity
+                  </h2>
+                </div>
+                <Counter />
+              </div>
+
+              <div className=" flex flex-col justify-start items-start w-full gap-4">
+                {/* Cost */}
+                <div className="flex flex-row justify-between items-center w-full">
+                  <div className="flex-1">
+                    <h2 className="font-patrick-hand-sc text-3xl text-black  ">
+                      Cost
+                    </h2>
+                  </div>
+                  <div>
+                    <span className="font-patrick-hand-sc text-3xl text-black  ">
+                      0.0012 Sol
+                    </span>
+                  </div>
+                </div>
+                {/* Gas Fee*/}
+                <div className="flex flex-row justify-between items-center w-full">
+                  <div className="flex-1">
+                    <h2 className="font-patrick-hand-sc text-3xl text-black  ">
+                      Gas Fee
+                    </h2>
+                  </div>
+                  <div>
+                    <span className="font-patrick-hand-sc text-3xl text-black  ">
+                      0.000021 Sol
+                    </span>
+                  </div>
+                </div>
+                {/* Total */}
+                <div className="flex flex-row justify-between items-center w-full">
+                  <div className="flex-1">
+                    <h2 className="font-patrick-hand-sc text-3xl text-black  ">
+                      Total
+                    </h2>
+                  </div>
+                  <div>
+                    <span className="font-patrick-hand-sc text-3xl text-black  ">
+                      0.001221 Sol
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <MintButton />
 
               {/* {ctx.lotteryState.ended ? (
                   <div className="p-5 md:p-0 flex flex-col gap-6 justify-center items-start h-full">
@@ -122,11 +187,9 @@ const MintSection = () => {
                     )}
                   </div>
                 ) : ( */}
-              <div className="md:bg-none bg-mint-controls bg-cover p-5 md:p-0 flex flex-col justify-around items-start h-[40%] md:h-full w-[90%] md:w-auto">
+              {/* <div className="md:bg-none bg-mint-controls bg-cover p-5 md:p-0 flex flex-col justify-around items-start h-[40%] md:h-full w-[90%] md:w-auto">
                 <Expiration />
-                <Price />
-                <Counter />
-              </div>
+              </div> */}
               {/* )} */}
             </div>
           </div>

@@ -85,11 +85,7 @@ const HeroSection = () => {
           </h1>
         </div>
         <button
-          className={`${
-            connected
-              ? "bg-social-section-button-x md:h-20 h-12"
-              : "bg-mint-section-btn h-14"
-          }  md:h-[86px] w-28 md:w-[191px] bg-contain bg-no-repeat group relative `}
+          className={`bg-hero-connect w-28 h-16 md:w-[210px] bg-contain bg-no-repeat group relative`}
           onClick={handleGoToMintSection}
         >
           <span className="absolute inset-0 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20 transition duration-200 z-20"></span>
@@ -98,11 +94,9 @@ const HeroSection = () => {
           </span>
         </button>
       </div>
-
-      <Nav className={"flex-1 absolute bottom-[25%] z-50"} />
+      <Nav className={"flex-1 absolute bottom-[25%] z-40"} />
       <div className="  bg-hero-section-lower bg-no-repeat bg-cover h-[20%] bg-end absolute bottom-0 left-0 right-0"></div>
       <div className="  bg-hero-section-logo max-w-[700px] max-h-[400px] min-w-[288px] h-[25%] w-[50%] min-h-[149px] bg-no-repeat bg-contain bg-bottom absolute left-[50%] -translate-x-[50%] lg:top-[10%] top-[13%]"></div>
-
       {/* casltes  red*/}
       <div className="relative md:static top-[75%] md:top-auto">
         <div className=" bg-hero-section-castle-red-1 max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-[1] md:bottom-[50%]  lg:bottom[50%]  bottom-[12rem] md:left-0"></div>
@@ -111,20 +105,15 @@ const HeroSection = () => {
         <div className=" bg-hero-section-castle-red-2  max-w-[500px] max-h-[619px] min-w-[162px] min-h-[230px]  bg-left-bottom   h-[50%] w-[37%] bg-contain bg-no-repeat absolute bottom-[12%] z-30"></div>
         <div className="bg-hero-section-memcoin-1 max-w-[273px] max-h-[319px] w-[20%] h-[24%] min-w-[70px] min-h-[78px] absolute top-[50%] left-[3%] z-30 md:block hidden bg-contain bg-no-repeat"></div>
       </div>
-
       <div className="bg-hero-section-red-1 lg:w-[96px] lg:h-[88px] w-[50px] h-[54px]  bg-contain bg-no-repeat  absolute  bottom-[5%] lg:left-[30%] left-[5%] z-10"></div>
-      <div className="bg-hero-section-red-2 w-[72px] h-[72px] absolute bottom-[6%] left-[2%] z-10 hidden lg:block bg-contain"></div>
-
+      <div className="bg-hero-section-red-2 w-[72px] h-[72px] absolute bottom-[10%] left-[28%] z-10 hidden lg:block bg-contain"></div>
       <div className="bg-hero-section-shark-1 lg:w-[96px] lg:h-[96px] w-[50px] h-[50px]  bg-contain bg-no-repeat  absolute bottom-[8%] right-[25%] z-10"></div>
       <div className="bg-hero-section-shark-2 w-[64px] h-[63px] absolute top-[86%] right-[2%] hidden lg:block bg-contain z-10"></div>
-
       {/* <div className="bg-hero-section-main max-w-[680px] max-h-[582px] w-[50%] h-[43%] absolute bottom-0 min-h-[304px] min-w-[400px] bg-contain bg-no-repeat left-[33%] z-[31] hidden md:block"></div> */}
-
       {/* <AnimatedElement
           className="max-w-[800px] max-h-[1024px] w-[48%] h-[60%] absolute -bottom-[6%] min-h-[304px] min-w-[400px] bg-contain bg-no-repeat left-[33%] z-[31] hidden md:block"
           source={ANIMATION_WEBM_SOURCES["Dog"]}
         /> */}
-
       {/* <div
         ref={catRef}
         className="bg-hero-section-memcoin-2 max-w-[431px] guide w-[31.2%] min-w-[144px] h-full bg-contain bg-no-repeat absolute lg:bottom-[1%] bottom-[4%] bg-left-bottom z-[31] md:left-[5%] left-[15%]"
@@ -142,17 +131,16 @@ const HeroSection = () => {
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
         src="/images/section-hero/memcoin2.png"
+        draggable={false}
         alt=""
         className="w-[31%] max-w-[331px] object-bottom h-auto pointer-events-all hover:cursor-pointer absolute bottom-0 z-[31] md:left-[5%] left-[15%]"
       ></img>
-
       <AnimatedElement
         className="absolute object-contain w-[50%]  md:w-[50%] h-[80.48%] max-w-[550px] max-h-[600px] min-w-[147px] min-h-[176px] lg:-bottom-[0%]  md:-bottom-[4%] -bottom-[14%] md:left-[10%] -left-[12%] z-30"
         source={ANIMATION_WEBM_SOURCES["magic"]}
       />
       {/* <div className="bg-hero-section-memcoin-3 max-w-[418px] max-h-[504px] w-[31%] h-[37.48%] min-w-[147px] min-h-[176px] bg-contain bg-no-repeat bg-bottom  absolute bottom-[14%] md:left-[15%] left-[0%] z-30"></div> */}
       <div className="bg-hero-section-distant lg:h-[68%] md:h-[65%] w-[100%] min-w-[300px] min-h-[200px] bg-contain lg:bg-repeat-x bg-no-repeat bg-bottom absolute bottom-[16%] z-0"></div>
-
       {/* castle-blue */}
       <div className="relative md:static top-[75%] md:top-auto">
         <div className="bg-hero-section-castle-blue-1 max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-0 md:bottom-[50%]  lg:bottom[50%] bottom-[12rem] bg-right-bottom right-0"></div>

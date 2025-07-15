@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import InfoText from "./UI/InfoText";
 import { CottonCandyContext } from "../providers/ContextProvider";
 import Modal from "./UI/Modal";
 import useProgramInstructions from "../hooks/useProgramInstructions";
@@ -80,11 +79,13 @@ const ClaimEgg = () => {
   }
 
   return (
-    <Modal onBackgroundClick={handleKeepNFT}>
-      <div className="flex flex-col justify-center items-center  w-full h-full bg-claim-egg-bg bg-cover bg-no-repeat bg-center p-4 gap-9 z-50">
-        <h1 className=" uppercase text-white  font-patrick-hand-sc text-6xl">
-          Here <span className="text-5xl">is your</span> nft
-        </h1>
+    <Modal onBackgroundClick={handleKeepNFT} className="z-[51] bg-black/90">
+      <div className="flex flex-col justify-center items-center   w-full h-full bg-claim-egg-bg bg-cover bg-no-repeat bg-center p-4 gap-12 z-50">
+        <div className="bg-banner-claim-nft w-[584px] h-[156px] flex flex-col justify-center items-center">
+          <h1 className=" uppercase text-[#1F1F1F] font-patrick-hand-sc text-5xl mb-5">
+            NFT #1341
+          </h1>
+        </div>
         <motion.div
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -97,12 +98,12 @@ const ClaimEgg = () => {
           className="w-full flex justify-center"
         >
           <div
-            className={`relative w-[462px] rounded-2xl ${
+            className={`relative w-[350px] rounded-2xl ${
               !nftState?.isEggClaimed ? "card-shadow" : ""
             } `}
           >
             <img
-              className="w-[462px] h-auto rounded-2xl"
+              className="w-full h-auto rounded-2xl"
               src={`./images/section-mint/nfts/nft1.jpg`}
               alt=""
             />
@@ -123,31 +124,41 @@ const ClaimEgg = () => {
         </motion.div>
 
         {nftState && !nftState.isEggClaimed ? (
-          <div className=" flex flex-row justify-between items-start gap-9">
+          <div className=" flex flex-row justify-between items-center gap-9">
             <button
               onClick={handleKeepNFT}
-              className="bg-mint-section-btn w-full h-full md:h-[86px] md:w-[191px] relative bg-contain bg-no-repeat group z-40"
+              className="bg-sell-nft-btn w-full h-full md:h-[64px] md:w-[196px] relative bg-contain bg-no-repeat group z-40"
             >
               <span className="absolute inset-0 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20 transition duration-200 z-50"></span>
-              <span className=" absolute inset-0 w-full h-full grid place-content-center font-patrick-hand text-3xl leading-none text-white z-60">
-                Keep
+              <span className=" absolute inset-0 w-full h-full grid place-content-center uppercase font-patrick-hand text-3xl leading-none text-white z-60">
+                Sell NFT
               </span>
             </button>
             <div className=" flex flex-col justify-start  gap-2">
               <button
                 disabled={!canSummonEgg}
                 onClick={handleSummonEgg}
-                className={`bg-summon-egg-btn w-full h-full md:h-[86px] md:w-[237px] relative bg-contain bg-no-repeat group z-40 rounded-2xl ${
-                  canSummonEgg ? " cursor-pointer" : " cursor-not-allowed"
-                }`}
+                className={`${
+                  canSummonEgg
+                    ? "bg-summon-egg-btn h-[64px] w-[350px]"
+                    : "bg-summon-disabled-btn h-[86px] w-[350px]"
+                }    bg-contain bg-no-repeat  group z-40 rounded-2xl relative cursor-default`}
               >
+                <div className="bg-contain size-20 bg-summon-disabled-peppos-btn absolute -top-[60%] right-0"></div>
+
+                {!canSummonEgg && (
+                  <span className=" text-white text-center text-lg absolute -bottom-6 font-patrick-hand w-full left-0 right-0">
+                    Can’t summon egg while sale is active
+                  </span>
+                )}
+
                 <span className="absolute inset-0 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20 transition duration-200 z-50"></span>
-                <span className=" absolute inset-0 w-full h-full grid place-content-center font-patrick-hand text-3xl  leading-none text-white z-60">
-                  Summon Egg
-                </span>
+                {canSummonEgg && (
+                  <span className=" uppercase inset-0 w-full h-full grid place-content-center font-patrick-hand text-4xl  leading-none text-white z-60">
+                    Summon the Egg
+                  </span>
+                )}
               </button>
-              <InfoText text="egg charge will be used" />
-              <InfoText text="summoning has a gas cost" />
             </div>
           </div>
         ) : (

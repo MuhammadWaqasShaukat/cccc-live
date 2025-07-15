@@ -23,6 +23,7 @@ export default {
       fontFamily: {
         "patrick-hand": ['"Patrick Hand"', "sans-serif"],
         "patrick-hand-sc": ['"Patrick Hand SC"', "sans-serif"],
+        "heavitas": ["Heavitas","sans-serif"],
         "impact": ["Impact", "sans-serif"],
       },
       backgroundImage: {
@@ -38,13 +39,14 @@ export default {
         'about-section-statue-left': "url('/images/section-about/statue-left.png')",
         'about-section-statue-right': "url('/images/section-about/statue-right.png')",
 
+        'about-section-castle': "url('/images/section-about/castle.about.png')",
+
 
         'mint-section': "url('/images/section-mint/background-mint-about.png')",
         'mint-section-stripe-pattern': "url('/images/section-mint/stripe-bar.png')",
         'mint-section-book': "url('/images/section-mint/mint-book.png')",
         'mint-section-btn': "url('/images/section-mint/button-bg.svg')",
-        "summon-egg-btn": "url('/images/section-mint/summon-egg-bg.png')",
-        "crack-disabled-btn": "url('/images/section-mint/crack-disabled.png')",
+       
 
 
         'mint-section-coins-2': "url('/images/section-mint/bg-coins-2.png')",
@@ -62,6 +64,11 @@ export default {
 
         'mint-section-heading': "url('/images/section-mint/min-heading-bg.png')",
         'mint-controls': "url('/images/section-mint/mint-controls-bg.png')",
+
+        'mint-section-book-tr': "url('/images/section-mint/book-border-tr.png')",
+        'mint-section-book-bl': "url('/images/section-mint/book-border-bl.png')",
+        'mint-section-nfts-book': "url('/images/section-mint/our-nfts-book.png')",
+        'mint-section-egg-book': "url('/images/section-mint/our-eggs-book.png')",
 
 
         'social-section': "url('/images/section-social/bg-upper.png')",
@@ -107,13 +114,47 @@ export default {
         'hero-section-memcoin-7': "url('/images/section-hero/memcoin7.png')",
         'hero-section-memcoin-8': "url('/images/section-hero/memcoin8.png')",
 
+
+        'hero-section-tombstone': "url('/images/section-hero/menu-tombstone.png')",
+        'menu-btn': "url('/images/section-hero/menu-button.png')",
+
+        'hero-connect': "url('/images/section-hero/connect.png')",
+
         'hero-section-logo': "url('/images/section-hero/logo-lg.png')",
 
         "top-bar-cow-face": "url('/images/cow-face.png')",
-        "top-bar-sheep-face": "url('/images/section-about/johny-face.png')"
+        "top-bar-sheep-face": "url('/images/section-about/johny-face.png')",
+
+
+        "icon-arrow-left": 'url("/images/arrow-left.svg")',
+        "icon-arrow-right": 'url("/images/arrow-right.svg")',
+
+
+        "ok-btn": 'url("/images/ok-btn.png")',
+        "sell-nft-btn": 'url("/images/sell-nft-btn.png")',
+        "summon-egg-btn": "url('/images/egg-summon-btn.png')",
+        "summon-disabled-btn": "url('/images/egg-summon-btn-1.png')",
+        "mint-btn": "url('/images/mint-btn.png')",
+
+        "summon-disabled-peppos-btn": "url('/images/egg-summon-btn-1-2.png')",
+
+        "banner-claim-nft": "url('/images/banner.png')",
 
 
 
+
+        // bookmarks
+
+        "bm-mint":"url('/images/bookmarks/bookmark-mint.png')",
+        "bm-mint-1":"url('/images/bookmarks/bookmark-mint-1.png')",
+        "bm-nft":"url('/images/bookmarks/bookmark-nft.png')",
+        "bm-nft-1":"url('/images/bookmarks/bookmark-nft-1.png')",
+        "bm-egg":"url('/images/bookmarks/bookmark-egg.png')",
+        "bm-egg-1":"url('/images/bookmarks/bookmark-egg-1.png')",
+
+        
+        "counter-plus": "url('/images/plus.svg')",
+        "counter-minus": "url('/images/minus.svg')",
 
       }
     },

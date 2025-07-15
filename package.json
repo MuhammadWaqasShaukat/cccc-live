@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build --debug", 
+    "build": "tsc -b && vite build --debug",
     "build-tailwincss": "npx tailwindcss -i ./src/index.css -o ./src/App.css --watch",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -29,6 +29,7 @@
     "react-dom": "^18.3.1",
     "react-fast-marquee": "^1.6.5",
     "stream-browserify": "^3.0.0",
+    "swiper": "^11.2.10",
     "tailwind-scrollbar-utilities": "^0.3.0",
     "wouter": "^3.7.1",
     "yarn": "^1.22.22"

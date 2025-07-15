@@ -14,7 +14,7 @@ const NFTBox: React.FC<any> = (nft) => {
 
   const handleNFTClicked = () => {
     setCollectiable(nft);
-    setCurrentModal("claim-egg");
+    setCurrentModal("nfts");
   };
 
   useEffect(() => {

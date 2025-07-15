@@ -62,7 +62,7 @@ const MintButton = () => {
   return (
     <>
       <button
-        className="bg-mint-section-btn w-full h-full md:h-[86px] md:w-[191px] relative bg-contain bg-no-repeat group z-10"
+        className="bg-mint-btn h-[90px] w-[407px] mx-auto relative bg-center bg-contain bg-no-repeat group z-10"
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -70,7 +70,7 @@ const MintButton = () => {
           handleNFTMintClick();
         }}
       >
-        <span className="absolute inset-0 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20 transition duration-200 z-20"></span>
+        <span className="absolute inset-0 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20 transition duration-200 z-20 "></span>
         <span className=" absolute inset-0 w-full h-full grid place-content-center font-patrick-hand text-3xl md:text-[48px] leading-none text-white z-30">
           {connected ? "Mint" : "Connect"}
         </span>

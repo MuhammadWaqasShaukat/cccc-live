@@ -1,10 +1,98 @@
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
+@import "swiper/css/scrollbar";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+
+:root {
+  --swiper-width: 40%;
+    --swiper-inactive-scale: .85;
+}
+
+
+html, *,
+button,
+a,
+input[type="submit"],
+input[type="button"]
+ {
+  cursor: url("./images/cursor.png"), auto
+}
+
+
+.swiper {
+  position: relative;
+  width: 100%;
+  height: calc(var(--swiper-width) * var(--swiper-image-ratio) / 100%);
+  overflow: hidden;
+}
+
+.swiper-slide {
+  position: relative;
+  width: var(--swiper-width);
+  opacity: .5;
+  transform: scale(.84);
+  transition: all .3s ease-in-out;
+  overflow: hidden;
+  border-radius: 0.4285rem;
+}
+
+.swiper-backface-hidden .swiper-slide {
+  transform: scale(.84) translateZ(0);
+}
+
+.swiper-slide.swiper-slide-active {
+  transform: scale(1) !important;
+  opacity: 1 !important;
+}
+
+.swiper-backface-hidden .swiper-slide.swiper-slide-active {
+  transform: scale(1) translateZ(0) !important;
+}
+
+.swiper-image {
+  position: relative;
+  width: 100%;
+  padding-top: var(--swiper-image-ratio);
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  padding: 8px;
+  width: 48px;
+  height: 48px;
+  margin-top: 0;
+  background-color:#B69772;
+  border-radius: 50%;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  content: "";
+}
+
+.swiper-button-next {
+  transform: translate(0%, -25%);
+  right: calc((100% - var(--swiper-width))/2);
+}
+
+.swiper-button-prev {
+  transform: translate(0%, -25%);
+  left: calc((100% - var(--swiper-width)) / 2);
+}
+
 @font-face {
   font-family: "Impact";
   src: url("/public/fonts/impact.ttf");
+}
+
+@font-face {
+  font-family: "Heavitas";
+  src: url("/public/fonts/Heavitas.ttf");
 }
 
 @layer utilities {
@@ -40,9 +128,7 @@
         0 0 2px #fff,
         0 0 10px #fff,
         0 0 20px #07D6FF,
-        0 0 30px #07D6FF,
-        0 0 40px #07D6FF,
-        0 0 50px #07D6FF;
+        0 0 30px #07D6FF;
   }
 
 
@@ -86,11 +172,26 @@
   }
 
 
+
   .loader {
     background: url('/public/images/loader.svg') no-repeat center center;
     background-size: contain;
     animation: spin 1s linear infinite;
   }
+
+
+    .myImg {
+      animation: transitionIn 4.35s linear ;
+    }
+  
+    @keyframes transitionIn {
+      from {
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+      }
+  
+      to {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      } }
 
     /* #egg {
       width: 100%;
