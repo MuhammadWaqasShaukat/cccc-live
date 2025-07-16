@@ -144,8 +144,9 @@ const ClaimEgg = () => {
                     : "bg-summon-disabled-btn h-[86px] w-[350px]"
                 }    bg-contain bg-no-repeat  group z-40 rounded-2xl relative cursor-default`}
               >
-                <div className="bg-contain size-20 bg-summon-disabled-peppos-btn absolute -top-[60%] right-0"></div>
-
+                {!canSummonEgg && (
+                  <div className="bg-contain size-20 bg-summon-disabled-peppos-btn absolute -top-[60%] right-0"></div>
+                )}
                 {!canSummonEgg && (
                   <span className=" text-white text-center text-lg absolute -bottom-6 font-patrick-hand w-full left-0 right-0">
                     Can’t summon egg while sale is active

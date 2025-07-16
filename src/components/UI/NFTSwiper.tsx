@@ -68,14 +68,18 @@ const NFTSwiper = () => {
           Minted {ctx.myNfts.length} NFTs:
         </h1>
 
-        <IconButton className="swiper-button-prev rounded-full size-12 bg-[#B69772] z-20  grid place-content-center">
-          <span className="size-5 block bg-no-repeat bg-contain bg-center bg-icon-arrow-left -ml-1 aspect-square"></span>
-        </IconButton>
-        <IconButton className="swiper-button-next rounded-full size-12  bg-[#B69772] z-20  grid place-content-center">
-          <span className="size-5 block bg-no-repeat bg-contain bg-center bg-icon-arrow-right -mr-1 aspect-square"></span>
-        </IconButton>
+        {ctx.myNfts.length > 1 && (
+          <>
+            <IconButton className="swiper-button-prev bg-slider-btn rounded-full size-12 bg-[#B69772] z-20  grid place-content-center">
+              <span className="size-5 block bg-no-repeat bg-contain bg-center bg-icon-arrow-left -ml-1 aspect-square"></span>
+            </IconButton>
+            <IconButton className="swiper-button-next bg-slider-btn rounded-full size-12  bg-[#B69772] z-20  grid place-content-center">
+              <span className="size-5 block bg-no-repeat bg-contain bg-center bg-icon-arrow-right -mr-1 aspect-square"></span>
+            </IconButton>
+          </>
+        )}
         <Swiper
-          initialSlide={1}
+          initialSlide={ctx.selectedNftIndex ?? 0}
           className="w-[100vw] swiper-radial-gradient"
           modules={[Navigation, A11y]}
           spaceBetween={80}

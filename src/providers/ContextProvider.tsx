@@ -72,6 +72,9 @@ interface CottonCandyContextType {
 
   activeMenu: Nav;
   setActiveMenu: (menu: Nav) => void;
+
+  selectedNftIndex: number;
+  setSeletedNftIndex: (selectedNftIndex: number) => void;
 }
 
 const defaultLotteryState: LotteryState = {
@@ -111,6 +114,8 @@ export const CottonCandyContextProvider: React.FC<
   >();
   const [myNfts, setMyNfts] = useState<Metadata[]>([]);
   const [myEggs, setMyEggs] = useState<Metadata[]>([]);
+
+  const [selectedNftIndex, setSeletedNftIndex] = useState<number>(0);
 
   const [nftToEggMap, setNftToEggMap] = useState<Record<string, string>>({});
   const [bookmark, setBookmark] = useState<BookMark>("mint");
@@ -292,6 +297,9 @@ export const CottonCandyContextProvider: React.FC<
 
     activeMenu,
     setActiveMenu,
+
+    selectedNftIndex,
+    setSeletedNftIndex,
   };
 
   return (

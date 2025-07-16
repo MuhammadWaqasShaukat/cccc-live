@@ -11,8 +11,8 @@ const AboutSection = () => {
         ctx.setActiveMenu("none");
       }}
     >
-      <div className="bg-about-section-castle w-[957px] h-[90vh] bg-no-repeat flex flex-col justify-end  bg-contain bg-center">
-        <div className=" h-1/2  px-24 text-center w-[50%] mx-auto pt-12">
+      <div className="bg-about-section-castle w-[750px] h-[90vh] bg-no-repeat flex flex-col justify-end  bg-contain bg-center">
+        <div className=" h-1/2  px-24 text-center w-[60%] mx-auto pt-12">
           <img
             src="./images/section-about/memnft-about.png"
             alt=""
@@ -20,7 +20,7 @@ const AboutSection = () => {
           />
         </div>
 
-        <div className=" h-1/2  px-24 text-center w-[68%] mx-auto pt-8">
+        <div className=" h-1/2  px-24 text-center w-[90%] mx-auto pt-8">
           <h2 className="font-patrick-hand  text-center lg:text-4xl text-xl pb-5">
             About memenfts
           </h2>

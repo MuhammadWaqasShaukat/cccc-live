@@ -2,9 +2,36 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
 import nodePolyfills from "rollup-plugin-node-polyfills";
+import { createHtmlPlugin } from "vite-plugin-html";
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    createHtmlPlugin({
+      inject: {
+        tags: [
+          {
+            tag: "link",
+            attrs: {
+              rel: "preload",
+              href: "/src/assets/styles/main.css",
+              as: "style",
+            },
+            injectTo: "head",
+          },
+          {
+            tag: "link",
+            attrs: {
+              rel: "preload",
+              href: "/src/main.js",
+              as: "script",
+            },
+            injectTo: "head",
+          },
+        ],
+      },
+    }),
+  ],
   server: {
     allowedHosts: [".ngrok-free.app"],
   },

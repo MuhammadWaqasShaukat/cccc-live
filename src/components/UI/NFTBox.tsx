@@ -3,9 +3,16 @@ import { useContext, useEffect, useState } from "react";
 import useWeb3Utils from "../../hooks/useWeb3Utils";
 import { NftState } from "../../types/NFTCardTypes";
 
-const NFTBox: React.FC<any> = (nft) => {
-  const { setCollectiable, setCurrentModal, refreshNftState } =
-    useContext(CottonCandyContext);
+const NFTBox: React.FC<{ nft: any; nftIndex: number }> = ({
+  nft,
+  nftIndex,
+}) => {
+  const {
+    setCollectiable,
+    setCurrentModal,
+    refreshNftState,
+    setSeletedNftIndex,
+  } = useContext(CottonCandyContext);
   const { getNftState } = useWeb3Utils();
 
   const [nftState, setNftState] = useState<NftState | null>(null);
@@ -14,6 +21,7 @@ const NFTBox: React.FC<any> = (nft) => {
 
   const handleNFTClicked = () => {
     setCollectiable(nft);
+    setSeletedNftIndex(nftIndex);
     setCurrentModal("nfts");
   };
 
@@ -45,21 +53,15 @@ const NFTBox: React.FC<any> = (nft) => {
   return (
     <div
       onClick={handleNFTClicked}
-      className={`bg-transparent rounded-xl shadow-md flex flex-col items-center relative h-fit ${
-        nftState && !nftState.isEggClaimed ? "card-shadow-0" : ""
-      } `}
+      className={`bg-transparent rounded-xl shadow-md flex flex-col items-center relative h-fit`}
     >
       <img src={imageSrc} alt={`NFT`} className="rounded-md " />
       <h3 className="absolute top-2 right-2 rounded text-white font-patrick-hand-sc tracking-wide text-4xl text-outline-0">
         #{1613 + 1}
       </h3>
       {nftState && !nftState.isEggClaimed && (
-        <div className="absolute bottom-2 flex flex-row justify-center items-center w-full">
-          <img
-            src={`./images/section-mint/nfts/unbroken.png`}
-            alt="claimable egg"
-            className="w-8"
-          />
+        <div className="absolute bottom-2 size-16 group">
+          <div className="bg-egg-glow group-hover:bg-egg-glow-1 bg-contain bg-center bg-no-repeat size-16 transition-all duration-100"></div>
         </div>
       )}
     </div>

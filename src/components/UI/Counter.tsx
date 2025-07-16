@@ -8,11 +8,9 @@ const Counter = () => {
   return (
     <div className="flex flex-row justify-between py-1.5 px-3 items-center bg-[#FFFFFF99] w-full md:w-[160px] rounded-[7px] box-border min-w-[8rem] md:min-w-0 h-12 md:h-auto">
       <button
-        disabled={
-          ctx.count === 1 || ctx.lotteryState.ended ? true : false || !connected
-        }
+        disabled={ctx.count === 1 || ctx.lotteryState.ended ? true : false}
         type="button"
-        className="size-6 bg-[#B69772] disabled:bg-[##89898866] disabled:hover:bg-[#B69772]  hover:bg-[#9F8362] active:bg-[#816A4F] rounded-full grid place-content-center"
+        className="size-6 bg-[#B69772] disabled:bg-[#89898866] disabled:hover:bg-[#B69772]  hover:bg-[#9F8362] active:bg-[#816A4F] rounded-full grid place-content-center"
         onClick={() => {
           if (ctx.count === 1) return;
           ctx.setCount((prev: number) => prev - 1);
