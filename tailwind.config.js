@@ -2,8 +2,6 @@
 export default {
   content: ["./src/**/*.{html,js,tsx,ts}"],
   theme: {
-    extend: {
-
 
       extend: {
         zIndex: {
@@ -23,7 +21,7 @@ export default {
       fontFamily: {
         "patrick-hand": ['"Patrick Hand"', "sans-serif"],
         "patrick-hand-sc": ['"Patrick Hand SC"', "sans-serif"],
-        "heavitas": ["Heavitas","sans-serif"],
+        "heavitas": ["Heavitas", "sans-serif"],
         "impact": ["Impact", "sans-serif"],
       },
       backgroundImage: {
@@ -38,14 +36,14 @@ export default {
         // 'about-section-gold-l2-mobile': "url('/images/section-about/gold-stacks-layer-2-mobile.png')",
         // 'about-section-statue-left': "url('/images/section-about/statue-left.png')",
         // 'about-section-statue-right': "url('/images/section-about/statue-right.png')",
-        // 'about-section-castle': "url('/images/section-about/castle.about.png')",
+        'about-section-castle': "url('/images/section-about/castle.about.png')",
 
 
         // 'mint-section': "url('/images/section-mint/background-mint-about.png')",
         // 'mint-section-stripe-pattern': "url('/images/section-mint/stripe-bar.png')",
         'mint-section-book': "url('/images/section-mint/mint-book.png')",
         // 'mint-section-btn': "url('/images/section-mint/button-bg.svg')",
-      
+
         // 'mint-section-coins-2': "url('/images/section-mint/bg-coins-2.png')",
         // 'mint-section-ipods': "url('/images/section-mint/bg-ipods.png')",
         // 'mint-section-cannabis': "url('/images/section-mint/bg-cannabis.png')",
@@ -64,11 +62,11 @@ export default {
 
         'mint-section-book-tr': "url('/images/section-mint/book-border-tr.png')",
         'mint-section-book-bl': "url('/images/section-mint/book-border-bl.png')",
-        "mint-section-book-lg" : "url('/images/section-mint/book-border-lg.png')",
-        "mint-section-book-lg-1" : "url('/images/section-mint/book-border-lg-1.png')",
-        "mint-section-time" : "url('/images/section-mint/time.png')",
-        
-        
+        "mint-section-book-lg": "url('/images/section-mint/book-border-lg.png')",
+        "mint-section-book-lg-1": "url('/images/section-mint/book-border-lg-1.png')",
+        "mint-section-time": "url('/images/section-mint/time.png')",
+
+
         'mint-section-nfts-book': "url('/images/section-mint/our-nfts-book.png')",
         'mint-section-egg-book': "url('/images/section-mint/our-eggs-book.png')",
 
@@ -123,7 +121,7 @@ export default {
         'hero-connect': "url('/images/section-hero/connect.png')",
         'hero-section-logo': "url('/images/section-hero/logo-lg.png')",
         "top-bar-cow-face": "url('/images/cow-face.png')",
-        "top-bar-sheep-face": "url('/images/section-about/johny-face.png')",
+        "top-bar-sheep-face": "url('/images/sheep-face.png')",
         "icon-arrow-left": 'url("/images/arrow-left.svg")',
         "icon-arrow-right": 'url("/images/arrow-right.svg")',
         "ok-btn": 'url("/images/ok-btn.png")',
@@ -136,23 +134,22 @@ export default {
         "banner-claim-nft": "url('/images/banner.png')",
         // bookmarks
 
-        "bm-mint":"url('/images/bookmarks/bookmark-mint.png')",
-        "bm-mint-1":"url('/images/bookmarks/bookmark-mint-1.png')",
-        "bm-nft":"url('/images/bookmarks/bookmark-nft.png')",
-        "bm-nft-1":"url('/images/bookmarks/bookmark-nft-1.png')",
-        "bm-egg":"url('/images/bookmarks/bookmark-egg.png')",
-        "bm-egg-1":"url('/images/bookmarks/bookmark-egg-1.png')",
-        
+        "bm-mint": "url('/images/bookmarks/bookmark-mint.png')",
+        "bm-mint-1": "url('/images/bookmarks/bookmark-mint-1.png')",
+        "bm-nft": "url('/images/bookmarks/bookmark-nft.png')",
+        "bm-nft-1": "url('/images/bookmarks/bookmark-nft-1.png')",
+        "bm-egg": "url('/images/bookmarks/bookmark-egg.png')",
+        "bm-egg-1": "url('/images/bookmarks/bookmark-egg-1.png')",
+
         "counter-plus": "url('/images/plus.svg')",
         "counter-minus": "url('/images/minus.svg')",
 
-        "egg":  "url('/images/egg.png')",
-        "egg-1":  "url('/images/egg-1.png')",
-        "egg-glow":  "url('/images/egg-glow.png')",
-        "egg-glow-1":  "url('/images/egg-glow-1.png')",
+        "egg": "url('/images/egg.png')",
+        "egg-1": "url('/images/egg-1.png')",
+        "egg-glow": "url('/images/egg-glow.png')",
+        "egg-glow-1": "url('/images/egg-glow-1.png')",
       }
     },
-  },
   plugins: [],
 }
 

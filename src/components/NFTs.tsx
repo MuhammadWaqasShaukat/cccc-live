@@ -65,7 +65,7 @@ export const NFTs = () => {
       {/*right page  */}
       <div className=" md:h-[530px] flex-1 flex flex-col h-full w-full justify-between items-center">
         {ctx.myNfts.length > 0 && (
-          <div className="grid grid-cols-3 gap-4 pr-6 grid-rows-[137px] overflow-y-auto h-[90%] scrollbar-thumb-teal-900">
+          <div className="grid grid-cols-3 gap-4 pr-6 grid-rows-[137px] overflow-y-auto h-[90%]">
             {ctx.myNfts.map((nft, index) => (
               <NFTBox key={index} nft={nft} nftIndex={index} />
             ))}

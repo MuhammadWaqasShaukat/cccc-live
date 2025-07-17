@@ -28,8 +28,7 @@ const useProgramInstructions = () => {
   const { publicKey, wallet } = useWallet();
   const ctx = useContext(CottonCandyContext);
 
-  const { getProvider, connection, getConnectedWallet, getEggFulFilledState } =
-    useWeb3Utils();
+  const { getProvider, connection, getConnectedWallet } = useWeb3Utils();
 
   //********************************************************
   //                    BUY NFT
@@ -263,19 +262,19 @@ const useProgramInstructions = () => {
         ASSOCIATED_TOKEN_PROGRAM_ID
       );
 
-      console.log({
-        user: connectedWallet.publicKey.toBase58(),
-        eggCollectionMint: eggCollectionMint.toBase58(),
-        collectionAuthority: collectionAuthorityPda.toBase58(),
-        eggCollectionMetadataAccount: eggCollectionMetadataAccount.toBase58(),
-        eggCollectionMasterEdition: eggCollectionMasterEdition.toBase58(),
-        tokenAccount: tokenAccount.toBase58(),
-        eggMetadataAccount: eggMetadataAccount.toBase58(),
-        eggMasterEdition: eggMasterEdition.toBase58(),
-        eggNftMint: nftMintKeypair.publicKey.toBase58(),
-        nftMint: nftAddress,
-        tokenMetadataProgram: MPL_TOKEN_METADATA_PROGRAM_ID,
-      });
+      // console.log({
+      //   user: connectedWallet.publicKey.toBase58(),
+      //   eggCollectionMint: eggCollectionMint.toBase58(),
+      //   collectionAuthority: collectionAuthorityPda.toBase58(),
+      //   eggCollectionMetadataAccount: eggCollectionMetadataAccount.toBase58(),
+      //   eggCollectionMasterEdition: eggCollectionMasterEdition.toBase58(),
+      //   tokenAccount: tokenAccount.toBase58(),
+      //   eggMetadataAccount: eggMetadataAccount.toBase58(),
+      //   eggMasterEdition: eggMasterEdition.toBase58(),
+      //   eggNftMint: nftMintKeypair.publicKey.toBase58(),
+      //   nftMint: nftAddress,
+      //   tokenMetadataProgram: MPL_TOKEN_METADATA_PROGRAM_ID,
+      // });
 
       const transaction = await program.methods
         .claim()
@@ -433,10 +432,10 @@ const useProgramInstructions = () => {
         })
         .rpc({ commitment: "confirmed" });
 
-      const { status, lotteryStatus } = await getEggFulFilledState(
-        eggMintAddress.toBase58()
-      );
-      ctx.setCrackedEggStatus({ status, lotteryStatus });
+      // const { status, lotteryStatus } = await getEggFulFilledState(
+      //   eggMintAddress.toBase58()
+      // );
+      // ctx.setCrackedEggStatus({ status, lotteryStatus });
     } catch (err: any) {
       console.error("Fulfill hatching failed:", err);
     }

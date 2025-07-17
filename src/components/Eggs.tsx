@@ -66,7 +66,7 @@ const Eggs = () => {
       {/*right page  */}
       <div className=" md:h-[530px] flex-1 flex flex-col h-full w-full justify-between items-center">
         {ctx.myEggs.length > 0 && (
-          <div className="grid grid-cols-3 gap-4 auto-rows-[minmax(100px,_auto)] pr-6 overflow-y-auto h-[90%]">
+          <div className="grid grid-cols-3 gap-4 auto-rows pr-6 overflow-y-auto h-[90%]">
             {ctx.myEggs.map((egg) => {
               return (
                 <EggBox

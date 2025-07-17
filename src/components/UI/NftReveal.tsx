@@ -23,15 +23,15 @@ const NftReveal = () => {
 
   return (
     <div className="bg-black relative flex flex-row justify-center items-center ">
-      <div className=" h-[65vh] absolute w-[22%] ">
+      <div className=" h-[65vh] absolute w-[22%] -mt-[40px] ">
         {/* <div
           className="overflow-clip relative "
           style={{ height: `${revealProgress * 65}vh` }} // Reveal from 0 to 65vh */}
         {/* > */}
         <img
-          src="./images/section-mint/nfts/nft1.jpg"
+          src="./images/section-mint/minting-image.png"
           alt=""
-          className="myImg w-full h-full absolute top-0 overflow-clip"
+          className="myImg w-full h-full absolute top-0  overflow-clip"
         />
         {/* </div> */}
       </div>

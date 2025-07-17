@@ -11,6 +11,8 @@ import RewardReveal from "../components/UI/RewardReveal";
 import NFTSwiper from "../components/UI/NFTSwiper";
 // import NftReveal from "../components/UI/NftReveal";
 
+import "react-circular-progressbar/dist/styles.css";
+
 const Home = () => {
   const ctx = useContext(CottonCandyContext);
 
@@ -23,6 +25,7 @@ const Home = () => {
     <>
       {/* <NftReveal /> */}
       <HeroSection />
+
       {/* <AboutSection /> */}
       {/* <MintSection /> */}
       {/* <SocialSection /> */}

@@ -10,16 +10,16 @@
 
 :root {
   --swiper-width: 40%;
-    --swiper-inactive-scale: .85;
+  --swiper-inactive-scale: .85;
 }
 
 
-html, *,
+html,
+*,
 button,
 a,
 input[type="submit"],
-input[type="button"]
- {
+input[type="button"] {
   cursor: url("./images/cursor.png"), auto
 }
 
@@ -66,7 +66,7 @@ input[type="button"]
   width: 48px;
   height: 48px;
   margin-top: 0;
-  background-color:#B69772;
+  background-color: #B69772;
   border-radius: 50%;
 }
 
@@ -96,25 +96,33 @@ input[type="button"]
 }
 
 @layer utilities {
+
   .guide,
   .guide * {
     outline: 1px solid red;
   }
+
   .text-outline {
     color: black;
     -webkit-text-fill-color: white;
     -webkit-text-stroke: 1.5px black;
   }
 
-    .text-outline-0 {
-      color: black;
-      -webkit-text-fill-color: white;
-      -webkit-text-stroke: .75px black;
-    }
+  .text-outline-0 {
+    color: black;
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke: .75px black;
+  }
 
+  .text-outline-1 {
+    color: black;
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke: .5px black;
+  }
 
-        .text-fake-bold {
-          text-shadow: 0 0 5px currentColor;   }
+  .text-fake-bold {
+    text-shadow: 0 0 5px currentColor;
+  }
 
   .card {
     /* width: 200px; */
@@ -124,20 +132,20 @@ input[type="button"]
   }
 
   .card-shadow {
-    box-shadow: 
-        0 0 2px #fff,
-        0 0 10px #fff,
-        0 0 20px #07D6FF,
-        0 0 30px #07D6FF;
+    box-shadow:
+      0 0 2px #fff,
+      0 0 10px #fff,
+      0 0 20px #07D6FF,
+      0 0 30px #07D6FF;
   }
 
 
-    .card-shadow-0 {
-      box-shadow:
-        0 0 10px #fff,
-        0 0 20px #07D6FF
-        }
-  
+  .card-shadow-0 {
+    box-shadow:
+      0 0 10px #fff,
+      0 0 20px #07D6FF
+  }
+
 
 
   .card-inner {
@@ -155,23 +163,26 @@ input[type="button"]
 
   .bg-hatch-won {
     background-image:
-        url('./images/hatch-win.png'),
-        url('./images/hatch-win-1.png'),
-        linear-gradient(rgba(92, 89, 89, 0.5), rgba(92, 89, 89, 0.5));
-      background-position: center;
-      background-size:70%,contain, contain;
-      background-repeat: no-repeat;
+      url('./images/hatch-win.png'),
+      url('./images/hatch-win-1.png'),
+      linear-gradient(rgba(92, 89, 89, 0.5), rgba(92, 89, 89, 0.5));
+    background-position: center;
+    background-size: 70%, contain, contain;
+    background-repeat: no-repeat;
   }
 
   .bg-hatch-lost {
-      background-image:
-        url('./images/hatch-lose.png'),
-        linear-gradient(rgba(55, 107, 166, 0.55), rgba(55, 107, 166, 0.55));
-      background-position: center;
-      background-size: 70%, contain;
-      background-repeat: no-repeat;
-    }
+    background-image:
+      url('./images/hatch-lose.png'),
+      linear-gradient(rgba(55, 107, 166, 0.55), rgba(55, 107, 166, 0.55));
+    background-position: center;
+    background-size: 70%, contain;
+    background-repeat: no-repeat;
+  }
 
+  .hammer-bg {
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, .7) 70%);
+  }
 
   .card-front,
   .card-back {
@@ -192,7 +203,9 @@ input[type="button"]
     border-width: 11px;
   }
 
-
+  .auto-rows {
+    grid-auto-rows: minmax(auto, 105px);
+  }
 
   .loader {
     background: url('/public/images/loader.svg') no-repeat center center;
@@ -201,117 +214,42 @@ input[type="button"]
   }
 
 
-    .myImg {
-      animation: transitionIn 4.35s linear ;
-    }
-  
-    @keyframes transitionIn {
-      from {
-        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
-      }
-  
-      to {
-        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-      } }
+  .myImg {
+    animation: transitionIn 4s cubic-bezier(0, 0, 1, 1);
+  }
 
-    /* #egg {
-      width: 100%;
-      height: auto;
-      animation: shakeTilt 1s infinite;
+  @keyframes transitionIn {
+    from {
+      clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
     }
-  
-    @keyframes shakeTilt {
-      0% {
-        transform: rotate(0deg);
-      }
-  
-      25% {
-        transform: rotate(10deg);
-      }
-  
-      50% {
-        transform: rotate(0deg);
-      }
-  
-      75% {
-        transform: rotate(-10deg);
-      }
-  
-      100% {
-        transform: rotate(0deg);
-      }
-    } */
 
-        .egg-wrapper {
-          position: relative;
-          width: 200px;
-          height: 200px;
-          margin: 100px auto;
-        }
-    
-        .egg {
-          position: absolute;
-          width: 100%;
-          height: auto;
-          top: 0;
-          left: 0;
-          opacity: 0;
-          animation: crackSteps 3s steps(3) forwards;
-        }
-    
-        /* All eggs use same animation timing */
-        .egg-step1 {
-          animation-delay: 0s;
-        }
-    
-        .egg-step2 {
-          animation-delay: 1s;
-        }
-    
-        .egg-step3 {
-          animation-delay: 2s;
-        }
-    
-        @keyframes crackSteps {
-          0% {
-            opacity: 1;
-            transform: rotate(0deg);
-          }
-    
-          25% {
-            transform: rotate(-10deg);
-          }
-    
-          50% {
-            transform: rotate(10deg);
-          }
-    
-          75% {
-            transform: rotate(-5deg);
-          }
-    
-          100% {
-            opacity: 0;
-            transform: rotate(0deg);
-          }
-        }
-    
-        /* Keep the last image visible */
-        .egg-step3 {
-          animation: crackStepsLast 3s steps(3) forwards;
-        }
-    
-        @keyframes crackStepsLast {
-    
-          0%,
-          99% {
-            opacity: 0;
-            transform: rotate(0deg);
-          }
-    
-          100% {
-            opacity: 1;
-            transform: rotate(0deg);
-          }
-        }
+    to {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 20px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 6px solid transparent;
+    background-image: url("images/scrollbar-track.png");
+    background-position: center;
+    background-repeat: repeat-y;
+    background-size: 6px 100%;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-image: url("images/scrollbar-thum.png");
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+
+
 }

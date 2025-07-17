@@ -12,7 +12,7 @@ const AboutSection = () => {
       }}
     >
       <div className="bg-about-section-castle w-[750px] h-[90vh] bg-no-repeat flex flex-col justify-end  bg-contain bg-center">
-        <div className=" h-1/2  px-24 text-center w-[60%] mx-auto pt-12">
+        <div className=" h-1/2  px-24 text-center w-[70%] mx-auto pt-8">
           <img
             src="./images/section-about/memnft-about.png"
             alt=""
