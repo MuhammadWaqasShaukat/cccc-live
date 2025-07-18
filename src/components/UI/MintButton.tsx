@@ -12,15 +12,11 @@ const MintButton = () => {
   const { setVisible } = useWalletModal();
 
   const getNewBoughtNft = async () => {
-    const currentMap = new Map(
-      ctx.myNfts.map((nft) => [nft.mintAddress.toBase58(), nft])
-    );
+    const currentMap = new Map(ctx.myNfts.map((nft) => [nft.mintAddress, nft]));
 
     const latestNfts = await ctx.getNFTs();
 
-    const latestMap = new Map(
-      latestNfts.map((nft) => [nft.mintAddress.toBase58(), nft])
-    );
+    const latestMap = new Map(latestNfts.map((nft) => [nft.mintAddress, nft]));
 
     const newNfts = [];
 
@@ -40,14 +36,14 @@ const MintButton = () => {
     }
 
     try {
-      ctx.setIsLoading(true);
+      ctx.setIsPortalOpen(true);
       await BuyNFT(ctx.count);
       ctx.calculatePrice!();
     } catch (error: any) {
       console.error("Error: ", error.message);
-      ctx.setIsLoading(false);
+      ctx.setIsPortalOpen(false);
     } finally {
-      ctx.setIsLoading(false);
+      ctx.setIsPortalOpen(false);
     }
 
     const newNft = await getNewBoughtNft();
@@ -56,6 +52,8 @@ const MintButton = () => {
       ctx.setCollectiable(newNft[0]);
       ctx.setCurrentModal("claim-egg");
       ctx.setBookmark("nfts");
+
+      ctx.setMyNfts([]);
     }
   };
 

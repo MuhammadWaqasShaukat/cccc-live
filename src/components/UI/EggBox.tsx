@@ -96,7 +96,7 @@ const EggBox: React.FC<{ egg: any; nftMint: string }> = ({ egg, nftMint }) => {
     debugger;
     try {
       ctx.setCurrentModal(null);
-      ctx.setIsLoading(true);
+      ctx.setIsPortalOpen(true);
       if (egg.mintAddress && nftMint) {
         await FulfillHatching(
           new PublicKey(egg.mintAddress),
@@ -107,9 +107,9 @@ const EggBox: React.FC<{ egg: any; nftMint: string }> = ({ egg, nftMint }) => {
       ctx.setRefreshNftState(egg.mintAddress);
     } catch (error: any) {
       console.error("Error : ", error.message);
-      ctx.setIsLoading(false);
+      ctx.setIsPortalOpen(false);
     } finally {
-      ctx.setIsLoading(false);
+      ctx.setIsPortalOpen(false);
     }
   };
 

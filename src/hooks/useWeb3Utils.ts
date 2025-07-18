@@ -8,6 +8,7 @@ import { Buffer } from "buffer";
 
 import IDL from "../constants/solana_lottery.json";
 import { FulFilledState } from "../types/Nft";
+import { Lottery } from "../types/Lottery";
 
 const useWeb3Utils = () => {
   const network = WalletAdapterNetwork.Devnet;
@@ -103,7 +104,7 @@ const useWeb3Utils = () => {
     };
   };
 
-  const getLotteryState = async () => {
+  const getLotteryState = async (): Promise<Lottery> => {
     const provider = await getProvider(connection);
     const program = new Program(IDL as any, provider);
 
@@ -130,6 +131,22 @@ const useWeb3Utils = () => {
       egg: state.egg.toBase58(),
       nft: state.nft.toBase58(),
     };
+  };
+
+  const getVaultState = async () => {
+    getVaultState;
+    const provider = await getProvider(connection);
+    const program = new Program(IDL as any, provider);
+
+    const [vault] = PublicKey.findProgramAddressSync(
+      [Buffer.from("vault")],
+      program.programId
+    );
+
+    const balanceLamports = await connection.getBalance(vault);
+    const balanceSol = balanceLamports / 1e9;
+
+    return balanceSol;
   };
 
   const getEggFulFilledState = async (
@@ -167,6 +184,7 @@ const useWeb3Utils = () => {
     getNftState,
     getLotteryState,
     getEggFulFilledState,
+    getVaultState,
   };
 };
 

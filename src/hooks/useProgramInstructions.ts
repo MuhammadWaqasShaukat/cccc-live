@@ -1,5 +1,10 @@
 import { useWallet } from "@solana/wallet-adapter-react";
-import { PublicKey, Keypair, ComputeBudgetProgram } from "@solana/web3.js";
+import {
+  PublicKey,
+  Keypair,
+  ComputeBudgetProgram,
+  Transaction,
+} from "@solana/web3.js";
 
 import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
@@ -29,6 +34,31 @@ const useProgramInstructions = () => {
   const ctx = useContext(CottonCandyContext);
 
   const { getProvider, connection, getConnectedWallet } = useWeb3Utils();
+
+  const estimateTransactionFee = async (
+    transaction: Transaction
+  ): Promise<number> => {
+    const provider = await getProvider(connection);
+
+    if (!transaction.recentBlockhash || !transaction.feePayer) {
+      const { blockhash } = await provider.connection.getLatestBlockhash();
+      transaction.recentBlockhash = blockhash;
+      transaction.feePayer = publicKey as PublicKey;
+    }
+
+    const message = transaction.compileMessage();
+
+    const feeResult = await provider.connection.getFeeForMessage(message);
+
+    if (feeResult.value !== null) {
+      const feeInLamports = feeResult.value;
+      const feeInSOL = feeInLamports / 1e9;
+      return feeInSOL;
+    } else {
+      console.warn("Failed to estimate fee");
+      return 0;
+    }
+  };
 
   //********************************************************
   //                    BUY NFT
@@ -138,6 +168,11 @@ const useProgramInstructions = () => {
           .signers([nftMintKeypair])
           .transaction();
 
+        const gasFee = await estimateTransactionFee(transaction);
+        if (gasFee) {
+          ctx.setGasFee(gasFee);
+        }
+
         const computeBudgetIx = ComputeBudgetProgram.setComputeUnitLimit({
           units: 300_000,
         });
@@ -168,7 +203,7 @@ const useProgramInstructions = () => {
           "confirmed"
         );
 
-        ctx.setMyNfts([]);
+        // ctx.setMyNfts([]);
       } catch (error: any) {
         console.error(`Failed to mint NFT ${i + 1}:`, error);
         if (error instanceof anchor.AnchorError) {

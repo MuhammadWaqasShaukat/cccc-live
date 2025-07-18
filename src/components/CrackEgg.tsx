@@ -61,7 +61,7 @@ const CrackEgg = () => {
 
     try {
       ctx.setCurrentModal(null);
-      ctx.setIsLoading(true);
+      ctx.setIsPortalOpen(true);
       if (eggMintAddress && ctx.nftMint) {
         await FulfillHatching(
           new PublicKey(eggMintAddress),
@@ -72,9 +72,9 @@ const CrackEgg = () => {
       ctx.setRefreshNftState(eggMintAddress);
     } catch (error: any) {
       console.error("Error : ", error.message);
-      ctx.setIsLoading(false);
+      ctx.setIsPortalOpen(false);
     } finally {
-      ctx.setIsLoading(false);
+      ctx.setIsPortalOpen(false);
     }
   };
 

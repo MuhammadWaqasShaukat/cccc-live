@@ -89,7 +89,7 @@ export default {
         'hero-section-lower': "url('/images/section-hero/field.png')",
 
         'hero-section-castle-red-1': "url('/images/section-hero/castle-red-top.png')",
-        'hero-section-castle-red-2': "url('/images/section-hero/castle-red.png')",
+        'hero-section-castle-red-2': "url('/images/section-hero/castle-red-1.png')",
         'hero-section-castle-blue-1': "url('/images/section-hero/castle-blue-top.png')",
         'hero-section-castle-blue-2': "url('/images/section-hero/castle-blue.png')",
 

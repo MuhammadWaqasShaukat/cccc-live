@@ -62,8 +62,8 @@ const NFTSwiper = () => {
   }, []);
 
   return (
-    <Modal onBackgroundClick={() => {}} className="bg-black/90 z-[51]">
-      <div className="relative h-full flex flex-col  justify-center items-center gap-10 my-auto w-[100vw]">
+    <Modal onBackgroundClick={() => {}} className="bg-black/90 z-[51] ">
+      <div className="relative h-full  flex flex-col  justify-center items-center gap-10 my-auto w-[100vw]">
         <h1 className=" text-white font-patrick-hand text-4xl w-full text-center">
           Minted {ctx.myNfts.length} NFTs:
         </h1>

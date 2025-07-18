@@ -7,7 +7,6 @@ import useWeb3Utils from "../hooks/useWeb3Utils";
 import { Buffer } from "buffer";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Modals } from "../types/modalProps";
-import { Metadata } from "@metaplex-foundation/js";
 import { NftState } from "../types/NFTCardTypes";
 import { BookMark } from "../types/BookMarks";
 import { FulFilledState } from "../types/Nft";
@@ -19,62 +18,68 @@ type LotteryState = {
   ended: boolean;
 };
 
+type StateSetter<T> = React.Dispatch<React.SetStateAction<T>>;
+
 interface CottonCandyContextType {
   price: number;
   count: number;
-  setCount: React.Dispatch<React.SetStateAction<number>>;
-  setPrice: (price: number) => void;
+  gasFee: number;
+  setGasFee: StateSetter<number>;
+  setCount: StateSetter<number>;
+  setPrice: StateSetter<number>;
   priceChangeTimeStamp: string;
   mintSectionRef: React.RefObject<HTMLDivElement> | null;
   calculatePrice?: () => Promise<void>;
   lotteryState: LotteryState;
 
   currentModal: Modals | null;
-  setCurrentModal: (modal: Modals | null) => void;
+  setCurrentModal: StateSetter<Modals | null>;
 
-  collectable: any | null;
-  setCollectiable: (collectiable: any | null) => void;
+  collectable: any;
+  setCollectiable: StateSetter<any>;
 
   nftState: NftState | undefined | null;
-  setNftState: (nftState: NftState | undefined | null) => void;
+  setNftState: StateSetter<NftState | undefined | null>;
 
-  isLoading: boolean;
-  setIsLoading: (isLoading: boolean) => void;
+  isPortalOpen: boolean;
+  setIsPortalOpen: StateSetter<boolean>;
 
   nftMint: string | null;
-  setNftMint: (nftMint: string | null) => void;
+  setNftMint: StateSetter<string | null>;
 
   nextCrackAvailabilty: number;
-  setNextCrackAvailability: (nextCrackAvailabilty: number) => void;
+  setNextCrackAvailability: StateSetter<number>;
 
   bookmark: BookMark;
-  setBookmark: (bookmark: BookMark) => void;
+  setBookmark: StateSetter<BookMark>;
 
   nftToEggMap: Record<string, string>;
-  setNftToEggMap: (a: Record<string, string>) => void;
+  setNftToEggMap: StateSetter<Record<string, string>>;
 
   getNftToEggMap: (nfts: any[]) => void;
 
   myNfts: any[];
-  setMyNfts: (myNfts: any[]) => void;
+  setMyNfts: StateSetter<any[]>;
 
   myEggs: any[];
-  setMyEggs: (myEggs: any[]) => void;
+  setMyEggs: StateSetter<any[]>;
 
   getNFTs: () => Promise<any[]>;
   getEggNFTs: () => Promise<any[]>;
 
   refreshNftState?: string;
-  setRefreshNftState: (mintAddress: string) => void;
+  setRefreshNftState: StateSetter<string>;
 
   crackedEggStatus: FulFilledState | null | undefined;
-  setCrackedEggStatus: (state: FulFilledState | null | undefined) => void;
+  setCrackedEggStatus: React.Dispatch<
+    React.SetStateAction<FulFilledState | null | undefined>
+  >;
 
   activeMenu: Nav;
-  setActiveMenu: (menu: Nav) => void;
+  setActiveMenu: StateSetter<Nav>;
 
   selectedNftIndex: number;
-  setSeletedNftIndex: (selectedNftIndex: number) => void;
+  setSeletedNftIndex: StateSetter<number>;
 }
 
 const defaultLotteryState: LotteryState = {
@@ -103,7 +108,7 @@ export const CottonCandyContextProvider: React.FC<
   const [currentModal, setCurrentModal] = useState<Modals | null>(null);
   const [collectable, setCollectiable] = useState<any | null>(null);
   const [nftState, setNftState] = useState<NftState | undefined | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isPortalOpen, setIsPortalOpen] = useState<boolean>(false);
   const [nftMint, setNftMint] = useState<string | null>(null);
   const [refreshNftState, setRefreshNftState] = useState<string>("");
   const [nextCrackAvailabilty, setNextCrackAvailability] = useState<number>(
@@ -112,14 +117,15 @@ export const CottonCandyContextProvider: React.FC<
   const [crackedEggStatus, setCrackedEggStatus] = useState<
     FulFilledState | null | undefined
   >();
-  const [myNfts, setMyNfts] = useState<Metadata[]>([]);
-  const [myEggs, setMyEggs] = useState<Metadata[]>([]);
+  const [myNfts, setMyNfts] = useState<any[]>([]);
+  const [myEggs, setMyEggs] = useState<any[]>([]);
 
   const [selectedNftIndex, setSeletedNftIndex] = useState<number>(0);
 
   const [nftToEggMap, setNftToEggMap] = useState<Record<string, string>>({});
   const [bookmark, setBookmark] = useState<BookMark>("mint");
   const [activeMenu, setActiveMenu] = useState<Nav>("none");
+  const [gasFee, setGasFee] = useState<number>(0);
 
   const [lotteryState, setLotteryState] =
     useState<LotteryState>(defaultLotteryState);
@@ -226,7 +232,6 @@ export const CottonCandyContextProvider: React.FC<
 
   React.useEffect(() => {
     if (!connected) return;
-
     const interval = setInterval(() => {
       calculatePrice();
     }, 5000);
@@ -270,8 +275,8 @@ export const CottonCandyContextProvider: React.FC<
     setCollectiable,
     nftState,
     setNftState,
-    isLoading,
-    setIsLoading,
+    isPortalOpen,
+    setIsPortalOpen,
     nftMint,
     setNftMint,
     setNextCrackAvailability,
@@ -300,6 +305,9 @@ export const CottonCandyContextProvider: React.FC<
 
     selectedNftIndex,
     setSeletedNftIndex,
+
+    gasFee,
+    setGasFee,
   };
 
   return (

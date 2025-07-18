@@ -91,19 +91,18 @@ const MintSection = () => {
                   <img
                     src="./images/section-mint/minting-image.png"
                     alt=""
-                    className="h-[98%]   absolute top-0 left-0 border-2 border-white rounded-xl"
+                    className="h-[98%]   absolute top-0 left-0 border-[3px] border-white rounded-xl card-shadow-1"
                   />
 
                   <img
-                    src="./images/section-mint/minting-image.png"
+                    src="./images/section-mint/nft-1.png"
                     alt=""
-                    className="h-[96%]   absolute bottom-0 left-2 -rotate-2 border-2 border-white rounded-xl"
+                    className="h-[96%] absolute bottom-2.5 left-6 -rotate-2 border-[3px] border-white rounded-xl origin-bottom-left card-shadow-1 "
                   />
-
                   <img
                     src="./images/section-mint/minting-image.png"
                     alt=""
-                    className="h-[98%]   absolute top-0 left-0 rotate-3 border-2 border-white rounded-xl"
+                    className="h-[98%] absolute top-4 left-5  rotate-2 border-[3px] border-white rounded-xl card-shadow-1 "
                   />
                 </div>
               </div>
@@ -149,7 +148,7 @@ const MintSection = () => {
                     </div>
                     <div>
                       <span className="font-patrick-hand-sc text-3xl text-black  ">
-                        0.0012 Sol
+                        {ctx.price} Sol
                       </span>
                     </div>
                   </div>
@@ -162,7 +161,7 @@ const MintSection = () => {
                     </div>
                     <div>
                       <span className="font-patrick-hand-sc text-3xl text-black  ">
-                        0.000021 Sol
+                        {ctx.gasFee} Sol
                       </span>
                     </div>
                   </div>
@@ -175,7 +174,7 @@ const MintSection = () => {
                     </div>
                     <div>
                       <span className="font-patrick-hand-sc text-3xl text-black  ">
-                        0.001221 Sol
+                        {ctx.gasFee + ctx.price} Sol
                       </span>
                     </div>
                   </div>

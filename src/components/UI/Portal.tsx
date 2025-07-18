@@ -1,13 +1,13 @@
 import Modal from "./Modal";
 import { motion } from "framer-motion";
 
-const Loader = () => {
+const Portal = () => {
   return (
     <Modal onBackgroundClick={() => {}}>
       <motion.img
-        src={"./images/loader.svg"}
+        src={"./images/portal.png"}
         alt="Loading..."
-        className="w-1/3"
+        className="w-[80%]"
         animate={{
           rotate: [0, 360],
           scale: [1, 1.2, 0.8],
@@ -38,4 +38,4 @@ const Loader = () => {
   );
 };
 
-export default Loader;
+export default Portal;

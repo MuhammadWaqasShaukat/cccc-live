@@ -12,7 +12,7 @@ const ClaimEgg = () => {
     setCollectiable,
     collectable,
     setCurrentModal,
-    setIsLoading,
+    setIsPortalOpen,
     myEggs,
     getEggNFTs,
     setNftMint,
@@ -37,15 +37,15 @@ const ClaimEgg = () => {
     if (collectable) {
       try {
         setCurrentModal(null);
-        setIsLoading(true);
+        setIsPortalOpen(true);
         await ClaimNFT(collectable.mintAddress);
         const { eggMint } = await getNftState(collectable.mintAddress);
         await HatchNFT(eggMint, collectable.mintAddress);
       } catch (error: any) {
         console.error("Error : ", error.message);
-        setIsLoading(false);
+        setIsPortalOpen(false);
       } finally {
-        setIsLoading(false);
+        setIsPortalOpen(false);
         setRefreshNftState(collectable.mintAddress);
         setCollectiable(null);
       }
