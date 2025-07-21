@@ -40,12 +40,13 @@ const Nav: React.FC<NavProps> = ({ className }) => {
             </li>
             <li className="space-y-1 bg-menu-btn w-[260px] h-[72px] bg-center  bg-no-repeat bg-contain  pointer-events-auto">
               <button
+                disabled
                 onClick={() => {
                   ctx.setActiveMenu("none");
                 }}
-                className="uppercase relative font-patrick-hand text-2xl w-full h-full mx-auto md:text-3xl lg:text-4xl group text-outline-0 text-white text-fake-bold"
+                className="uppercase relative font-patrick-hand disabled:cursor-not-allowed text-2xl w-full h-full mx-auto md:text-3xl lg:text-4xl group text-outline-0 text-white text-fake-bold"
               >
-                <span className="absolute inset-0 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20 transition duration-200 z-20"></span>
+                {/* <span className="absolute inset-0 bg-black/0  group-hover:bg-black/10  group-active:bg-black/20 transition duration-200 z-20"></span> */}
                 Collection
               </button>
               {/* <div className="h-1 md:h-[1.25px] lg:h-1.5 rounded-full bg-white border border-black opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div> */}

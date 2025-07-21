@@ -16,19 +16,27 @@ const HeroSection = () => {
   const { connected, disconnect } = useWallet();
   const { setVisible } = useWalletModal();
 
+  const fireRef = useRef<HTMLVideoElement | null>(null);
+  const magicRef = useRef<HTMLVideoElement | null>(null);
+
+  const handleMouseEnter = (videoRef: any) => {
+    videoRef.current?.play();
+  };
+
+  const handleMouseLeave = (videoRef: any) => {
+    videoRef.current?.pause();
+  };
+
   const isMouthOpenCheck = () =>
     catRef.current?.src.includes("open") ? true : false;
 
   const handleMouseDown = () => {
-    console.log("src", catRef.current?.src);
-
     if (!catRef.current) return;
 
     const isMouthOpen = isMouthOpenCheck();
 
     if (!isMouthOpen) {
       catRef.current.src = "/images/section-hero/memcoin2.open.png";
-
       if (!audioRef.current) {
         audioRef.current = new Audio("./sound/pop-cat.mp3");
         audioRef.current.volume = 1;
@@ -45,8 +53,6 @@ const HeroSection = () => {
 
     if (isMouthOpen) {
       catRef.current.src = "/images/section-hero/memcoin2.png";
-      // catRef.current?.classList.remove("bg-hero-section-memcoin-2-open");
-      // catRef.current?.classList.add("bg-hero-section-memcoin-2");
     }
   };
 
@@ -114,7 +120,7 @@ const HeroSection = () => {
         <div className="bg-hero-section-chillguy lg:w-[352px] max-h-[341px] h-[25.30%] w-[26%] min-w-[117px] min-h-[111px] bg-contain z-10 absolute md:bottom-[50%] bottom-[10rem] md:left-[6%] left-[9%]  bg-bottom bg-no-repeat"></div>
         <div className=" bg-hero-section-castle-red-2  pointer-events-none  max-w-[400px] max-h-[619px] min-w-[162px] min-h-[230px]  bg-left-bottom   h-[50%] w-[37%] bg-contain bg-no-repeat absolute bottom-[12%] z-30"></div>
         <div className=" bg-[#1e1e1e] md:max-w-[250px] -mt-1 first-letter:  max-w-28 max-h-[320px] md:min-w-[210px] min-w-28 min-h-[160px] md:max-h-[380px]  bg-left-bottom   h-[50%] md:w-[37%] w-[25%] bg-contain bg-no-repeat absolute bottom-[12%] z-10"></div>
-        <div className="bg-hero-section-memcoin-1 max-w-[273px] max-h-[319px] w-[20%] h-[24%] min-w-[70px] min-h-[78px] absolute top-[53%] left-[0%] z-20 md:block hidden bg-contain bg-no-repeat"></div>
+        <div className="bg-hero-section-memcoin-1 max-w-[273px] max-h-[319px] w-[20%] h-[24%] min-w-[70px] min-h-[78px] absolute bottom-[11%] left-[0%] z-20 md:block hidden bg-contain bg-no-repeat"></div>
       </div>
       <div className="bg-hero-section-red-1 lg:w-[96px] lg:h-[88px] w-[50px] h-[54px]  bg-contain bg-no-repeat  absolute  bottom-[5%] lg:left-[30%] left-[5%] z-10"></div>
       <div className="bg-hero-section-red-2 w-[72px] h-[72px] absolute bottom-[10%] left-[28%] z-10 hidden lg:block bg-contain"></div>
@@ -137,20 +143,38 @@ const HeroSection = () => {
           <div className=" bg-black/50 h-full w-full absolute bottom-0 left-0"></div>
         </div>
       </div> */}
-      <img
-        ref={catRef}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-        src="/images/section-hero/memcoin2.png"
-        draggable={false}
-        alt=""
-        className="w-[31%] max-w-[331px] object-bottom h-auto pointer-events-all hover:cursor-pointer absolute bottom-0 z-[31] md:left-[5%] left-[15%]"
-      ></img>
-      <AnimatedElement
-        className="absolute object-contain w-[50%]  md:w-[50%] h-[80.48%] max-w-[550px] max-h-[600px] min-w-[147px] min-h-[176px] lg:-bottom-[0%]  md:-bottom-[4%] -bottom-[14%] md:left-[10%] -left-[12%] z-30"
-        source={ANIMATION_WEBM_SOURCES["magic"]}
-      />
+      <div className="w-[31%]  max-w-[331px] object-bottom h-auto pointer-events-none hover:cursor-pointer absolute bottom-0 z-[31] md:left-[5%] left-[15%]">
+        <div className=" relative flex flex-col justify-start items-center">
+          <div
+            className=" absolute h-28 w-28 top-[15%] -ml-9 pointer-events-auto"
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+          ></div>
+          <img
+            ref={catRef}
+            src="/images/section-hero/memcoin2.png"
+            draggable={false}
+            alt=""
+            className=""
+          ></img>
+        </div>
+      </div>
+
+      <div className="absolute  object-contain w-[50%]  md:w-[50%] h-[80.48%] max-w-[550px] max-h-[600px] min-w-[147px] min-h-[176px] lg:-bottom-[0%]  md:-bottom-[4%] -bottom-[14%] md:left-[10%] -left-[12%] z-30">
+        <div className=" relative flex flex-col justify-end items-center">
+          <div
+            className=" absolute  h-72 w-36 -ml-20 mb-2 top-52 z-[999]"
+            onMouseEnter={() => handleMouseEnter(magicRef)}
+            onMouseLeave={() => handleMouseLeave(magicRef)}
+          ></div>
+          <AnimatedElement
+            videoRef={magicRef}
+            className=""
+            source={ANIMATION_WEBM_SOURCES["magic"]}
+          />
+        </div>
+      </div>
       {/* <div className="bg-hero-section-memcoin-3 max-w-[418px] max-h-[504px] w-[31%] h-[37.48%] min-w-[147px] min-h-[176px] bg-contain bg-no-repeat bg-bottom  absolute bottom-[14%] md:left-[15%] left-[0%] z-30"></div> */}
       <div className="bg-hero-section-distant pointer-events-none lg:h-[68%] md:h-[65%] w-[100%] min-w-[300px] min-h-[200px] bg-contain lg:bg-repeat-x bg-no-repeat bg-bottom absolute bottom-[16%] z-0"></div>
       {/* castle-blue */}
@@ -172,10 +196,20 @@ const HeroSection = () => {
 
         <div className="bg-hero-section-memcoin-5 max-w-[346px] max-h-[432px] w-[25.68%] h-[32%] min-w-[137px] min-h-[171px] bg-contain bg-no-repeat z-30 absolute -bottom-4 md:bottom-[10%] right-[10%] bg-right-bottom "></div>
         <div className="bg-hero-section-memcoin-6 max-w-[350px] max-h-[434px] min-w-[119px] min-h-[147px] w-[25.68%] h-[32%] bg-contain bg-no-repeat z-[31]  absolute -top-24 md:top-[68%] lg:right-[6%] bg-right-bottom  right-[0%]"></div>
-        <AnimatedElement
-          className="md:w-[400px] md:h-[300px] w-[250px] origin-center  h-[200px] object-contain bg-no-repeat z-[31]  absolute  md:block hidden -bottom-[10%] lg:-bottom-[6%] bg-bottom  lg:right-[10%] right-[0%]"
-          source={ANIMATION_WEBM_SOURCES["fire"]}
-        />
+        <div className="  md:w-[400px] md:h-[300px] w-[250px] origin-center  h-[200px] bg-no-repeat z-[31]  absolute  md:block hidden -bottom-[10%] lg:bottom-[1%] bg-bottom  lg:right-[10%] right-[0%]">
+          <div className=" relative flex flex-col justify-end items-center">
+            <div
+              className=" absolute h-28 w-24 -ml-2 top-52 z-[999]"
+              onMouseEnter={() => handleMouseEnter(fireRef)}
+              onMouseLeave={() => handleMouseLeave(fireRef)}
+            ></div>
+            <AnimatedElement
+              videoRef={fireRef}
+              className="object-contain "
+              source={ANIMATION_WEBM_SOURCES["fire"]}
+            />
+          </div>
+        </div>
         <div className="bg-hero-section-memcoin-7 max-w-[299px] max-h-[351px] w-[22%] h-[26%] min-w-[119px] min-h-[147px] z-30 absolute top-[63%] bg-contain bg-no-repeat  -right-[0%] bg-right hidden md:block "></div>
       </div>
     </div>

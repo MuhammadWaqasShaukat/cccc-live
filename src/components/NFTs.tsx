@@ -1,22 +1,17 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import NFTBox from "./UI/NFTBox";
 import { CottonCandyContext } from "../providers/ContextProvider";
-import SnakeLoader from "./UI/SnakeLoader";
 
 export const NFTs = () => {
   const ctx = useContext(CottonCandyContext);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (ctx.myNfts.length === 0) {
       (async () => {
         try {
-          setLoading(true);
           ctx.setMyNfts(await ctx.getNFTs());
         } catch (error: any) {
           console.error("Error:", error.message);
-        } finally {
-          setLoading(false);
         }
       })();
     }
@@ -76,16 +71,12 @@ export const NFTs = () => {
         </div>
         {/*right page  */}
         <div className=" md:h-[530px] flex-1 flex flex-col h-full w-full justify-between items-center">
-          {loading ? (
-            <SnakeLoader className="bg-transparent" />
-          ) : ctx.myNfts.length > 0 ? (
+          {ctx.myNfts.length > 0 && (
             <div className="grid grid-cols-3 gap-4 pr-6 grid-rows-[137px] overflow-y-auto h-[90%]">
               {ctx.myNfts.map((nft, index) => (
                 <NFTBox key={index} nft={nft} nftIndex={index} />
               ))}
             </div>
-          ) : (
-            <></>
           )}
         </div>
       </div>
