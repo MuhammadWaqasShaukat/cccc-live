@@ -80,6 +80,9 @@ interface CottonCandyContextType {
 
   selectedNftIndex: number;
   setSeletedNftIndex: StateSetter<number>;
+
+  revealNFT: boolean;
+  setRevealNFT: StateSetter<boolean>;
 }
 
 const defaultLotteryState: LotteryState = {
@@ -119,6 +122,7 @@ export const CottonCandyContextProvider: React.FC<
   >();
   const [myNfts, setMyNfts] = useState<any[]>([]);
   const [myEggs, setMyEggs] = useState<any[]>([]);
+  const [revealNFT, setRevealNFT] = useState<boolean>(false);
 
   const [selectedNftIndex, setSeletedNftIndex] = useState<number>(0);
 
@@ -308,6 +312,9 @@ export const CottonCandyContextProvider: React.FC<
 
     gasFee,
     setGasFee,
+
+    revealNFT,
+    setRevealNFT,
   };
 
   return (
