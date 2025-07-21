@@ -128,7 +128,7 @@ const HeroSection = () => {
       <div className="bg-hero-section-shark-2 w-[64px] h-[63px] absolute top-[86%] right-[2%] hidden lg:block bg-contain z-10"></div>
 
       <div className="hidden sm:block w-[31%]  max-w-[331px] object-bottom h-auto pointer-events-none absolute bottom-0 z-[31] md:left-[5%] left-[15%]">
-        <div className=" relative flex flex-col justify-start items-center ">
+        <div className=" relative flex flex-col justify-start items-center">
           <div
             className=" absolute h-28 w-28 top-[15%] -ml-9 pointer-events-auto"
             onMouseDown={handleMouseDown}
