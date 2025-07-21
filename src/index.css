@@ -248,14 +248,14 @@ img,
     border-radius: 10px;
     background-clip: padding-box;
     border: 6px solid transparent;
-    background-image: url("images/custom-scrollbar-track.png");
+    background-image: url("/public/images/custom-scrollbar-track.png");
     background-position: center;
     background-repeat: repeat-y;
     background-size: 6px 100%;
   }
 
   ::-webkit-scrollbar-thumb {
-    background-image: url("images/custom-scrollbar-thumb.png");
+    background-image: url("/public/images/custom-scrollbar-thumb.png");
     background-position: center top;
     background-repeat: no-repeat;
     background-size: contain;
