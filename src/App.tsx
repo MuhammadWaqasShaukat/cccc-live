@@ -13,7 +13,7 @@ function App() {
     "/images/section-hero/frog.png",
     "/images/section-hero/castle-red-top.png",
     "/images/section-hero/memcoin1.png",
-    "/images/cursor.png",
+    "/images/cursor-glove.png",
     "/images/section-hero/memcoin2.png",
     "/images/section-hero/logo-lg.png",
     "/images/section-hero/field.png",

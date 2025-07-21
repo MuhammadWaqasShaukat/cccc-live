@@ -65,7 +65,7 @@ const MintButton = () => {
     <button
       disabled={isMinting}
       className={`bg-mint-btn h-[90px] w-[350px]  relative bg-center bg-contain bg-no-repeat group z-10 ${
-        isMinting ? " cursor-not-allowed" : "cursor-default"
+        isMinting ? " cursor-not-allowed" : ""
       }`}
       onClick={(e) => {
         e.preventDefault();

@@ -187,7 +187,7 @@ const ClaimEgg = () => {
                     canSummonEgg
                       ? "bg-summon-egg-btn h-[64px] w-[350px]"
                       : "bg-summon-disabled-btn h-[86px] w-[350px]"
-                  }    bg-contain bg-no-repeat  group z-40 rounded-2xl relative cursor-default`}
+                  }    bg-contain bg-no-repeat  group z-40 rounded-2xl relative`}
                 >
                   {!canSummonEgg && (
                     <div className="bg-contain size-20 bg-summon-disabled-peppos-btn absolute -top-[60%] right-0"></div>

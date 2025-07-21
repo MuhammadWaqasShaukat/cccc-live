@@ -19,8 +19,6 @@ const AnimatedElement: React.FC<AnimatedElementType> = ({
       loop
       preload="auto"
       className={` ${className}`}
-      // onMouseEnter={handleMouseEnter}
-      // onMouseLeave={handleMouseLeave}
     >
       <source src={source} type="video/webm" />
       Your browser does not support the video tag.

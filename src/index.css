@@ -18,9 +18,11 @@ html,
 *,
 button,
 a,
+div,
 input[type="submit"],
-input[type="button"] {
-  cursor: url("./images/cursor.png"), auto
+input[type="button"],
+video,img {
+  cursor: url("/images/cursor-glove.png"), auto
 }
 
 
@@ -165,8 +167,8 @@ input[type="button"] {
 
   .bg-hatch-won {
     background-image:
-      url('./images/hatch-win.png'),
-      url('./images/hatch-win-1.png'),
+      url('/images/hatch-win.png'),
+      url('/images/hatch-win-1.png'),
       linear-gradient(rgba(92, 89, 89, 0.5), rgba(92, 89, 89, 0.5));
     background-position: center;
     background-size: 70%, contain, contain;
@@ -175,7 +177,7 @@ input[type="button"] {
 
   .bg-hatch-lost {
     background-image:
-      url('./images/hatch-lose.png'),
+      url('/images/hatch-lose.png'),
       linear-gradient(rgba(55, 107, 166, 0.55), rgba(55, 107, 166, 0.55));
     background-position: center;
     background-size: 70%, contain;

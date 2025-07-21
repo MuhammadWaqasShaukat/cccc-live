@@ -53,14 +53,14 @@ const NFTBox: React.FC<{ nft: any; nftIndex: number }> = ({
   return (
     <div
       onClick={handleNFTClicked}
-      className={`bg-transparent rounded-xl shadow-md flex flex-col items-center relative h-fit`}
+      className={`bg-transparent custom-pointer rounded-xl shadow-md flex flex-col items-center relative h-fit`}
     >
       <img src={imageSrc} alt={`NFT`} className="rounded-md " />
       <h3 className="absolute top-2 right-2 rounded text-white font-patrick-hand-sc tracking-wide text-4xl text-outline-0">
         #{1613 + 1}
       </h3>
       {nftState && !nftState.isEggClaimed && (
-        <div className="absolute bottom-2 size-16 group">
+        <div className="absolute bottom-2 size-16 group custom-pointer">
           <div className="bg-egg-glow group-hover:bg-egg-glow-1 bg-contain bg-center bg-no-repeat size-16 transition-all duration-100"></div>
         </div>
       )}

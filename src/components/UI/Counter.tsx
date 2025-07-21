@@ -62,7 +62,7 @@ const Counter = () => {
       <button
         disabled={disabled.max}
         type="button"
-        className="size-7 bg-[#B69772]  disabled:bg-[#89898866] disabled:hover:bg-[#89898866]  hover:bg-[#9F8362] active:bg-[#816A4F]    rounded-full grid place-content-center"
+        className="size-7 bg-[#B69772]  disabled:bg-[#89898866] disabled:hover:bg-[#89898866]  hover:bg-[#9F8362] active:bg-[#816A4F]  rounded-full grid place-content-center"
         onClick={() => {
           ctx.setCount!(ctx.count + 1);
         }}

@@ -11,20 +11,26 @@ const AboutSection = () => {
         ctx.setActiveMenu("none");
       }}
     >
-      <div className="bg-about-section-castle w-[750px] h-[90vh] bg-no-repeat flex flex-col justify-end  bg-contain bg-center">
-        <div className=" h-1/2  px-24 text-center w-[70%] mx-auto pt-8">
+      <div
+        className="sm:hidden h-full w-full absolute"
+        onClick={() => {
+          ctx.setActiveMenu("none");
+        }}
+      ></div>
+      <div className="bg-about-section-castle sm:w-[750px] w-full h-[90vh] bg-no-repeat flex flex-col justify-end  bg-contain bg-center">
+        <div className=" h-[45%] sm:px-24 text-center sm:w-[70%] w-[180px] min-w-[150px] mx-auto sm:pt-8 flex flex-col justify-end items-center mb-8">
           <img
             src="./images/section-about/memnft-about.png"
             alt=""
-            className=""
+            className="sm:ml-0 -ml-2.5"
           />
         </div>
 
-        <div className=" h-1/2  px-24 text-center w-[90%] mx-auto pt-8">
-          <h2 className="font-patrick-hand  text-center lg:text-4xl text-xl pb-5">
+        <div className=" h-[55%]  sm:px-24 pt-4 text-center sm:w-[90%] w-[70%] mx-auto sm:pt-8">
+          <h2 className="font-patrick-hand  text-center lg:text-4xl text-xl sm:pb-5 pb-1">
             About memenfts
           </h2>
-          <p className="font-patrick-hand  text-xl leading-9">
+          <p className="font-patrick-hand sm:text-xl sm:leading-9 text-sm">
             It is a long established fact that a reader will be distracted by
             the readable content of a page when looking at its layout.The point
             of using Lorem Ipsum is that it has a more-or-less normal
