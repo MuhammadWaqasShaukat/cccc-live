@@ -27,8 +27,6 @@ const HeroSection = () => {
     const isMouthOpen = isMouthOpenCheck();
 
     if (!isMouthOpen) {
-      // catRef.current?.classList.remove("bg-hero-section-memcoin-2");
-      // catRef.current?.classList.add("bg-hero-section-memcoin-2-open");
       catRef.current.src = "/images/section-hero/memcoin2.open.png";
 
       if (!audioRef.current) {
