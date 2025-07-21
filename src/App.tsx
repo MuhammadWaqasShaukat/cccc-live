@@ -74,10 +74,10 @@ function App() {
   };
 
   useEffect(() => {
-    const timeout = setTimeout(() => setLoading(false), 10000);
+    const timeout = setTimeout(() => setLoading(false), 10000); // fallback in case loading hangs
 
-    const preloadImages = async () => {
-      const promises = imageAssets.map((src) => {
+    const preloadAssets = async () => {
+      const imagePromises = imageAssets.map((src) => {
         return new Promise<void>((resolve) => {
           const img = new Image();
           img.src = src;
@@ -85,13 +85,15 @@ function App() {
         });
       });
 
-      await Promise.all(promises);
+      const videoAndAudioPromises = await preloadVideosAndAudio();
+
+      await Promise.all([...imagePromises, ...videoAndAudioPromises]);
+
       clearTimeout(timeout);
       setLoading(false);
     };
 
-    preloadImages();
-    preloadVideosAndAudio();
+    preloadAssets();
   }, []);
 
   if (loading) return <SnakeLoader />;
