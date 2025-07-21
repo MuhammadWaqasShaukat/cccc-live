@@ -38,6 +38,8 @@ function App() {
     "/images/section-about/castle.about.png",
     "/images/section-about/memnft-about.png",
     "/images/section-mint/mint-book.png",
+    "/images/custom-scrollbar-track.png",
+    "/images/custom-scrollbar-thumb.png",
   ];
 
   const preloadVideosAndAudio = () => {
