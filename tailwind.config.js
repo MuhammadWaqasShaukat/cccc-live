@@ -1,6 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./src/**/*.{html,js,tsx,ts}"],
+  safelist: [
+  '::-webkit-scrollbar',
+  '::-webkit-scrollbar-track',
+  '::-webkit-scrollbar-thumb'
+],
   theme: {
 
       extend: {

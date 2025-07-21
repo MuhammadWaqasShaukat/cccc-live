@@ -76,7 +76,7 @@ function App() {
   };
 
   useEffect(() => {
-    const timeout = setTimeout(() => setLoading(false), 10000); // fallback in case loading hangs
+    const timeout = setTimeout(() => setLoading(false), 10000);
 
     const preloadAssets = async () => {
       const imagePromises = imageAssets.map((src) => {

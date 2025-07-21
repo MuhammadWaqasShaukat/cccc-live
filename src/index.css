@@ -137,7 +137,7 @@ img,
     /* width: 200px; */
     /* height: 300px; */
     perspective: 1000px;
-    cursor: pointer;
+    /* cursor: pointer; */
   }
 
   .card-shadow {
