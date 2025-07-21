@@ -18,8 +18,6 @@ const ClaimEgg = () => {
     setNftMint,
     setBookmark,
     setRefreshNftState,
-    revealNFT,
-    setRevealNFT,
   } = useContext(CottonCandyContext);
   const { ClaimNFT, HatchNFT } = useProgramInstructions();
   const { getNftState, getLotteryState } = useWeb3Utils();
@@ -27,6 +25,7 @@ const ClaimEgg = () => {
   const [nftState, setNftState] = useState<NftState | null>(null);
   const [canSummonEgg, setCanSummonEgg] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [playAnimation, setPlayAnimation] = useState(true);
 
   const handleKeepNFT = async () => {
     setCurrentModal(null);
@@ -82,7 +81,7 @@ const ClaimEgg = () => {
     if (!video) return;
 
     const handleEnded = () => {
-      setRevealNFT(false);
+      setPlayAnimation(false);
     };
 
     video.addEventListener("ended", handleEnded);
@@ -98,7 +97,7 @@ const ClaimEgg = () => {
 
   return (
     <Modal onBackgroundClick={handleKeepNFT} className="z-[51] bg-black/90">
-      {revealNFT ? (
+      {playAnimation ? (
         <div className="bg-black relative flex flex-row justify-center items-center ">
           <div className=" h-[65vh] absolute w-[22%] -mt-[40px] ">
             <img
@@ -169,7 +168,7 @@ const ClaimEgg = () => {
 
           {nftState && !nftState.isEggClaimed ? (
             <div className=" flex flex-row justify-between items-center gap-9">
-              {/* <button
+              <button
                 onClick={handleKeepNFT}
                 className="bg-sell-nft-btn w-full h-full md:h-[64px] md:w-[196px] relative bg-contain bg-no-repeat group z-40"
               >
@@ -177,7 +176,7 @@ const ClaimEgg = () => {
                 <span className=" absolute inset-0 w-full h-full grid place-content-center uppercase font-patrick-hand text-3xl leading-none text-white z-60">
                   Sell NFT
                 </span>
-              </button> */}
+              </button>
 
               <div className=" flex flex-col justify-start  gap-2">
                 <button

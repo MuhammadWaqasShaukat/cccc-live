@@ -3,16 +3,17 @@ import useWeb3Utils from "../../hooks/useWeb3Utils";
 
 const Remaining = () => {
   const [remainingState, setRemainingState] = useState<{
-    mintedNFTs: number;
-    totalNFTs: number;
-  }>({ mintedNFTs: 0, totalNFTs: 0 });
+    balance: number;
+    total: number;
+  }>({ balance: 0, total: 0 });
 
-  const { getLotteryState } = useWeb3Utils();
+  const { getLotteryState, getVaultState } = useWeb3Utils();
   useEffect(() => {
     (async () => {
-      const { totalMinted, maxPlayers } = await getLotteryState();
-      if (totalMinted && maxPlayers) {
-        setRemainingState({ mintedNFTs: totalMinted, totalNFTs: maxPlayers });
+      const balance = await getVaultState();
+      const { totalValueToCollect: total } = await getLotteryState();
+      if (balance && total) {
+        setRemainingState({ balance, total: total / 1e9 });
       }
     })();
   }, []);
@@ -24,9 +25,9 @@ const Remaining = () => {
       </h4>
       <div className="font-heavitas  ml-4">
         <span className="text-[28px] text-[#292726]">
-          {remainingState.mintedNFTs}
+          {remainingState.balance.toFixed(4)}
           <span className="text-[20px] text-base text-[#29272699]">
-            /{remainingState.totalNFTs}
+            /{remainingState.total}
           </span>
         </span>
       </div>

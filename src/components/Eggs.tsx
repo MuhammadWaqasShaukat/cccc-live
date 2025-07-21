@@ -5,14 +5,18 @@ import SnakeLoader from "./UI/SnakeLoader";
 
 const Eggs = () => {
   const ctx = useContext(CottonCandyContext);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (ctx.myEggs.length === 0) {
       (async () => {
         try {
+          setLoading(true);
           ctx.setMyEggs(await ctx.getEggNFTs());
         } catch (error: any) {
           console.error("Error:", error.message);
+        } finally {
+          setLoading(false);
         }
       })();
     }
@@ -72,7 +76,9 @@ const Eggs = () => {
       </div>
       {/*right page  */}
       <div className=" md:h-[530px] flex-1 flex flex-col h-full w-full justify-between items-center">
-        {ctx.myEggs.length > 0 && (
+        {loading ? (
+          <SnakeLoader className="bg-transparent" />
+        ) : ctx.myEggs.length > 0 ? (
           <div className="grid grid-cols-3 gap-4 auto-rows pr-6 overflow-y-auto h-[90%]">
             {ctx.myEggs.map((egg) => {
               return (
@@ -84,6 +90,8 @@ const Eggs = () => {
               );
             })}
           </div>
+        ) : (
+          <></>
         )}
       </div>
     </div>

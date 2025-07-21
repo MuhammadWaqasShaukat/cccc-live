@@ -1,3 +1,6 @@
+import { ANIMATION_WEBM_SOURCES } from "../constants/animatedElements";
+import AnimatedElement from "./UI/AnimatedElement";
+
 const SocialSection = () => {
   return (
     <div>
@@ -69,10 +72,10 @@ const SocialSection = () => {
           </div>
         </div>
         <div className="relative h-full w-full">
-          {/* <AnimatedElement
+          <AnimatedElement
             className="w-full h-[430px] sm:h-[500px] md:h-[60%] object-cover absolute bottom-[9%]  md:bottom-[12%] z-20"
             source={ANIMATION_WEBM_SOURCES["warriors"]}
-          /> */}
+          />
           <img
             src="./images/section-social/distant-bg.png"
             className="w-full h-[430px] sm:h-[500px] md:h-[60%] object-contain absolute bottom-[9%]  md:bottom-[4%] z-0"
