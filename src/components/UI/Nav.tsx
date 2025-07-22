@@ -9,33 +9,33 @@ const Nav: React.FC<NavProps> = ({ className }) => {
   return (
     ctx.activeMenu === "none" && (
       <nav
-        className={`${className} w-full grid place-content-center gap-4 md:gap-8 z-30  pointer-events-none h-full`}
+        className={`${className} w-full grid place-content-end gap-4 md:gap-8 z-20  pointer-events-none h-full`}
       >
-        <div className="absolute sm:top-[60%] top-[50%] left-1/2 -translate-x-1/2  sm:w-[40.26vw] w-[90%] h-[550px] bg-hero-section-tombstone  bg-contain bg-center bg-no-repeat">
-          <ul className="md:space-y-4 space-y-2  flex flex-col justify-center items-center h-full mt-5">
-            <li className="space-y-1 bg-menu-btn sm:w-[260px] w-[210px] h-[72px] bg-center bg-no-repeat bg-contain  pointer-events-auto">
+        <div className="absolute top-[62%] left-1/2 -translate-x-1/2 max-w-[500px] md:w-[40%] sm:w-[45%] w-[80%] h-[60%] bg-hero-section-tombstone  bg-contain bg-center bg-no-repeat">
+          <ul className="space-y-2 lg:space-y-3   flex flex-col justify-center items-center h-full mt-5">
+            <li
+              className={`space-y-1 bg-menu-btn hover:bg-menu-btn-hovered w-[60%] min-w-40 max-w-60 h-16 min-h-14 max-h-20 bg-center  bg-no-repeat bg-contain  pointer-events-auto`}
+            >
               <button
                 onClick={() => {
                   ctx.setActiveMenu("about");
                 }}
                 className="uppercase relative font-patrick-hand text-2xl h-full w-full mx-auto md:text-3xl lg:text-4xl  text-outline-0 group text-white text-fake-bold"
               >
-                <span className="absolute inset-0 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20 transition duration-200 z-20"></span>
                 About
               </button>
             </li>
-            <li className="space-y-1 bg-menu-btn sm:w-[260px] w-[210px] h-[72px] bg-center  bg-no-repeat bg-contain  pointer-events-auto">
+            <li className="space-y-1 bg-menu-btn hover:bg-menu-btn-hovered w-[60%] min-w-40 max-w-60 min-h-14 h-16 max-h-20 bg-center  bg-no-repeat bg-contain  pointer-events-auto">
               <button
                 onClick={() => {
                   ctx.setActiveMenu("mint");
                 }}
                 className="uppercase relative font-patrick-hand text-2xl h-full w-full mx-auto md:text-3xl lg:text-4xl group  text-outline-0 text-white text-fake-bold"
               >
-                <span className="absolute  inset-0 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20 transition duration-200 z-20"></span>
                 mint
               </button>
             </li>
-            <li className="space-y-1 bg-menu-btn sm:w-[260px] w-[210px] h-[72px] bg-center  bg-no-repeat bg-contain  pointer-events-auto">
+            <li className="space-y-1 bg-menu-btn hover:bg-menu-btn-hovered w-[60%] min-w-40 max-w-60 min-h-14 h-16 max-h-20 bg-center  bg-no-repeat bg-contain  pointer-events-auto">
               <button
                 disabled
                 onClick={() => {

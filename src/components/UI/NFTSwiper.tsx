@@ -90,6 +90,24 @@ const NFTSwiper = () => {
             nextEl: ".swiper-button-next",
             prevEl: ".swiper-button-prev",
           }}
+          breakpoints={{
+            0: {
+              slidesPerView: 1,
+              spaceBetween: 20,
+            },
+            640: {
+              slidesPerView: 1.5,
+              spaceBetween: 40,
+            },
+            768: {
+              slidesPerView: 2,
+              spaceBetween: 60,
+            },
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: 80,
+            },
+          }}
           onSlideChange={(swiper) =>
             ctx.setCollectiable(ctx.myNfts[swiper.activeIndex])
           }

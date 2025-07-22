@@ -104,7 +104,7 @@ const HeroSection = () => {
       <div className="bg-hero-section-logo max-w-[700px] max-h-[400px] min-w-[288px] h-[25%] w-[50%] min-h-[149px] bg-no-repeat bg-contain bg-bottom absolute left-[50%] -translate-x-[50%] lg:top-[10%] top-[13%]"></div>
       {/* casltes  red*/}
       <div className="hidden sm:block relative md:static top-[75%] md:top-auto">
-        <div className=" bg-hero-section-castle-red-1 max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-[1] md:bottom-[50%]  lg:bottom[50%]  bottom-[12rem] md:left-0"></div>
+        <div className=" bg-hero-section-castle-red-1 max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-[1] md:bottom-[48%]  lg:bottom[50%]  bottom-[11rem] md:left-0"></div>
 
         <motion.div
           initial={{ y: 20 }}
@@ -115,11 +115,12 @@ const HeroSection = () => {
             damping: 12,
             mass: 0.5,
           }}
-          className="bg-hero-section-frog  max-w-[211px] max-h-[230px] h-[17%] w-[15.7%] min-h-[69px] bottom-[50%] min-w-[61px] bg-contain bg-no-repeat z-10 absolute  left-0  bg-left-bottom"
+          className="bg-hero-section-frog  max-w-[211px] max-h-[230px] h-[17%] w-[15.7%] min-h-[69px] bottom-[50%] sm:top-[260px] min-w-[61px] bg-contain bg-no-repeat z-10 absolute  left-0  bg-left-bottom"
         ></motion.div>
-        <div className="bg-hero-section-chillguy lg:w-[352px] max-h-[341px] h-[25.30%] w-[26%] min-w-[117px] min-h-[111px] bg-contain z-10 absolute md:bottom-[50%] bottom-[10rem] md:left-[6%] left-[9%]  bg-bottom bg-no-repeat"></div>
+
+        <div className="bg-hero-section-chillguy lg:w-[352px] max-h-[341px] h-[25.30%] w-[26%] min-w-[117px] min-h-[111px] bg-contain z-10 absolute md:top-[24%] bottom-[10rem] md:left-[15%] lg:left-[6%] left-[4%] bg-bottom bg-no-repeat"></div>
         <div className=" bg-hero-section-castle-red-2  pointer-events-none  max-w-[400px] max-h-[619px] min-w-[162px] min-h-[230px]  bg-left-bottom   h-[50%] w-[37%] bg-contain bg-no-repeat absolute bottom-[12%] z-30"></div>
-        <div className=" bg-[#1e1e1e] md:max-w-[250px] -mt-1 first-letter:  max-w-28 max-h-[320px] md:min-w-[210px] min-w-28 min-h-[160px] md:max-h-[380px]  bg-left-bottom   h-[50%] md:w-[37%] w-[25%] bg-contain bg-no-repeat absolute bottom-[12%] z-10"></div>
+        <div className=" bg-[#1e1e1e] md:max-w-[220px]  -mt-1 first-letter:  max-w-28 max-h-[320px] md:min-w-[210px] min-w-28 min-h-[160px] bg-left-bottom   h-[50%] md:w-[37%] w-[25%] bg-contain bg-no-repeat absolute bottom-[12%] z-10"></div>
         <div className="bg-hero-section-memcoin-1 max-w-[273px] max-h-[319px] w-[20%] h-[24%] min-w-[70px] min-h-[78px] absolute bottom-[11%] left-[0%] z-20 md:block hidden bg-contain bg-no-repeat"></div>
       </div>
       <div className="hidden sm:block bg-hero-section-red-1 lg:w-[96px] lg:h-[88px] w-[50px] h-[54px]  bg-contain bg-no-repeat  absolute  bottom-[5%] lg:left-[30%] left-[5%] z-10"></div>
@@ -127,7 +128,7 @@ const HeroSection = () => {
       <div className="hidden sm:block bg-hero-section-shark-1 lg:w-[96px] lg:h-[96px] w-[50px] h-[50px]  bg-contain bg-no-repeat  absolute bottom-[8%] right-[25%] z-10"></div>
       <div className="bg-hero-section-shark-2 w-[64px] h-[63px] absolute top-[86%] right-[2%] hidden lg:block bg-contain z-10"></div>
 
-      <div className="hidden sm:block w-[31%]  max-w-[331px] object-bottom h-auto pointer-events-none absolute bottom-0 z-[31] md:left-[5%] left-[15%]">
+      <div className="hidden sm:block w-[31%]  max-w-[331px] object-bottom h-auto pointer-events-none absolute bottom-0  md:left-[5%] left-[15%] z-40">
         <div className=" relative flex flex-col justify-start items-center">
           <div
             className=" absolute h-28 w-28 top-[15%] -ml-9 pointer-events-auto"
@@ -145,7 +146,7 @@ const HeroSection = () => {
         </div>
       </div>
 
-      <div className="hidden sm:block absolute  object-contain w-[50%]  md:w-[50%] h-[80.48%] max-w-[550px] max-h-[600px] min-w-[147px] min-h-[176px] lg:-bottom-[0%]  md:-bottom-[4%] -bottom-[14%] md:left-[10%] -left-[12%] z-30">
+      <div className="hidden sm:block absolute  object-contain w-[50%]  md:w-[50%] h-[80.48%] max-w-[550px] max-h-[600px] min-w-[147px] min-h-[176px] lg:-bottom-[1%]  md:-bottom-[14%] sm:-bottom-[26%] md:left-[10%] -left-[12%] z-30">
         <div className=" relative flex flex-col justify-end items-center">
           <div
             className=" absolute  h-72 w-36 -ml-20 mb-2 top-52 z-[999]"
@@ -159,10 +160,10 @@ const HeroSection = () => {
           />
         </div>
       </div>
-      <div className="hidden sm:block bg-hero-section-distant pointer-events-none lg:h-[68%] md:h-[65%] w-[100%] min-w-[300px] min-h-[200px] bg-contain lg:bg-repeat-x bg-no-repeat bg-bottom absolute bottom-[16%] z-0"></div>
+      <div className="hidden sm:block bg-hero-section-distant pointer-events-none lg:h-[68%] md:h-[65%] w-[100%] min-w-[300px] min-h-[200px] bg-contain sm:bg-repeat-x bg-no-repeat bg-bottom absolute bottom-[16%] z-0"></div>
       {/* castle-blue */}
       <div className="hidden sm:block relative md:static top-[75%] md:top-auto">
-        <div className="bg-hero-section-castle-blue-1 pointer-events-none max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-0 md:bottom-[50%]  lg:bottom[50%] bottom-[12rem] bg-right-bottom right-0"></div>
+        <div className="bg-hero-section-castle-blue-1 pointer-events-none max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-0 md:bottom-[47%]  lg:bottom[50%] bottom-[11rem] bg-right-bottom right-0"></div>
         <motion.div
           initial={{ y: 20 }}
           whileHover={{ y: -20 }}
@@ -174,7 +175,7 @@ const HeroSection = () => {
           }}
           className="bg-hero-section-memcoin-4  max-w-[199px] maxh-[229px] min-w-[71px] w-[15%] h-[17%] min-h-[82px] bg-contain bg-no-repeat z-10 absolute bottom-[48%] right-0 bg-right-bottom"
         ></motion.div>
-        <div className="bg-hero-section-memcoin-8 pointer-events-none  max-w-[401px] max-h-[403px] w-[30%] h-[30%] min-w-[133px] min-h-[131px] bg-contain bg-no-repeat bg-bottom z-10 absolute md:top-[23%] bottom-[10rem] md:right-[3%]  right-[6%]"></div>
+        <div className="bg-hero-section-memcoin-8 pointer-events-none  max-w-[401px] max-h-[403px] w-[30%] h-[30%] min-w-[133px] min-h-[131px] bg-contain bg-no-repeat bg-bottom z-10 absolute  md:top-[24%] bottom-[10rem] md:right-[3%]  right-[4%]"></div>
         <div className="bg-hero-section-castle-blue-2 pointer-events-none max-w-[465px] max-h-[606px] h-[46%] w-[37%]  absolute min-h-[221px] min-w-[168px] bg-contain bg-no-repeat bg-right-bottom z-30 right-0 bottom-[12%]"></div>
 
         <div className="bg-hero-section-memcoin-5 max-w-[346px] max-h-[432px] w-[25.68%] h-[32%] min-w-[137px] min-h-[171px] bg-contain bg-no-repeat z-30 absolute -bottom-4 md:bottom-[10%] right-[10%] bg-right-bottom "></div>

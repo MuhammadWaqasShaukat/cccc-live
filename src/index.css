@@ -30,7 +30,7 @@ textarea,
 video,
 img,
 .custom-cursor {
-  cursor: url("/images/cursor-glove.png") 10 10, auto !important;
+  cursor: url("/images/cursor-glove.png") 10 10, url("/images/cursor-glove_32x32.png") 10 10, auto !important;
 }
 
 .swiper {
@@ -84,16 +84,44 @@ img,
   content: "";
 }
 
-.swiper-button-next {
-  transform: translate(0%, -25%);
-  right: calc((100% - var(--swiper-width))/2);
-}
-
+.swiper-button-next,
 .swiper-button-prev {
   transform: translate(0%, -25%);
-  left: calc((100% - var(--swiper-width)) / 2);
+  top: 50%;
 }
 
+/* Desktop */
+@media (min-width: 1024px) {
+  .swiper-button-next {
+    right: calc((100% - var(--swiper-width)) / 2);
+  }
+
+  .swiper-button-prev {
+    left: calc((100% - var(--swiper-width)) / 2);
+  }
+}
+
+/* Tablet */
+@media (max-width: 1023px) {
+  .swiper-button-next {
+    right: 40px;
+  }
+
+  .swiper-button-prev {
+    left: 40px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .swiper-button-next {
+    right: 20px;
+  }
+
+  .swiper-button-prev {
+    left: 20px;
+  }
+}
 @font-face {
   font-family: "Impact";
   src: url("/public/fonts/impact.ttf");
@@ -110,6 +138,24 @@ img,
   .guide * {
     outline: 1px solid red;
   }
+
+     .outlined-text {
+       font-size: 72px;
+       font-weight: 900;
+       color: white;
+       text-align: center;
+  
+       /* thick black outline using multiple shadows */
+       text-shadow:
+         -2px -2px 0 black,
+         2px -2px 0 black,
+         -2px 2px 0 black,
+         2px 2px 0 black,
+         -3px 0px 0 black,
+         3px 0px 0 black,
+         0px -3px 0 black,
+         0px 3px 0 black;
+     }
 
   .text-outline {
     color: black;
