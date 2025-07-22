@@ -15,6 +15,7 @@ const Bookmark: React.FC<BookMarkProps> = ({
   children,
   className,
   disabledClasss,
+  style,
 }) => {
   const { connected } = useWallet();
 
@@ -31,6 +32,7 @@ const Bookmark: React.FC<BookMarkProps> = ({
       className={`px-5 py-2.5 bg-no-repeat bg-contain w-32 h-14 ${
         active ? className : disabledClasss
       }`}
+      style={style}
     >
       {children}
     </motion.button>

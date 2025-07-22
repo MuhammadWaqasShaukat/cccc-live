@@ -174,7 +174,7 @@ const HeroSection = () => {
           }}
           className="bg-hero-section-memcoin-4  max-w-[199px] maxh-[229px] min-w-[71px] w-[15%] h-[17%] min-h-[82px] bg-contain bg-no-repeat z-10 absolute bottom-[48%] right-0 bg-right-bottom"
         ></motion.div>
-        <div className="bg-hero-section-memcoin-8  max-w-[401px] max-h-[403px] w-[30%] h-[30%] min-w-[133px] min-h-[131px] bg-contain bg-no-repeat bg-bottom z-10 absolute md:top-[23%] bottom-[10rem] md:right-[3%]  right-[6%]"></div>
+        <div className="bg-hero-section-memcoin-8 pointer-events-none  max-w-[401px] max-h-[403px] w-[30%] h-[30%] min-w-[133px] min-h-[131px] bg-contain bg-no-repeat bg-bottom z-10 absolute md:top-[23%] bottom-[10rem] md:right-[3%]  right-[6%]"></div>
         <div className="bg-hero-section-castle-blue-2 pointer-events-none max-w-[465px] max-h-[606px] h-[46%] w-[37%]  absolute min-h-[221px] min-w-[168px] bg-contain bg-no-repeat bg-right-bottom z-30 right-0 bottom-[12%]"></div>
 
         <div className="bg-hero-section-memcoin-5 max-w-[346px] max-h-[432px] w-[25.68%] h-[32%] min-w-[137px] min-h-[171px] bg-contain bg-no-repeat z-30 absolute -bottom-4 md:bottom-[10%] right-[10%] bg-right-bottom "></div>

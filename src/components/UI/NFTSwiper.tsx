@@ -52,7 +52,8 @@ const NFTSwiper = () => {
   const ctx = useContext(CottonCandyContext);
 
   const handleNFTClicked = () => {
-    ctx.setCurrentModal("claim-egg");
+    // ctx.setCurrentModal("claim-egg");
+    ctx.setCurrentModal(null);
   };
 
   useEffect(() => {

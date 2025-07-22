@@ -60,6 +60,7 @@ const MintSection = () => {
             }}
             className="bg-bm-nft"
             disabledClasss="bg-bm-nft-1"
+            style={{ marginLeft: "-2px" }}
           >
             <span className="sr-only">NFTs</span>
           </Bookmark>
