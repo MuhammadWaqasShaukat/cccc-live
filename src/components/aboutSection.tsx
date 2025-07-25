@@ -11,32 +11,75 @@ const AboutSection = () => {
         ctx.setActiveMenu("none");
       }}
     >
+      <div className="mt-40 sm:mt-0">
+        {/* for mobile screens */}
+        <div className="bg-center bg-no-repeat xs:w-[350px] xs:h-[475px]  h-[435px] w-[300px] bg-contain sm:hidden bg-about-section-castle-sm relative  flex flex-col justify-center items-center">
+          <div className="h-[40%] text-center w-[63%] -top-[30%] min-w-[150px] flex flex-col justify-end items-center absolute">
+            <img
+              src="./images/section-about/memnft-about.png"
+              alt=""
+              className=""
+            />
+          </div>
+          <div className="flex flex-col items-center justify-between mt-10">
+            <h2 className="font-patrick-hand text-center  text-[22px] pb-2">
+              About memenfts
+            </h2>
+            <p className="px-10 text-sm leading-6 text-center xs:px-12 font-patrick-hand md:text-base lg:text-lg ">
+              It is a long established fact that a reader will be distracted by
+              the readable content of a page when looking at its layout.
+              <br />
+              The point of using Lorem Ipsum is that it has a more-or-less
+              normal distribution of letters, as opposed to using 'Content here,
+              content here', making it look like readable English.
+            </p>
+
+            <button
+              onClick={() => ctx.setActiveMenu("none")}
+              className="bg-about-ok-btn sm:hidden block h-[38px] w-[71px] relative bg-contain bg-no-repeat group z-40 mt-4"
+            >
+              <span className="absolute inset-0 z-50 transition duration-200 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20"></span>
+              <span className=" absolute inset-0 w-full h-full grid place-content-center font-patrick-hand text-[22px] leading-none text-white z-60">
+                OK
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+      {/* for tablets, desktops, laptop screens (sm:++++) */}
       <div
-        className="sm:hidden h-full w-full absolute"
-        onClick={() => {
-          ctx.setActiveMenu("none");
-        }}
-      ></div>
-      <div className="bg-about-section-castle sm:w-[750px] w-full h-[90vh] bg-no-repeat flex flex-col justify-end  bg-contain bg-center">
-        <div className=" h-[45%] sm:px-24 text-center sm:w-[70%] w-[180px] min-w-[150px] mx-auto sm:pt-8 flex flex-col justify-end items-center mb-8">
+        className={`hidden sm:bg-about-section-castle bg-about-section-castle-sm w-[530px] h-[580px]   md:w-[650px] md:h-[700px] xl:w-[700px] xl:h-[750px] xl:max-w-[1163px]  bg-no-repeat sm:flex flex-col justify-end  bg-contain md:bg-center bg-bottom`}
+      >
+        <div className="  h-[40%] text-center w-[47.5%]   min-w-[150px] mx-auto pt-8 flex flex-col justify-end items-center sm:mb-8 mb-16">
           <img
             src="./images/section-about/memnft-about.png"
             alt=""
-            className="sm:ml-0 -ml-2.5"
+            className=""
           />
         </div>
 
-        <div className=" h-[55%]  sm:px-24 pt-4 text-center sm:w-[90%] w-[70%] mx-auto sm:pt-8">
-          <h2 className="font-patrick-hand  text-center lg:text-4xl text-xl sm:pb-5 pb-1">
+        <div className=" sm:h-[55%] h-[60%] bg-no-repeat bg-center md:px-16 xl:px-20 px-14 pt-4 text-center sm:w-[90%] w-[70%] mx-auto sm:pt-12">
+          <h2 className="font-patrick-hand text-center lg:text-4xl md:text-3xl sm:text-2xl text-[22px] pb-4">
             About memenfts
           </h2>
-          <p className="font-patrick-hand sm:text-xl sm:leading-9 text-sm">
+          <p className="text-sm text-center font-patrick-hand md:text-base lg:text-lg md:leading-7 lg:leading-8">
             It is a long established fact that a reader will be distracted by
-            the readable content of a page when looking at its layout.The point
-            of using Lorem Ipsum is that it has a more-or-less normal
+            the readable content of a page when looking at its layout.
+            <br />
+            The point of using Lorem Ipsum is that it has a more-or-less normal
             distribution of letters, as opposed to using 'Content here, content
             here', making it look like readable English.
           </p>
+
+          <button
+            onClick={() => ctx.setActiveMenu("none")}
+            className="bg-about-ok-btn h-[38px] w-[71px] relative bg-contain bg-no-repeat group z-40 mt-4"
+          >
+            <span className="absolute inset-0 z-50 transition duration-200 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20"></span>
+            <span className=" absolute inset-0 w-full h-full grid place-content-center font-patrick-hand text-[22px] leading-none text-white z-60">
+              OK
+            </span>
+          </button>
         </div>
       </div>
     </Modal>
@@ -44,61 +87,3 @@ const AboutSection = () => {
 };
 
 export default AboutSection;
-
-// <div className="relative overflow-hidden">
-// <div className="lg:h-[1330px] h-screen w-screen relative bg-about-section bg-no-repeat bg-cover bg-center">
-//   <span className="bg-grass-pattern h-14 block bg-repeat-x bg-contain"></span>
-//   {/* statues */}
-//   <span className="bg-about-section-statue-left lg:h-[955px] h-[60%]  max-w-[564px] w-[50%] absolute top-[15%] lg:top-[11%] lg:left-[4%] -left-12 bg-contain bg-no-repeat"></span>
-//   <span className="bg-about-section-statue-left scale-x-[-1] lg:scale-x-[1] lg:bg-about-section-statue-right  lg:h-[955px] h-[60%] max-w-[564px] w-[50%]  absolute top-[15%] lg:top-[11%] lg:right-[3%] -right-12  bg-contain bg-no-repeat"></span>
-
-//   <div className="lg:mt-[160px] flex flex-col justify-center items-center gap-6">
-//     <div className="lg:bg-about-section-text-block bg-about-section-text-block-sm bg-contain bg-no-repeat py-8  w-[233px] h-[375px] lg:w-[925px] lg:h-[407px] flex flex-col justify-center items-center relative">
-//       <div className="flex flex-row justify-center items-end absolute lg:-top-[5.5rem] -top-[2rem] lg:gap-16 gap-x-2.5">
-//         <img
-//           src="./images/section-about/badge3.png"
-//           alt=""
-//           className="lg:w-[117px] lg:h-[116px] h-[47px] w-[48]"
-//         />
-//         <img
-//           src="./images/section-about/badge2.png"
-//           alt=""
-//           className="lg:h-[154px] lg:w-[156px] h-[64px] 2-[65px]"
-//         />
-//         <img
-//           src="./images/section-about/badge1.png"
-//           alt=""
-//           className="lg:w-[117px] lg:h-[116px] h-[47px] w-[48]"
-//         />
-//       </div>
-//       <h2 className="font-patrick-hand  text-center lg:text-4xl text-xl pb-5">
-//         About memenfts
-//       </h2>
-//       <p className=" font-patrick-hand  text-center lg:text-lg text-sm w-3/4 lg:px-[75px] px-4 space-y-2 text-[#0A0A0A]">
-//         <span className=" leading-3">
-//           It is a long established fact that a reader will be distracted
-//           by the readable content of a page when looking at its layout.
-//         </span>
-
-//         <br />
-//         <span className=" leading-3">
-//           The point of using Lorem Ipsum is that it has a more-or-less
-//           normal distribution of letters, as opposed to using 'Content
-//           here, content here', making it look like readable English.
-//         </span>
-//       </p>
-//     </div>
-//     <div className=" flex flex-row justify-center items-center gap-[14.2px] z-10 lg:mt-0 mt-[12%] sm:-mt-4">
-//       {NFTS.map((card: NFTCardProps, index: number) => (
-//         <NFTCard {...card} index={index} key={index} />
-//       ))}
-//     </div>
-//   </div>
-// </div>
-// <span className="bg-about-section-floor absolute w-screen -bottom-[155px] h-[273px] bg-cover bg-center"></span>
-// {/* background layer */}
-// <span className="bg-about-section-gold-l1 absolute -left-[30px] md:-left-[127px] lg:h-[500px] h-[40%] w-[108%] bg-no-repeat bg-cover md:bottom-[6%] bottom-[7%] bg-left"></span>
-
-// {/* forground layer */}
-// <span className="bg-about-section-gold-l2-mobile z-[11] md:bg-about-section-gold-l2 absolute bottom-[6%] md:-bottom-[1%] md:left-[2%]  lg:h-[300px] h-[20%] md:h-[30%]   w-screen bg-no-repeat bg-cover bg-left"></span>
-// </div>

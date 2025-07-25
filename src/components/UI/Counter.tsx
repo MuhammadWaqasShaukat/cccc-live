@@ -14,10 +14,10 @@ const Counter = () => {
   });
 
   useEffect(() => {
-    if (!connected || ctx.lotteryState.ended) {
-      setDisabled({ min: true, max: true });
-      return;
-    }
+    // if (!connected || ctx.lotteryState.ended) {
+    //   setDisabled({ min: true, max: true });
+    //   return;
+    // }
 
     setDisabled((prev) => ({
       ...prev,
@@ -44,30 +44,30 @@ const Counter = () => {
   }, []);
 
   return (
-    <div className="flex flex-row justify-between py-1.5 px-3 items-center bg-[#FFFFFF99] w-full md:w-[160px] rounded-[7px] box-border min-w-[8rem] md:min-w-0 h-12 md:h-auto">
+    <div className="flex flex-row justify-between py-1.5 px-3 items-center bg-[#FFFFFF99] w-max sm:w-[160px] md:w-[128px] rounded-[7px] box-border min-w-[8rem] md:min-w-0 h-12 md:h-auto">
       <button
         disabled={disabled.min}
         type="button"
-        className="size-7 bg-[#B69772] disabled:bg-[#89898866] disabled:hover:bg-[#89898866]  hover:bg-[#9F8362] active:bg-[#816A4F] rounded-full grid place-content-center"
+        className=" size-5 md:size-6 sm:size-7 bg-[#B69772] disabled:bg-[#89898866] disabled:hover:bg-[#89898866]  hover:bg-[#9F8362] active:bg-[#816A4F] rounded-full grid place-content-center"
         onClick={() => {
           if (ctx.count === 1) return;
           ctx.setCount((prev: number) => prev - 1);
         }}
       >
-        <div className="bg-counter-minus bg-contain bg-no-repeat size-4 bg-center"></div>
+        <div className="bg-center bg-no-repeat bg-contain bg-counter-minus size-3 sm:size-4 md:size-3"></div>
       </button>
-      <span className=" text-black text-4xl md:text-[48px] font-patrick-hand  leading-none">
+      <span className="text-2xl leading-none text-black sm:text-4xl lg:text-3xl md:text-2xl font-patrick-hand">
         {ctx.count}
       </span>
       <button
         disabled={disabled.max}
         type="button"
-        className="size-7 bg-[#B69772]  disabled:bg-[#89898866] disabled:hover:bg-[#89898866]  hover:bg-[#9F8362] active:bg-[#816A4F]  rounded-full grid place-content-center"
+        className=" size-5 md:size-6 sm:size-7 bg-[#B69772]  disabled:bg-[#89898866] disabled:hover:bg-[#89898866]  hover:bg-[#9F8362] active:bg-[#816A4F]  rounded-full grid place-content-center"
         onClick={() => {
           ctx.setCount!(ctx.count + 1);
         }}
       >
-        <div className="bg-counter-plus bg-contain bg-no-repeat size-4 bg-center"></div>
+        <div className="bg-center bg-no-repeat bg-contain bg-counter-plus size-3 sm:size-4 md:size-3"></div>
       </button>
     </div>
   );

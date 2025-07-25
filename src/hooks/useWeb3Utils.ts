@@ -113,12 +113,6 @@ const useWeb3Utils = () => {
       program.programId
     );
 
-    // const [vault] = PublicKey.findProgramAddressSync(
-    //   [Buffer.from("vault")],
-    //   program.programId
-    // );
-
-    // console.log("vultadd", vault.toBase58());
     //@ts-ignore
     const state = await program.account.state.fetch(lottery);
 

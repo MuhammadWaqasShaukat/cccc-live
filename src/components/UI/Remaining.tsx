@@ -19,13 +19,13 @@ const Remaining = () => {
 
   return (
     <div className="flex-1 flex flex-col justify-start items-start relative before:content-[''] before:w-[6px] before:h-full before:rounded-[2px] before:bg-[#D18A27] before:absolute before:left-0 ">
-      <h4 className="font-patrick-hand-sc text-2xl uppercase ml-4">
+      <h4 className="ml-4 text-base md:text-lg lg:text-xl xl:text-2xl font-patrick-hand-sc ">
         Remaining
       </h4>
-      <div className="font-heavitas  ml-4">
-        <span className="text-[28px] text-[#292726]">
+      <div className="ml-4 font-semibold font-heavitas">
+        <span className="text-lg md:text-xl lg:text-2xl xl:text-3xl  text-[#292726]">
           {remainingState.mintedNFTs}
-          <span className="text-[20px] text-base text-[#29272699]">
+          <span className="text-base lg:text-xl md:text-lg xl:text-2xl  text-[#29272699]">
             /{remainingState.totalNFTs}
           </span>
         </span>

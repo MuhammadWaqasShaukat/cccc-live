@@ -10,6 +10,78 @@ import Modal from "./UI/Modal";
 import Remaining from "./UI/Remaining";
 import MintButton from "./UI/MintButton";
 
+const BookmarkSM = () => {
+  const { bookmark, setBookmark } = useContext(CottonCandyContext);
+
+  const handleBookmarkChange = (newChapter: BookMark) => {
+    setBookmark(newChapter);
+  };
+
+  return (
+    <>
+      <button
+        onClick={(e: MouseEvent) => {
+          e.preventDefault();
+          e.stopPropagation();
+          handleBookmarkChange("mint");
+        }}
+        className={`w-[85px] xs:w-[112px] xs:h-[45px]  bg-no-repeat bg-contain ${
+          bookmark === "mint"
+            ? "bg-bm-sm xs:h-[44px] h-[31px]"
+            : "bg-bm-sm-1 xs:h-[43px] h-[28px]"
+        }`}
+      >
+        <div className="flex flex-row items-center justify-center h-full gap-1 bg-no-repeat bg-contain">
+          <div className="bg-no-repeat bg-contain size-4 bg-bm-mint-icon"></div>
+          <p className="text-lg text-white font-patrick-hand">MINT</p>
+        </div>
+      </button>
+      <button
+        onClick={(e: MouseEvent) => {
+          e.preventDefault();
+          e.stopPropagation();
+          handleBookmarkChange("nfts");
+        }}
+        className={`w-[85px]  xs:w-[112px] xs:h-[45px] bg-no-repeat bg-contain ${
+          bookmark === "nfts"
+            ? "bg-bm-sm xs:h-[44px] h-[31px]"
+            : "bg-bm-sm-1 xs:h-[43px] h-[28px]"
+        }`}
+      >
+        <div className="flex flex-row items-center justify-center h-full gap-1 bg-no-repeat bg-contain">
+          <div className="bg-no-repeat bg-contain size-4 bg-bm-nft-icon "></div>
+          <p className="text-lg text-white font-patrick-hand">NFTs</p>
+        </div>
+      </button>
+      <button
+        onClick={(e: MouseEvent) => {
+          e.preventDefault();
+          e.stopPropagation();
+          handleBookmarkChange("eggs");
+        }}
+        className={`w-[85px] xs:w-[112px] xs:h-[45px] bg-no-repeat bg-contain ${
+          bookmark === "eggs"
+            ? "bg-bm-sm xs:h-[44px] h-[31px]"
+            : "bg-bm-sm-1 xs:h-[43px] h-[28px]"
+        }`}
+      >
+        <div className="flex flex-row items-center justify-center h-full gap-1 bg-no-repeat bg-contain">
+          <div className="bg-no-repeat bg-contain size-4 bg-bm-egg-icon "></div>
+          <p className="text-lg text-white font-patrick-hand">EGGs</p>
+        </div>
+      </button>
+
+      <button
+        className={`h-[38px] w-[35px] bg-no-repeat bg-contain bg-bm-help`}
+      >
+        <div className="flex flex-row items-center justify-center h-full gap-1 bg-no-repeat bg-contain">
+          <p className="text-2xl text-white font-patrick-hand">?</p>
+        </div>
+      </button>
+    </>
+  );
+};
+
 const MintSection = () => {
   const ctx = useContext(CottonCandyContext);
 
@@ -19,25 +91,17 @@ const MintSection = () => {
 
   return (
     <Modal
+      className=""
       onBackgroundClick={() => {
         ctx.setCurrentModal(null);
         ctx.setBookmark("mint");
         ctx.setActiveMenu("none");
       }}
     >
-      {/* <div className=" relative" id="mint-section" ref={ctx.mintSectionRef}> */}
-      {/* <span className="bg-mint-section-stripe-pattern h-8 block bg-repeat-x bg-cover z-10 -m-[2px]"></span> */}
-      {/* <div className=" lg:h-[1348px] h-screen w-screen relative bg-mint-section bg-no-repeat bg-cover flex flex-col md:justify-center justify-start items-center"> */}
-      <div
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-        }}
-        className="md:bg-mint-section-book  md:h-[768px] w-full md:w-[1163px] md:pl-[170px] md:pr-[150px] md:py-[100px] h-full z-50 relative"
-      >
+      <div className="md:bg-mint-section-book  mt-16 bg-sm-mint-section-book w-full bg-no-repeat bg-center md:bg-contain bg-cover md:w-[720px] md:h-[470px] lg:w-[850px] lg:h-[560px] xl:w-[950px] xl:h-[620px] xl:pr-[120px] xl:pl-[136px] lg:pr-[98px] md:pr-20 md:pl-24  lg:pl-[107px] lg:pt-[75px] lg:pb-[95px] xl:max-w-[1163px] md:pt-16 md:pb-20 h-full z-50 relative">
         {/* nav */}
 
-        <div className=" flex flex-col absolute -right-7 gap-7">
+        <div className="absolute flex-col hidden md:flex xl:-right-7 lg:-right-10 md:-right-4 gap-7 lg:gap-3 md:gap-2">
           <Bookmark
             active={ctx.bookmark === "mint"}
             onClick={(e: MouseEvent) => {
@@ -45,7 +109,7 @@ const MintSection = () => {
               e.stopPropagation();
               handleBookmarkChange("mint");
             }}
-            className="bg-bm-mint "
+            className="bg-bm-mint"
             disabledClasss="bg-bm-mint-1"
           >
             <span className="sr-only ">Mint</span>
@@ -78,103 +142,111 @@ const MintSection = () => {
           </Bookmark>
         </div>
 
+        <div className="fixed top-0 left-0 right-0 h-[70px] px-5 bg-right bg-cover  md:hidden bg-bm-sm-header z-[51]">
+          <div className="flex flex-row items-center justify-start gap-3  sm:w-2/3 pt-2.5">
+            <BookmarkSM />
+          </div>
+        </div>
+
         {ctx.bookmark === "mint" && (
           <>
             {/* <PublicMint /> */}
-            <div className=" flex flex-row justify-between items-start gap-20 h-full ">
+
+            <div className="flex flex-row items-end justify-center w-full p-2 bg-bottom bg-cover md:hidden md:justify-start md:bg-none bg-mint-section-heading md:p-0 ">
+              <img
+                src="./images/letter-m-mint.png"
+                alt=""
+                className="w-12 h-auto xs:w-14"
+              />
+              <h3 className="text-2xl uppercase font-patrick-hand-sc xs:text-3xl">
+                inting is Live!
+              </h3>
+            </div>
+
+            <div className="flex flex-col items-center justify-between h-full mx-auto sm:w-2/3 md:flex-row md:items-start md:gap-4 md:w-full ">
               {/*left page*/}
-              <div className=" h-[500px] flex-1 flex flex-col justify-center items-center mt-2 -ml-2">
-                {/* <AnimatedElement
-                  className=" h-[500px] flex-1 md:block hidden"
-                  source={ANIMATION_WEBM_SOURCES["HorseAnimation"]}
-                /> */}
-                <div className="w-full h-full relative ">
+              <div className="flex flex-col items-center justify-center flex-1 h-full -ml-2">
+                <div className="h-[90%] w-[90%] min-w-64 relative">
                   <img
                     src="./images/section-mint/minting-image.png"
                     alt=""
-                    className="h-[98%]   absolute top-0 left-0 border-[3px] border-white rounded-xl card-shadow-1"
+                    className="h-[98%] min-w-[191px] aspect-[191/269]  absolute top-0 left-0 border-[3px] border-white rounded-xl card-shadow-1"
                   />
-
                   <img
                     src="./images/section-mint/nft-1.png"
                     alt=""
-                    className="h-[96%] absolute bottom-2.5 left-6 -rotate-2 border-[3px] border-white rounded-xl origin-bottom-left card-shadow-1 "
+                    className="h-[96%] min-w-[191px] aspect-[191/269] absolute bottom-2.5 left-6 -rotate-2 border-[3px] border-white rounded-xl origin-bottom-left card-shadow-1 "
                   />
                   <img
                     src="./images/section-mint/minting-image.png"
                     alt=""
-                    className="h-[98%] absolute top-4 left-5  rotate-2 border-[3px] border-white rounded-xl card-shadow-1 "
+                    className="h-[98%] min-w-[191px] aspect-[191/269] absolute top-4 left-5  rotate-2 border-[3px] border-white rounded-xl card-shadow-1 "
                   />
                 </div>
               </div>
               {/*right page  */}
-              <div className=" md:h-[530px]  flex-1 flex flex-col h-full w-full justify-between items-center gap-7">
-                <div className="flex  flex-row md:justify-start justify-end w-[90%] md:w-full items-end md:bg-none bg-mint-section-heading bg-cover bg-bottom md:p-0 p-2 ">
+              <div className="flex flex-col items-center justify-start flex-1 w-full h-full gap-2 lg:gap-4 md:gap-3 xl:gap-5">
+                <div className="md:flex hidden flex-row md:justify-start justify-end w-[90%] md:w-full items-end md:bg-none bg-mint-section-heading bg-cover bg-bottom md:p-0 p-2 ">
                   <img
                     src="./images/letter-m-mint.png"
                     alt=""
-                    className="h-[70%] md:h-auto"
+                    className="h-[70%] md:h-auto lg:size-10 md:size-8 xl:size-14"
                   />
-                  <h3 className=" font-patrick-hand-sc md:text-[40px] text-[34px] uppercase ">
+                  <h3 className="uppercase font-patrick-hand-sc lg:text-3xl md:text-2xl xl:text-4xl">
                     inting is Live!
                   </h3>
                 </div>
 
-                {/* <AnimatedElement
-                className="md:hidden flex flex-row justify-center w-[60%]"
-                source={ANIMATION_WEBM_SOURCES["HorseAnimation"]}
-              /> */}
-
-                <div className=" flex flex-row justify-between items-start w-full">
+                <div className="flex flex-row items-start justify-center w-full px-12 sm:justify-between sm:p-0">
                   <Remaining />
                   <Price />
                 </div>
 
-                <div className="flex flex-row justify-between items-center w-full">
+                <div className="flex flex-row items-center justify-between w-full px-12 sm:p-0">
                   <div className="flex-1">
-                    <h2 className="font-patrick-hand-sc text-2xl text-black  ">
+                    <h2 className="text-lg text-black font-patrick-hand-sc sm:text-2xl xl:3xl lg:text-2xl md:text-xl ">
                       Quantity
                     </h2>
                   </div>
                   <Counter />
                 </div>
 
-                <div className=" flex flex-col justify-start items-start w-full gap-4">
+                <div className="flex flex-col items-start justify-start w-full gap-1 xl:gap-2">
                   {/* Cost */}
-                  <div className="flex flex-row justify-between items-center w-full">
+                  <div className="flex flex-row items-center justify-between w-full px-12 sm:p-0">
                     <div className="flex-1">
-                      <h2 className="font-patrick-hand-sc text-3xl text-black  ">
+                      <h2 className="text-xl black text- font-patrick-hand-sc xl:3xl lg:text-2xl md:text-xl">
                         Cost
                       </h2>
                     </div>
                     <div>
-                      <span className="font-patrick-hand-sc text-3xl text-black  ">
+                      <span className="text-xl text-black font-patrick-hand-sc xl:text-3xl lg:text-2xl md:text-xl">
                         {ctx.price} Sol
                       </span>
                     </div>
                   </div>
                   {/* Gas Fee*/}
-                  <div className="flex flex-row justify-between items-center w-full">
+                  <div className="flex flex-row items-center justify-between w-full px-12 sm:p-0">
                     <div className="flex-1">
-                      <h2 className="font-patrick-hand-sc text-3xl text-black  ">
+                      <h2 className="text-xl black text- font-patrick-hand-sc xl:3xl lg:text-2xl md:text-xl">
                         Gas Fee
                       </h2>
                     </div>
                     <div>
-                      <span className="font-patrick-hand-sc text-3xl text-black  ">
+                      <span className="text-xl text-black font-patrick-hand-sc xl:text-3xl lg:text-2xl md:text-xl">
                         {ctx.gasFee} Sol
                       </span>
                     </div>
                   </div>
                   {/* Total */}
-                  <div className="flex flex-row justify-between items-center w-full">
+                  <div className="flex flex-row items-center justify-between w-full px-12 sm:p-0">
                     <div className="flex-1">
-                      <h2 className="font-patrick-hand-sc text-3xl text-black  ">
+                      <h2 className="text-xl black text- font-patrick-hand-sc xl:3xl lg:text-2xl md:text-xl">
                         Total
                       </h2>
                     </div>
                     <div>
-                      <span className="font-patrick-hand-sc text-3xl text-black  ">
+                      <span className="text-xl text-black font-patrick-hand-sc xl:text-3xl lg:text-2xl md:text-xl">
                         {ctx.gasFee + ctx.price} Sol
                       </span>
                     </div>
@@ -189,22 +261,6 @@ const MintSection = () => {
         {ctx.bookmark === "nfts" && <NFTs />}
         {ctx.bookmark === "eggs" && <Eggs />}
       </div>
-      {/* </div> */}
-      {/* bg-iamges  */}
-      {/* <div className="bg-mint-section-coins-2 bg-no-repeat bg-contain  w-[239px] h-[262px] absolute top-12 md:block hidden"></div>
-      <div className=" bg-mint-section-ipods bg-no-repeat bg-contain w-44 md:w-[337px] h-[257px] absolute top-20 md:top-12 md:left-[342px] -right-16 md:-right-10 z-[11]"></div>
-      <div className=" bg-mint-section-cannabis bg-no-repeat bg-contain  w-[327px] h-[252px] absolute top-12 left-[35%] md:block hidden"></div>
-      <div className=" bg-mint-section-coins-1 bg-no-repeat bg-contain w-44 md:w-[361px] h-[286px] absolute top-20 md:top-12 md:!right-[25%] right-[75%] z-[11]"></div>
-      <div className=" bg-mint-section-paper bg-no-repeat bg-[40%] z-0  w-[548px] h-[468px] absolute -top-[2.2%] -right-20 md:block hidden"></div>
-      <div className=" bg-mint-section-donat bg-no-repeat bg-contain w-44 md:w-[308px] h-[282px] absolute top-60 md:top-[25%] md:!left-0 -left-[20%]"></div>
-      <div className=" bg-mint-section-keys bg-no-repeat bg-contain  w-[295px] h-[341px] absolute top-[45%] left-0 md:block hidden"></div>
-      <div className=" bg-mint-section-feather bg-no-repeat bg-contain w-32 md:w-[243px] h-[610px] absolute top-[27%] md:top-[31%] md:right-[5%] -right-20 -rotate-[19deg] md:-rotate-[25deg] z-0"></div>
-      <div className=" bg-mint-section-potato bg-no-repeat bg-contain  w-[517px] h-[476px] absolute bottom-[0.5%] -left-[2%] md:block hidden"></div>
-      <div className=" bg-mint-section-coins-3 bg-no-repeat bg-contain z-[11] w-44 md:w-[330px] h-[186px] absolute md:!bottom-[5%] bottom-[26%] md:!left-[25%] -left-[25%]"></div>
-      <div className=" bg-mint-section-letter bg-no-repeat bg-contain  w-[593px] h-[397px] absolute -bottom-[5.5%] left-[50%] md:block hidden"></div>
-      <div className=" bg-mint-section-coins-2-2 bg-no-repeat bg-contain  w-[261px] h-[288px] absolute bottom-[5%] right-[0px] md:block hidden"></div>
-      <span className="bg-mint-section-stripe-pattern h-8 block bg-repeat-x bg-cover"></span> */}
-      {/* </div> */}
     </Modal>
   );
 };

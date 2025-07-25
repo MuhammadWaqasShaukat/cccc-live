@@ -16,8 +16,9 @@ const HeroSection = () => {
   const { connected, disconnect } = useWallet();
   const { setVisible } = useWalletModal();
 
-  const fireRef = useRef<HTMLVideoElement | null>(null);
-  const magicRef = useRef<HTMLVideoElement | null>(null);
+  const fireRef = useRef<HTMLVideoElement>(null);
+  const magicRef = useRef<HTMLVideoElement>(null);
+  // const candleRef = useRef<HTMLVideoElement>(null);
 
   const handleMouseEnter = (videoRef: any) => {
     videoRef.current?.play();
@@ -104,7 +105,7 @@ const HeroSection = () => {
       <div className="bg-hero-section-logo max-w-[700px] max-h-[400px] min-w-[288px] h-[25%] w-[50%] min-h-[149px] bg-no-repeat bg-contain bg-bottom absolute left-[50%] -translate-x-[50%] lg:top-[10%] top-[13%]"></div>
       {/* casltes  red*/}
       <div className="hidden sm:block relative md:static top-[75%] md:top-auto">
-        <div className=" bg-hero-section-castle-red-1 max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-[1] md:bottom-[48%]  lg:bottom[50%]  bottom-[11rem] md:left-0"></div>
+        <div className=" bg-hero-section-castle-red-1 max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-[1] md:bottom-[48%]  lg:bottom[50%]  bottom-[11rem] bg-left-bottom  md:left-0"></div>
 
         <motion.div
           initial={{ y: 20 }}
@@ -115,12 +116,14 @@ const HeroSection = () => {
             damping: 12,
             mass: 0.5,
           }}
-          className="bg-hero-section-frog  max-w-[211px] max-h-[230px] h-[17%] w-[15.7%] min-h-[69px] bottom-[50%] sm:top-[260px] min-w-[61px] bg-contain bg-no-repeat z-10 absolute  left-0  bg-left-bottom"
+          className="bg-hero-section-frog  max-w-[211px] max-h-[230px] h-[17%] w-[15.7%] min-h-[69px] bottom-[50%]  min-w-[61px] bg-contain bg-no-repeat z-10 absolute  left-0  bg-left-bottom"
         ></motion.div>
 
         <div className="bg-hero-section-chillguy lg:w-[352px] max-h-[341px] h-[25.30%] w-[26%] min-w-[117px] min-h-[111px] bg-contain z-10 absolute md:top-[24%] bottom-[10rem] md:left-[15%] lg:left-[6%] left-[4%] bg-bottom bg-no-repeat"></div>
-        <div className=" bg-hero-section-castle-red-2  pointer-events-none  max-w-[400px] max-h-[619px] min-w-[162px] min-h-[230px]  bg-left-bottom   h-[50%] w-[37%] bg-contain bg-no-repeat absolute bottom-[12%] z-30"></div>
-        <div className=" bg-[#1e1e1e] md:max-w-[220px]  -mt-1 first-letter:  max-w-28 max-h-[320px] md:min-w-[210px] min-w-28 min-h-[160px] bg-left-bottom   h-[50%] md:w-[37%] w-[25%] bg-contain bg-no-repeat absolute bottom-[12%] z-10"></div>
+        <div className=" max-w-[400px] max-h-[619px] min-w-[162px] min-h-[230px] h-[50%] w-[37%] absolute bottom-[12%] ">
+          <div className=" bg-hero-section-castle-red-2 h-full w-full  pointer-events-none bg-left-bottom  bg-contain bg-no-repeat z-30 relative"></div>
+          <div className=" bg-[#1e1e1e] -mt-1 bg-left-bottom md:w-[65%] lg:w-[60%] md:h-[70%] sm:w-[50%] h-[70%]   bg-contain bg-no-repeat absolute bottom-0 z-10"></div>
+        </div>
         <div className="bg-hero-section-memcoin-1 max-w-[273px] max-h-[319px] w-[20%] h-[24%] min-w-[70px] min-h-[78px] absolute bottom-[11%] left-[0%] z-20 md:block hidden bg-contain bg-no-repeat"></div>
       </div>
       <div className="hidden sm:block bg-hero-section-red-1 lg:w-[96px] lg:h-[88px] w-[50px] h-[54px]  bg-contain bg-no-repeat  absolute  bottom-[5%] lg:left-[30%] left-[5%] z-10"></div>
@@ -180,6 +183,22 @@ const HeroSection = () => {
 
         <div className="bg-hero-section-memcoin-5 max-w-[346px] max-h-[432px] w-[25.68%] h-[32%] min-w-[137px] min-h-[171px] bg-contain bg-no-repeat z-30 absolute -bottom-4 md:bottom-[10%] right-[10%] bg-right-bottom "></div>
         <div className="bg-hero-section-memcoin-6 max-w-[350px] max-h-[434px] min-w-[119px] min-h-[147px] w-[25.68%] h-[32%] bg-contain bg-no-repeat z-[31]  absolute -top-24 md:top-[68%] lg:right-[6%] bg-right-bottom  right-[0%]"></div>
+
+        {/* <div className=" w-[50%] absolute  md:w-[50%] h-[80.48%] max-w-[550px] max-h-[600px] min-w-[147px] min-h-[176px] lg:-bottom-[1%]  md:-bottom-[14%] sm:-bottom-[26%] guide">
+          <div className=" relative flex flex-col justify-end items-center">
+            <div
+              className=" absolute h-28 w-24 -ml-2 top-52 z-[999]"
+              onMouseEnter={() => handleMouseEnter(candleRef)}
+              onMouseLeave={() => handleMouseLeave(candleRef)}
+            ></div>
+            <AnimatedElement
+              videoRef={candleRef}
+              className="object-contain "
+              source={ANIMATION_WEBM_SOURCES["candle"]}
+            />
+          </div>
+        </div> */}
+
         <div className="  md:w-[400px] md:h-[300px] w-[250px] origin-center  h-[200px] bg-no-repeat z-[31]  absolute  md:block hidden -bottom-[10%] lg:bottom-[1%] bg-bottom  lg:right-[10%] right-[0%]">
           <div className=" relative flex flex-col justify-end items-center">
             <div

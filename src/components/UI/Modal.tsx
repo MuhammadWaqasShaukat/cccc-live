@@ -41,7 +41,7 @@ const Modal: React.FC<ModalProps> = ({
         }}
         className={`z-50 w-full bg-black/70 h-full absolute top-0 left-0 ${className}`}
       ></div>
-      <div className="z-[51] flex flex-col justify-center items-center">
+      <div className="z-[50] flex flex-col justify-center items-center md:h-auto md:w-auto h-full w-full">
         {children}
       </div>
     </div>

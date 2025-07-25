@@ -53,15 +53,19 @@ const NFTBox: React.FC<{ nft: any; nftIndex: number }> = ({
   return (
     <div
       onClick={handleNFTClicked}
-      className={`bg-transparent custom-pointer rounded-xl shadow-md flex flex-col items-center relative h-fit`}
+      className={`bg-transparent custom-pointer rounded-xl md:shadow-md flex flex-col items-center relative md:h-fit min-w-[29%] md:p-0`}
     >
-      <img src={imageSrc} alt={`NFT`} className="rounded-md " />
-      <h3 className="absolute top-2 right-2 rounded text-white font-patrick-hand-sc tracking-wide text-4xl text-outline-0">
+      <img
+        src={imageSrc}
+        alt={`NFT`}
+        className="rounded-md w-[-webkit-fill-available]"
+      />
+      <h3 className="absolute text-2xl tracking-wide text-white rounded top-2 right-4 md:right-1 md:top-0 font-patrick-hand-sc md:text-lg lg:text-xl xl:text-2xl outlined-text-sm">
         #{1613 + 1}
       </h3>
       {nftState && !nftState.isEggClaimed && (
-        <div className="absolute bottom-2 size-16 group custom-pointer">
-          <div className="bg-egg-glow group-hover:bg-egg-glow-1 bg-contain bg-center bg-no-repeat size-16 transition-all duration-100"></div>
+        <div className="absolute bottom-2 md:size-12 lg:size-14 xl:size-16 group custom-pointer">
+          <div className="transition-all duration-100 bg-center bg-no-repeat bg-contain bg-egg-glow group-hover:bg-egg-glow-1 size-16 md:size-12 lg:size-14 xl:size-16"></div>
         </div>
       )}
     </div>

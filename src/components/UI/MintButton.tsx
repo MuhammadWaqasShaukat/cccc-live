@@ -11,7 +11,7 @@ const MintButton = () => {
   const [isMinting, setisMinting] = useState<boolean>(false);
 
   const { connected } = useWallet();
-  const { setVisible } = useWalletModal();
+  const { setVisible, visible } = useWalletModal();
 
   const getNewBoughtNft = async () => {
     const currentMap = new Map(ctx.myNfts.map((nft) => [nft.mintAddress, nft]));
@@ -64,7 +64,7 @@ const MintButton = () => {
   return (
     <button
       disabled={isMinting}
-      className={`bg-mint-btn h-[90px] w-[350px]  relative bg-center bg-contain bg-no-repeat group z-10 ${
+      className={`bg-mint-btn  max-h-[90px] max-w-[350px] min-w-64 min-h-14 relative bg-center bg-contain bg-no-repeat group z-10 ${
         isMinting ? " cursor-not-allowed" : ""
       }`}
       onClick={(e) => {
@@ -73,12 +73,18 @@ const MintButton = () => {
         handleNFTMintClick();
       }}
     >
-      {!isMinting && (
-        <span className="absolute inset-0 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20 transition duration-200 z-20 "></span>
+      {(isMinting || visible) && (
+        <img src="./images/loading-dots.svg" className="mx-auto " alt="" />
       )}
-      <span className=" absolute uppercase inset-0 w-full h-full grid place-content-center font-heavitas text-xl  leading-none text-white z-30">
-        {connected ? "Mint now" : "Connect"}
-      </span>
+
+      {!isMinting && (
+        <span className="absolute inset-0 z-20 transition duration-200 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20 "></span>
+      )}
+      {!(isMinting || visible) && (
+        <span className="absolute inset-0 z-30 grid w-full h-full text-xl leading-none text-white uppercase place-content-center font-heavitas">
+          {connected ? "Mint now" : "Connect"}
+        </span>
+      )}
     </button>
   );
 };

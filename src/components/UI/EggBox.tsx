@@ -173,26 +173,26 @@ const EggBox: React.FC<{ egg: any; nftMint: string }> = ({ egg, nftMint }) => {
     <div
       data-nft-mint={nftMint}
       onClick={handleCrackEgg}
-      className={`aspect-square border-2 border-black rounded-xl grid place-content-center h-auto w-full overflow-hidden  relative group`}
+      className={`aspect-square border-2 border-black rounded-xl grid place-content-center grid-cols-1 grid-rows-1 h-full w-full sm:min-w-28 xs:min-w-20 md:min-w-[72px] lg:min-w-24  overflow-hidden  relative group`}
     >
       {/* reward */}
       {fulfilledState?.status === "done" &&
         fulfilledState?.lotteryStatus === "won" && (
-          <div className="bg-hatch-won h-full w-full absolute top-0 left-0 right-0 bottom-0 z-10"></div>
+          <div className="absolute top-0 bottom-0 left-0 right-0 z-10 w-full h-full bg-hatch-won"></div>
         )}
       {/* no reward */}
       {fulfilledState?.status === "done" &&
         fulfilledState?.lotteryStatus === "none" && (
-          <div className="bg-hatch-lost h-full w-full absolute top-0 left-0 right-0 bottom-0 z-10"></div>
+          <div className="absolute top-0 bottom-0 left-0 right-0 z-10 w-full h-full bg-hatch-lost"></div>
         )}
       {fulfilledState?.status === "pending" && (
         <div
-          className="hammer-bg aspect-square z-10  bg-cover min-w-[105px] hidden group-hover:block transition-all duration-300 pointer-events-none"
+          className="z-10 hidden w-full h-full transition-all duration-300 bg-cover pointer-events-none hammer-bg aspect-square group-hover:block"
           style={{ width: "inherit" }}
         >
           <div className="relative pointer-events-none">
             <motion.img
-              className=" m-auto absolute pointer-events-none"
+              className="absolute m-auto pointer-events-none "
               src={isStriking ? strikeSrc : normalSrc}
               animate={
                 isStriking
@@ -206,6 +206,7 @@ const EggBox: React.FC<{ egg: any; nftMint: string }> = ({ egg, nftMint }) => {
               initial={false}
               style={{
                 transformOrigin: "bottom bottom",
+                width: "-webkit-fill-available",
               }}
             />
           </div>
@@ -213,7 +214,7 @@ const EggBox: React.FC<{ egg: any; nftMint: string }> = ({ egg, nftMint }) => {
       )}
 
       {crackpoints > 0 && fulfilledState?.status === "pending" && (
-        <div className=" absolute z-10 bg-black/70 bloack group-hover:hidden p-1">
+        <div className="absolute z-10 p-1 bg-black/70 bloack group-hover:hidden">
           <CircularProgressbarWithChildren
             value={crackpoints}
             styles={buildStyles({
@@ -226,7 +227,7 @@ const EggBox: React.FC<{ egg: any; nftMint: string }> = ({ egg, nftMint }) => {
               trailColor: "rgba(166, 255, 0, 0.2)",
             })}
           >
-            <span className=" font-patrick-hand text-white text-outline-1 text-xl">
+            <span className="text-xl text-white font-patrick-hand text-outline-1">
               {crackpoints}/10k
             </span>
           </CircularProgressbarWithChildren>
@@ -235,7 +236,7 @@ const EggBox: React.FC<{ egg: any; nftMint: string }> = ({ egg, nftMint }) => {
       <img
         src={imageSrc ?? ""}
         alt={`Egg`}
-        className="object-cover overflow-hidden absolute z-0"
+        className="object-cover overflow-hidden absolute z-0 w-[-webkit-fill-available]"
       />
     </div>
   );
