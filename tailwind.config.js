@@ -70,7 +70,9 @@ export default {
         'hero-section-memcoin-7': "url('/images/section-hero/memcoin7.png')",
         'hero-section-memcoin-8': "url('/images/section-hero/memcoin8.png')",
         'hero-section-tombstone': "url('/images/section-hero/menu-tombstone.png')",
+        
         'menu-btn': "url('/images/section-hero/menu-button.png')",
+
         'menu-btn-hovered': "url('/images/section-hero/menu-button-hovered.png')",
         'hero-connect': "url('/images/section-hero/connect.png')",
         'hero-section-logo': "url('/images/section-hero/logo-lg.png')",

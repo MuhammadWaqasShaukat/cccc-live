@@ -224,6 +224,12 @@ img,
     transform: rotateY(180deg) rotateZ(-3deg);
   }
 
+  .bg-swiper {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/swiper-bg.png');
+    background-position: center;
+    background-size: cover;
+  }
 
   .bg-hatch-won {
     background-image:
@@ -278,6 +284,25 @@ img,
   }
 
 
+.fade-left-half {
+  background: linear-gradient(to right,
+      rgba(0, 0, 0, 0.9) 0%,
+      rgba(0, 0, 0, 0.7) 20%,
+      rgba(0, 0, 0, 0.5) 30%,
+      rgba(0, 0, 0, 0.4) 40%,
+      rgba(0, 0, 0, 0) 100%
+    );
+}
+  
+.fade-right-half {
+  background: linear-gradient(to left,
+        rgba(0, 0, 0, 0.9) 0%,
+        rgba(0, 0, 0, 0.7) 20%,
+        rgba(0, 0, 0, 0.5) 30%,
+        rgba(0, 0, 0, 0.4) 40%,
+        rgba(0, 0, 0, 0) 100%
+      );
+}
   .myImg {
     animation: transitionIn 4s cubic-bezier(0, 0, 1, 1);
   }

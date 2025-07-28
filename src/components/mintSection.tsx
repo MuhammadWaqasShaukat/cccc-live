@@ -143,7 +143,7 @@ const MintSection = () => {
         </div>
 
         <div className="fixed top-0 left-0 right-0 h-[70px] px-5 bg-right bg-cover  md:hidden bg-bm-sm-header z-[51]">
-          <div className="flex flex-row items-center justify-start gap-3  sm:w-2/3 pt-2.5">
+          <div className="flex flex-row items-center justify-start gap-3 pt-5 xs:pt-4 sm:w-2/3">
             <BookmarkSM />
           </div>
         </div>

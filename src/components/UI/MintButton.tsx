@@ -65,7 +65,7 @@ const MintButton = () => {
     <button
       disabled={isMinting}
       className={`bg-mint-btn  max-h-[90px] max-w-[350px] min-w-64 min-h-14 relative bg-center bg-contain bg-no-repeat group z-10 ${
-        isMinting ? " cursor-not-allowed" : ""
+        isMinting ? " cursor-not-allowed opacity-75" : " opacity-100"
       }`}
       onClick={(e) => {
         e.preventDefault();
@@ -74,14 +74,16 @@ const MintButton = () => {
       }}
     >
       {(isMinting || visible) && (
-        <img src="./images/loading-dots.svg" className="mx-auto " alt="" />
+        <div className="grid w-full h-full place-content-center">
+          <img src="./images/loading-dots.svg" className="ml-6" alt="" />
+        </div>
       )}
 
       {!isMinting && (
         <span className="absolute inset-0 z-20 transition duration-200 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20 "></span>
       )}
       {!(isMinting || visible) && (
-        <span className="absolute inset-0 z-30 grid w-full h-full text-xl leading-none text-white uppercase place-content-center font-heavitas">
+        <span className="absolute inset-0 z-30 grid w-full h-full text-3xl leading-none text-white uppercase md:text-4xl place-content-center font-patrick-hand-sc">
           {connected ? "Mint now" : "Connect"}
         </span>
       )}

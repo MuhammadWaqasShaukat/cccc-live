@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const NftLoader = () => {
   return (
-    <div className="grid w-full h-full -ml-6 place-content-center">
+    <div className="grid w-full h-full ml-0 sm:-ml-6 place-content-center">
       <motion.img
         src={"/images/snake-loader.png"}
         alt="Loading..."
