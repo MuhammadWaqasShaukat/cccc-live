@@ -4,7 +4,8 @@ export const ANIMATION_WEBM_SOURCES = {
   fire: "/images/animations/fire.webm",
   HorseAnimation: "/images/animations/HorseAnimation.webm",
   Dog: "/images/animations/DOG.webm",
-  candle: "/images/animations/candle-wizard.webm",
+  candle: "/images/animations/candle.webm",
+  about: "/images/animations/about.webm",
 
   warriors: "/images/animations/Warriors.webm",
   warrior1: "/images/animations/Warrior1.webm",

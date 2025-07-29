@@ -4,12 +4,14 @@ import { CottonCandyContext } from "../../providers/ContextProvider";
 
 interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
   onBackgroundClick: () => void;
+  childContainerStyles?: string;
 }
 
 const Modal: React.FC<ModalProps> = ({
   onBackgroundClick,
   className,
   children,
+  childContainerStyles,
 }) => {
   const ctx = useContext(CottonCandyContext);
 
@@ -41,7 +43,9 @@ const Modal: React.FC<ModalProps> = ({
         }}
         className={`z-50 w-full bg-black/70 h-full absolute top-0 left-0 ${className}`}
       ></div>
-      <div className="z-[51] flex flex-col justify-center items-center md:h-auto md:w-auto h-full w-full">
+      <div
+        className={`z-[51] flex flex-col justify-center  items-center md:h-auto md:w-auto h-full w-full ${childContainerStyles}`}
+      >
         {children}
       </div>
     </div>

@@ -36,10 +36,10 @@ export const NFTs = () => {
         <NFTInstructions setViewInstruction={setViewInstruction} />
       )}
 
-      <div className="flex flex-col items-start justify-start h-full gap-5 px-5 pb-20 mt-12 overflow-y-auto mx-w-2/3 md:hidden ">
+      <div className="flex flex-col items-start justify-start h-full gap-5 px-5 py-20 overflow-y-auto md:hidden ">
         {/* top bar */}
         <div className="flex flex-row items-start justify-between w-full ">
-          <div className="flex flex-row justify-start w-[90%] md:w-full items-center md:bg-none z-40   bg-cover bg-bottom md:pt-2.5 md:pl-4">
+          <div className="flex flex-row justify-start w-[90%] md:w-full items-center md:bg-none z-40 bg-cover bg-bottom md:pt-2.5 md:pl-4">
             <img src="./images/letter-y-nfts.png" alt="" className="size-10" />
             <h3 className="text-2xl uppercase font-patrick-hand-sc">
               our <span className="text-3xl">NFT</span>s

@@ -10,7 +10,7 @@ const MintButton = () => {
 
   const [isMinting, setisMinting] = useState<boolean>(false);
 
-  const { connected } = useWallet();
+  const { connected, connecting } = useWallet();
   const { setVisible, visible } = useWalletModal();
 
   const getNewBoughtNft = async () => {
@@ -73,7 +73,7 @@ const MintButton = () => {
         handleNFTMintClick();
       }}
     >
-      {(isMinting || visible) && (
+      {(isMinting || visible || connecting) && (
         <div className="grid w-full h-full place-content-center">
           <img src="./images/loading-dots.svg" className="ml-6" alt="" />
         </div>
@@ -82,7 +82,7 @@ const MintButton = () => {
       {!isMinting && (
         <span className="absolute inset-0 z-20 transition duration-200 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20 "></span>
       )}
-      {!(isMinting || visible) && (
+      {!(isMinting || visible || connecting) && (
         <span className="absolute inset-0 z-30 grid w-full h-full text-3xl leading-none text-white uppercase md:text-4xl place-content-center font-patrick-hand-sc">
           {connected ? "Mint now" : "Connect"}
         </span>

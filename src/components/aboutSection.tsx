@@ -1,9 +1,21 @@
 import Modal from "./UI/Modal";
 import { CottonCandyContext } from "../providers/ContextProvider";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
+import AnimatedElement from "./UI/AnimatedElement";
+import { ANIMATION_WEBM_SOURCES } from "../constants/animatedElements";
+import { motion } from "framer-motion";
 
 const AboutSection = () => {
   const ctx = useContext(CottonCandyContext);
+  const aboutRef = useRef<HTMLVideoElement>(null);
+
+  const handleMouseEnter = (videoRef: any) => {
+    videoRef.current?.play();
+  };
+
+  const handleMouseLeave = (videoRef: any) => {
+    videoRef.current?.pause();
+  };
 
   return (
     <Modal
@@ -11,16 +23,42 @@ const AboutSection = () => {
         ctx.setActiveMenu("none");
       }}
     >
-      <div className="mt-40 sm:mt-0">
+      <motion.div
+        initial={{
+          opacity: 0,
+        }}
+        animate={{
+          opacity: [0, 1],
+        }}
+        transition={{
+          opacity: {
+            duration: 0.3,
+          },
+        }}
+        className="mt-40 sm:mt-0"
+      >
         {/* for mobile screens */}
         <div className="bg-center bg-no-repeat xs:w-[350px] xs:h-[475px]  h-[435px] w-[300px] bg-contain sm:hidden bg-about-section-castle-sm relative  flex flex-col justify-center items-center">
           <div className="h-[40%] text-center w-[63%] -top-[30%] min-w-[150px] flex flex-col justify-end items-center absolute">
-            <img
+            {/* <img
               src="./images/section-about/memnft-about.png"
               alt=""
               className=""
-            />
+            /> */}
+            <div className="relative ">
+              <div
+                className=" absolute h-full w-full z-[999]"
+                onMouseEnter={() => handleMouseEnter(aboutRef)}
+                onMouseLeave={() => handleMouseLeave(aboutRef)}
+              ></div>
+              <AnimatedElement
+                videoRef={aboutRef}
+                className=""
+                source={ANIMATION_WEBM_SOURCES["about"]}
+              />
+            </div>
           </div>
+
           <div className="flex flex-col items-center justify-between mt-10">
             <h2 className="font-patrick-hand text-center  text-[22px] pb-2">
               About memenfts
@@ -45,16 +83,40 @@ const AboutSection = () => {
             </button>
           </div>
         </div>
-      </div>
+      </motion.div>
       {/* for tablets, desktops, laptop screens (sm:++++) */}
-      <div
+      <motion.div
+        initial={{
+          opacity: 0,
+        }}
+        animate={{
+          opacity: [0, 1],
+        }}
+        transition={{
+          opacity: {
+            duration: 0.3,
+          },
+        }}
         className={`hidden sm:bg-about-section-castle bg-about-section-castle-sm w-[530px] h-[580px]   md:w-[650px] md:h-[700px] xl:w-[700px] xl:h-[750px] xl:max-w-[1163px]  bg-no-repeat sm:flex flex-col justify-end  bg-contain md:bg-center bg-bottom`}
       >
-        <div className="  h-[40%] text-center w-[47.5%]   min-w-[150px] mx-auto pt-8 flex flex-col justify-end items-center sm:mb-8 mb-16">
+        {/* <div className="  h-[40%] text-center w-[47.5%]   min-w-[150px] mx-auto pt-8 flex flex-col justify-end items-center sm:mb-8 mb-16">
           <img
             src="./images/section-about/memnft-about.png"
             alt=""
             className=""
+          />
+        </div> */}
+
+        <div className="relative h-[40%] text-center w-[47.5%] min-w-[150px] mx-auto pt-8 flex flex-col justify-end items-center sm:mb-8 mb-16">
+          <div
+            className=" absolute h-full w-full z-[999] -ml-4"
+            onMouseEnter={() => handleMouseEnter(aboutRef)}
+            onMouseLeave={() => handleMouseLeave(aboutRef)}
+          ></div>
+          <AnimatedElement
+            videoRef={aboutRef}
+            className="-ml-4"
+            source={ANIMATION_WEBM_SOURCES["about"]}
           />
         </div>
 
@@ -81,7 +143,7 @@ const AboutSection = () => {
             </span>
           </button>
         </div>
-      </div>
+      </motion.div>
     </Modal>
   );
 };
