@@ -29,7 +29,7 @@ const Bookmark: React.FC<BookMarkProps> = ({
         duration: 0.3,
         ease: "easeInOut",
       }}
-      className={`px-5 py-2.5 bg-no-repeat bg-contain w-32 h-14 lg:w-28 lg:h-14 md:w-20 md:h-10  ${
+      className={`px-5 py-2.5 bg-no-repeat bg-contain w-32 h-14 lg:w-28 lg:h-14 md:w-20 md:h-10 ${
         active ? className : disabledClasss
       }`}
       style={style}

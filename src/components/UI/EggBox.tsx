@@ -93,7 +93,6 @@ const EggBox: React.FC<{ egg: any; nftMint: string }> = ({ egg, nftMint }) => {
       }, 30000);
       return;
     }
-    debugger;
     try {
       ctx.setCurrentModal(null);
       ctx.setIsPortalOpen(true);
@@ -164,8 +163,6 @@ const EggBox: React.FC<{ egg: any; nftMint: string }> = ({ egg, nftMint }) => {
       (async () => await getEggState())();
     })();
   }, [ctx.refreshNftState]);
-
-  console.log({ fulfilledState });
 
   const imageSrc = "./images/section-mint/nfts/egg.png";
 

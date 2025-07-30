@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 const AboutSection = () => {
   const ctx = useContext(CottonCandyContext);
   const aboutRef = useRef<HTMLVideoElement>(null);
+  const smAboutRef = useRef<HTMLVideoElement>(null);
 
   const handleMouseEnter = (videoRef: any) => {
     videoRef.current?.play();
@@ -99,22 +100,14 @@ const AboutSection = () => {
         }}
         className={`hidden sm:bg-about-section-castle bg-about-section-castle-sm w-[530px] h-[580px]   md:w-[650px] md:h-[700px] xl:w-[700px] xl:h-[750px] xl:max-w-[1163px]  bg-no-repeat sm:flex flex-col justify-end  bg-contain md:bg-center bg-bottom`}
       >
-        {/* <div className="  h-[40%] text-center w-[47.5%]   min-w-[150px] mx-auto pt-8 flex flex-col justify-end items-center sm:mb-8 mb-16">
-          <img
-            src="./images/section-about/memnft-about.png"
-            alt=""
-            className=""
-          />
-        </div> */}
-
         <div className="relative h-[40%] text-center w-[47.5%] min-w-[150px] mx-auto pt-8 flex flex-col justify-end items-center sm:mb-8 mb-16">
           <div
             className=" absolute h-full w-full z-[999] -ml-4"
-            onMouseEnter={() => handleMouseEnter(aboutRef)}
-            onMouseLeave={() => handleMouseLeave(aboutRef)}
+            onMouseEnter={() => handleMouseEnter(smAboutRef)}
+            onMouseLeave={() => handleMouseLeave(smAboutRef)}
           ></div>
           <AnimatedElement
-            videoRef={aboutRef}
+            videoRef={smAboutRef}
             className="-ml-4"
             source={ANIMATION_WEBM_SOURCES["about"]}
           />

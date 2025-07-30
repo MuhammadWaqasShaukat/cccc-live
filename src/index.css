@@ -50,6 +50,14 @@ img,
   border-radius: 0.4285rem;
 }
 
+.swiper-slide.swiper-slide-active {
+  transform: scale(1) !important;
+}
+
+.swiper-slide {
+  transform: scale(.84) !important;
+}
+
 .swiper-backface-hidden .swiper-slide {
   transform: scale(.84) translateZ(0);
 }
@@ -316,6 +324,15 @@ img,
       clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     }
   }
+
+
+  .black-wall {
+    background: linear-gradient(to bottom,
+          rgba(30, 30, 30, 0) 0%,
+          rgba(30, 30, 30, 1) 5%,
+          rgba(30, 30, 30, 1) 100%);
+  }
+
 
   ::-webkit-scrollbar {
     width: 20px;

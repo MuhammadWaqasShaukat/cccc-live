@@ -19,6 +19,7 @@ const HeroSection = () => {
   const fireRef = useRef<HTMLVideoElement>(null);
   const magicRef = useRef<HTMLVideoElement>(null);
   const candleRef = useRef<HTMLVideoElement>(null);
+  const archerRef = useRef<HTMLVideoElement>(null);
 
   const handleMouseEnter = (videoRef: any) => {
     videoRef.current?.play();
@@ -122,7 +123,7 @@ const HeroSection = () => {
         <div className="bg-hero-section-chillguy lg:w-[352px] max-h-[341px] h-[25.30%] w-[26%] min-w-[117px] min-h-[111px] bg-contain z-10 absolute md:top-[32%] lg:top-[24%] bottom-[10rem] md:left-[15%] lg:left-[5%] left-[4%] bg-bottom bg-no-repeat"></div>
         <div className=" max-w-[400px] max-h-[619px] min-w-[162px] min-h-[230px] h-[50%] w-[37%] absolute bottom-[12%] ">
           <div className="relative z-30 w-full h-full bg-left-bottom bg-no-repeat bg-contain pointer-events-none bg-hero-section-castle-red-2"></div>
-          <div className=" bg-[#1e1e1e] -mt-1 bg-left-bottom md:w-[65%] w-[60%] xs:w-[62%] lg:w-[62.2%] md:h-[68%] lg:h-[70%] sm:w-[50%] h-[70%]   bg-contain bg-no-repeat absolute bottom-0 z-10"></div>
+          <div className=" black-wall min-w-[120px] -mt-1 bg-left-bottom md:w-[65%] w-[60%] xs:w-[62%] lg:w-[62.2%] md:h-[68%] lg:h-[70%] sm:w-[50%] h-[70%]   bg-contain bg-no-repeat absolute bottom-0 z-10"></div>
         </div>
         <div className="bg-hero-section-memcoin-1 hidden md:block max-w-[273px] max-h-[319px] w-[20%] h-[24%] min-w-[70px] min-h-[78px] absolute lg:bottom-[11%] md:bottom-[11%] bottom-[5%] left-[0%] z-20 bg-contain bg-no-repeat"></div>
       </div>
@@ -149,7 +150,7 @@ const HeroSection = () => {
         </div>
       </div>
 
-      <div className=" absolute  object-contain w-[50%]  md:w-[40%]  sm:h-[80.48%] h-[30%] bottom-[8%] max-w-[500px] max-h-[600px] min-w-[200px] min-h-[176px] lg:-bottom-[15%]  md:-bottom-[30%] sm:-bottom-[26%] md:left-[10%] -left-[12%] z-30">
+      <div className=" absolute  object-contain w-[50%]  md:w-[40%]  sm:h-[80.48%] h-[30%] bottom-[5%] max-w-[500px] max-h-[600px] min-w-[200px] min-h-[176px] lg:-bottom-[15%]  md:-bottom-[30%] sm:-bottom-[26%] md:left-[10%] -left-[12%] z-30">
         <div className="relative flex flex-col items-center justify-end ">
           <div
             className=" absolute  md:h-64 md:w-32 sm:h-48 sm:w-28 w-16 h-[50%] top-24 sm:-ml-28 -ml-16 sm:mb-2 md:top-40 sm:top-24  z-[999]"
@@ -166,7 +167,7 @@ const HeroSection = () => {
       <div className=" bg-hero-section-distant pointer-events-none lg:h-[68%] md:h-[65%] w-[100%] min-w-[300px] min-h-[200px] bg-contain sm:bg-repeat-x bg-no-repeat bg-bottom absolute sm:bottom-[16%] bottom-[18%] z-0"></div>
       {/* castle-blue */}
       <div className=" relative md:static top-[75%] md:top-auto">
-        <div className="bg-hero-section-castle-blue-1 pointer-events-none max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-0 md:bottom-[46%]  lg:bottom-[50%] bottom-[11rem] bg-right-bottom right-0"></div>
+        <div className="bg-hero-section-castle-blue-1 pointer-events-none max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-0 md:bottom-[44%]  lg:bottom-[50%] bottom-[11rem] bg-right-bottom right-0"></div>
         <motion.div
           initial={{ y: 20 }}
           whileHover={{ y: -20 }}
@@ -176,9 +177,25 @@ const HeroSection = () => {
             damping: 12,
             mass: 0.5,
           }}
-          className="bg-hero-section-memcoin-4 hidden md:block  max-w-[199px] maxh-[229px] min-w-[71px] w-[15%] h-[17%] min-h-[82px] bg-contain bg-no-repeat z-10 absolute md:bottom-[42%] lg:bottom-[48%] right-0 bg-right-bottom"
+          className="bg-hero-section-memcoin-4 hidden md:block  max-w-[140px] max-h-[229px] min-w-[71px] w-[15%] h-[17%] min-h-[82px] bg-contain bg-no-repeat z-10 absolute md:bottom-[42%] lg:bottom-[48%] right-0 bg-right-bottom"
         ></motion.div>
-        <div className="bg-hero-section-memcoin-8 pointer-events-none  max-w-[401px] max-h-[403px] w-[30%] h-[30%] min-w-[133px] min-h-[131px] bg-contain bg-no-repeat bg-bottom z-10 absolute  md:top-[31%] lg:top-[24%] bottom-[10rem] md:right-[9%] lg:right-[3%]  right-[4%]"></div>
+        {/* <div className="bg-hero-section-memcoin-8 pointer-events-none  max-w-[401px] max-h-[403px] w-[30%] h-[30%] min-w-[133px] min-h-[131px] bg-contain bg-no-repeat bg-bottom z-10 absolute  md:top-[31%] lg:top-[24%] bottom-[10rem] md:right-[9%] lg:right-[3%]  right-[4%]"></div> */}
+
+        <div className="absolute lg:w-[60%] md:w-[75%] md:h-[18%] w-[85%] max-w-[370px] md:max-w-[600px] lg:max-w-[600px] h-[25%] bg-contain bg-no-repeat bg-bottom md:top-[43%] lg:top-[35%] xs:-top-64 -top-64 md:right-6 right-0 z-0">
+          <div className="relative flex flex-col items-center justify-end ">
+            <div
+              className=" absolute h-full w-[20%] right-28 z-[999]"
+              onMouseEnter={() => handleMouseEnter(archerRef)}
+              onMouseLeave={() => handleMouseLeave(archerRef)}
+            ></div>
+            <AnimatedElement
+              videoRef={archerRef}
+              className=""
+              source={ANIMATION_WEBM_SOURCES["archer"]}
+            />
+          </div>
+        </div>
+
         <div className="bg-hero-section-castle-blue-2 pointer-events-none max-w-[465px] max-h-[606px] h-[46%] w-[37%]  absolute min-h-[221px] min-w-[168px] bg-contain bg-no-repeat bg-right-bottom z-30 right-0 bottom-[12%]"></div>
 
         <div className="bg-hero-section-memcoin-5 max-w-[346px] max-h-[432px] sm:w-[25.68%] w-[30%] h-[32%] min-w-[200px] min-h-[171px] bg-contain bg-no-repeat z-30 absolute -bottom-4 md:bottom-[10%] right-[10%] bg-right-bottom "></div>

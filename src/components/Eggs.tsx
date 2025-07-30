@@ -58,7 +58,7 @@ const Eggs = () => {
           <div className="grid w-full grid-cols-3 gap-4 sm:grid-cols-4 md:pr-2 md:gap-2 ">
             {ctx.myEggs.map((egg, index) => (
               <EggBox
-                key={index}
+                key={index + "eggs"}
                 egg={egg}
                 nftMint={ctx.nftToEggMap[egg.mintAddress as any]}
               />

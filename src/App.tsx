@@ -59,7 +59,9 @@ function App() {
     "/images/egg-summon-btn-1-2.png",
     "/images/banner.png",
     "/images/bookmarks/sm-min-corner.png",
-    "/images/bookmarks/bm-sm.png",
+    "/images/bookmarks/bm-sm-mint.png",
+    "/images/bookmarks/bm-sm-eggs.png",
+    "/images/bookmarks/bm-sm-nfts.png",
     "/images/bookmarks/bm-sm-1.png",
     "/images/bookmarks/help-bg.png",
     "/images/bookmarks/mint-icon.png",
@@ -88,11 +90,14 @@ function App() {
       "/images/animations/particles.webm",
       "/images/animations/candle.webm",
       "/images/animations/about.webm",
+      "/images/animations/archer.webm",
     ];
 
     const audioSources = ["/sound/pop-cat.mp3"];
 
-    const container = document.createElement("div");
+    const container = document.getElementById("preload-container");
+
+    if (!container) return;
     container.style.display = "none";
     document.body.appendChild(container);
 
@@ -140,7 +145,11 @@ function App() {
 
     const videoAndAudioPromises = await preloadVideosAndAudio();
 
-    await Promise.all([...imagePromises, ...videoAndAudioPromises]);
+    if (videoAndAudioPromises) {
+      await Promise.all([...imagePromises, ...videoAndAudioPromises]);
+    } else {
+      await Promise.all([...imagePromises]);
+    }
 
     setLoading(false);
   };

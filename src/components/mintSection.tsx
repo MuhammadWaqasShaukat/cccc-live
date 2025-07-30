@@ -11,6 +11,7 @@ import Remaining from "./UI/Remaining";
 import MintButton from "./UI/MintButton";
 
 import { motion } from "framer-motion";
+// import PublicMint from "./PublicMint";
 
 const BookmarkSM = () => {
   const { bookmark, setBookmark } = useContext(CottonCandyContext);
@@ -29,7 +30,7 @@ const BookmarkSM = () => {
         }}
         className={`w-[85px] xs:w-[112px] xs:h-[45px]  bg-no-repeat bg-contain ${
           bookmark === "mint"
-            ? "bg-bm-sm xs:h-[44px] h-[31px]"
+            ? "bg-bm-sm-mint xs:h-[44px] h-[31px]"
             : "bg-bm-sm-1 xs:h-[43px] h-[28px]"
         }`}
       >
@@ -46,7 +47,7 @@ const BookmarkSM = () => {
         }}
         className={`w-[85px]  xs:w-[112px] xs:h-[45px] bg-no-repeat bg-contain ${
           bookmark === "nfts"
-            ? "bg-bm-sm xs:h-[44px] h-[31px]"
+            ? "bg-bm-sm-nfts xs:h-[44px] h-[31px]"
             : "bg-bm-sm-1 xs:h-[43px] h-[28px]"
         }`}
       >
@@ -63,7 +64,7 @@ const BookmarkSM = () => {
         }}
         className={`w-[85px] xs:w-[112px] xs:h-[45px] bg-no-repeat bg-contain ${
           bookmark === "eggs"
-            ? "bg-bm-sm xs:h-[44px] h-[31px]"
+            ? "bg-bm-sm-eggs xs:h-[44px] h-[31px]"
             : "bg-bm-sm-1 xs:h-[43px] h-[28px]"
         }`}
       >
@@ -107,7 +108,7 @@ const MintSection = () => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.3 }}
-        className="block h-screen pb-4 bg-repeat bg-contain bg-sm-mint-section-book md:hidden w-dvw"
+        className="block h-screen pb-4 bg-repeat-y bg-cover bg-sm-mint-section-book md:hidden w-dvw"
       >
         <div className="fixed top-0 left-0 right-0 h-[70px] px-5 bg-right bg-cover  md:hidden bg-bm-sm-header z-[51] ">
           <div className="flex flex-row items-center justify-start gap-3 pt-5 xs:pt-4 sm:w-2/3">
@@ -115,97 +116,101 @@ const MintSection = () => {
           </div>
         </div>
         {ctx.bookmark === "mint" && (
-          <div className="flex flex-col items-center justify-start h-full pt-20 overflow-auto">
-            <div className="flex flex-row items-end justify-center w-full p-2 bg-bottom bg-cover md:hidden md:justify-start md:bg-none bg-mint-section-heading md:p-0 ">
-              <img
-                src="./images/letter-m-mint.png"
-                alt=""
-                className="w-12 h-auto xs:w-14"
-              />
-              <h3 className="text-2xl uppercase font-patrick-hand-sc xs:text-3xl">
-                inting is Live!
-              </h3>
-            </div>
+          <>
+            {/* <PublicMint /> */}
 
-            <div className="flex flex-col items-center justify-center flex-1 w-full max-h-max">
-              <div className="h-full relative min-h-[269px] min-w-[169px]">
+            <div className="flex flex-col items-center justify-between h-full gap-6 pt-20 overflow-auto">
+              <div className="flex flex-row items-end justify-center w-full p-2 bg-bottom bg-cover md:hidden md:justify-start md:bg-none bg-mint-section-heading md:p-0 ">
                 <img
-                  src="./images/section-mint/minting-image.png"
+                  src="./images/letter-m-mint.png"
                   alt=""
-                  className="absolute bottom-3 left-0 border-[3px] border-white rounded-xl card-shadow-1"
+                  className="w-12 h-auto xs:w-14"
                 />
-                <img
-                  src="./images/section-mint/nft-1.png"
-                  alt=""
-                  className="absolute bottom-2.5 left-6 -rotate-2 border-[3px] border-white rounded-xl origin-bottom-left card-shadow-1 "
-                />
-                <img
-                  src="./images/section-mint/minting-image.png"
-                  alt=""
-                  className="absolute top-4 left-5  rotate-2 border-[3px] border-white rounded-xl card-shadow-1 "
-                />
+                <h3 className="text-2xl uppercase font-patrick-hand-sc xs:text-3xl">
+                  inting is Live!
+                </h3>
               </div>
-            </div>
 
-            <div className="flex flex-row items-start justify-center w-full px-12 sm:justify-between">
-              <Remaining />
-              <Price />
-            </div>
-
-            <div className="flex flex-row items-center justify-between w-full px-12">
-              <div className="flex-1">
-                <h2 className="text-lg text-black font-patrick-hand-sc">
-                  Quantity
-                </h2>
+              <div className="flex flex-col items-center justify-center flex-1 w-full max-h-max">
+                <div className="h-full relative xs:min-h-[320px] xs:min-w-[220px] min-h-[269px] min-w-[169px]">
+                  <img
+                    src="./images/section-mint/minting-image.png"
+                    alt=""
+                    className="absolute bottom-3 left-0 border-[3px] border-white rounded-xl card-shadow-1"
+                  />
+                  <img
+                    src="./images/section-mint/nft-1.png"
+                    alt=""
+                    className="absolute bottom-2.5 left-6 -rotate-2 border-[3px] border-white rounded-xl origin-bottom-left card-shadow-1 "
+                  />
+                  <img
+                    src="./images/section-mint/minting-image.png"
+                    alt=""
+                    className="absolute top-4 left-5  rotate-2 border-[3px] border-white rounded-xl card-shadow-1 "
+                  />
+                </div>
               </div>
-              <Counter />
-            </div>
 
-            <div className="flex flex-col items-start justify-start w-full gap-1 ">
-              {/* Cost */}
+              <div className="flex flex-row items-start justify-center w-full px-12 sm:justify-between">
+                <Remaining />
+                <Price />
+              </div>
+
               <div className="flex flex-row items-center justify-between w-full px-12">
                 <div className="flex-1">
-                  <h2 className="text-xl text-black font-patrick-hand-sc">
-                    Cost
+                  <h2 className="text-lg text-black font-patrick-hand-sc">
+                    Quantity
                   </h2>
                 </div>
-                <div>
-                  <span className="text-xl text-black font-patrick-hand-sc">
-                    {ctx.price} Sol
-                  </span>
+                <Counter />
+              </div>
+
+              <div className="flex flex-col items-start justify-start w-full gap-1 ">
+                {/* Cost */}
+                <div className="flex flex-row items-center justify-between w-full px-12">
+                  <div className="flex-1">
+                    <h2 className="text-xl text-black font-patrick-hand-sc">
+                      Cost
+                    </h2>
+                  </div>
+                  <div>
+                    <span className="text-xl text-black font-patrick-hand-sc">
+                      {ctx.price} Sol
+                    </span>
+                  </div>
+                </div>
+                {/* Gas Fee*/}
+                <div className="flex flex-row items-center justify-between w-full px-12">
+                  <div className="flex-1">
+                    <h2 className="text-xl text-black font-patrick-hand-sc">
+                      Gas Fee
+                    </h2>
+                  </div>
+                  <div>
+                    <span className="text-xl text-black font-patrick-hand-sc">
+                      {ctx.gasFee} Sol
+                    </span>
+                  </div>
+                </div>
+                {/* Total */}
+                <div className="flex flex-row items-center justify-between w-full px-12">
+                  <div className="flex-1">
+                    <h2 className="text-xl text-black font-patrick-hand-sc">
+                      Total
+                    </h2>
+                  </div>
+                  <div>
+                    <span className="text-xl text-black font-patrick-hand-sc">
+                      {ctx.gasFee + ctx.price} Sol
+                    </span>
+                  </div>
                 </div>
               </div>
-              {/* Gas Fee*/}
-              <div className="flex flex-row items-center justify-between w-full px-12">
-                <div className="flex-1">
-                  <h2 className="text-xl text-black font-patrick-hand-sc">
-                    Gas Fee
-                  </h2>
-                </div>
-                <div>
-                  <span className="text-xl text-black font-patrick-hand-sc">
-                    {ctx.gasFee} Sol
-                  </span>
-                </div>
-              </div>
-              {/* Total */}
-              <div className="flex flex-row items-center justify-between w-full px-12">
-                <div className="flex-1">
-                  <h2 className="text-xl text-black font-patrick-hand-sc">
-                    Total
-                  </h2>
-                </div>
-                <div>
-                  <span className="text-xl text-black font-patrick-hand-sc">
-                    {ctx.gasFee + ctx.price} Sol
-                  </span>
-                </div>
+              <div className="flex flex-row items-start justify-center w-full mx-auto">
+                <MintButton />
               </div>
             </div>
-            <div className="flex flex-row items-start justify-center w-full mx-auto">
-              <MintButton />
-            </div>
-          </div>
+          </>
         )}
         {ctx.bookmark === "nfts" && <NFTs />}
         {ctx.bookmark === "eggs" && <Eggs />}
@@ -265,8 +270,10 @@ const MintSection = () => {
             {/* <PublicMint /> */}
 
             <div className="flex flex-col items-center justify-between h-full mx-auto sm:w-2/3 md:flex-row md:items-start md:gap-4 md:w-full ">
-              {/*left page*/}
-              <div className="flex flex-col items-center justify-center flex-1 h-full -ml-2">
+              <div
+                data-page="left"
+                className="flex flex-col items-center justify-center flex-1 h-full -ml-2"
+              >
                 <div className="h-[90%] w-[90%] min-w-64 relative">
                   <img
                     src="./images/section-mint/minting-image.png"
@@ -285,8 +292,10 @@ const MintSection = () => {
                   />
                 </div>
               </div>
-              {/*right page  */}
-              <div className="flex flex-col items-center justify-start flex-1 w-full h-full gap-2 lg:gap-4 md:gap-3 xl:gap-5">
+              <div
+                data-page="right"
+                className="flex flex-col items-center justify-start flex-1 w-full h-full gap-2 lg:gap-4 md:gap-3 xl:gap-5"
+              >
                 <div className="md:flex hidden flex-row md:justify-start justify-end w-[90%] md:w-full items-end md:bg-none bg-mint-section-heading bg-cover bg-bottom md:p-0 p-2 ">
                   <img
                     src="./images/letter-m-mint.png"

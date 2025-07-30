@@ -32,7 +32,9 @@ const SlideItem: React.FC<Metadata> = ({ mintAddress }) => {
   return (
     <>
       <div className="z-50 flex flex-col items-center justify-center w-full h-full gap-6 p-4 bg-center bg-no-repeat bg-cover bg-claim-egg-bg rounded-2xl">
-        <div className={`relative w-[325px] rounded-2xl card-shadow`}>
+        <div
+          className={`relative sm:w-[320px] w-[250px] rounded-2xl card-shadow`}
+        >
           <img
             className="w-full h-auto rounded-2xl"
             src={`./images/section-mint/nfts/nft1.jpg`}
@@ -59,15 +61,6 @@ const NFTSwiper = () => {
   const { getLotteryState } = useWeb3Utils();
   const [canSummonEgg, setCanSummonEgg] = useState(false);
   const [isTutorial, setIsTutorial] = useState<string | null>(null);
-  useEffect(() => {
-    (async () => {
-      if (!ctx.collectable && !ctx.collectable.mintAddress) return;
-      const { totalMinted, maxPlayers } = await getLotteryState();
-      if (totalMinted === maxPlayers) {
-        setCanSummonEgg(true);
-      }
-    })();
-  }, []);
 
   const handleNFTClicked = () => {
     // ctx.setCurrentModal("claim-egg");
@@ -77,22 +70,33 @@ const NFTSwiper = () => {
   };
 
   useEffect(() => {
+    (async () => {
+      // if (!ctx.collectable && !ctx.collectable.mintAddress) return;
+      const { totalMinted, maxPlayers } = await getLotteryState();
+      if (totalMinted === maxPlayers) {
+        setCanSummonEgg(true);
+      }
+    })();
+
     if (ctx.myNfts.length === 0) {
       (async () => ctx.setMyNfts(await ctx.getNFTs()))();
+    }
 
-      const isTutorial: string | null = localStorage.getItem("tutorial");
+    const isTutorial: string | null = localStorage.getItem("tutorial");
 
-      if (isTutorial) {
-        setIsTutorial(isTutorial);
-      }
+    if (isTutorial) {
+      setIsTutorial(isTutorial);
     }
   }, []);
 
   return (
-    <Modal onBackgroundClick={() => {}} className="z-[51] bg-swiper">
+    <Modal
+      onBackgroundClick={() => {}}
+      className="z-[51] bg-swiper bg-repeat-y bg-contain justify-start "
+    >
       <div className="h-screen hidden md:block fade-left-half w-[50%] absolute left-0 z-20 pointer-events-none"></div>
       <div className="h-screen hidden md:block fade-right-half w-[50%] absolute right-0 z-20 pointer-events-none"></div>
-      <div className="relative flex flex-col items-center justify-center h-full gap-6 my-auto md:gap-10 ">
+      <div className="relative flex flex-col items-center justify-start gap-6 py-4 sm:justify-center l md:gap-10">
         <div className="flex w-[100vw] flex-col justify-start relative items-center gap-4 ">
           <h1 className="w-full text-4xl text-center text-white font-patrick-hand">
             Minted {ctx.myNfts.length} NFTs:
@@ -133,8 +137,16 @@ const NFTSwiper = () => {
                 spaceBetween: 60,
               },
               1024: {
+                slidesPerView: 2,
+                spaceBetween: 80,
+              },
+              1440: {
                 slidesPerView: 3,
                 spaceBetween: 80,
+              },
+              1920: {
+                slidesPerView: 4,
+                spaceBetween: 60,
               },
             }}
             onSlideChange={(swiper) =>
@@ -174,9 +186,11 @@ const NFTSwiper = () => {
               </button>
             </div>
           )}
-          <div className="mt-4">
-            {isTutorial && <NFTActions canSummonEgg={canSummonEgg} />}
-          </div>
+          {isTutorial && (
+            <div className="mt-4">
+              <NFTActions canSummonEgg={canSummonEgg} />
+            </div>
+          )}
         </div>
       </div>
     </Modal>
