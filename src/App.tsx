@@ -1,12 +1,17 @@
 import { Route, Switch } from "wouter";
 import "./App.css";
 import Home from "./pages/Home";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 import SnakeLoader from "./components/UI/SnakeLoader";
 import { AnimatePresence, motion } from "framer-motion";
+import { CottonCandyContext } from "./providers/ContextProvider";
 
 function App() {
-  const [loading, setLoading] = useState(true);
+  const ctx = useContext(CottonCandyContext);
+
+  // const [setLoading] = useState(true);
+  const preloadContainer = useRef<HTMLDivElement>(null);
+  const cursorRef = useRef<HTMLDivElement>(null);
 
   const imageAssets = [
     "/images/section-about/grass.png",
@@ -44,7 +49,6 @@ function App() {
     "/images/custom-scrollbar-track.png",
     "/images/custom-scrollbar-thumb.png",
     "/images/tutorial-badge.png",
-    "/images/section-hero/menu-button.png",
     "/images/section-hero/menu-button-hovered.png",
     "/images/section-hero/connect.png",
     "/images/ok-btn.png",
@@ -95,17 +99,18 @@ function App() {
 
     const audioSources = ["/sound/pop-cat.mp3"];
 
-    const container = document.getElementById("preload-container");
+    const container = preloadContainer.current;
 
     if (!container) return;
     container.style.display = "none";
-    document.body.appendChild(container);
+    // document.body.appendChild(container);
 
     const videoPromises = videoSources.map((src) => {
       return new Promise<void>((resolve) => {
         const video = document.createElement("video");
         video.src = src;
         video.preload = "auto";
+        video.dataset.key = src;
         video.muted = true;
         video.oncanplaythrough = () => resolve();
         video.onerror = () => resolve();
@@ -117,6 +122,7 @@ function App() {
       return new Promise<void>((resolve) => {
         const audio = document.createElement("audio");
         audio.src = src;
+        audio.dataset.key = src;
         audio.preload = "auto";
         audio.oncanplaythrough = () => resolve();
         audio.onerror = () => resolve();
@@ -128,7 +134,7 @@ function App() {
   };
 
   const preloadAssets = async () => {
-    const preloaderContainer = document.getElementById("preload-container");
+    const _preloaderContainer = preloadContainer.current;
 
     const imageElements: HTMLImageElement[] = [];
 
@@ -136,9 +142,10 @@ function App() {
       return new Promise<void>((resolve) => {
         const img = new Image();
         img.src = src;
-        img.style.display = "none";
+        img.dataset.key = src;
+        // img.style.display = "none";
         img.onload = img.onerror = () => resolve();
-        preloaderContainer?.appendChild(img);
+        _preloaderContainer?.appendChild(img);
         imageElements.push(img);
       });
     });
@@ -151,37 +158,68 @@ function App() {
       await Promise.all([...imagePromises]);
     }
 
-    setLoading(false);
+    // setTimeout(() => setLoading(false), 1000);
   };
 
   useEffect(() => {
     preloadAssets();
   }, []);
 
+  useEffect(() => {
+    const cursor = cursorRef.current;
+    if (!cursor) return;
+
+    const moveCursor = (e: MouseEvent) => {
+      cursor.style.left = `${e.clientX}px`;
+      cursor.style.top = `${e.clientY}px`;
+    };
+
+    const buttonDetector = () => {
+      cursor.style.transform = "translate(-25%, -10%) rotate(10deg)";
+
+      setTimeout(() => {
+        cursor.style.transform = "translate(-25%, -10%)";
+      }, 100);
+    };
+
+    document.addEventListener("click", buttonDetector);
+    document.addEventListener("mousemove", moveCursor);
+
+    return () => {
+      document.removeEventListener("mousemove", moveCursor);
+      document.removeEventListener("click", buttonDetector);
+    };
+  }, []);
+
   return (
-    <AnimatePresence mode="wait">
-      {/* preloader-container */}
+    <>
+      <div ref={cursorRef} id="custom-cursor"></div>
+      <div
+        ref={preloadContainer}
+        id="preload-container"
+        className="absolute "
+      ></div>
 
-      <div id="preload-container"></div>
-
-      {loading && (
-        <motion.div
-          className="w-screen h-screen bg-black"
-          key="loader"
-          initial={{ opacity: 1 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ opacity: { duration: 0.4 } }}
-        >
-          <SnakeLoader />
-        </motion.div>
+      {!ctx.assestsPreloaded && (
+        <AnimatePresence mode="wait">
+          <motion.div
+            className="w-screen h-screen bg-black"
+            key="loader"
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ opacity: { duration: 0.5 } }}
+          >
+            <SnakeLoader />
+          </motion.div>
+        </AnimatePresence>
       )}
       <div className="overflow-x-hidden">
         <Switch>
           <Route path="/" component={Home} />
         </Switch>
       </div>
-    </AnimatePresence>
+    </>
   );
 }
 

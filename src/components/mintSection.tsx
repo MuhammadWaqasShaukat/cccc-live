@@ -1,6 +1,6 @@
 import Price from "./UI/Price";
 import Counter from "./UI/Counter";
-import { MouseEvent, useContext } from "react";
+import { useContext } from "react";
 import { CottonCandyContext } from "../providers/ContextProvider";
 import { NFTs } from "./NFTs";
 import Eggs from "./Eggs";
@@ -23,9 +23,7 @@ const BookmarkSM = () => {
   return (
     <>
       <button
-        onClick={(e: MouseEvent) => {
-          e.preventDefault();
-          e.stopPropagation();
+        onClick={() => {
           handleBookmarkChange("mint");
         }}
         className={`w-[85px] xs:w-[112px] xs:h-[45px]  bg-no-repeat bg-contain ${
@@ -40,9 +38,7 @@ const BookmarkSM = () => {
         </div>
       </button>
       <button
-        onClick={(e: MouseEvent) => {
-          e.preventDefault();
-          e.stopPropagation();
+        onClick={() => {
           handleBookmarkChange("nfts");
         }}
         className={`w-[85px]  xs:w-[112px] xs:h-[45px] bg-no-repeat bg-contain ${
@@ -57,9 +53,7 @@ const BookmarkSM = () => {
         </div>
       </button>
       <button
-        onClick={(e: MouseEvent) => {
-          e.preventDefault();
-          e.stopPropagation();
+        onClick={() => {
           handleBookmarkChange("eggs");
         }}
         className={`w-[85px] xs:w-[112px] xs:h-[45px] bg-no-repeat bg-contain ${
@@ -175,7 +169,7 @@ const MintSection = () => {
                   </div>
                   <div>
                     <span className="text-xl text-black font-patrick-hand-sc">
-                      {ctx.price} Sol
+                      {ctx.estimate ?? ctx.price} Sol
                     </span>
                   </div>
                 </div>
@@ -201,7 +195,8 @@ const MintSection = () => {
                   </div>
                   <div>
                     <span className="text-xl text-black font-patrick-hand-sc">
-                      {ctx.gasFee + ctx.price} Sol
+                      {(ctx.gasFee + (ctx.estimate ?? ctx.price)).toFixed(9)}{" "}
+                      Sol
                     </span>
                   </div>
                 </div>
@@ -227,9 +222,7 @@ const MintSection = () => {
         <div className="absolute flex-col hidden md:flex xl:-right-7 lg:-right-10 md:-right-4 gap-7 lg:gap-3 md:gap-2">
           <Bookmark
             active={ctx.bookmark === "mint"}
-            onClick={(e: MouseEvent) => {
-              e.preventDefault();
-              e.stopPropagation();
+            onClick={() => {
               handleBookmarkChange("mint");
             }}
             className="bg-bm-mint"
@@ -239,9 +232,7 @@ const MintSection = () => {
           </Bookmark>
           <Bookmark
             active={ctx.bookmark === "nfts"}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
+            onClick={() => {
               handleBookmarkChange("nfts");
               return;
             }}
@@ -253,9 +244,7 @@ const MintSection = () => {
           </Bookmark>
           <Bookmark
             active={ctx.bookmark === "eggs"}
-            onClick={(e: MouseEvent) => {
-              e.preventDefault();
-              e.stopPropagation();
+            onClick={() => {
               handleBookmarkChange("eggs");
             }}
             className="bg-bm-egg"
@@ -331,7 +320,7 @@ const MintSection = () => {
                     </div>
                     <div>
                       <span className="text-xl text-black font-patrick-hand-sc xl:text-3xl lg:text-2xl md:text-xl">
-                        {ctx.price} Sol
+                        {ctx.estimate ?? ctx.price} Sol
                       </span>
                     </div>
                   </div>
@@ -357,7 +346,8 @@ const MintSection = () => {
                     </div>
                     <div>
                       <span className="text-xl text-black font-patrick-hand-sc xl:text-3xl lg:text-2xl md:text-xl">
-                        {ctx.gasFee + ctx.price} Sol
+                        {(ctx.gasFee + (ctx.estimate ?? ctx.price)).toFixed(9)}{" "}
+                        Sol
                       </span>
                     </div>
                   </div>

@@ -1,7 +1,8 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CottonCandyContext } from "../../providers/ContextProvider";
 import { useWallet } from "@solana/wallet-adapter-react";
 import useWeb3Utils from "../../hooks/useWeb3Utils";
+import { calculatePayment } from "../../utils/calculatePayment";
 
 const Counter = () => {
   const ctx = useContext(CottonCandyContext);
@@ -14,33 +15,39 @@ const Counter = () => {
   });
 
   useEffect(() => {
-    // if (!connected || ctx.lotteryState.ended) {
-    //   setDisabled({ min: true, max: true });
-    //   return;
-    // }
+    const updateDisabledState = async () => {
+      const { totalMinted, maxPlayers, totalValueToCollect, minPrice } =
+        await getLotteryState();
+      const remaining = maxPlayers - totalMinted;
 
-    setDisabled((prev) => ({
-      ...prev,
-      min: ctx.count <= 1,
-    }));
+      const _price = calculatePayment(
+        totalMinted + 1,
+        ctx.count,
+        maxPlayers,
+        totalValueToCollect,
+        minPrice
+      );
+
+      ctx.setEstimate(_price);
+
+      setDisabled({
+        min: ctx.count <= 1,
+        max: ctx.count >= remaining,
+      });
+    };
+
+    updateDisabledState();
   }, [ctx.count, connected, ctx.lotteryState.ended]);
 
-  const lotteryState = useCallback(async () => {
-    const { totalMinted, maxPlayers } = await getLotteryState();
-    const remaining = maxPlayers - totalMinted;
-
-    setDisabled((prev) => ({
-      ...prev,
-      max: ctx.count >= remaining,
-    }));
-  }, [ctx.count]);
+  const lockCounter = () => {
+    setDisabled({ min: true, max: true });
+  };
 
   useEffect(() => {
-    lotteryState();
-  }, [ctx.count]);
-
-  useEffect(() => {
-    return () => ctx.setCount(1);
+    return () => {
+      ctx.setCount(1);
+      ctx.setEstimate(null);
+    };
   }, []);
 
   return (
@@ -50,6 +57,7 @@ const Counter = () => {
         type="button"
         className=" size-5 md:size-6 sm:size-7 bg-[#B69772] disabled:bg-[#89898866] disabled:hover:bg-[#89898866]  hover:bg-[#9F8362] active:bg-[#816A4F] rounded-full grid place-content-center"
         onClick={() => {
+          lockCounter();
           if (ctx.count === 1) return;
           ctx.setCount((prev: number) => prev - 1);
         }}
@@ -64,6 +72,7 @@ const Counter = () => {
         type="button"
         className=" size-5 md:size-6 sm:size-7 bg-[#B69772]  disabled:bg-[#89898866] disabled:hover:bg-[#89898866]  hover:bg-[#9F8362] active:bg-[#816A4F]  rounded-full grid place-content-center"
         onClick={() => {
+          lockCounter();
           ctx.setCount!(ctx.count + 1);
         }}
       >

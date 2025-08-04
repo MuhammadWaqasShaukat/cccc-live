@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useWeb3Utils from "../../hooks/useWeb3Utils";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { CottonCandyContext } from "../../providers/ContextProvider";
 
 const Remaining = () => {
   const [remainingState, setRemainingState] = useState<{
@@ -7,15 +9,19 @@ const Remaining = () => {
     totalNFTs: number;
   }>({ mintedNFTs: 0, totalNFTs: 0 });
 
+  const ctx = useContext(CottonCandyContext);
   const { getLotteryState } = useWeb3Utils();
+  const { connected } = useWallet();
+
   useEffect(() => {
     (async () => {
       const { totalMinted, maxPlayers } = await getLotteryState();
-      if (totalMinted && maxPlayers) {
+
+      if (totalMinted >= 0 && maxPlayers >= 0) {
         setRemainingState({ mintedNFTs: totalMinted, totalNFTs: maxPlayers });
       }
     })();
-  }, []);
+  }, [connected, ctx.lotteryState.ended]);
 
   return (
     <div className="flex-1 flex flex-col justify-start items-start relative before:content-[''] before:w-[6px] before:h-full before:rounded-[2px] before:bg-[#D18A27] before:absolute before:left-0 ">

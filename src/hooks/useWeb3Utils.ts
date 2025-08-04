@@ -78,7 +78,6 @@ const useWeb3Utils = () => {
       }
       const data = await res.json();
       const nfts = data;
-      console.log("Fetched NFTs:", nfts);
       return nfts;
     } catch (error) {
       console.error("Error fetching NFTs:", error);

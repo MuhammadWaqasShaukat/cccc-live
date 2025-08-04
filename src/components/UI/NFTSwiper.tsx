@@ -41,11 +41,11 @@ const SlideItem: React.FC<Metadata> = ({ mintAddress }) => {
             alt=""
           />
           {nftState && !nftState.isEggClaimed ? (
-            <div className="absolute flex flex-row items-center justify-center w-full gap-3 p-4 rounded bottom-2">
-              <img src={`./images/egg.png`} alt="claimable egg" />
+            <div className="absolute flex flex-row items-center justify-center w-full p-4 rounded group bottom-2">
+              <div className="transition-all duration-100 bg-center bg-no-repeat bg-contain bg-egg-glow group-hover:bg-egg-glow-1 size-16 md:size-20 lg:size-24"></div>
               <span className="text-5xl text-white text-outline-0 font-patrick-hand-sc">
                 x 1
-              </span>{" "}
+              </span>
             </div>
           ) : (
             ""

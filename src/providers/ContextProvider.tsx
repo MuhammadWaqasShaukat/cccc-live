@@ -29,11 +29,14 @@ interface CottonCandyContextType {
   setPrice: StateSetter<number>;
   priceChangeTimeStamp: string;
   mintSectionRef: React.RefObject<HTMLDivElement> | null;
-  calculatePrice?: () => Promise<void>;
+  calculatePrice: () => Promise<void>;
   lotteryState: LotteryState;
 
   currentModal: Modals | null;
   setCurrentModal: StateSetter<Modals | null>;
+
+  estimate: number | null;
+  setEstimate: StateSetter<number | null>;
 
   collectable: any;
   setCollectiable: StateSetter<any>;
@@ -83,6 +86,9 @@ interface CottonCandyContextType {
 
   revealNFT: boolean;
   setRevealNFT: StateSetter<boolean>;
+
+  assestsPreloaded: boolean;
+  setAssestsPreloaded: StateSetter<boolean>;
 }
 
 const defaultLotteryState: LotteryState = {
@@ -130,6 +136,10 @@ export const CottonCandyContextProvider: React.FC<
   const [bookmark, setBookmark] = useState<BookMark>("mint");
   const [activeMenu, setActiveMenu] = useState<Nav>("none");
   const [gasFee, setGasFee] = useState<number>(0);
+
+  const [estimate, setEstimate] = useState<number | null>(null);
+
+  const [assestsPreloaded, setAssestsPreloaded] = useState(false);
 
   const [lotteryState, setLotteryState] =
     useState<LotteryState>(defaultLotteryState);
@@ -188,13 +198,14 @@ export const CottonCandyContextProvider: React.FC<
     let _userMintCount = 0;
 
     const _price = calculatePayment(
-      totalMinted,
+      totalMinted + 1,
+      count,
       maxPlayers,
       totalValueToCollect,
       minPrice
     );
 
-    setPrice(_price / 1e9);
+    setPrice(_price);
 
     const [userStatePda] = PublicKey.findProgramAddressSync(
       [Buffer.from("user-state"), connectedWallet.publicKey.toBuffer()],
@@ -315,6 +326,12 @@ export const CottonCandyContextProvider: React.FC<
 
     revealNFT,
     setRevealNFT,
+
+    estimate,
+    setEstimate,
+
+    assestsPreloaded,
+    setAssestsPreloaded,
   };
 
   return (

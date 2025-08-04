@@ -1,7 +1,7 @@
 {
-  "address": "6UqwNK6VbdF9Qg4NhiJBiqJ4A6Wbmu6Fvy8unFaSSPWW",
+  "address": "2UqTGXGQB8ffYEgxFBFDoUTBbzxRL1tdRkLuZ6s8xJam",
   "metadata": {
-    "name": "solanaLottery",
+    "name": "solana_lottery",
     "version": "0.1.0",
     "spec": "0.1.0",
     "description": "A Solana smart contract for token locking and rewards management, created with Anchor",
@@ -9,7 +9,7 @@
   },
   "instructions": [
     {
-      "name": "adminWithdrawRoyalties",
+      "name": "admin_withdraw_royalties",
       "discriminator": [
         82,
         36,
@@ -27,7 +27,7 @@
           "signer": true
         },
         {
-          "name": "collectionAuthority",
+          "name": "collection_authority",
           "writable": true,
           "pda": {
             "seeds": [
@@ -80,7 +80,7 @@
           }
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
@@ -105,7 +105,7 @@
           "signer": true
         },
         {
-          "name": "userState",
+          "name": "user_state",
           "writable": true,
           "pda": {
             "seeds": [
@@ -127,32 +127,6 @@
               {
                 "kind": "account",
                 "path": "user"
-              }
-            ]
-          }
-        },
-        {
-          "name": "nftState",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  110,
-                  102,
-                  116,
-                  45,
-                  115,
-                  116,
-                  97,
-                  116,
-                  101
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "nftMint"
               }
             ]
           }
@@ -196,7 +170,7 @@
           }
         },
         {
-          "name": "collectionMint",
+          "name": "collection_mint",
           "writable": true,
           "pda": {
             "seeds": [
@@ -219,28 +193,15 @@
           }
         },
         {
-          "name": "collectionMetadataAccount",
+          "name": "collection_metadata_account",
           "writable": true
         },
         {
-          "name": "collectionMasterEdition",
+          "name": "collection_master_edition",
           "writable": true
         },
         {
-          "name": "nftMint",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "metadataAccount",
-          "writable": true
-        },
-        {
-          "name": "masterEdition",
-          "writable": true
-        },
-        {
-          "name": "collectionAuthority",
+          "name": "collection_authority",
           "writable": true,
           "pda": {
             "seeds": [
@@ -273,109 +234,19 @@
           }
         },
         {
-          "name": "tokenAccount",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "account",
-                "path": "user"
-              },
-              {
-                "kind": "const",
-                "value": [
-                  6,
-                  221,
-                  246,
-                  225,
-                  215,
-                  101,
-                  161,
-                  147,
-                  217,
-                  203,
-                  225,
-                  70,
-                  206,
-                  235,
-                  121,
-                  172,
-                  28,
-                  180,
-                  133,
-                  237,
-                  95,
-                  91,
-                  55,
-                  145,
-                  58,
-                  140,
-                  245,
-                  133,
-                  126,
-                  255,
-                  0,
-                  169
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "nftMint"
-              }
-            ],
-            "program": {
-              "kind": "const",
-              "value": [
-                140,
-                151,
-                37,
-                143,
-                78,
-                36,
-                137,
-                241,
-                187,
-                61,
-                16,
-                41,
-                20,
-                142,
-                13,
-                131,
-                11,
-                90,
-                19,
-                153,
-                218,
-                255,
-                16,
-                132,
-                4,
-                142,
-                123,
-                216,
-                219,
-                233,
-                248,
-                89
-              ]
-            }
-          }
-        },
-        {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         },
         {
-          "name": "tokenProgram",
+          "name": "token_program",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          "name": "associatedTokenProgram",
+          "name": "associated_token_program",
           "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         },
         {
-          "name": "tokenMetadataProgram",
+          "name": "token_metadata_program",
           "address": "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
         },
         {
@@ -404,7 +275,7 @@
           "signer": true
         },
         {
-          "name": "userState",
+          "name": "user_state",
           "writable": true,
           "pda": {
             "seeds": [
@@ -431,7 +302,7 @@
           }
         },
         {
-          "name": "nftState",
+          "name": "nft_state",
           "writable": true,
           "pda": {
             "seeds": [
@@ -451,7 +322,7 @@
               },
               {
                 "kind": "account",
-                "path": "nftMint"
+                "path": "nft_mint"
               }
             ]
           }
@@ -476,7 +347,7 @@
           }
         },
         {
-          "name": "eggCollectionMint",
+          "name": "egg_collection_mint",
           "writable": true,
           "pda": {
             "seeds": [
@@ -503,31 +374,31 @@
           }
         },
         {
-          "name": "eggCollectionMetadataAccount",
+          "name": "egg_collection_metadata_account",
           "writable": true
         },
         {
-          "name": "eggCollectionMasterEdition",
+          "name": "egg_collection_master_edition",
           "writable": true
         },
         {
-          "name": "eggNftMint",
+          "name": "egg_nft_mint",
           "writable": true,
           "signer": true
         },
         {
-          "name": "eggMetadataAccount",
+          "name": "egg_metadata_account",
           "writable": true
         },
         {
-          "name": "eggMasterEdition",
+          "name": "egg_master_edition",
           "writable": true
         },
         {
-          "name": "nftMint"
+          "name": "nft_mint"
         },
         {
-          "name": "collectionAuthority",
+          "name": "collection_authority",
           "writable": true,
           "pda": {
             "seeds": [
@@ -560,7 +431,7 @@
           }
         },
         {
-          "name": "tokenAccount",
+          "name": "token_account",
           "writable": true,
           "pda": {
             "seeds": [
@@ -607,7 +478,7 @@
               },
               {
                 "kind": "account",
-                "path": "eggNftMint"
+                "path": "egg_nft_mint"
               }
             ],
             "program": {
@@ -650,19 +521,19 @@
           }
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         },
         {
-          "name": "tokenProgram",
+          "name": "token_program",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          "name": "associatedTokenProgram",
+          "name": "associated_token_program",
           "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         },
         {
-          "name": "tokenMetadataProgram",
+          "name": "token_metadata_program",
           "address": "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
         },
         {
@@ -673,7 +544,7 @@
       "args": []
     },
     {
-      "name": "disableBuying",
+      "name": "disable_buying",
       "discriminator": [
         87,
         6,
@@ -711,7 +582,7 @@
           }
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
@@ -754,7 +625,7 @@
           }
         },
         {
-          "name": "prevRound",
+          "name": "prev_round",
           "pda": {
             "seeds": [
               {
@@ -791,7 +662,7 @@
               },
               {
                 "kind": "account",
-                "path": "eggNftMint"
+                "path": "egg_nft_mint"
               }
             ],
             "program": {
@@ -854,7 +725,7 @@
           }
         },
         {
-          "name": "nftState",
+          "name": "nft_state",
           "writable": true,
           "pda": {
             "seeds": [
@@ -874,19 +745,19 @@
               },
               {
                 "kind": "account",
-                "path": "nftMint"
+                "path": "nft_mint"
               }
             ]
           }
         },
         {
-          "name": "eggNftMint"
+          "name": "egg_nft_mint"
         },
         {
-          "name": "nftMint"
+          "name": "nft_mint"
         },
         {
-          "name": "tokenAccount",
+          "name": "token_account",
           "pda": {
             "seeds": [
               {
@@ -932,7 +803,7 @@
               },
               {
                 "kind": "account",
-                "path": "eggNftMint"
+                "path": "egg_nft_mint"
               }
             ],
             "program": {
@@ -975,7 +846,7 @@
           }
         },
         {
-          "name": "fulfilledState",
+          "name": "fulfilled_state",
           "writable": true,
           "pda": {
             "seeds": [
@@ -985,13 +856,13 @@
               },
               {
                 "kind": "account",
-                "path": "eggNftMint"
+                "path": "egg_nft_mint"
               }
             ]
           }
         },
         {
-          "name": "collectionAuthority",
+          "name": "collection_authority",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1024,23 +895,23 @@
           }
         },
         {
-          "name": "eggMetadataAccount",
+          "name": "egg_metadata_account",
           "writable": true
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         },
         {
-          "name": "tokenProgram",
+          "name": "token_program",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          "name": "associatedTokenProgram",
+          "name": "associated_token_program",
           "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         },
         {
-          "name": "tokenMetadataProgram",
+          "name": "token_metadata_program",
           "address": "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
         },
         {
@@ -1069,7 +940,7 @@
           "signer": true
         },
         {
-          "name": "userState",
+          "name": "user_state",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1096,7 +967,7 @@
           }
         },
         {
-          "name": "nftState",
+          "name": "nft_state",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1116,7 +987,7 @@
               },
               {
                 "kind": "account",
-                "path": "nftMint"
+                "path": "nft_mint"
               }
             ]
           }
@@ -1160,7 +1031,7 @@
               },
               {
                 "kind": "account",
-                "path": "eggNftMint"
+                "path": "egg_nft_mint"
               }
             ],
             "program": {
@@ -1311,13 +1182,13 @@
           }
         },
         {
-          "name": "eggNftMint"
+          "name": "egg_nft_mint"
         },
         {
-          "name": "nftMint"
+          "name": "nft_mint"
         },
         {
-          "name": "tokenAccount",
+          "name": "token_account",
           "pda": {
             "seeds": [
               {
@@ -1363,7 +1234,7 @@
               },
               {
                 "kind": "account",
-                "path": "eggNftMint"
+                "path": "egg_nft_mint"
               }
             ],
             "program": {
@@ -1406,7 +1277,7 @@
           }
         },
         {
-          "name": "fulfilledState",
+          "name": "fulfilled_state",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1416,25 +1287,25 @@
               },
               {
                 "kind": "account",
-                "path": "eggNftMint"
+                "path": "egg_nft_mint"
               }
             ]
           }
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         },
         {
-          "name": "tokenProgram",
+          "name": "token_program",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          "name": "associatedTokenProgram",
+          "name": "associated_token_program",
           "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         },
         {
-          "name": "tokenMetadataProgram",
+          "name": "token_metadata_program",
           "address": "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
         },
         {
@@ -1478,7 +1349,7 @@
           }
         },
         {
-          "name": "collectionMint",
+          "name": "collection_mint",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1501,21 +1372,21 @@
           }
         },
         {
-          "name": "metadataAccount",
+          "name": "metadata_account",
           "writable": true
         },
         {
-          "name": "masterEdition",
+          "name": "master_edition",
           "writable": true
         },
         {
-          "name": "tokenAccount",
+          "name": "token_account",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "account",
-                "path": "collectionAuthority"
+                "path": "collection_authority"
               },
               {
                 "kind": "const",
@@ -1556,7 +1427,7 @@
               },
               {
                 "kind": "account",
-                "path": "collectionMint"
+                "path": "collection_mint"
               }
             ],
             "program": {
@@ -1599,7 +1470,7 @@
           }
         },
         {
-          "name": "eggCollectionMint",
+          "name": "egg_collection_mint",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1626,21 +1497,21 @@
           }
         },
         {
-          "name": "eggMetadataAccount",
+          "name": "egg_metadata_account",
           "writable": true
         },
         {
-          "name": "eggMasterEdition",
+          "name": "egg_master_edition",
           "writable": true
         },
         {
-          "name": "eggTokenAccount",
+          "name": "egg_token_account",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "account",
-                "path": "collectionAuthority"
+                "path": "collection_authority"
               },
               {
                 "kind": "const",
@@ -1681,7 +1552,7 @@
               },
               {
                 "kind": "account",
-                "path": "eggCollectionMint"
+                "path": "egg_collection_mint"
               }
             ],
             "program": {
@@ -1724,7 +1595,7 @@
           }
         },
         {
-          "name": "collectionAuthority",
+          "name": "collection_authority",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1775,19 +1646,19 @@
           }
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         },
         {
-          "name": "tokenProgram",
+          "name": "token_program",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          "name": "associatedTokenProgram",
+          "name": "associated_token_program",
           "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         },
         {
-          "name": "tokenMetadataProgram",
+          "name": "token_metadata_program",
           "address": "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
         },
         {
@@ -1802,35 +1673,35 @@
       ],
       "args": [
         {
-          "name": "totalValueToCollect",
+          "name": "total_value_to_collect",
           "type": "u64"
         },
         {
-          "name": "minPrice",
+          "name": "min_price",
           "type": "u64"
         },
         {
-          "name": "maxPlayers",
+          "name": "max_players",
           "type": "u64"
         },
         {
-          "name": "maxWinners",
+          "name": "max_winners",
           "type": "u64"
         },
         {
-          "name": "startTime",
+          "name": "start_time",
           "type": "u64"
         },
         {
-          "name": "wonUri",
+          "name": "won_uri",
           "type": "string"
         },
         {
-          "name": "lostUri",
+          "name": "lost_uri",
           "type": "string"
         },
         {
-          "name": "eggAfterHatchCooldown",
+          "name": "egg_after_hatch_cooldown",
           "type": "u64"
         }
       ]
@@ -1838,7 +1709,7 @@
   ],
   "accounts": [
     {
-      "name": "fulFilledState",
+      "name": "FulFilledState",
       "discriminator": [
         204,
         179,
@@ -1851,7 +1722,7 @@
       ]
     },
     {
-      "name": "networkState",
+      "name": "NetworkState",
       "discriminator": [
         212,
         237,
@@ -1864,7 +1735,7 @@
       ]
     },
     {
-      "name": "nftState",
+      "name": "NftState",
       "discriminator": [
         249,
         203,
@@ -1877,7 +1748,7 @@
       ]
     },
     {
-      "name": "state",
+      "name": "State",
       "discriminator": [
         216,
         146,
@@ -1890,7 +1761,7 @@
       ]
     },
     {
-      "name": "userState",
+      "name": "UserState",
       "discriminator": [
         72,
         177,
@@ -1903,7 +1774,7 @@
       ]
     },
     {
-      "name": "vault",
+      "name": "Vault",
       "discriminator": [
         211,
         8,
@@ -1919,88 +1790,113 @@
   "errors": [
     {
       "code": 6000,
-      "name": "startTimeMustBeInTheFuture",
+      "name": "StartTimeMustBeInTheFuture",
       "msg": "Start time must be in the future"
     },
     {
       "code": 6001,
-      "name": "zeroSeedForce",
+      "name": "ZeroSeedForce",
       "msg": "Zero seed force is not allowed"
     },
     {
       "code": 6002,
-      "name": "invalidPlayerIndex",
+      "name": "InvalidPlayerIndex",
       "msg": "Invalid player index"
     },
     {
       "code": 6003,
-      "name": "lotteryOver",
+      "name": "LotteryOver",
       "msg": "Lottery over"
     },
     {
       "code": 6004,
-      "name": "lotteryNotOverYet",
+      "name": "LotteryNotOverYet",
       "msg": "Lottery not over yet"
     },
     {
       "code": 6005,
-      "name": "insufficientFunds",
+      "name": "InsufficientFunds",
       "msg": "Insufficient funds"
     },
     {
       "code": 6006,
-      "name": "firstBuyTheNft",
+      "name": "FirstBuyTheNft",
       "msg": "First buy the nft"
     },
     {
       "code": 6007,
-      "name": "youNeedToHatchTheEggFirst",
+      "name": "YouNeedToHatchTheEggFirst",
       "msg": "You need to hatch the egg first"
     },
     {
       "code": 6008,
-      "name": "alreadyHatchedTheEgg",
+      "name": "AlreadyHatchedTheEgg",
       "msg": "Already hatched the egg"
     },
     {
       "code": 6009,
-      "name": "withdrawalAlreadyCompleted",
+      "name": "WithdrawalAlreadyCompleted",
       "msg": "Withdrawal already completed"
     },
     {
       "code": 6010,
-      "name": "notAdmin",
+      "name": "NotAdmin",
       "msg": "Not admin"
     },
     {
       "code": 6011,
-      "name": "insufficientVaultBalance",
+      "name": "InsufficientVaultBalance",
       "msg": "Insufficient vault balance"
     },
     {
       "code": 6012,
-      "name": "mintingHasNotStartedYet",
+      "name": "MintingHasNotStartedYet",
       "msg": "Minting has not started yet"
     },
     {
       "code": 6013,
-      "name": "hatchNotReady",
+      "name": "HatchNotReady",
       "msg": "Hatch not ready"
     },
     {
       "code": 6014,
-      "name": "eggAlreadyClaimedAgainstThisNft",
+      "name": "EggAlreadyClaimedAgainstThisNft",
       "msg": "Egg already claimed against this nft"
     },
     {
       "code": 6015,
-      "name": "buyingDisabled",
+      "name": "BuyingDisabled",
       "msg": "Buying disabled"
+    },
+    {
+      "code": 6016,
+      "name": "InvalidRemainingAccounts",
+      "msg": "Invalid remaining accounts"
+    },
+    {
+      "code": 6017,
+      "name": "InvalidMetadata",
+      "msg": "Invalid metadata"
+    },
+    {
+      "code": 6018,
+      "name": "InvalidMasterEdition",
+      "msg": "Invalid master edition"
+    },
+    {
+      "code": 6019,
+      "name": "InvalidTokenAccount",
+      "msg": "Invalid token account"
+    },
+    {
+      "code": 6020,
+      "name": "InvalidNftStatePda",
+      "msg": "Invalid NFT state PDA"
     }
   ],
   "types": [
     {
-      "name": "fulFilledState",
+      "name": "FulFilledState",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2008,15 +1904,15 @@
             "name": "status",
             "type": {
               "defined": {
-                "name": "fulfillmentStatus"
+                "name": "FulfillmentStatus"
               }
             }
           },
           {
-            "name": "lotteryStatus",
+            "name": "lottery_status",
             "type": {
               "defined": {
-                "name": "lotteryStatus"
+                "name": "LotteryStatus"
               }
             }
           }
@@ -2024,41 +1920,41 @@
       }
     },
     {
-      "name": "fulfillmentStatus",
+      "name": "FulfillmentStatus",
       "type": {
         "kind": "enum",
         "variants": [
           {
-            "name": "none"
+            "name": "None"
           },
           {
-            "name": "pending"
+            "name": "Pending"
           },
           {
-            "name": "done"
+            "name": "Done"
           }
         ]
       }
     },
     {
-      "name": "lotteryStatus",
+      "name": "LotteryStatus",
       "type": {
         "kind": "enum",
         "variants": [
           {
-            "name": "none"
+            "name": "None"
           },
           {
-            "name": "won"
+            "name": "Won"
           },
           {
-            "name": "lost"
+            "name": "Lost"
           }
         ]
       }
     },
     {
-      "name": "networkConfiguration",
+      "name": "NetworkConfiguration",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2071,21 +1967,21 @@
             "type": "pubkey"
           },
           {
-            "name": "requestFee",
+            "name": "request_fee",
             "type": "u64"
           },
           {
-            "name": "fulfillmentAuthorities",
+            "name": "fulfillment_authorities",
             "type": {
               "vec": "pubkey"
             }
           },
           {
-            "name": "tokenFeeConfig",
+            "name": "token_fee_config",
             "type": {
               "option": {
                 "defined": {
-                  "name": "oraoTokenFeeConfig"
+                  "name": "OraoTokenFeeConfig"
                 }
               }
             }
@@ -2094,7 +1990,7 @@
       }
     },
     {
-      "name": "networkState",
+      "name": "NetworkState",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2102,12 +1998,12 @@
             "name": "config",
             "type": {
               "defined": {
-                "name": "networkConfiguration"
+                "name": "NetworkConfiguration"
               }
             }
           },
           {
-            "name": "numReceived",
+            "name": "num_received",
             "docs": [
               "Total number of received requests."
             ],
@@ -2117,27 +2013,27 @@
       }
     },
     {
-      "name": "nftState",
+      "name": "NftState",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "isEggClaimed",
+            "name": "is_egg_claimed",
             "type": "bool"
           },
           {
-            "name": "eggMint",
+            "name": "egg_mint",
             "type": "pubkey"
           },
           {
-            "name": "eggHatchedAt",
+            "name": "egg_hatched_at",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "oraoTokenFeeConfig",
+      "name": "OraoTokenFeeConfig",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2166,7 +2062,7 @@
       }
     },
     {
-      "name": "state",
+      "name": "State",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2187,67 +2083,67 @@
             "type": "pubkey"
           },
           {
-            "name": "maxPlayers",
+            "name": "max_players",
             "type": "u64"
           },
           {
-            "name": "maxWinners",
+            "name": "max_winners",
             "type": "u64"
           },
           {
-            "name": "totalMinted",
+            "name": "total_minted",
             "type": "u64"
           },
           {
-            "name": "totalMintedEgg",
+            "name": "total_minted_egg",
             "type": "u64"
           },
           {
-            "name": "totalValueToCollect",
+            "name": "total_value_to_collect",
             "type": "u64"
           },
           {
-            "name": "minPrice",
+            "name": "min_price",
             "type": "u64"
           },
           {
-            "name": "isAdminWithdrawalDone",
+            "name": "is_admin_withdrawal_done",
             "type": "bool"
           },
           {
-            "name": "winnersDeclared",
+            "name": "winners_declared",
             "type": "u64"
           },
           {
-            "name": "startTime",
+            "name": "start_time",
             "type": "u64"
           },
           {
-            "name": "hatchCount",
+            "name": "hatch_count",
             "type": "u64"
           },
           {
-            "name": "eggAfterHatchCooldown",
+            "name": "egg_after_hatch_cooldown",
             "type": "u64"
           },
           {
-            "name": "disableBuying",
+            "name": "disable_buying",
             "type": "bool"
           },
           {
-            "name": "totalValueYetCollected",
+            "name": "total_value_yet_collected",
             "type": "u64"
           },
           {
-            "name": "wonUri",
+            "name": "won_uri",
             "type": "string"
           },
           {
-            "name": "lostUri",
+            "name": "lost_uri",
             "type": "string"
           },
           {
-            "name": "padding",
+            "name": "_padding",
             "type": {
               "array": [
                 "u8",
@@ -2259,7 +2155,7 @@
       }
     },
     {
-      "name": "userState",
+      "name": "UserState",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2272,29 +2168,20 @@
             "type": "u64"
           },
           {
-            "name": "userMintCount",
+            "name": "user_mint_count",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "vault",
+      "name": "Vault",
       "type": {
         "kind": "struct",
         "fields": [
           {
             "name": "version",
             "type": "u8"
-          },
-          {
-            "name": "padding",
-            "type": {
-              "array": [
-                "u8",
-                64
-              ]
-            }
           }
         ]
       }

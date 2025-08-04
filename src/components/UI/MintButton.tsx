@@ -41,7 +41,7 @@ const MintButton = () => {
       // ctx.setIsPortalOpen(true);
       setisMinting(true);
       await BuyNFT(ctx.count);
-      ctx.calculatePrice!();
+      ctx.calculatePrice();
     } catch (error: any) {
       console.error("Error: ", error.message);
       // ctx.setIsPortalOpen(false);
@@ -67,11 +67,7 @@ const MintButton = () => {
       className={`bg-mint-btn  max-h-[90px] max-w-[350px] min-w-64 min-h-14 relative bg-center bg-contain bg-no-repeat group z-10 ${
         isMinting ? " cursor-not-allowed opacity-75" : " opacity-100"
       }`}
-      onClick={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        handleNFTMintClick();
-      }}
+      onClick={handleNFTMintClick}
     >
       {(isMinting || visible || connecting) && (
         <div className="grid w-full h-full place-content-center">
@@ -80,7 +76,7 @@ const MintButton = () => {
       )}
 
       {!isMinting && (
-        <span className="absolute inset-0 z-20 transition duration-200 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20 "></span>
+        <span className="absolute inset-0 z-20 transition duration-200 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20"></span>
       )}
       {!(isMinting || visible || connecting) && (
         <span className="absolute inset-0 z-30 grid w-full h-full text-3xl leading-none text-white uppercase md:text-4xl place-content-center font-patrick-hand-sc">
