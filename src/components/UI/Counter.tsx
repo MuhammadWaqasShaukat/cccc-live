@@ -1,25 +1,30 @@
 import { useContext, useEffect, useState } from "react";
 import { CottonCandyContext } from "../../providers/ContextProvider";
-import { useWallet } from "@solana/wallet-adapter-react";
 import useWeb3Utils from "../../hooks/useWeb3Utils";
 import { calculatePayment } from "../../utils/calculatePayment";
 
+type CounterState = {
+  min: boolean;
+  max: boolean;
+};
+
+const defaultCounter: CounterState = {
+  min: true,
+  max: true,
+};
+
 const Counter = () => {
   const ctx = useContext(CottonCandyContext);
-  const { connected } = useWallet();
   const { getLotteryState } = useWeb3Utils();
 
-  const [disabled, setDisabled] = useState<{ min: boolean; max: boolean }>({
-    min: true,
-    max: false,
-  });
+  const [disabled, setDisabled] = useState<CounterState>(defaultCounter);
 
-  useEffect(() => {
-    const updateDisabledState = async () => {
-      const { totalMinted, maxPlayers, totalValueToCollect, minPrice } =
-        await getLotteryState();
-      const remaining = maxPlayers - totalMinted;
+  const updateDisabledState = async () => {
+    const { totalMinted, maxPlayers, totalValueToCollect, minPrice } =
+      await getLotteryState();
+    const remaining = maxPlayers - totalMinted;
 
+    if (remaining > 0) {
       const _price = calculatePayment(
         totalMinted + 1,
         ctx.count,
@@ -27,17 +32,18 @@ const Counter = () => {
         totalValueToCollect,
         minPrice
       );
-
       ctx.setEstimate(_price);
+      ctx.setCount(1);
+    }
+    setDisabled({
+      min: ctx.count <= 1,
+      max: ctx.count >= remaining,
+    });
+  };
 
-      setDisabled({
-        min: ctx.count <= 1,
-        max: ctx.count >= remaining,
-      });
-    };
-
+  useEffect(() => {
     updateDisabledState();
-  }, [ctx.count, connected, ctx.lotteryState.ended]);
+  }, [ctx.count, ctx.lotteryState.ended]);
 
   const lockCounter = () => {
     setDisabled({ min: true, max: true });
@@ -45,7 +51,7 @@ const Counter = () => {
 
   useEffect(() => {
     return () => {
-      ctx.setCount(1);
+      ctx.setCount(0);
       ctx.setEstimate(null);
     };
   }, []);

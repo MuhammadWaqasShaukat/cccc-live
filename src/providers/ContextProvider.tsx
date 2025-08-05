@@ -89,6 +89,9 @@ interface CottonCandyContextType {
 
   assestsPreloaded: boolean;
   setAssestsPreloaded: StateSetter<boolean>;
+
+  nftStates: Record<string, NftState>;
+  setNftStates: StateSetter<Record<string, NftState>>;
 }
 
 const defaultLotteryState: LotteryState = {
@@ -110,8 +113,8 @@ interface CottonCandyContextProviderProps {
 export const CottonCandyContextProvider: React.FC<
   CottonCandyContextProviderProps
 > = ({ children }) => {
-  const [count, setCount] = useState<number>(1);
-  const [price, setPrice] = useState<number>(1);
+  const [count, setCount] = useState<number>(0);
+  const [price, setPrice] = useState<number>(0);
   const [priceChangeTimeStamp] = useState<string>("");
   const mintSectionRef = useRef<HTMLDivElement | null>(null);
   const [currentModal, setCurrentModal] = useState<Modals | null>(null);
@@ -127,6 +130,7 @@ export const CottonCandyContextProvider: React.FC<
     FulFilledState | null | undefined
   >();
   const [myNfts, setMyNfts] = useState<any[]>([]);
+  const [nftStates, setNftStates] = useState<Record<string, NftState>>({});
   const [myEggs, setMyEggs] = useState<any[]>([]);
   const [revealNFT, setRevealNFT] = useState<boolean>(false);
 
@@ -197,15 +201,19 @@ export const CottonCandyContextProvider: React.FC<
 
     let _userMintCount = 0;
 
-    const _price = calculatePayment(
-      totalMinted + 1,
-      count,
-      maxPlayers,
-      totalValueToCollect,
-      minPrice
-    );
+    const remaining = maxPlayers - totalMinted;
 
-    setPrice(_price);
+    if (remaining > 0) {
+      const _price = calculatePayment(
+        totalMinted + 1,
+        count,
+        maxPlayers,
+        totalValueToCollect,
+        minPrice
+      );
+
+      setPrice(_price);
+    }
 
     const [userStatePda] = PublicKey.findProgramAddressSync(
       [Buffer.from("user-state"), connectedWallet.publicKey.toBuffer()],
@@ -221,6 +229,7 @@ export const CottonCandyContextProvider: React.FC<
         }
       } catch (error) {}
     }
+
     if (totalMinted >= maxPlayers) {
       const _lotteryState: LotteryState = {} as LotteryState;
       _lotteryState.ended = true;
@@ -332,6 +341,9 @@ export const CottonCandyContextProvider: React.FC<
 
     assestsPreloaded,
     setAssestsPreloaded,
+
+    nftStates,
+    setNftStates,
   };
 
   return (

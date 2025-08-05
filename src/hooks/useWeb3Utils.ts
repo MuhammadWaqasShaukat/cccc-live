@@ -1,5 +1,4 @@
 import { AnchorProvider, Program } from "@coral-xyz/anchor";
-import { Metadata } from "@metaplex-foundation/js";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { useWallet, Wallet } from "@solana/wallet-adapter-react";
 import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js";
@@ -9,6 +8,7 @@ import { Buffer } from "buffer";
 import IDL from "../constants/solana_lottery.json";
 import { FulFilledState } from "../types/Nft";
 import { Lottery } from "../types/Lottery";
+import { Metadata } from "../types/Metadata";
 
 const useWeb3Utils = () => {
   const network = WalletAdapterNetwork.Devnet;

@@ -1,4 +1,4 @@
-import { Metadata } from "@metaplex-foundation/js";
+import { Metadata } from "../types/Metadata";
 
 export const getNewBoughtNftEgg = async (
   stale: Metadata[],

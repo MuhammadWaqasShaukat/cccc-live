@@ -133,7 +133,10 @@ const ClaimEgg = () => {
           </motion.div>
 
           {nftState && !nftState.isEggClaimed ? (
-            <NFTActions canSummonEgg={canSummonEgg} />
+            <NFTActions
+              canSummonEgg={canSummonEgg}
+              isEggClaimed={nftState.isEggClaimed}
+            />
           ) : (
             ""
           )}

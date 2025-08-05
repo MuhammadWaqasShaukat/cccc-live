@@ -10,6 +10,7 @@ import NFTSwiper from "../components/UI/NFTSwiper";
 
 import "react-circular-progressbar/dist/styles.css";
 import Portal from "../components/UI/Portal";
+import { motion } from "framer-motion";
 
 const Home = () => {
   const ctx = useContext(CottonCandyContext);
@@ -21,7 +22,21 @@ const Home = () => {
 
   return (
     <>
-      <HeroSection />
+      <motion.div
+        initial={{
+          opacity: 0,
+        }}
+        animate={{
+          opacity: 1,
+        }}
+        transition={{
+          opacity: {
+            duration: 0.5,
+          },
+        }}
+      >
+        <HeroSection />
+      </motion.div>
 
       {/* pages  */}
       {ctx.activeMenu === "about" && <AboutSection />}

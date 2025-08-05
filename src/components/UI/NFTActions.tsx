@@ -4,7 +4,13 @@ import useWeb3Utils from "../../hooks/useWeb3Utils";
 import useProgramInstructions from "../../hooks/useProgramInstructions";
 import { getNewBoughtNftEgg } from "../../utils/getNewBoughtNft";
 
-const NFTActions = ({ canSummonEgg }: { canSummonEgg: boolean }) => {
+const NFTActions = ({
+  canSummonEgg,
+  isEggClaimed,
+}: {
+  canSummonEgg: boolean;
+  isEggClaimed: boolean;
+}) => {
   const {
     setCollectiable,
     collectable,
@@ -61,7 +67,7 @@ const NFTActions = ({ canSummonEgg }: { canSummonEgg: boolean }) => {
 
       <div className="flex flex-col justify-start gap-2 ">
         <button
-          disabled={!canSummonEgg}
+          disabled={!canSummonEgg || isEggClaimed}
           onClick={handleSummonEgg}
           className={`${
             canSummonEgg
@@ -75,6 +81,12 @@ const NFTActions = ({ canSummonEgg }: { canSummonEgg: boolean }) => {
           {!canSummonEgg && (
             <span className="absolute left-0 right-0 w-full text-lg text-left text-white -bottom-14 font-patrick-hand">
               Can’t summon egg while sale is active
+            </span>
+          )}
+
+          {canSummonEgg && isEggClaimed && (
+            <span className="absolute left-0 right-0 w-full text-lg text-left text-white -bottom-14 font-patrick-hand">
+              Egg summoned already.
             </span>
           )}
 

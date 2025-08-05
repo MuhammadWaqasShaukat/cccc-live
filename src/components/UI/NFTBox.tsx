@@ -12,6 +12,7 @@ const NFTBox: React.FC<{ nft: any; nftIndex: number }> = ({
     setCurrentModal,
     refreshNftState,
     setSeletedNftIndex,
+    setNftStates,
   } = useContext(CottonCandyContext);
   const { getNftState } = useWeb3Utils();
 
@@ -25,6 +26,13 @@ const NFTBox: React.FC<{ nft: any; nftIndex: number }> = ({
     setCurrentModal("nfts");
   };
 
+  const setNftStateHelper = (nftMintAddress: string, nftState: NftState) => {
+    setNftStates((prev) => ({
+      ...prev,
+      [nftMintAddress]: nftState,
+    }));
+  };
+
   useEffect(() => {
     (async () => {
       if (!nft) return;
@@ -32,6 +40,11 @@ const NFTBox: React.FC<{ nft: any; nftIndex: number }> = ({
         nft.mintAddress
       );
       setNftState({ isEggClaimed, eggHatchedAt, eggMint });
+      setNftStateHelper(nft.mintAddress, {
+        isEggClaimed,
+        eggHatchedAt,
+        eggMint,
+      });
     })();
   }, []);
 
@@ -42,6 +55,11 @@ const NFTBox: React.FC<{ nft: any; nftIndex: number }> = ({
         nft.mintAddress
       );
       setNftState({ isEggClaimed, eggHatchedAt, eggMint });
+      setNftStateHelper(nft.mintAddress, {
+        isEggClaimed,
+        eggHatchedAt,
+        eggMint,
+      });
     })();
   }, [refreshNftState]);
 

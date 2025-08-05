@@ -9,25 +9,26 @@ import { Metadata } from "../../types/Metadata";
 import useWeb3Utils from "../../hooks/useWeb3Utils";
 import NFTActions from "./NFTActions";
 
-const SlideItem: React.FC<Metadata> = ({ mintAddress }) => {
-  const [nftState, setNftState] = useState<NftState | null>(null);
+const SlideItem: React.FC<NftState> = (nftState) => {
+  const { isEggClaimed } = nftState;
+  // const [nftState, setNftState] = useState<NftState | null>(null);
 
-  const { getNftState, getLotteryState } = useWeb3Utils();
+  // const { getNftState, getLotteryState } = useWeb3Utils();
 
-  useEffect(() => {
-    (async () => {
-      if (!mintAddress) return;
-      const { isEggClaimed, eggMint, eggHatchedAt } = await getNftState(
-        mintAddress as any
-      );
+  // useEffect(() => {
+  //   (async () => {
+  //     if (!mintAddress) return;
+  //     const { isEggClaimed, eggMint, eggHatchedAt } = await getNftState(
+  //       mintAddress as any
+  //     );
 
-      const { totalMinted, maxPlayers } = await getLotteryState();
+  //     const { totalMinted, maxPlayers } = await getLotteryState();
 
-      if (totalMinted === maxPlayers) {
-      }
-      setNftState({ isEggClaimed, eggHatchedAt, eggMint });
-    })();
-  }, []);
+  //     if (totalMinted === maxPlayers) {
+  //     }
+  //     setNftState({ isEggClaimed, eggHatchedAt, eggMint });
+  //   })();
+  // }, []);
 
   return (
     <>
@@ -40,7 +41,7 @@ const SlideItem: React.FC<Metadata> = ({ mintAddress }) => {
             src={`./images/section-mint/nfts/nft1.jpg`}
             alt=""
           />
-          {nftState && !nftState.isEggClaimed ? (
+          {!isEggClaimed ? (
             <div className="absolute flex flex-row items-center justify-center w-full p-4 rounded group bottom-2">
               <div className="transition-all duration-100 bg-center bg-no-repeat bg-contain bg-egg-glow group-hover:bg-egg-glow-1 size-16 md:size-20 lg:size-24"></div>
               <span className="text-5xl text-white text-outline-0 font-patrick-hand-sc">
@@ -61,17 +62,17 @@ const NFTSwiper = () => {
   const { getLotteryState } = useWeb3Utils();
   const [canSummonEgg, setCanSummonEgg] = useState(false);
   const [isTutorial, setIsTutorial] = useState<string | null>(null);
+  const [currentNftState, setCurrentNftState] = useState<NftState>(
+    {} as NftState
+  );
 
   const handleNFTClicked = () => {
-    // ctx.setCurrentModal("claim-egg");
     localStorage.setItem("tutorial", JSON.stringify(true));
     setIsTutorial(localStorage.getItem("tutorial"));
-    // ctx.setCurrentModal(null);
   };
 
   useEffect(() => {
     (async () => {
-      // if (!ctx.collectable && !ctx.collectable.mintAddress) return;
       const { totalMinted, maxPlayers } = await getLotteryState();
       if (totalMinted === maxPlayers) {
         setCanSummonEgg(true);
@@ -88,6 +89,12 @@ const NFTSwiper = () => {
       setIsTutorial(isTutorial);
     }
   }, []);
+
+  const handleSlideChange = (slideIndex: number) => {
+    ctx.setCollectiable(ctx.myNfts[slideIndex]);
+    const currentNftState = ctx.nftStates[ctx.myNfts[slideIndex].mintAddress];
+    setCurrentNftState(currentNftState);
+  };
 
   return (
     <Modal
@@ -149,14 +156,14 @@ const NFTSwiper = () => {
                 spaceBetween: 60,
               },
             }}
-            onSlideChange={(swiper) =>
-              ctx.setCollectiable(ctx.myNfts[swiper.activeIndex])
-            }
+            onSlideChange={(swiper) => handleSlideChange(swiper.activeIndex)}
           >
             {ctx.myNfts.map((slide: Metadata, index: number) => {
+              const nftMintAddress: string = slide.mintAddress as any;
+
               return (
                 <SwiperSlide key={index} className="">
-                  <SlideItem {...slide} />
+                  <SlideItem {...ctx.nftStates[nftMintAddress]} />
                 </SwiperSlide>
               );
             })}
@@ -188,7 +195,10 @@ const NFTSwiper = () => {
           )}
           {isTutorial && (
             <div className="mt-4">
-              <NFTActions canSummonEgg={canSummonEgg} />
+              <NFTActions
+                canSummonEgg={canSummonEgg}
+                isEggClaimed={currentNftState.isEggClaimed}
+              />
             </div>
           )}
         </div>

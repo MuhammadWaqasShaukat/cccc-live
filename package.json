@@ -12,9 +12,7 @@
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.31.1",
-    "@metaplex-foundation/js": "^0.20.1",
     "@orao-network/solana-vrf": "^0.6.1",
-    "@project-serum/anchor": "^0.26.0",
     "@solana/spl-token": "^0.4.13",
     "@solana/wallet-adapter-base": "^0.9.27",
     "@solana/wallet-adapter-react": "^0.15.39",
@@ -31,8 +29,6 @@
     "react-fast-marquee": "^1.6.5",
     "stream-browserify": "^3.0.0",
     "swiper": "^11.2.10",
-    "tailwind-scrollbar-utilities": "^0.3.0",
-    "wouter": "^3.7.1",
     "yarn": "^1.22.22"
   },
   "devDependencies": {

@@ -1,15 +1,13 @@
-import { Route, Switch } from "wouter";
 import "./App.css";
 import Home from "./pages/Home";
 import { useContext, useEffect, useRef } from "react";
 import SnakeLoader from "./components/UI/SnakeLoader";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { CottonCandyContext } from "./providers/ContextProvider";
 
 function App() {
   const ctx = useContext(CottonCandyContext);
 
-  // const [setLoading] = useState(true);
   const preloadContainer = useRef<HTMLDivElement>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
 
@@ -95,6 +93,7 @@ function App() {
       "/images/animations/candle.webm",
       "/images/animations/about.webm",
       "/images/animations/archer.webm",
+      "/images/animations/hammer.webm",
     ];
 
     const audioSources = ["/sound/pop-cat.mp3"];
@@ -103,7 +102,6 @@ function App() {
 
     if (!container) return;
     container.style.display = "none";
-    // document.body.appendChild(container);
 
     const videoPromises = videoSources.map((src) => {
       return new Promise<void>((resolve) => {
@@ -143,7 +141,7 @@ function App() {
         const img = new Image();
         img.src = src;
         img.dataset.key = src;
-        // img.style.display = "none";
+        img.style.display = "none";
         img.onload = img.onerror = () => resolve();
         _preloaderContainer?.appendChild(img);
         imageElements.push(img);
@@ -157,8 +155,6 @@ function App() {
     } else {
       await Promise.all([...imagePromises]);
     }
-
-    // setTimeout(() => setLoading(false), 1000);
   };
 
   useEffect(() => {
@@ -201,23 +197,19 @@ function App() {
       ></div>
 
       {!ctx.assestsPreloaded && (
-        <AnimatePresence mode="wait">
-          <motion.div
-            className="w-screen h-screen bg-black"
-            key="loader"
-            initial={{ opacity: 1 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ opacity: { duration: 0.5 } }}
-          >
-            <SnakeLoader />
-          </motion.div>
-        </AnimatePresence>
+        <motion.div
+          className="w-screen h-screen bg-black"
+          key="loader"
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 1 }}
+          // exit={{ opacity: 0 }}
+          transition={{ opacity: { duration: 0.5 } }}
+        >
+          <SnakeLoader />
+        </motion.div>
       )}
       <div className="overflow-x-hidden">
-        <Switch>
-          <Route path="/" component={Home} />
-        </Switch>
+        <Home />
       </div>
     </>
   );

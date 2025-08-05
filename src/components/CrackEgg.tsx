@@ -2,9 +2,9 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { CottonCandyContext } from "../providers/ContextProvider";
 import Modal from "./UI/Modal";
 import useProgramInstructions from "../hooks/useProgramInstructions";
-import { PublicKey } from "@metaplex-foundation/js";
 import useWeb3Utils from "../hooks/useWeb3Utils";
 import { motion } from "framer-motion";
+import { PublicKey } from "@solana/web3.js";
 
 const CrackEgg = () => {
   const ctx = useContext(CottonCandyContext);
@@ -119,8 +119,8 @@ const CrackEgg = () => {
 
   return (
     <Modal onBackgroundClick={handleKeepEgg}>
-      <div className="flex flex-col justify-center items-center  w-full h-full bg-claim-egg-bg bg-cover bg-no-repeat bg-center p-4 gap-9 z-50">
-        <h1 className=" uppercase text-white  font-patrick-hand-sc text-6xl">
+      <div className="z-50 flex flex-col items-center justify-center w-full h-full p-4 bg-center bg-no-repeat bg-cover bg-claim-egg-bg gap-9">
+        <h1 className="text-6xl text-white uppercase font-patrick-hand-sc">
           The Egg <span className="text-5xl">was summoned</span>!
         </h1>
         <motion.div
@@ -132,7 +132,7 @@ const CrackEgg = () => {
             damping: 15,
             duration: 0.5,
           }}
-          className="w-full flex justify-center"
+          className="flex justify-center w-full"
         >
           <img
             className="w-[350px] h-auto rounded-2xl"
@@ -141,24 +141,24 @@ const CrackEgg = () => {
           />
 
           {
-            <div className=" absolute h-1/2 z-50 flex flex-col justify-center items-center">
-              <span className=" text-6xl font-patrick-hand">
+            <div className="absolute z-50 flex flex-col items-center justify-center h-1/2">
+              <span className="text-6xl font-patrick-hand">
                 {crackpoints} / {10000}
               </span>
             </div>
           }
         </motion.div>
-        <div className=" flex flex-row justify-between items-start gap-9">
+        <div className="flex flex-row items-start justify-between gap-9">
           <button
             onClick={handleKeepEgg}
             className="bg-mint-section-btn w-full h-full md:h-[86px] md:w-[191px] relative bg-contain bg-no-repeat group z-40"
           >
-            <span className="absolute inset-0 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20 transition duration-200 z-50"></span>
-            <span className=" absolute inset-0 w-full h-full grid place-content-center font-patrick-hand text-3xl  leading-none text-white z-60">
+            <span className="absolute inset-0 z-50 transition duration-200 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20"></span>
+            <span className="absolute inset-0 grid w-full h-full text-3xl leading-none text-white place-content-center font-patrick-hand z-60">
               Keep
             </span>
           </button>
-          <div className=" flex flex-col justify-start  gap-2">
+          <div className="flex flex-col justify-start gap-2 ">
             <button
               disabled={!shouldCrack}
               onClick={handleCrackEgg}
@@ -168,13 +168,13 @@ const CrackEgg = () => {
                   : "bg-crack-disabled-btn rounded-2xl"
               } w-full h-full md:h-[86px] md:w-[237px] relative bg-contain bg-no-repeat group z-40 rounded-2xl`}
             >
-              <span className="absolute inset-0 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20 transition duration-200 z-50"></span>
-              <span className=" absolute inset-0 w-full h-full grid place-content-center font-patrick-hand text-3xl  leading-none text-white z-60">
+              <span className="absolute inset-0 z-50 transition duration-200 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20"></span>
+              <span className="absolute inset-0 grid w-full h-full text-3xl leading-none text-white place-content-center font-patrick-hand z-60">
                 Crack
               </span>
               {!shouldCrack && time && (
-                <div className=" absolute -bottom-2 flex flex-row justify-center items-center w-full text-white">
-                  <div className=" font-patrick-hand-sc inline-block text-2xl">
+                <div className="absolute flex flex-row items-center justify-center w-full text-white -bottom-2">
+                  <div className="inline-block text-2xl font-patrick-hand-sc">
                     {time && time.hours}
                     <span className="text-lg">H</span> {time && time.minutes}
                     <span className="text-lg">M</span>

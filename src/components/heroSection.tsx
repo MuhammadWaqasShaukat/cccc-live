@@ -152,7 +152,7 @@ const HeroSection = () => {
 
         <div className="bg-hero-section-chillguy lg:w-[352px] max-h-[341px] h-[25.30%] w-[26%] min-w-[117px] min-h-[111px] bg-contain z-10 absolute md:top-[32%] lg:top-[24%] bottom-[10rem] md:left-[15%] lg:left-[5%] left-[4%] bg-bottom bg-no-repeat"></div>
         <div className=" max-w-[400px] max-h-[619px] min-w-[162px] min-h-[230px] h-[50%] w-[37%] absolute bottom-[12%] ">
-          <div className="relative z-30 w-full h-full bg-left-bottom bg-no-repeat bg-contain bg-hero-section-castle-red-2"></div>
+          <div className="relative z-30 w-full h-full bg-left-bottom bg-no-repeat bg-contain pointer-events-none bg-hero-section-castle-red-2"></div>
           <div className=" black-wall min-w-[120px] -mt-1 bg-left-bottom md:w-[65%] w-[60%] xs:w-[62%] lg:w-[62.2%] md:h-[68%] lg:h-[70%] sm:w-[50%] h-[70%]   bg-contain bg-no-repeat absolute bottom-0 z-10"></div>
         </div>
         <div className="bg-hero-section-memcoin-1 hidden md:block max-w-[273px] max-h-[319px] w-[20%] h-[24%] min-w-[70px] min-h-[78px] absolute lg:bottom-[11%] md:bottom-[11%] bottom-[5%] left-[0%] z-20 bg-contain bg-no-repeat"></div>
@@ -226,7 +226,7 @@ const HeroSection = () => {
           </div>
         </div>
 
-        <div className="bg-hero-section-castle-blue-2  max-w-[465px] max-h-[606px] h-[46%] w-[37%]  absolute min-h-[221px] min-w-[168px] bg-contain bg-no-repeat bg-right-bottom z-30 right-0 bottom-[12%]"></div>
+        <div className="bg-hero-section-castle-blue-2 pointer-events-none  max-w-[465px] max-h-[606px] h-[46%] w-[37%]  absolute min-h-[221px] min-w-[168px] bg-contain bg-no-repeat bg-right-bottom z-30 right-0 bottom-[12%]"></div>
 
         <div className="bg-hero-section-memcoin-5 max-w-[346px] max-h-[432px] sm:w-[25.68%] w-[30%] h-[32%] min-w-[200px] min-h-[171px] bg-contain bg-no-repeat z-30 absolute -bottom-4 md:bottom-[10%] right-[10%] bg-right-bottom "></div>
 
