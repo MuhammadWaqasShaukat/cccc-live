@@ -113,7 +113,7 @@ interface CottonCandyContextProviderProps {
 export const CottonCandyContextProvider: React.FC<
   CottonCandyContextProviderProps
 > = ({ children }) => {
-  const [count, setCount] = useState<number>(0);
+  const [count, setCount] = useState<number>(1);
   const [price, setPrice] = useState<number>(0);
   const [priceChangeTimeStamp] = useState<string>("");
   const mintSectionRef = useRef<HTMLDivElement | null>(null);

@@ -22,6 +22,7 @@ const Counter = () => {
   const updateDisabledState = async () => {
     const { totalMinted, maxPlayers, totalValueToCollect, minPrice } =
       await getLotteryState();
+
     const remaining = maxPlayers - totalMinted;
 
     if (remaining > 0) {
@@ -33,7 +34,10 @@ const Counter = () => {
         minPrice
       );
       ctx.setEstimate(_price);
-      ctx.setCount(1);
+
+      if (remaining === 0) {
+        ctx.setCount(1);
+      }
     }
     setDisabled({
       min: ctx.count <= 1,
@@ -51,7 +55,7 @@ const Counter = () => {
 
   useEffect(() => {
     return () => {
-      ctx.setCount(0);
+      ctx.setCount(1);
       ctx.setEstimate(null);
     };
   }, []);

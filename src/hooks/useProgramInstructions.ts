@@ -73,157 +73,170 @@ const useProgramInstructions = () => {
       return;
     }
 
+    const txnsCount =
+      mintCount % 2 === 0 ? mintCount / 2 : Math.floor(mintCount / 2) + 1;
+
     const txs: Transaction[] = [];
-    const nftMintKeypairsForSign: Keypair[] = [];
+    const nftMintKeypairsForSign: Record<number, Keypair[]> = {};
 
-    //temp loop
-    for (let i = 0; i < mintCount; i++) {
-      const remainingAccounts: any[] = [];
-      const nftMintKeypairs: Keypair[] = [];
+    try {
+      for (let i = 0; i < txnsCount; i++) {
+        const isLast = i === txnsCount - 1;
+        const remaining = mintCount - i * 2;
+        const maxNftCount = isLast ? remaining : 2;
 
-      const [collectionAuthorityPda] = PublicKey.findProgramAddressSync(
-        [encode("collection_authority")],
-        program.programId
-      );
+        const remainingAccounts: any[] = [];
+        const nftMintKeypairs: Keypair[] = [];
 
-      const [collectionMintPda] = PublicKey.findProgramAddressSync(
-        [encode("collection")],
-        program.programId
-      );
+        const [collectionAuthorityPda] = PublicKey.findProgramAddressSync(
+          [encode("collection_authority")],
+          program.programId
+        );
 
-      const [collectionMetadataAccountPda] = PublicKey.findProgramAddressSync(
-        [
-          encode("metadata"),
-          MPL_TOKEN_METADATA_PROGRAM_ID.toBuffer(),
-          collectionMintPda.toBuffer(),
-        ],
-        MPL_TOKEN_METADATA_PROGRAM_ID
-      );
+        const [collectionMintPda] = PublicKey.findProgramAddressSync(
+          [encode("collection")],
+          program.programId
+        );
 
-      const [collectionMasterEditionPda] = PublicKey.findProgramAddressSync(
-        [
-          encode("metadata"),
-          MPL_TOKEN_METADATA_PROGRAM_ID.toBuffer(),
-          collectionMintPda.toBuffer(),
-          encode("edition"),
-        ],
-        MPL_TOKEN_METADATA_PROGRAM_ID
-      );
-
-      for (let i = 0; i < 1 /** mintCount */; i++) {
-        const nftMintKeypair = Keypair.generate();
-        nftMintKeypairs.push(nftMintKeypair);
-        nftMintKeypairsForSign.push(nftMintKeypair);
-        const [metadataPda] = PublicKey.findProgramAddressSync(
+        const [collectionMetadataAccountPda] = PublicKey.findProgramAddressSync(
           [
             encode("metadata"),
             MPL_TOKEN_METADATA_PROGRAM_ID.toBuffer(),
-            nftMintKeypair.publicKey.toBuffer(),
+            collectionMintPda.toBuffer(),
           ],
           MPL_TOKEN_METADATA_PROGRAM_ID
         );
 
-        const [masterEditionPda] = PublicKey.findProgramAddressSync(
+        const [collectionMasterEditionPda] = PublicKey.findProgramAddressSync(
           [
             encode("metadata"),
             MPL_TOKEN_METADATA_PROGRAM_ID.toBuffer(),
-            nftMintKeypair.publicKey.toBuffer(),
+            collectionMintPda.toBuffer(),
             encode("edition"),
           ],
           MPL_TOKEN_METADATA_PROGRAM_ID
         );
 
-        const tokenAccount = getAssociatedTokenAddressSync(
-          nftMintKeypair.publicKey,
-          publicKey,
-          false,
-          TOKEN_PROGRAM_ID,
-          ASSOCIATED_TOKEN_PROGRAM_ID
+        for (let j = 0; j < maxNftCount; j++) {
+          const nftMintKeypair = Keypair.generate();
+          nftMintKeypairs.push(nftMintKeypair);
+
+          if (!nftMintKeypairsForSign[i]) {
+            nftMintKeypairsForSign[i] = [];
+          }
+          nftMintKeypairsForSign[i].push(nftMintKeypair);
+
+          const [metadataPda] = PublicKey.findProgramAddressSync(
+            [
+              encode("metadata"),
+              MPL_TOKEN_METADATA_PROGRAM_ID.toBuffer(),
+              nftMintKeypair.publicKey.toBuffer(),
+            ],
+            MPL_TOKEN_METADATA_PROGRAM_ID
+          );
+
+          const [masterEditionPda] = PublicKey.findProgramAddressSync(
+            [
+              encode("metadata"),
+              MPL_TOKEN_METADATA_PROGRAM_ID.toBuffer(),
+              nftMintKeypair.publicKey.toBuffer(),
+              encode("edition"),
+            ],
+            MPL_TOKEN_METADATA_PROGRAM_ID
+          );
+
+          const tokenAccount = getAssociatedTokenAddressSync(
+            nftMintKeypair.publicKey,
+            publicKey,
+            false,
+            TOKEN_PROGRAM_ID,
+            ASSOCIATED_TOKEN_PROGRAM_ID
+          );
+
+          const [nftState] = PublicKey.findProgramAddressSync(
+            [encode("nft-state"), nftMintKeypair.publicKey.toBuffer()],
+            program.programId
+          );
+
+          // Push the required 5 accounts in order:
+          remainingAccounts.push(
+            {
+              pubkey: nftMintKeypair.publicKey,
+              isWritable: true,
+              isSigner: true,
+            },
+            { pubkey: metadataPda, isWritable: true, isSigner: false },
+            { pubkey: masterEditionPda, isWritable: true, isSigner: false },
+            { pubkey: tokenAccount, isWritable: true, isSigner: false },
+            { pubkey: nftState, isWritable: true, isSigner: false }
+          );
+        }
+
+        const computeBudgetIx = ComputeBudgetProgram.setComputeUnitLimit({
+          units: 600_000,
+        });
+
+        const tx = await program.methods
+          .buy()
+          .accounts({
+            user: publicKey,
+            collectionMint: collectionMintPda,
+            collectionAuthority: collectionAuthorityPda,
+            collectionMetadataAccount: collectionMetadataAccountPda,
+            collectionMasterEdition: collectionMasterEditionPda,
+            tokenMetadataProgram: MPL_TOKEN_METADATA_PROGRAM_ID,
+          })
+          .remainingAccounts(remainingAccounts)
+          .signers(nftMintKeypairs)
+          .transaction();
+
+        let size = getTxSize(tx, publicKey);
+
+        if (size > 1232) {
+          throw new Error("Tx size limit exceeded.");
+        }
+
+        const gasFee = await estimateTransactionFee(tx);
+        if (gasFee) {
+          ctx.setGasFee(gasFee);
+        }
+
+        tx.add(computeBudgetIx);
+        tx.feePayer = publicKey;
+        tx.recentBlockhash = (
+          await provider.connection.getLatestBlockhash()
+        ).blockhash;
+
+        txs.push(tx);
+      }
+
+      // const signedTx = await connectedWallet.signTransaction(tx);
+      const signedTxs = await connectedWallet.signAllTransactions(txs);
+
+      for (const [index, signedTx] of signedTxs.entries()) {
+        // await connection.sendRawTransaction(signedTx.serialize());
+
+        signedTx.partialSign(nftMintKeypairsForSign[index][0]);
+
+        if (nftMintKeypairsForSign[index].length > 1) {
+          signedTx.partialSign(nftMintKeypairsForSign[index][1]);
+        }
+
+        const txId = await provider.connection.sendRawTransaction(
+          signedTx.serialize()
         );
 
-        const [nftState] = PublicKey.findProgramAddressSync(
-          [encode("nft-state"), nftMintKeypair.publicKey.toBuffer()],
-          program.programId
-        );
-
-        // Push the required 5 accounts in order:
-        remainingAccounts.push(
+        await provider.connection.confirmTransaction(
           {
-            pubkey: nftMintKeypair.publicKey,
-            isWritable: true,
-            isSigner: true,
+            signature: txId,
+            ...(await provider.connection.getLatestBlockhash()),
           },
-          { pubkey: metadataPda, isWritable: true, isSigner: false },
-          { pubkey: masterEditionPda, isWritable: true, isSigner: false },
-          { pubkey: tokenAccount, isWritable: true, isSigner: false },
-          { pubkey: nftState, isWritable: true, isSigner: false }
+          "confirmed"
         );
       }
-
-      // try {
-      const computeBudgetIx = ComputeBudgetProgram.setComputeUnitLimit({
-        units: 600_000,
-      });
-
-      const tx = await program.methods
-        .buy()
-        .accounts({
-          user: publicKey,
-          collectionMint: collectionMintPda,
-          collectionAuthority: collectionAuthorityPda,
-          collectionMetadataAccount: collectionMetadataAccountPda,
-          collectionMasterEdition: collectionMasterEditionPda,
-          tokenMetadataProgram: MPL_TOKEN_METADATA_PROGRAM_ID,
-        })
-        .remainingAccounts(remainingAccounts)
-        .signers(nftMintKeypairs)
-        .transaction();
-
-      let size = getTxSize(tx, publicKey);
-
-      console.log("*size", size);
-      // if (size > 1232) {
-      // throw new Error("Tx size limit exceeded.");
-      // }
-
-      const gasFee = await estimateTransactionFee(tx);
-      if (gasFee) {
-        ctx.setGasFee(gasFee);
-      }
-
-      tx.add(computeBudgetIx);
-      tx.feePayer = publicKey;
-      tx.recentBlockhash = (
-        await provider.connection.getLatestBlockhash()
-      ).blockhash;
-
-      txs.push(tx);
+    } catch (error: any) {
+      console.error("BuyNFT error:", error.message);
     }
-    // const signedTx = await connectedWallet.signTransaction(tx);
-    const signedTxs = await connectedWallet.signAllTransactions(txs);
-
-    for (const [index, signedTx] of signedTxs.entries()) {
-      // await connection.sendRawTransaction(signedTx.serialize());
-
-      signedTx.partialSign(nftMintKeypairsForSign[index]);
-
-      const txId = await provider.connection.sendRawTransaction(
-        signedTx.serialize()
-      );
-
-      await provider.connection.confirmTransaction(
-        {
-          signature: txId,
-          ...(await provider.connection.getLatestBlockhash()),
-        },
-        "confirmed"
-      );
-    }
-
-    //   console.log("Minted NFTs Tx:", txId);
-    // } catch (e) {
-    //   console.error("BuyNFT error:", e);
-    // }
   };
 
   // const BuyNFT = async (mintCount: number) => {
