@@ -155,6 +155,7 @@ export const CottonCandyContextProvider: React.FC<
     getLotteryState,
     getNftState,
     getNftByType,
+    getVaultState,
   } = useWeb3Utils();
 
   const { wallet, connected } = useWallet();
@@ -262,6 +263,13 @@ export const CottonCandyContextProvider: React.FC<
     calculatePrice();
     return () => clearInterval(interval);
   }, [connection, connected]);
+
+  React.useEffect(() => {
+    console.log("Fetching Vault State...");
+    (async () => {
+      await getVaultState();
+    })();
+  }, []);
 
   React.useEffect(() => {
     (async () => {

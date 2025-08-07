@@ -127,7 +127,6 @@ const useWeb3Utils = () => {
   };
 
   const getVaultState = async () => {
-    getVaultState;
     const provider = await getProvider(connection);
     const program = new Program(IDL as any, provider);
 
@@ -136,6 +135,7 @@ const useWeb3Utils = () => {
       program.programId
     );
 
+    console.log("Vault Address:", vault.toBase58());
     const balanceLamports = await connection.getBalance(vault);
     const balanceSol = balanceLamports / 1e9;
 
