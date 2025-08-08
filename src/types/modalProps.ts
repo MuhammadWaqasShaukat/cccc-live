@@ -1,6 +1,1 @@
-export type Modals =
-  | "claim-egg"
-  | "mint"
-  | "reward-reveal"
-  | "crack-egg"
-  | "nfts";
+export type Modals = "claim-egg" | "mint" | "crack-egg" | "nfts";

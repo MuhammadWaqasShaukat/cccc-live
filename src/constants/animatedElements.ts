@@ -6,5 +6,6 @@ export const ANIMATION_WEBM_SOURCES = {
   Dog: "/images/animations/DOG.webm",
   candle: "/images/animations/candle.webm",
   about: "/images/animations/about.webm",
-  archer: "/images/animations/archer.webm",
+  archerBlue: "/images/animations/archer-blue.webm",
+  archerRed: "/images/animations/archer-red.webm",
 };
