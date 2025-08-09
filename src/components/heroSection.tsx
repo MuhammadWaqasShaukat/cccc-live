@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { RefObject, useContext, useEffect, useRef, useState } from "react";
 import { CottonCandyContext } from "../providers/ContextProvider";
 import AnimatedElement from "./UI/AnimatedElement";
 import { ANIMATION_WEBM_SOURCES } from "../constants/animatedElements";
@@ -211,12 +211,13 @@ const HeroSection = () => {
     if (!video) return;
 
     const handleTimeUpdate = () => {
+      if (video.currentTime >= 3 && projectileRef.current === "arrow") {
+        animationStartRef.current = performance.now();
+      }
       if (video.currentTime >= 4) {
         video.currentTime = 0;
         progress.set(0);
-        // video.play();
         video.playbackRate = 1.25;
-        animationStartRef.current = performance.now() + 1100;
       }
     };
 
@@ -230,10 +231,12 @@ const HeroSection = () => {
     if (!video) return;
 
     const handleTimeUpdate = () => {
-      if (video.currentTime >= 3) {
+      if (video.currentTime >= 4 && projectileRef.current === "candle") {
+        animationStartRef.current = performance.now() + 1600;
+      }
+      if (video.currentTime >= 5) {
         video.currentTime = 0;
         progress.set(0);
-        animationStartRef.current = performance.now() + 2300;
       }
     };
 
@@ -272,33 +275,22 @@ const HeroSection = () => {
     if (projectileRef.current === "none" || animationStartRef.current === null)
       return;
 
-    const time = (t - animationStartRef.current) / 600;
+    const time = (t - animationStartRef.current) / 1500;
     progress.set(time);
 
-    // if (time >= 1) {
-    //   if (projectileRef.current === "candle" && candleFireRef.current) {
-    //     candleFireRef.current.style.opacity = "0";
-    //   }
-    //   if (projectileRef.current === "arrow" && arrowRedRef.current) {
-    //     arrowRedRef.current.style.opacity = "0";
-    //   }
-    //   return;
-    // }
 
     if (projectileRef.current === "candle") {
-      if (!candleFireRef.current || !pathRedRef.current) return;
-
+      if (!candleFireRef.current || !pathRef.current) return;
       movingProjectile(time, pathRef.current, candleFireRef.current);
     }
     if (projectileRef.current === "arrow") {
       if (!arrowRedRef.current || !pathRedRef.current) return;
-
       movingProjectile(time, pathRedRef.current, arrowRedRef.current);
     }
   });
 
   const handleDrawBow = (
-    videoRef: any,
+    videoRef: RefObject<HTMLVideoElement>,
     projectile: "none" | "candle" | "arrow"
   ) => {
     if (!videoRef.current) return;
@@ -308,13 +300,12 @@ const HeroSection = () => {
     }
 
     if (projectile === "candle") {
-      animationStartRef.current = performance.now() + 2300;
+      animationStartRef.current = performance.now();
     }
     if (projectile === "arrow") {
-      animationStartRef.current = performance.now() + 1100;
+      animationStartRef.current = performance.now() + 1600;
     }
     videoRef.current.currentTime = 0;
-
     videoRef.current.play();
   };
 
