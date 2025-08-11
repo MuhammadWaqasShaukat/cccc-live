@@ -7,6 +7,7 @@ import Nav from "./UI/Nav";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import TopBar from "./topbar";
 import { motion, useAnimationFrame, useMotionValue } from "framer-motion";
+import { SpriteAnimationConfig, useSpriteAnimation } from "../hooks/useSpriteAnimation";
 
 const HeroSection = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -24,6 +25,26 @@ const HeroSection = () => {
 
   const projectileRef = useRef<"none" | "candle" | "arrow">("none");
 
+  const animationConfig: SpriteAnimationConfig = {
+    frameWidth: 164,
+    frameHeight: 164,
+    columns: 5,
+    rows: 9,
+    spriteAnimationSpeed: 50,
+    projectileImageUrl: "/images/arrow-candle.png",
+    bowReleasedFrame: 24
+  };
+
+  const animationRedConfig: SpriteAnimationConfig = {
+    frameWidth: 164,
+    frameHeight: 164,
+    columns: 5,
+    rows: 10,
+    spriteAnimationSpeed: 50,
+    projectileImageUrl: "/images/arrow-lightning.png",
+    bowReleasedFrame: 7
+  };
+
   // red
 
   const arrowRedRef = useRef<HTMLDivElement>(null);
@@ -31,7 +52,7 @@ const HeroSection = () => {
 
   const redCastleBottomRef = useRef<HTMLDivElement>(null);
   const archerRedContainerRef = useRef<HTMLDivElement>(null);
-
+  const redSpriteRef = useRef<HTMLDivElement>(null);
   const pathRedRef = useRef<SVGPathElement>(null);
   const redSvgRef = useRef<SVGSVGElement>(null);
   const redRangeRef = useRef<HTMLDivElement>(null);
@@ -46,97 +67,101 @@ const HeroSection = () => {
 
   const blueCastleBottomRef = useRef<HTMLDivElement>(null);
   const archerBlueContainerRef = useRef<HTMLDivElement>(null);
-
+  const blueSpriteRef = useRef<HTMLDivElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
   const blueSvgRef = useRef<SVGSVGElement>(null);
   const blueRangeRef = useRef<HTMLDivElement>(null);
   const BlueTrajectoryStartRef = useRef<HTMLDivElement>(null);
   const BlueTrajectoryEndRef = useRef<HTMLDivElement>(null);
 
-  const getCenterPosition = (el: HTMLElement) => {
-    const rect = el.getBoundingClientRect();
-    return {
-      x: rect.left + rect.width / 2,
-      y: rect.top + rect.height / 2,
-    };
-  };
 
-  const generateProjectilePath = (
-    start: { x: number; y: number },
-    end: { x: number; y: number }
-  ) => {
-    const midX = (start.x + end.x) / 2;
-    const midY = Math.min(start.y, end.y) - 150;
+  const { playAnimation: playCandleArcherAnimation, stopAnimation: stopCandleArcherAnimation } = useSpriteAnimation({ spriteRef: blueSpriteRef, pathRef, rangeRef: blueRangeRef, svgRef: blueSvgRef, startPathRef: BlueTrajectoryStartRef, endPathRef: BlueTrajectoryEndRef, projectileRef: candleFireRef, config: animationConfig });
+  const { playAnimation: playLighteningArcherAnimation, stopAnimation: stopLighteningArcherAnimation } = useSpriteAnimation({ spriteRef: redSpriteRef, pathRef: pathRedRef, rangeRef: redRangeRef, svgRef: redSvgRef, startPathRef: redTrajectoryStartRef, endPathRef: redTrajectoryEndRef, projectileRef: arrowRedRef, config: animationRedConfig });
 
-    return `M ${start.x} ${start.y} Q ${midX} ${midY}, ${end.x} ${end.y}`;
-  };
+  // const getCenterPosition = (el: HTMLElement) => {
+  //   const rect = el.getBoundingClientRect();
+  //   return {
+  //     x: rect.left + rect.width / 2,
+  //     y: rect.top + rect.height / 2,
+  //   };
+  // };
 
-  useEffect(() => {
-    if (
-      !blueRangeRef.current ||
-      !blueSvgRef.current ||
-      !BlueTrajectoryStartRef.current ||
-      !BlueTrajectoryEndRef.current
-    )
-      return;
+  // const generateProjectilePath = (
+  //   start: { x: number; y: number },
+  //   end: { x: number; y: number }
+  // ) => {
+  //   const midX = (start.x + end.x) / 2;
+  //   const midY = Math.min(start.y, end.y) - 150;
 
-    const updatePath = (
-      startPosEl: HTMLElement,
-      endPosEl: HTMLElement,
-      rangeEl: HTMLElement,
-      svgEl: SVGElement,
-      setPath: any
-    ) => {
-      const rangeRect = rangeEl.getBoundingClientRect();
-      const startPos = getCenterPosition(startPosEl);
-      const endPos = getCenterPosition(endPosEl);
+  //   return `M ${start.x} ${start.y} Q ${midX} ${midY}, ${end.x} ${end.y}`;
+  // };
 
-      const offsetX = rangeRect.left;
-      const offsetY = rangeRect.top;
-      const start = {
-        x: startPos.x - offsetX,
-        y: startPos.y - offsetY,
-      };
-      const end = {
-        x: endPos.x - offsetX,
-        y: endPos.y - offsetY,
-      };
+  // useEffect(() => {
+  //   if (
+  //     !blueRangeRef.current ||
+  //     !blueSvgRef.current ||
+  //     !BlueTrajectoryStartRef.current ||
+  //     !BlueTrajectoryEndRef.current
+  //   )
+  //     return;
 
-      svgEl.setAttribute(
-        "viewBox",
-        `0 0 ${rangeRect.width} ${rangeRect.height}`
-      );
-      const newPath = generateProjectilePath(start, end);
-      setPath(newPath);
-    };
+  //   const updatePath = (
+  //     startPosEl: HTMLElement,
+  //     endPosEl: HTMLElement,
+  //     rangeEl: HTMLElement,
+  //     svgEl: SVGElement,
+  //     setPath: any
+  //   ) => {
+  //     const rangeRect = rangeEl.getBoundingClientRect();
+  //     const startPos = getCenterPosition(startPosEl);
+  //     const endPos = getCenterPosition(endPosEl);
 
-    const setBlueRangePath = () => {
-      const startPosEl = BlueTrajectoryStartRef.current;
-      const endPosEl = BlueTrajectoryEndRef.current;
-      const rangeEl = blueRangeRef.current;
-      const svgEl = blueSvgRef.current;
-      if (!startPosEl || !endPosEl || !rangeEl || !svgEl) return;
-      updatePath(startPosEl, endPosEl, rangeEl, svgEl, setPath);
-    };
-    const setRedRangePath = () => {
-      const startPosEl = redTrajectoryStartRef.current;
-      const endPosEl = redTrajectoryEndRef.current;
-      const rangeEl = redRangeRef.current;
-      const svgEl = redSvgRef.current;
-      if (!startPosEl || !endPosEl || !rangeEl || !svgEl) return;
-      updatePath(startPosEl, endPosEl, rangeEl, svgEl, setPathRed);
-    };
-    setBlueRangePath();
-    setRedRangePath();
+  //     const offsetX = rangeRect.left;
+  //     const offsetY = rangeRect.top;
+  //     const start = {
+  //       x: startPos.x - offsetX,
+  //       y: startPos.y - offsetY,
+  //     };
+  //     const end = {
+  //       x: endPos.x - offsetX,
+  //       y: endPos.y - offsetY,
+  //     };
 
-    const setArcheryRange = () => {
-      setBlueRangePath();
-      setRedRangePath();
-    };
+  //     svgEl.setAttribute(
+  //       "viewBox",
+  //       `0 0 ${rangeRect.width} ${rangeRect.height}`
+  //     );
+  //     const newPath = generateProjectilePath(start, end);
+  //     setPath(newPath);
+  //   };
 
-    window.addEventListener("resize", setArcheryRange);
-    return () => window.removeEventListener("resize", setArcheryRange);
-  }, []);
+  // const setBlueRangePath = () => {
+  //   const startPosEl = BlueTrajectoryStartRef.current;
+  //   const endPosEl = BlueTrajectoryEndRef.current;
+  //   const rangeEl = blueRangeRef.current;
+  //   const svgEl = blueSvgRef.current;
+  //   if (!startPosEl || !endPosEl || !rangeEl || !svgEl) return;
+  //   updatePath(startPosEl, endPosEl, rangeEl, svgEl, setPath);
+  // };
+  // const setRedRangePath = () => {
+  //   const startPosEl = redTrajectoryStartRef.current;
+  //   const endPosEl = redTrajectoryEndRef.current;
+  //   const rangeEl = redRangeRef.current;
+  //   const svgEl = redSvgRef.current;
+  //   if (!startPosEl || !endPosEl || !rangeEl || !svgEl) return;
+  //   updatePath(startPosEl, endPosEl, rangeEl, svgEl, setPathRed);
+  // };
+  // setBlueRangePath();
+  // setRedRangePath();
+
+  //   const setArcheryRange = () => {
+  //     setBlueRangePath();
+  //     setRedRangePath();
+  //   };
+
+  //   window.addEventListener("resize", setArcheryRange);
+  //   return () => window.removeEventListener("resize", setArcheryRange);
+  // }, []);
 
   const setArcherPosition = (
     anchor: HTMLElement,
@@ -175,7 +200,7 @@ const HeroSection = () => {
   }, [ctx.assestsPreloaded]);
 
   useEffect(() => {
-    const refs = [fireRef, magicRef, candleRef, archerRef];
+    const refs = [fireRef, magicRef, candleRef];
     const CHECK_INTERVAL = 100;
 
     let intervalId: number;
@@ -205,115 +230,120 @@ const HeroSection = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  // event for archerRed
-  useEffect(() => {
-    const video = archerRedRef.current;
-    if (!video) return;
+  // // event for archerRed
+  // useEffect(() => {
+  //   const video = archerRedRef.current;
+  //   if (!video) return;
 
-    const handleTimeUpdate = () => {
-      if (video.currentTime >= 3 && projectileRef.current === "arrow") {
-        animationStartRef.current = performance.now();
-      }
-      if (video.currentTime >= 4) {
-        video.currentTime = 0;
-        progress.set(0);
-        video.playbackRate = 1.25;
-      }
-    };
+  //   const handleTimeUpdate = () => {
+  //     if (video.currentTime >= 3 && projectileRef.current === "arrow") {
+  //       animationStartRef.current = performance.now();
+  //     }
+  //     if (video.currentTime >= 4) {
+  //       video.currentTime = 0;
+  //       progress.set(0);
+  //       video.playbackRate = 1.25;
+  //     }
+  //   };
 
-    video.addEventListener("timeupdate", handleTimeUpdate);
-    return () => video.removeEventListener("timeupdate", handleTimeUpdate);
-  }, []);
+  //   video.addEventListener("timeupdate", handleTimeUpdate);
+  //   return () => video.removeEventListener("timeupdate", handleTimeUpdate);
+  // }, []);
 
-  // event for archerBlue
-  useEffect(() => {
-    const video = archerRef.current;
-    if (!video) return;
+  // // event for archerBlue
+  // useEffect(() => {
+  //   const video = archerRef.current;
+  //   if (!video) return;
 
-    const handleTimeUpdate = () => {
-      if (video.currentTime >= 4 && projectileRef.current === "candle") {
-        animationStartRef.current = performance.now() + 1600;
-      }
-      if (video.currentTime >= 5) {
-        video.currentTime = 0;
-        progress.set(0);
-      }
-    };
+  //   const handleTimeUpdate = () => {
+  //     if (video.currentTime >= 4 && projectileRef.current === "candle") {
+  //       animationStartRef.current = performance.now() + 1600;
+  //     }
+  //     if (video.currentTime >= 5) {
+  //       video.currentTime = 0;
+  //       progress.set(0);
+  //     }
+  //   };
 
-    video.addEventListener("timeupdate", handleTimeUpdate);
-    return () => video.removeEventListener("timeupdate", handleTimeUpdate);
-  }, []);
+  //   video.addEventListener("timeupdate", handleTimeUpdate);
+  //   return () => video.removeEventListener("timeupdate", handleTimeUpdate);
+  // }, []);
 
-  const animationStartRef = useRef<number | null>(null);
+  // const animationStartRef = useRef<number | null>(null);
 
-  const movingProjectile = (
-    time: number,
-    path: SVGPathElement | null,
-    prejectile: HTMLDivElement
-  ) => {
-    if (!path) return;
-    const length = path.getTotalLength();
-    if (!length) return;
-    const point = path.getPointAtLength(time * length);
-    const delta = 1;
-    const point2 = path.getPointAtLength(
-      Math.min(time * length + delta, length)
-    );
-    const angle =
-      Math.atan2(point2.y - point.y, point2.x - point.x) * (180 / Math.PI);
-    if (prejectile) {
-      if (angle === 0) {
-        prejectile.style.opacity = "0";
-      } else {
-        prejectile.style.opacity = "1";
-      }
-      prejectile.style.transform = `translate(${point.x}px, ${point.y}px) rotate(${angle}deg)`;
-    }
-  };
+  // const movingProjectile = (
+  //   time: number,
+  //   path: SVGPathElement | null,
+  //   prejectile: HTMLDivElement
+  // ) => {
+  //   if (!path) return;
+  //   const length = path.getTotalLength();
+  //   if (!length) return;
+  //   const point = path.getPointAtLength(time * length);
+  //   const delta = 1;
+  //   const point2 = path.getPointAtLength(
+  //     Math.min(time * length + delta, length)
+  //   );
+  //   const angle =
+  //     Math.atan2(point2.y - point.y, point2.x - point.x) * (180 / Math.PI);
+  //   if (prejectile) {
+  //     if (angle === 0) {
+  //       // prejectile.style.opacity = "0";
+  //     } else {
 
-  useAnimationFrame((t) => {
-    if (projectileRef.current === "none" || animationStartRef.current === null)
-      return;
+  //       prejectile.style.opacity = "1";
+  //     }
+  //     prejectile.style.transform = `translate(${point.x}px, ${point.y}px) rotate(${angle}deg)`;
+  //   }
+  // };
 
-    const time = (t - animationStartRef.current) / 1500;
-    progress.set(time);
+  // useAnimationFrame((t) => {
+  //   if (projectileRef.current === "none" || animationStartRef.current === null)
+  //     return;
+
+  //   const time = (t - animationStartRef.current) / 1500;
+  //   progress.set(time);
+
+  //   console.log(progress.get())
+
+  //   if (projectileRef.current === "candle") {
+  //     if (!candleFireRef.current || !pathRef.current) return;
+  //     movingProjectile(time, pathRef.current, candleFireRef.current);
+  //   }
+  //   if (projectileRef.current === "arrow") {
+  //     if (!arrowRedRef.current || !pathRedRef.current) return;
+  //     movingProjectile(time, pathRedRef.current, arrowRedRef.current);
+  //   }
+  // });
+
+  // const handleDrawBow = (
+  //   videoRef: RefObject<HTMLVideoElement>,
+  //   projectile: "none" | "candle" | "arrow"
+  // ) => {
 
 
-    if (projectileRef.current === "candle") {
-      if (!candleFireRef.current || !pathRef.current) return;
-      movingProjectile(time, pathRef.current, candleFireRef.current);
-    }
-    if (projectileRef.current === "arrow") {
-      if (!arrowRedRef.current || !pathRedRef.current) return;
-      movingProjectile(time, pathRedRef.current, arrowRedRef.current);
-    }
-  });
+  //   if (!videoRef.current) return;
+  //   if (projectileRef.current !== projectile) {
+  //     projectileRef.current = projectile;
+  //     progress.set(0);
+  //   }
 
-  const handleDrawBow = (
-    videoRef: RefObject<HTMLVideoElement>,
-    projectile: "none" | "candle" | "arrow"
-  ) => {
-    if (!videoRef.current) return;
-    if (projectileRef.current !== projectile) {
-      projectileRef.current = projectile;
-      progress.set(0);
-    }
+  //   if (projectile === "candle") {
+  //     animationStartRef.current = performance.now();
+  //   }
+  //   if (projectile === "arrow") {
+  //     animationStartRef.current = performance.now() + 1600;
+  //   }
 
-    if (projectile === "candle") {
-      animationStartRef.current = performance.now();
-    }
-    if (projectile === "arrow") {
-      animationStartRef.current = performance.now() + 1600;
-    }
-    videoRef.current.currentTime = 0;
-    videoRef.current.play();
-  };
+  //   videoRef.current.currentTime = 0;
+  //   videoRef.current.play();
+  // };
 
-  const handleResetProjectile = (videoRef: any) => {
-    projectileRef.current = "none";
-    videoRef.current?.pause();
-    videoRef.current.currentTime = 0;
-  };
+  // const handleResetProjectile = (videoRef: any) => {
+  //   projectileRef.current = "none";
+  //   videoRef.current?.pause();
+  //   videoRef.current.currentTime = 0;
+  // };
 
   const handleMouseEnter = (videoRef: any) => {
     videoRef.current?.play();
@@ -435,13 +465,12 @@ const HeroSection = () => {
             id="archerRedContainer"
             ref={archerRedContainerRef}
             // lg:w-[60%] opacity-0 md:w-[75%] h-fit w-[85%] max-w-[370px] md:max-w-[550px] lg:max-w-[650px] top-[30%] md:right-6 right-0 z-0"
-            className="candleFireRef lg:w-[60%] md:w-[75%] h-fit  w-[85%] max-w-[370px] md:max-w-[550px] top-[30%] z-10 left-24 absolute candleFireRef "
+            className="candleFireRef lg:w-[60%] md:w-[75%] h-fit  w-[85%] max-w-[370px] md:max-w-[550px] top-[30%] z-10 -left-24 absolute candleFireRef "
           >
             <div className="relative flex flex-col items-center justify-end h-full ">
               <div
                 className=" absolute h-full w-[20%] left-8 z-[999]"
-                onMouseEnter={() => handleDrawBow(archerRedRef, "arrow")}
-                onMouseLeave={() => handleResetProjectile(archerRedRef)}
+
               ></div>
 
               <div
@@ -491,11 +520,24 @@ const HeroSection = () => {
                 </div>
               </div>
 
-              <AnimatedElement
+              {/* <AnimatedElement
                 videoRef={archerRedRef}
                 className=""
                 source={ANIMATION_WEBM_SOURCES["archerRed"]}
-              />
+              /> */}
+              <div
+                onMouseEnter={playLighteningArcherAnimation}
+                onMouseLeave={stopLighteningArcherAnimation}
+                ref={redSpriteRef}
+                className="sprite-container absolute top-0  z-0"
+                style={{
+                  width: `${animationRedConfig.frameWidth}px`,
+                  height: `${animationRedConfig.frameHeight}px`,
+                  backgroundImage: 'url(images/archer-red-ezgif.com-gif-to-sprite-converter.png)',
+                  // New: Scale the entire sprite sheet based on its dimensions.
+                  backgroundSize: `${animationRedConfig.columns * 100}% ${animationRedConfig.rows * 100}%`
+                }}
+              ></div>
             </div>
           </div>
 
@@ -569,13 +611,13 @@ const HeroSection = () => {
           <div
             id="archerContainer"
             ref={archerBlueContainerRef}
-            className="fixed candleFireRef lg:w-[60%] opacity-0 md:w-[75%] h-fit w-[85%] max-w-[370px] md:max-w-[550px] lg:max-w-[650px] top-[30%] md:right-6 right-0 z-0"
+            className="fixed candleFireRef lg:w-[60%] opacity-0 md:w-[75%] h-fit w-[85%] max-w-[370px] md:max-w-[550px] lg:max-w-[650px] top-[30%]  -right-24 z-0"
           >
             <div className="relative flex flex-col items-center justify-end h-full ">
               <div
                 className=" absolute h-full w-[20%] right-28 z-[999]"
-                onMouseEnter={() => handleDrawBow(archerRef, "candle")}
-                onMouseLeave={() => handleResetProjectile(archerRef)}
+              // onMouseEnter={() => handleDrawBow(archerRef, "candle")}
+              // onMouseLeave={() => handleResetProjectile(archerRef)}
               ></div>
 
               <div
@@ -625,11 +667,25 @@ const HeroSection = () => {
                 </div>
               </div>
 
-              <AnimatedElement
+              {/* <AnimatedElement
                 videoRef={archerRef}
                 className=""
                 source={ANIMATION_WEBM_SOURCES["archerBlue"]}
-              />
+              /> */}
+
+              <div
+                onMouseEnter={playCandleArcherAnimation}
+                onMouseLeave={stopCandleArcherAnimation}
+                ref={blueSpriteRef}
+                className="sprite-container absolute top-0 z-0"
+                style={{
+                  width: `${animationConfig.frameWidth}px`,
+                  height: `${animationConfig.frameHeight}px`,
+                  backgroundImage: 'url(/images/archer-blue-ezgif.com-gif-to-sprite-converter.png)',
+                  // New: Scale the entire sprite sheet based on its dimensions.
+                  backgroundSize: `${animationConfig.columns * 100}% ${animationConfig.rows * 100}%`
+                }}
+              ></div>
             </div>
           </div>
 
