@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { CottonCandyContext } from "../providers/ContextProvider";
 import AnimatedElement from "./UI/AnimatedElement";
 import { ANIMATION_WEBM_SOURCES } from "../constants/animatedElements";
@@ -11,10 +11,12 @@ import {
   SpriteAnimationConfig,
   useSpriteAnimation,
 } from "../hooks/useSpriteAnimation";
+import copyStyles from "../utils/copyStyles";
 
 const HeroSection = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const catRef = useRef<HTMLImageElement | null>(null);
+  const catContainerRef = useRef<HTMLDivElement>(null);
   const ctx = useContext(CottonCandyContext);
 
   const { connected, disconnect } = useWallet();
@@ -23,10 +25,14 @@ const HeroSection = () => {
   const fireRef = useRef<HTMLVideoElement>(null);
   const magicRef = useRef<HTMLVideoElement>(null);
   const candleRef = useRef<HTMLVideoElement>(null);
-  // const archerRef = useRef<HTMLVideoElement>(null);
-  // const archerRedRef = useRef<HTMLVideoElement>(null);
+  const whaleRef = useRef<HTMLVideoElement>(null);
 
-  // const projectileRef = useRef<"none" | "candle" | "arrow">("none");
+  // anchors
+
+  const anchor_0_Ref = useRef<HTMLDivElement>(null);
+
+  // menu ref
+  const tombstoneRef = useRef<any>(null);
 
   const animationConfig: SpriteAnimationConfig = {
     frameWidth: 164,
@@ -34,7 +40,6 @@ const HeroSection = () => {
     columns: 5,
     rows: 9,
     spriteAnimationSpeed: 50,
-    projectileImageUrl: "/images/arrow-candle.png",
     bowReleasedFrame: 24,
   };
 
@@ -44,14 +49,12 @@ const HeroSection = () => {
     columns: 5,
     rows: 10,
     spriteAnimationSpeed: 50,
-    projectileImageUrl: "/images/arrow-lightning.png",
     bowReleasedFrame: 7,
   };
 
   // red
 
   const arrowRedRef = useRef<HTMLDivElement>(null);
-  const [pathRed] = useState("");
 
   const redCastleBottomRef = useRef<HTMLDivElement>(null);
   const archerRedContainerRef = useRef<HTMLDivElement>(null);
@@ -63,10 +66,7 @@ const HeroSection = () => {
   const redTrajectoryEndRef = useRef<HTMLDivElement>(null);
 
   // blue
-  const [path] = useState("");
-
   const candleFireRef = useRef<HTMLDivElement>(null);
-  // const progress = useMotionValue(0);
 
   const blueCastleBottomRef = useRef<HTMLDivElement>(null);
   const archerBlueContainerRef = useRef<HTMLDivElement>(null);
@@ -104,91 +104,6 @@ const HeroSection = () => {
     config: animationRedConfig,
   });
 
-  // const getCenterPosition = (el: HTMLElement) => {
-  //   const rect = el.getBoundingClientRect();
-  //   return {
-  //     x: rect.left + rect.width / 2,
-  //     y: rect.top + rect.height / 2,
-  //   };
-  // };
-
-  // const generateProjectilePath = (
-  //   start: { x: number; y: number },
-  //   end: { x: number; y: number }
-  // ) => {
-  //   const midX = (start.x + end.x) / 2;
-  //   const midY = Math.min(start.y, end.y) - 150;
-
-  //   return `M ${start.x} ${start.y} Q ${midX} ${midY}, ${end.x} ${end.y}`;
-  // };
-
-  // useEffect(() => {
-  //   if (
-  //     !blueRangeRef.current ||
-  //     !blueSvgRef.current ||
-  //     !BlueTrajectoryStartRef.current ||
-  //     !BlueTrajectoryEndRef.current
-  //   )
-  //     return;
-
-  //   const updatePath = (
-  //     startPosEl: HTMLElement,
-  //     endPosEl: HTMLElement,
-  //     rangeEl: HTMLElement,
-  //     svgEl: SVGElement,
-  //     setPath: any
-  //   ) => {
-  //     const rangeRect = rangeEl.getBoundingClientRect();
-  //     const startPos = getCenterPosition(startPosEl);
-  //     const endPos = getCenterPosition(endPosEl);
-
-  //     const offsetX = rangeRect.left;
-  //     const offsetY = rangeRect.top;
-  //     const start = {
-  //       x: startPos.x - offsetX,
-  //       y: startPos.y - offsetY,
-  //     };
-  //     const end = {
-  //       x: endPos.x - offsetX,
-  //       y: endPos.y - offsetY,
-  //     };
-
-  //     svgEl.setAttribute(
-  //       "viewBox",
-  //       `0 0 ${rangeRect.width} ${rangeRect.height}`
-  //     );
-  //     const newPath = generateProjectilePath(start, end);
-  //     setPath(newPath);
-  //   };
-
-  // const setBlueRangePath = () => {
-  //   const startPosEl = BlueTrajectoryStartRef.current;
-  //   const endPosEl = BlueTrajectoryEndRef.current;
-  //   const rangeEl = blueRangeRef.current;
-  //   const svgEl = blueSvgRef.current;
-  //   if (!startPosEl || !endPosEl || !rangeEl || !svgEl) return;
-  //   updatePath(startPosEl, endPosEl, rangeEl, svgEl, setPath);
-  // };
-  // const setRedRangePath = () => {
-  //   const startPosEl = redTrajectoryStartRef.current;
-  //   const endPosEl = redTrajectoryEndRef.current;
-  //   const rangeEl = redRangeRef.current;
-  //   const svgEl = redSvgRef.current;
-  //   if (!startPosEl || !endPosEl || !rangeEl || !svgEl) return;
-  //   updatePath(startPosEl, endPosEl, rangeEl, svgEl, setPathRed);
-  // };
-  // setBlueRangePath();
-  // setRedRangePath();
-
-  //   const setArcheryRange = () => {
-  //     setBlueRangePath();
-  //     setRedRangePath();
-  //   };
-
-  //   window.addEventListener("resize", setArcheryRange);
-  //   return () => window.removeEventListener("resize", setArcheryRange);
-  // }, []);
-
   const setArcherPosition = (
     anchor: HTMLElement,
     archer: HTMLElement,
@@ -217,11 +132,19 @@ const HeroSection = () => {
   useEffect(() => {
     if (!ctx.assestsPreloaded) return;
 
+    tombstoneRef.current = document.getElementById("tombstone");
+    const positionElement = () => {
+      copyStyles(anchor_0_Ref, tombstoneRef, { bottom: true });
+      copyStyles(anchor_0_Ref, catContainerRef, { bottom: true });
+    };
+
     positionedArcher();
     window.addEventListener("resize", positionedArcher);
+    window.addEventListener("resize", positionElement);
 
     return () => {
       window.removeEventListener("resize", positionedArcher);
+      window.removeEventListener("resize", positionElement);
     };
   }, [ctx.assestsPreloaded]);
 
@@ -256,125 +179,12 @@ const HeroSection = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  // // event for archerRed
-  // useEffect(() => {
-  //   const video = archerRedRef.current;
-  //   if (!video) return;
-
-  //   const handleTimeUpdate = () => {
-  //     if (video.currentTime >= 3 && projectileRef.current === "arrow") {
-  //       animationStartRef.current = performance.now();
-  //     }
-  //     if (video.currentTime >= 4) {
-  //       video.currentTime = 0;
-  //       progress.set(0);
-  //       video.playbackRate = 1.25;
-  //     }
-  //   };
-
-  //   video.addEventListener("timeupdate", handleTimeUpdate);
-  //   return () => video.removeEventListener("timeupdate", handleTimeUpdate);
-  // }, []);
-
-  // // event for archerBlue
-  // useEffect(() => {
-  //   const video = archerRef.current;
-  //   if (!video) return;
-
-  //   const handleTimeUpdate = () => {
-  //     if (video.currentTime >= 4 && projectileRef.current === "candle") {
-  //       animationStartRef.current = performance.now() + 1600;
-  //     }
-  //     if (video.currentTime >= 5) {
-  //       video.currentTime = 0;
-  //       progress.set(0);
-  //     }
-  //   };
-
-  //   video.addEventListener("timeupdate", handleTimeUpdate);
-  //   return () => video.removeEventListener("timeupdate", handleTimeUpdate);
-  // }, []);
-
-  // const animationStartRef = useRef<number | null>(null);
-
-  // const movingProjectile = (
-  //   time: number,
-  //   path: SVGPathElement | null,
-  //   prejectile: HTMLDivElement
-  // ) => {
-  //   if (!path) return;
-  //   const length = path.getTotalLength();
-  //   if (!length) return;
-  //   const point = path.getPointAtLength(time * length);
-  //   const delta = 1;
-  //   const point2 = path.getPointAtLength(
-  //     Math.min(time * length + delta, length)
-  //   );
-  //   const angle =
-  //     Math.atan2(point2.y - point.y, point2.x - point.x) * (180 / Math.PI);
-  //   if (prejectile) {
-  //     if (angle === 0) {
-  //       // prejectile.style.opacity = "0";
-  //     } else {
-
-  //       prejectile.style.opacity = "1";
-  //     }
-  //     prejectile.style.transform = `translate(${point.x}px, ${point.y}px) rotate(${angle}deg)`;
-  //   }
-  // };
-
-  // useAnimationFrame((t) => {
-  //   if (projectileRef.current === "none" || animationStartRef.current === null)
-  //     return;
-
-  //   const time = (t - animationStartRef.current) / 1500;
-  //   progress.set(time);
-
-  //   console.log(progress.get())
-
-  //   if (projectileRef.current === "candle") {
-  //     if (!candleFireRef.current || !pathRef.current) return;
-  //     movingProjectile(time, pathRef.current, candleFireRef.current);
-  //   }
-  //   if (projectileRef.current === "arrow") {
-  //     if (!arrowRedRef.current || !pathRedRef.current) return;
-  //     movingProjectile(time, pathRedRef.current, arrowRedRef.current);
-  //   }
-  // });
-
-  // const handleDrawBow = (
-  //   videoRef: RefObject<HTMLVideoElement>,
-  //   projectile: "none" | "candle" | "arrow"
-  // ) => {
-
-  //   if (!videoRef.current) return;
-  //   if (projectileRef.current !== projectile) {
-  //     projectileRef.current = projectile;
-  //     progress.set(0);
-  //   }
-
-  //   if (projectile === "candle") {
-  //     animationStartRef.current = performance.now();
-  //   }
-  //   if (projectile === "arrow") {
-  //     animationStartRef.current = performance.now() + 1600;
-  //   }
-
-  //   videoRef.current.currentTime = 0;
-  //   videoRef.current.play();
-  // };
-
-  // const handleResetProjectile = (videoRef: any) => {
-  //   projectileRef.current = "none";
-  //   videoRef.current?.pause();
-  //   videoRef.current.currentTime = 0;
-  // };
-
   const handleMouseEnter = (videoRef: any) => {
     videoRef.current?.play();
   };
 
   const handleMouseLeave = (videoRef: any) => {
+    videoRef.current.currentTime = 0;
     videoRef.current?.pause();
   };
 
@@ -407,7 +217,7 @@ const HeroSection = () => {
     }
   };
 
-  const handleGoToMintSection = async () => {
+  const handleConnect = async () => {
     if (!connected) {
       if (!connected) {
         setVisible(true);
@@ -455,7 +265,7 @@ const HeroSection = () => {
           </div>
           <button
             className={`bg-hero-connect sm:min-w-52 sm:min-h-16 min-h-12 min-w-40 md:w-[210px] bg-contain bg-no-repeat group relative `}
-            onClick={handleGoToMintSection}
+            onClick={handleConnect}
           >
             <span className="absolute inset-0 z-20 transition duration-200 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20"></span>
             <span className="absolute inset-0 w-full h-full grid place-content-center uppercase font-patrick-hand lg:text-[1.5em] text-xl text-white leading-none  z-30">
@@ -489,7 +299,6 @@ const HeroSection = () => {
           <div
             id="archerRedContainer"
             ref={archerRedContainerRef}
-            // lg:w-[60%] opacity-0 md:w-[75%] h-fit w-[85%] max-w-[370px] md:max-w-[550px] lg:max-w-[650px] top-[30%] md:right-6 right-0 z-0"
             className="candleFireRef lg:w-[60%] md:w-[75%] h-fit  w-[85%] max-w-[370px] md:max-w-[550px] top-[30%] z-10 -left-24 absolute candleFireRef "
           >
             <div className="relative flex flex-col items-center justify-end h-full ">
@@ -506,7 +315,6 @@ const HeroSection = () => {
                   >
                     <path
                       ref={pathRedRef}
-                      d={pathRed}
                       stroke="none"
                       strokeWidth="2"
                       fill="none"
@@ -542,11 +350,6 @@ const HeroSection = () => {
                 </div>
               </div>
 
-              {/* <AnimatedElement
-                videoRef={archerRedRef}
-                className=""
-                source={ANIMATION_WEBM_SOURCES["archerRed"]}
-              /> */}
               <div
                 onMouseEnter={playLighteningArcherAnimation}
                 onMouseLeave={stopLighteningArcherAnimation}
@@ -557,7 +360,6 @@ const HeroSection = () => {
                   height: `${animationRedConfig.frameHeight}px`,
                   backgroundImage:
                     "url(images/archer-red-ezgif.com-gif-to-sprite-converter.png)",
-                  // New: Scale the entire sprite sheet based on its dimensions.
                   backgroundSize: `${animationRedConfig.columns * 100}% ${
                     animationRedConfig.rows * 100
                   }%`,
@@ -584,7 +386,10 @@ const HeroSection = () => {
         <div className="bg-hero-section-shark-2 w-[64px] h-[63px] absolute top-[86%] right-[2%] hidden lg:block bg-contain z-10"></div>
         {/* Cavlary : red */}
 
-        <div className=" xs:w-[31%] w-[40%]  max-w-[275px] object-bottom h-auto  absolute bottom-0  md:left-[5%]  left-[15%] z-40">
+        <div
+          ref={catContainerRef}
+          className=" xs:w-[31%] w-[40%]  max-w-[275px] object-bottom h-auto guide  absolute bottom-0  md:left-[5%]  left-[15%] z-40"
+        >
           <div className="relative flex flex-col items-center justify-start ">
             <div
               className=" absolute h-28 w-28 top-[15%] -ml-9 pointer-events-auto"
@@ -631,7 +436,6 @@ const HeroSection = () => {
             }}
             className="bg-hero-section-memcoin-4 hidden md:block  max-w-[140px] max-h-[229px] min-w-[71px] w-[15%] h-[17%] min-h-[82px] bg-contain bg-no-repeat z-10 absolute md:bottom-[42%] lg:bottom-[48%] right-0 bg-right-bottom"
           ></motion.div>
-          {/* <div className="bg-hero-section-memcoin-8   max-w-[401px] max-h-[403px] w-[30%] h-[30%] min-w-[133px] min-h-[131px] bg-contain bg-no-repeat bg-bottom z-10 absolute  md:top-[31%] lg:top-[24%] bottom-[10rem] md:right-[9%] lg:right-[3%]  right-[4%]"></div> */}
 
           <div
             id="archerContainer"
@@ -639,12 +443,6 @@ const HeroSection = () => {
             className="fixed candleFireRef lg:w-[60%] opacity-0 md:w-[75%] h-fit w-[85%] max-w-[370px] md:max-w-[550px] lg:max-w-[650px] top-[30%]  -right-24 z-0"
           >
             <div className="relative flex flex-col items-center justify-end h-full ">
-              <div
-                className=" absolute h-full w-[20%] right-28 z-[999]"
-                // onMouseEnter={() => handleDrawBow(archerRef, "candle")}
-                // onMouseLeave={() => handleResetProjectile(archerRef)}
-              ></div>
-
               <div
                 ref={blueRangeRef}
                 className="fixed w-1/2 bottom-40 h-2/3 right-64 z-100"
@@ -656,7 +454,6 @@ const HeroSection = () => {
                   >
                     <path
                       ref={pathRef}
-                      d={path}
                       stroke="none"
                       strokeWidth="2"
                       fill="none"
@@ -687,16 +484,10 @@ const HeroSection = () => {
 
                   <div
                     ref={BlueTrajectoryStartRef}
-                    className="absolute top-[39%] right-0 w-1 h-4 "
+                    className="absolute top-[39%] right-0 w-1 h-4"
                   ></div>
                 </div>
               </div>
-
-              {/* <AnimatedElement
-                videoRef={archerRef}
-                className=""
-                source={ANIMATION_WEBM_SOURCES["archerBlue"]}
-              /> */}
 
               <div
                 onMouseEnter={playCandleArcherAnimation}
@@ -708,7 +499,6 @@ const HeroSection = () => {
                   height: `${animationConfig.frameHeight}px`,
                   backgroundImage:
                     "url(/images/archer-blue-ezgif.com-gif-to-sprite-converter.png)",
-                  // New: Scale the entire sprite sheet based on its dimensions.
                   backgroundSize: `${animationConfig.columns * 100}% ${
                     animationConfig.rows * 100
                   }%`,
@@ -722,15 +512,30 @@ const HeroSection = () => {
             ref={blueCastleBottomRef}
             className="bg-hero-section-castle-blue-2   pointer-events-none  max-w-[465px] lg:max-h-[600px] max-h-[380px] h-[46%] w-[37%]  absolute min-h-[221px] min-w-[168px] bg-contain bg-no-repeat bg-right-bottom z-30 right-0 bottom-[12%]"
           ></div>
-
-          <div className="bg-hero-section-memcoin-5 max-w-[346px] max-h-[432px] sm:w-[25.68%] w-[30%] h-[32%] min-w-[200px] min-h-[171px] bg-contain bg-no-repeat z-30 absolute -bottom-4 md:bottom-[10%] right-[10%] bg-right-bottom "></div>
-
-          {/* <div className="bg-hero-section-memcoin-6 max-w-[350px] max-h-[434px] min-w-[119px] min-h-[147px] w-[25.68%] h-[32%] bg-contain bg-no-repeat z-[31]  absolute sm:-top-24 -top-12 md:top-[68%] lg:right-[6%] bg-right-bottom  sm:right-[0%] right-[3%]"></div> */}
-
-          <div className=" absolute object-contain  xl:w-[13%] xl:min-w-[240px]  md:min-w-[220px] max-w-[350px] max-h-[434px] min-w-[150px] min-h-[147px] lg:w-[14%] md:w-[21%] w-[25%]  h-[32%] xl:bottom-[6%]  md:bottom-[2%]  lg:right-[5%] bg-right-bottom -bottom-8 sm:right-[5%] right-[3%] z-40">
+          {/* whale */}
+          <div className=" absolute  object-contain pointer-events-none  xl:w-[18%] xl:min-w-[240px] md:min-w-[220px] max-w-[350px] max-h-[434px] min-w-[150px] min-h-[147px] lg:w-[20%] md:w-[24%] w-[26%]  h-[32%] xl:bottom-[9%]  md:bottom-[5%]  lg:right-[10%]  sm:right-[10%] right-[6%] z-40">
             <div className="relative flex flex-col items-center justify-end ">
               <div
-                className=" absolute  md:h-64 md:w-24 sm:h-48 sm:w-28 w-16 h-[70%]  ml-4 sm:mb-2   z-[999]"
+                className=" absolute  md:h-64 md:w-24 sm:h-48 sm:w-28 w-16 h-[70%]  ml-4 sm:mb-2 pointer-events-auto   z-[999]"
+                onMouseEnter={() => handleMouseEnter(whaleRef)}
+                onMouseLeave={() => handleMouseLeave(whaleRef)}
+              ></div>
+              <AnimatedElement
+                videoRef={whaleRef}
+                className=""
+                source={ANIMATION_WEBM_SOURCES["whale"]}
+              />
+            </div>
+          </div>
+
+          {/* <div className="bg-hero-section-memcoin-5 max-w-[346px] max-h-[432px] sm:w-[25.68%] w-[30%] h-[32%] min-w-[200px] min-h-[171px] bg-contain bg-no-repeat z-30 absolute -bottom-4 md:bottom-[10%] right-[10%] bg-right-bottom "></div> */}
+
+          {/* candle wizard */}
+
+          <div className=" absolute object-contain  xl:w-[13%] xl:min-w-[240px] pointer-events-none  md:min-w-[220px] max-w-[350px] max-h-[434px] min-w-[150px] min-h-[147px] lg:w-[14%] md:w-[21%] w-[25%]  h-[32%] xl:bottom-[6%]  md:bottom-[2%]  lg:right-[5%] bg-right-bottom -bottom-8 sm:right-[5%] right-[3%] z-40">
+            <div className="relative flex flex-col items-center justify-end ">
+              <div
+                className=" absolute  md:h-64 md:w-24 sm:h-48 sm:w-28 w-16 h-[70%] pointer-events-auto  ml-4 sm:mb-2   z-[999]"
                 onMouseEnter={() => handleMouseEnter(candleRef)}
                 onMouseLeave={() => handleMouseLeave(candleRef)}
               ></div>
@@ -741,6 +546,7 @@ const HeroSection = () => {
               />
             </div>
           </div>
+
           <div className="hidden lg:block  md:w-[400px] md:h-[300px] w-[250px] origin-center  h-[200px] bg-no-repeat z-[31]  absolute -bottom-[10%] lg:bottom-[4%] bg-bottom  lg:right-[18%] right-[0%]">
             <div className="relative flex flex-col items-center justify-end ">
               <div
@@ -757,6 +563,18 @@ const HeroSection = () => {
           </div>
           <div className="bg-hero-section-memcoin-7 md:block hidden max-w-[299px] max-h-[351px] w-[22%] h-[26%] min-w-[119px] min-h-[147px] z-30 absolute top-[63%] bg-contain bg-no-repeat  -right-[0%] bg-right "></div>
         </div>
+
+        {/*anchor-2*/}
+        <div className="w-full h-0.5 absolute bottom-[15%] guide"></div>
+
+        {/*anchor-1*/}
+        <div className="w-full h-0.5 absolute bottom-[12%] guide"></div>
+
+        {/*anchor-0*/}
+        <div
+          ref={anchor_0_Ref}
+          className="w-full h-0.5 absolute bottom-[5%] guide"
+        ></div>
       </div>
     </motion.div>
   );

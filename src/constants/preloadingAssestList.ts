@@ -7,6 +7,7 @@ export const VIDEO_SOURCES = [
   // "/images/animations/archer-blue.webm",
   // "/images/animations/archer-red.webm",
   "/images/animations/hammer.webm",
+  "/images/animations/whale.webm",
 ];
 
 export const IMGS_SOURCES = [

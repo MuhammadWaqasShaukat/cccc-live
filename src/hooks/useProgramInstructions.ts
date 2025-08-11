@@ -398,7 +398,7 @@ const useProgramInstructions = () => {
   //                    CLAIM NFT
   //********************************************************
 
-  const ClaimNFT = async (nftAddress: string) => {
+  const ClaimNFT = async (nftAddress: string, nftMintKeypair: Keypair) => {
     const connectedWallet = await getConnectedWallet(wallet!);
 
     const provider = await getProvider(connection);
@@ -415,7 +415,7 @@ const useProgramInstructions = () => {
     }
 
     try {
-      const nftMintKeypair = Keypair.generate();
+      // const nftMintKeypair = Keypair.generate();
 
       const [collectionAuthorityPda] = PublicKey.findProgramAddressSync(
         [encode("collection_authority")],
@@ -473,20 +473,6 @@ const useProgramInstructions = () => {
         ASSOCIATED_TOKEN_PROGRAM_ID
       );
 
-      // console.log({
-      //   user: connectedWallet.publicKey.toBase58(),
-      //   eggCollectionMint: eggCollectionMint.toBase58(),
-      //   collectionAuthority: collectionAuthorityPda.toBase58(),
-      //   eggCollectionMetadataAccount: eggCollectionMetadataAccount.toBase58(),
-      //   eggCollectionMasterEdition: eggCollectionMasterEdition.toBase58(),
-      //   tokenAccount: tokenAccount.toBase58(),
-      //   eggMetadataAccount: eggMetadataAccount.toBase58(),
-      //   eggMasterEdition: eggMasterEdition.toBase58(),
-      //   eggNftMint: nftMintKeypair.publicKey.toBase58(),
-      //   nftMint: nftAddress,
-      //   tokenMetadataProgram: MPL_TOKEN_METADATA_PROGRAM_ID,
-      // });
-
       const transaction = await program.methods
         .claim()
         .accounts({
@@ -516,6 +502,8 @@ const useProgramInstructions = () => {
       transaction.recentBlockhash = (
         await provider.connection.getLatestBlockhash()
       ).blockhash;
+
+      return transaction;
 
       const signedTx = await connectedWallet.signTransaction(transaction);
 
@@ -571,7 +559,7 @@ const useProgramInstructions = () => {
         ASSOCIATED_TOKEN_PROGRAM_ID
       );
 
-      await program.methods
+      const transaction = await program.methods
         .hatch()
         .accounts({
           user: publicKey,
@@ -583,11 +571,125 @@ const useProgramInstructions = () => {
           tokenAccount,
           tokenMetadataProgram: MPL_TOKEN_METADATA_PROGRAM_ID,
         })
-        .rpc({ commitment: "confirmed" });
+        .transaction();
 
+      const computeBudgetIx = ComputeBudgetProgram.setComputeUnitLimit({
+        units: 300_000,
+      });
+
+      transaction.add(computeBudgetIx);
+
+      transaction.feePayer = publicKey;
+
+      transaction.recentBlockhash = (
+        await provider.connection.getLatestBlockhash()
+      ).blockhash;
+
+      return transaction;
+
+      // const transaction = await program.methods
+      //   .hatch()
+      //   .accounts({
+      //     user: publicKey,
+      //     treasury: treasury,
+      //     network: networkStateAccountAddress(),
+      //     vrf: vrf.programId,
+      //     eggNftMint: eggMintAddress,
+      //     nftMint: nftMintAddress,
+      //     tokenAccount,
+      //     tokenMetadataProgram: MPL_TOKEN_METADATA_PROGRAM_ID,
+      //   })
+      //   .rpc({ commitment: "confirmed" });
       ctx.setMyEggs([]);
     } catch (err: any) {
       console.error("Hatch failed:", err);
+    }
+  };
+
+  //********************************************************
+  //                    SUMMON NFT
+  //********************************************************
+
+  const SummonEgg = async (nftAddress: string) => {
+    const connectedWallet = await getConnectedWallet(wallet!);
+    const provider = await getProvider(connection);
+
+    const nftMintKeypair = Keypair.generate();
+
+    let eggMintAddress: PublicKey = nftMintKeypair.publicKey;
+
+    try {
+      const claimedNftTx = await ClaimNFT(nftAddress, nftMintKeypair);
+      const hatchNftTx = await HatchNFT(
+        eggMintAddress,
+        new PublicKey(nftAddress)
+      );
+
+      const signedTxs = await connectedWallet.signAllTransactions([
+        claimedNftTx,
+        hatchNftTx,
+      ]);
+
+      // partial sign the first transaction with the nftMintKeypair
+      signedTxs[0].partialSign(nftMintKeypair);
+
+      const txId = await provider.connection.sendRawTransaction(
+        signedTxs[0].serialize()
+      );
+
+      const latestBlockhash = await provider.connection.getLatestBlockhash();
+      await provider.connection.confirmTransaction(
+        {
+          signature: txId,
+          blockhash: latestBlockhash.blockhash,
+          lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
+        },
+        "confirmed"
+      );
+
+      // Now send the second transaction
+
+      setTimeout(async () => {
+        const txId = await provider.connection.sendRawTransaction(
+          signedTxs[1].serialize()
+        );
+
+        const latestBlockhash = await provider.connection.getLatestBlockhash();
+        await provider.connection.confirmTransaction(
+          {
+            signature: txId,
+            blockhash: latestBlockhash.blockhash,
+            lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
+          },
+          "confirmed"
+        );
+      }, 2000);
+
+      // for (const [index, signedTx] of signedTxs.entries()) {
+      //   if (index === 0) {
+      //     signedTx.partialSign(nftMintKeypair);
+      //   }
+
+      //   const txId = await provider.connection.sendRawTransaction(
+      //     signedTx.serialize()
+      //   );
+
+      //   const latestBlockhash = await provider.connection.getLatestBlockhash();
+      //   await provider.connection.confirmTransaction(
+      //     {
+      //       signature: txId,
+      //       blockhash: latestBlockhash.blockhash,
+      //       lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
+      //     },
+      //     "confirmed"
+      //   );
+      // }
+    } catch (error: any) {
+      console.error("SummonEgg error:", error.message);
+      throw new Error("Failed to summon egg: " + error.message);
+    } finally {
+      ctx.setMyEggs([]);
+      ctx.setBookmark("eggs");
     }
   };
 
@@ -654,9 +756,8 @@ const useProgramInstructions = () => {
 
   return {
     BuyNFT,
-    ClaimNFT,
-    HatchNFT,
     FulfillHatching,
+    SummonEgg,
   };
 };
 

@@ -10,7 +10,10 @@ const Nav: React.FC<NavProps> = ({ className }) => {
     <nav
       className={`${className} w-full grid place-content-end gap-4 md:gap-8 z-20  pointer-events-none h-full`}
     >
-      <div className="absolute top-[60%] md:top-[65%] left-1/2 -translate-x-1/2 max-w-[500px] md:w-[40%] sm:w-[35%] w-[80%] md:h-[60%] h-[40%] md:bg-hero-section-tombstone  bg-contain bg-center bg-no-repeat">
+      <div
+        id="tombstone"
+        className="absolute top-[60%] md:top-[65%] left-1/2 -translate-x-1/2 max-w-[500px] md:w-[40%] sm:w-[35%] w-[80%] md:h-[60%] h-[40%] md:bg-hero-section-tombstone  bg-contain bg-center bg-no-repeat"
+      >
         <ul className="flex flex-col items-center justify-center h-full space-y-2 sm:mt-5 lg:space-y-3">
           <li
             className={`space-y-1 bg-menu-btn hover:bg-menu-btn-hovered w-[60%] min-w-40 max-w-60 h-16 min-h-14 max-h-20 bg-center  bg-no-repeat bg-contain  pointer-events-auto`}
