@@ -2,7 +2,7 @@ const PublicMint = () => {
   return (
     <>
       <div className="flex flex-col items-center gap-4 pt-20 justify-normal md:hidden">
-        <div className="relative grid gap-2 mt-2 place-content-center w-[324px] guide">
+        <div className="relative grid gap-2 mt-2 place-content-center w-[324px] ">
           <div className="absolute top-0 right-0 w-20 h-20 bg-no-repeat bg-contain bg-mint-section-book-tr"></div>
           <div className="absolute top-0 left-0 w-20 h-20 -rotate-90 bg-no-repeat bg-contain bg-mint-section-book-tr"></div>
 
@@ -27,7 +27,7 @@ const PublicMint = () => {
             </span>
           </div>
         </div>
-        <div className="grid w-full h-full px-5 place-content-center guide">
+        <div className="grid w-full h-full px-5 place-content-center ">
           <div className="relative flex flex-col items-center justify-center flex-1 w-full h-full p-8 ">
             <div className="absolute bottom-0 left-0 w-40 h-40 bg-bottom bg-no-repeat bg-contain bg-mint-section-book-lg lg:w-52 lg:h-52"></div>
             <div className="absolute top-0 right-0 w-40 h-40 bg-top bg-no-repeat bg-contain bg-mint-section-book-lg-1 lg:w-52 lg:h-52"></div>

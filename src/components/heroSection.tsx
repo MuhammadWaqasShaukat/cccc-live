@@ -388,7 +388,7 @@ const HeroSection = () => {
 
         <div
           ref={catContainerRef}
-          className=" xs:w-[31%] w-[40%]  max-w-[275px] object-bottom h-auto guide  absolute bottom-0  md:left-[5%]  left-[15%] z-40"
+          className=" xs:w-[31%] w-[40%]  max-w-[275px] object-bottom h-auto   absolute bottom-0  md:left-[5%]  left-[15%] z-40"
         >
           <div className="relative flex flex-col items-center justify-start ">
             <div
@@ -565,15 +565,15 @@ const HeroSection = () => {
         </div>
 
         {/*anchor-2*/}
-        <div className="w-full h-0.5 absolute bottom-[15%] guide"></div>
+        <div className="w-full h-0.5 absolute bottom-[15%] "></div>
 
         {/*anchor-1*/}
-        <div className="w-full h-0.5 absolute bottom-[12%] guide"></div>
+        <div className="w-full h-0.5 absolute bottom-[12%] "></div>
 
         {/*anchor-0*/}
         <div
           ref={anchor_0_Ref}
-          className="w-full h-0.5 absolute bottom-[5%] guide"
+          className="w-full h-0.5 absolute bottom-[5%] "
         ></div>
       </div>
     </motion.div>
