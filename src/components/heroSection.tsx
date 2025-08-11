@@ -1,4 +1,4 @@
-import { RefObject, useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { CottonCandyContext } from "../providers/ContextProvider";
 import AnimatedElement from "./UI/AnimatedElement";
 import { ANIMATION_WEBM_SOURCES } from "../constants/animatedElements";
@@ -6,8 +6,11 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import Nav from "./UI/Nav";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import TopBar from "./topbar";
-import { motion, useAnimationFrame, useMotionValue } from "framer-motion";
-import { SpriteAnimationConfig, useSpriteAnimation } from "../hooks/useSpriteAnimation";
+import { motion } from "framer-motion";
+import {
+  SpriteAnimationConfig,
+  useSpriteAnimation,
+} from "../hooks/useSpriteAnimation";
 
 const HeroSection = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -20,10 +23,10 @@ const HeroSection = () => {
   const fireRef = useRef<HTMLVideoElement>(null);
   const magicRef = useRef<HTMLVideoElement>(null);
   const candleRef = useRef<HTMLVideoElement>(null);
-  const archerRef = useRef<HTMLVideoElement>(null);
-  const archerRedRef = useRef<HTMLVideoElement>(null);
+  // const archerRef = useRef<HTMLVideoElement>(null);
+  // const archerRedRef = useRef<HTMLVideoElement>(null);
 
-  const projectileRef = useRef<"none" | "candle" | "arrow">("none");
+  // const projectileRef = useRef<"none" | "candle" | "arrow">("none");
 
   const animationConfig: SpriteAnimationConfig = {
     frameWidth: 164,
@@ -32,7 +35,7 @@ const HeroSection = () => {
     rows: 9,
     spriteAnimationSpeed: 50,
     projectileImageUrl: "/images/arrow-candle.png",
-    bowReleasedFrame: 24
+    bowReleasedFrame: 24,
   };
 
   const animationRedConfig: SpriteAnimationConfig = {
@@ -42,13 +45,13 @@ const HeroSection = () => {
     rows: 10,
     spriteAnimationSpeed: 50,
     projectileImageUrl: "/images/arrow-lightning.png",
-    bowReleasedFrame: 7
+    bowReleasedFrame: 7,
   };
 
   // red
 
   const arrowRedRef = useRef<HTMLDivElement>(null);
-  const [pathRed, setPathRed] = useState("");
+  const [pathRed] = useState("");
 
   const redCastleBottomRef = useRef<HTMLDivElement>(null);
   const archerRedContainerRef = useRef<HTMLDivElement>(null);
@@ -60,10 +63,10 @@ const HeroSection = () => {
   const redTrajectoryEndRef = useRef<HTMLDivElement>(null);
 
   // blue
-  const [path, setPath] = useState("");
+  const [path] = useState("");
 
   const candleFireRef = useRef<HTMLDivElement>(null);
-  const progress = useMotionValue(0);
+  // const progress = useMotionValue(0);
 
   const blueCastleBottomRef = useRef<HTMLDivElement>(null);
   const archerBlueContainerRef = useRef<HTMLDivElement>(null);
@@ -74,9 +77,32 @@ const HeroSection = () => {
   const BlueTrajectoryStartRef = useRef<HTMLDivElement>(null);
   const BlueTrajectoryEndRef = useRef<HTMLDivElement>(null);
 
-
-  const { playAnimation: playCandleArcherAnimation, stopAnimation: stopCandleArcherAnimation } = useSpriteAnimation({ spriteRef: blueSpriteRef, pathRef, rangeRef: blueRangeRef, svgRef: blueSvgRef, startPathRef: BlueTrajectoryStartRef, endPathRef: BlueTrajectoryEndRef, projectileRef: candleFireRef, config: animationConfig });
-  const { playAnimation: playLighteningArcherAnimation, stopAnimation: stopLighteningArcherAnimation } = useSpriteAnimation({ spriteRef: redSpriteRef, pathRef: pathRedRef, rangeRef: redRangeRef, svgRef: redSvgRef, startPathRef: redTrajectoryStartRef, endPathRef: redTrajectoryEndRef, projectileRef: arrowRedRef, config: animationRedConfig });
+  const {
+    playAnimation: playCandleArcherAnimation,
+    stopAnimation: stopCandleArcherAnimation,
+  } = useSpriteAnimation({
+    spriteRef: blueSpriteRef,
+    pathRef,
+    rangeRef: blueRangeRef,
+    svgRef: blueSvgRef,
+    startPathRef: BlueTrajectoryStartRef,
+    endPathRef: BlueTrajectoryEndRef,
+    projectileRef: candleFireRef,
+    config: animationConfig,
+  });
+  const {
+    playAnimation: playLighteningArcherAnimation,
+    stopAnimation: stopLighteningArcherAnimation,
+  } = useSpriteAnimation({
+    spriteRef: redSpriteRef,
+    pathRef: pathRedRef,
+    rangeRef: redRangeRef,
+    svgRef: redSvgRef,
+    startPathRef: redTrajectoryStartRef,
+    endPathRef: redTrajectoryEndRef,
+    projectileRef: arrowRedRef,
+    config: animationRedConfig,
+  });
 
   // const getCenterPosition = (el: HTMLElement) => {
   //   const rect = el.getBoundingClientRect();
@@ -321,7 +347,6 @@ const HeroSection = () => {
   //   projectile: "none" | "candle" | "arrow"
   // ) => {
 
-
   //   if (!videoRef.current) return;
   //   if (projectileRef.current !== projectile) {
   //     projectileRef.current = projectile;
@@ -468,10 +493,7 @@ const HeroSection = () => {
             className="candleFireRef lg:w-[60%] md:w-[75%] h-fit  w-[85%] max-w-[370px] md:max-w-[550px] top-[30%] z-10 -left-24 absolute candleFireRef "
           >
             <div className="relative flex flex-col items-center justify-end h-full ">
-              <div
-                className=" absolute h-full w-[20%] left-8 z-[999]"
-
-              ></div>
+              <div className=" absolute h-full w-[20%] left-8 z-[999]"></div>
 
               <div
                 ref={redRangeRef}
@@ -533,9 +555,12 @@ const HeroSection = () => {
                 style={{
                   width: `${animationRedConfig.frameWidth}px`,
                   height: `${animationRedConfig.frameHeight}px`,
-                  backgroundImage: 'url(images/archer-red-ezgif.com-gif-to-sprite-converter.png)',
+                  backgroundImage:
+                    "url(images/archer-red-ezgif.com-gif-to-sprite-converter.png)",
                   // New: Scale the entire sprite sheet based on its dimensions.
-                  backgroundSize: `${animationRedConfig.columns * 100}% ${animationRedConfig.rows * 100}%`
+                  backgroundSize: `${animationRedConfig.columns * 100}% ${
+                    animationRedConfig.rows * 100
+                  }%`,
                 }}
               ></div>
             </div>
@@ -616,8 +641,8 @@ const HeroSection = () => {
             <div className="relative flex flex-col items-center justify-end h-full ">
               <div
                 className=" absolute h-full w-[20%] right-28 z-[999]"
-              // onMouseEnter={() => handleDrawBow(archerRef, "candle")}
-              // onMouseLeave={() => handleResetProjectile(archerRef)}
+                // onMouseEnter={() => handleDrawBow(archerRef, "candle")}
+                // onMouseLeave={() => handleResetProjectile(archerRef)}
               ></div>
 
               <div
@@ -681,9 +706,12 @@ const HeroSection = () => {
                 style={{
                   width: `${animationConfig.frameWidth}px`,
                   height: `${animationConfig.frameHeight}px`,
-                  backgroundImage: 'url(/images/archer-blue-ezgif.com-gif-to-sprite-converter.png)',
+                  backgroundImage:
+                    "url(/images/archer-blue-ezgif.com-gif-to-sprite-converter.png)",
                   // New: Scale the entire sprite sheet based on its dimensions.
-                  backgroundSize: `${animationConfig.columns * 100}% ${animationConfig.rows * 100}%`
+                  backgroundSize: `${animationConfig.columns * 100}% ${
+                    animationConfig.rows * 100
+                  }%`,
                 }}
               ></div>
             </div>
