@@ -9,11 +9,13 @@ import "react-circular-progressbar/dist/styles.css";
 import Portal from "../components/UI/Portal";
 import NFTSwiper from "../components/Nfts/NFTSwiper";
 
+
 const Home = () => {
   const ctx = useContext(CottonCandyContext);
 
   return (
     <>
+
       <HeroSection />
       {ctx.activeMenu === "about" && <AboutSection />}
       {ctx.activeMenu === "mint" && <MintSection />}

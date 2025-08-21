@@ -346,6 +346,7 @@ body * {
     animation: transitionIn 4s cubic-bezier(0, 0, 1, 1);
   }
 
+
   @keyframes transitionIn {
     from {
       clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
@@ -356,8 +357,25 @@ body * {
     }
   }
 
+  .myImgFast {
+    animation: reveal 1.4s steps(26) alternate 2;
+  }
+
+  @keyframes reveal {
+    from {
+      clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    }
+
+    to {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+  }
 
 
+  .myImgFast.invisible {
+    opacity: 0;
+    visibility: hidden;
+  }
 
   .black-wall {
     background: linear-gradient(to bottom,

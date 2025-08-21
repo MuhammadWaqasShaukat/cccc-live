@@ -6,7 +6,7 @@ export interface SpriteAnimationConfig {
   columns: number;
   rows: number;
   spriteAnimationSpeed: number;
-  bowReleasedFrame: number;
+  bowReleasedFrame?: number;
 }
 
 interface Position {
@@ -20,7 +20,6 @@ export const useSpriteAnimation = ({
   rangeRef,
   svgRef,
   startPathRef,
-  endPathRef,
   projectileRef,
   config,
 }: {
@@ -29,7 +28,6 @@ export const useSpriteAnimation = ({
   rangeRef: RefObject<HTMLDivElement>;
   svgRef: RefObject<SVGSVGElement>;
   startPathRef: RefObject<HTMLDivElement>;
-  endPathRef: RefObject<HTMLDivElement>;
   projectileRef: RefObject<HTMLDivElement>;
   config: SpriteAnimationConfig;
 }) => {
@@ -40,6 +38,23 @@ export const useSpriteAnimation = ({
   const { columns, rows, spriteAnimationSpeed, bowReleasedFrame } = config;
   const numFrames = rows * columns;
 
+  // re-position range //
+
+  const archerRect = spriteRef.current?.getBoundingClientRect();
+
+  if (archerRect && rangeRef.current && startPathRef.current) {
+    // if (spriteRef.current?.getAttribute("data-archer") === "arrow-archer") {
+    //   rangeRef.current.style.left = `${
+    //     archerRect.right + archerRect.width - 80
+    //   }px`;
+    // }
+    // if (spriteRef.current?.getAttribute("data-archer") === "candle-archer") {
+    //   rangeRef.current.style.left = `${
+    //     archerRect.right + archerRect.width - 50
+    //   }px`;
+    // }
+    startPathRef.current.style.top = `${archerRect.top - 150}px`;
+  }
   const getCenterPosition = (el: HTMLElement): Position => {
     const rect = el.getBoundingClientRect();
     return {
@@ -57,7 +72,6 @@ export const useSpriteAnimation = ({
   const updatePath = (): void => {
     if (
       !startPathRef.current ||
-      !endPathRef.current ||
       !svgRef.current ||
       !rangeRef.current ||
       !pathRef.current
@@ -66,7 +80,6 @@ export const useSpriteAnimation = ({
 
     const rangeRect = rangeRef.current.getBoundingClientRect();
     const startPos = getCenterPosition(startPathRef.current);
-    const endPos = getCenterPosition(endPathRef.current);
 
     const offsetX = rangeRect.left;
     const offsetY = rangeRect.top;
@@ -74,9 +87,14 @@ export const useSpriteAnimation = ({
       x: startPos.x - offsetX,
       y: startPos.y - offsetY,
     };
+
+    const viewportCenter = {
+      x: window.innerWidth / 2,
+      y: window.innerHeight * 0.9,
+    };
     const end: Position = {
-      x: endPos.x - offsetX,
-      y: endPos.y - offsetY,
+      x: viewportCenter.x - offsetX,
+      y: viewportCenter.y - offsetY,
     };
 
     svgRef.current.setAttribute(
@@ -131,7 +149,7 @@ export const useSpriteAnimation = ({
         spriteRef.current.style.backgroundPosition = `${backgroundX}% ${backgroundY}%`;
       }
 
-      if (currentFrame.current === bowReleasedFrame) {
+      if (currentFrame.current === bowReleasedFrame && bowReleasedFrame) {
         launchArrow();
       }
 

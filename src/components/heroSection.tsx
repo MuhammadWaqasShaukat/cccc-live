@@ -1,7 +1,5 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { CottonCandyContext } from "../providers/ContextProvider";
-import AnimatedElement from "./UI/AnimatedElement";
-import { ANIMATION_WEBM_SOURCES } from "../constants/animatedElements";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Nav from "./UI/Nav";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
@@ -11,7 +9,10 @@ import {
   SpriteAnimationConfig,
   useSpriteAnimation,
 } from "../hooks/useSpriteAnimation";
-import copyStyles from "../utils/copyStyles";
+import anchorElement from "../utils/anchorELement";
+import { useSpriteAnimationSimple } from "../hooks/useAnimations";
+
+type Dimensions = { width: number; height: number };
 
 const HeroSection = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -22,21 +23,50 @@ const HeroSection = () => {
   const { connected, disconnect } = useWallet();
   const { setVisible } = useWalletModal();
 
-  const fireRef = useRef<HTMLVideoElement>(null);
-  const magicRef = useRef<HTMLVideoElement>(null);
-  const candleRef = useRef<HTMLVideoElement>(null);
-  const whaleRef = useRef<HTMLVideoElement>(null);
+  const heroesDimensions = useRef(
+    new WeakMap<React.RefObject<HTMLElement>, Dimensions>()
+  );
+
+  const [boltArcherDimension, setBoltArcherDimension] = useState<{
+    width: number;
+    height: number;
+  }>({ width: 0, height: 0 });
+
+  const [candleArcherDimension, setCandleArcherDimension] = useState<{
+    width: number;
+    height: number;
+  }>({ width: 0, height: 0 });
+
+  const fireRef = useRef<HTMLDivElement>(null);
+  const magicRef = useRef<HTMLDivElement>(null);
+  const candleRef = useRef<HTMLDivElement>(null);
+  const whaleRef = useRef<HTMLDivElement>(null);
+  const swordmanRef = useRef<HTMLDivElement>(null);
 
   // anchors
-
+  const anchor_Ref = useRef<HTMLDivElement>(null);
   const anchor_0_Ref = useRef<HTMLDivElement>(null);
+  const anchor_1_Ref = useRef<HTMLDivElement>(null);
+  const anchor_2_Ref = useRef<HTMLDivElement>(null);
 
   // menu ref
   const tombstoneRef = useRef<any>(null);
 
+  // fired projectilrs refs
+
+  const candleOneRef = useRef<HTMLDivElement>(null);
+  const candleTwoRef = useRef<HTMLDivElement>(null);
+
+  const arrowOneRef = useRef<HTMLDivElement>(null);
+  const arrowTwoRef = useRef<HTMLDivElement>(null);
+
+  // heroes ref
+
+  const redCastleLightSaberRef = useRef<HTMLDivElement>(null);
+
   const animationConfig: SpriteAnimationConfig = {
-    frameWidth: 164,
-    frameHeight: 164,
+    frameWidth: candleArcherDimension.width || 96,
+    frameHeight: candleArcherDimension.height || 96,
     columns: 5,
     rows: 9,
     spriteAnimationSpeed: 50,
@@ -44,8 +74,8 @@ const HeroSection = () => {
   };
 
   const animationRedConfig: SpriteAnimationConfig = {
-    frameWidth: 164,
-    frameHeight: 164,
+    frameWidth: boltArcherDimension.width || 96,
+    frameHeight: boltArcherDimension.height || 96,
     columns: 5,
     rows: 10,
     spriteAnimationSpeed: 50,
@@ -63,7 +93,6 @@ const HeroSection = () => {
   const redSvgRef = useRef<SVGSVGElement>(null);
   const redRangeRef = useRef<HTMLDivElement>(null);
   const redTrajectoryStartRef = useRef<HTMLDivElement>(null);
-  const redTrajectoryEndRef = useRef<HTMLDivElement>(null);
 
   // blue
   const candleFireRef = useRef<HTMLDivElement>(null);
@@ -74,8 +103,7 @@ const HeroSection = () => {
   const pathRef = useRef<SVGPathElement>(null);
   const blueSvgRef = useRef<SVGSVGElement>(null);
   const blueRangeRef = useRef<HTMLDivElement>(null);
-  const BlueTrajectoryStartRef = useRef<HTMLDivElement>(null);
-  const BlueTrajectoryEndRef = useRef<HTMLDivElement>(null);
+  const blueTrajectoryStartRef = useRef<HTMLDivElement>(null);
 
   const {
     playAnimation: playCandleArcherAnimation,
@@ -85,8 +113,7 @@ const HeroSection = () => {
     pathRef,
     rangeRef: blueRangeRef,
     svgRef: blueSvgRef,
-    startPathRef: BlueTrajectoryStartRef,
-    endPathRef: BlueTrajectoryEndRef,
+    startPathRef: blueTrajectoryStartRef,
     projectileRef: candleFireRef,
     config: animationConfig,
   });
@@ -99,33 +126,81 @@ const HeroSection = () => {
     rangeRef: redRangeRef,
     svgRef: redSvgRef,
     startPathRef: redTrajectoryStartRef,
-    endPathRef: redTrajectoryEndRef,
     projectileRef: arrowRedRef,
     config: animationRedConfig,
   });
 
-  const setArcherPosition = (
-    anchor: HTMLElement,
-    archer: HTMLElement,
-    offset: number
-  ) => {
-    const rect = anchor.getBoundingClientRect();
-    archer.style.top = `${rect.top - offset}px`;
-    archer.style.opacity = "1";
-  };
-
   const positionedArcher = () => {
     const blueCastleEl = document.getElementById("blueCastleBottom");
-    const archerEl = document.getElementById("archerContainer");
 
     const redCastleEl = document.getElementById("redCastleBottom");
-    const archerRedEl = document.getElementById("archerRedContainer");
+    // resize the archer
 
-    if (blueCastleEl && archerEl && redCastleEl && archerRedEl) {
-      setTimeout(() => {
-        setArcherPosition(blueCastleEl, archerEl, 50);
-        setArcherPosition(redCastleEl, archerRedEl, 80);
-      }, 10);
+    if (blueCastleEl) {
+      const castleRect = blueCastleEl.getBoundingClientRect();
+      const archerSize = castleRect.width * 0.45;
+      setBoltArcherDimension({ width: archerSize, height: archerSize });
+
+      if (
+        blueSpriteRef.current &&
+        blueRangeRef.current &&
+        blueTrajectoryStartRef.current
+      ) {
+        const archer = blueSpriteRef.current.getBoundingClientRect();
+        blueRangeRef.current.style.right = `${
+          window.innerWidth - archer?.left
+        }px`;
+        blueTrajectoryStartRef.current.style.top = `${archer.top}px`;
+      }
+    }
+
+    if (redCastleEl) {
+      const castleRect = redCastleEl.getBoundingClientRect();
+      const archerSize = castleRect.width * 0.5;
+      setCandleArcherDimension({ width: archerSize, height: archerSize });
+      if (
+        redSpriteRef.current &&
+        redRangeRef.current &&
+        redTrajectoryStartRef.current
+      ) {
+        const archer = redSpriteRef.current.getBoundingClientRect();
+        redRangeRef.current.style.left = `${archer.right}px`;
+        redTrajectoryStartRef.current.style.top = `${archer.top}px`;
+      }
+    }
+  };
+
+  const resizeHeroes = () => {
+    // lightening heroes
+
+    const redCastleEl = document.getElementById("redCastleBottom");
+    const castleRect = redCastleEl?.getBoundingClientRect();
+
+    if (castleRect) {
+      if (magicRef.current) {
+        heroesDimensions.current.set(magicRef, {
+          width: castleRect.width * 0.75,
+          height: castleRect.width * 0.75,
+        });
+      }
+      if (candleRef.current) {
+        heroesDimensions.current.set(candleRef, {
+          width: castleRect.width * 0.5,
+          height: castleRect.width * 0.5,
+        });
+      }
+      if (whaleRef.current) {
+        heroesDimensions.current.set(whaleRef, {
+          width: castleRect.width * 0.75,
+          height: castleRect.width * 0.75,
+        });
+      }
+      if (fireRef.current) {
+        heroesDimensions.current.set(fireRef, {
+          width: castleRect.width * 0.5,
+          height: (castleRect.width * 0.5) / 2,
+        });
+      }
     }
   };
 
@@ -134,59 +209,35 @@ const HeroSection = () => {
 
     tombstoneRef.current = document.getElementById("tombstone");
     const positionElement = () => {
-      copyStyles(anchor_0_Ref, tombstoneRef, { bottom: true });
-      copyStyles(anchor_0_Ref, catContainerRef, { bottom: true });
+      anchorElement(anchor_0_Ref, tombstoneRef, { bottom: true });
+      anchorElement(anchor_0_Ref, catContainerRef, { bottom: true });
+      anchorElement(anchor_0_Ref, candleOneRef, { bottom: true });
+      anchorElement(anchor_1_Ref, candleTwoRef, { bottom: true });
+      anchorElement(anchor_0_Ref, arrowOneRef, { bottom: true });
+      anchorElement(anchor_1_Ref, arrowTwoRef, { bottom: true });
+      anchorElement(anchor_Ref, fireRef, { bottom: true });
+      anchorElement(anchor_1_Ref, swordmanRef, { bottom: true });
+      anchorElement(anchor_0_Ref, candleRef, { bottom: true });
+      anchorElement(anchor_1_Ref, whaleRef, { bottom: true });
+      anchorElement(anchor_2_Ref, magicRef, { bottom: true });
     };
-
+    resizeHeroes();
+    positionElement();
     positionedArcher();
     window.addEventListener("resize", positionedArcher);
     window.addEventListener("resize", positionElement);
+    window.addEventListener("resize", resizeHeroes);
 
     return () => {
       window.removeEventListener("resize", positionedArcher);
       window.removeEventListener("resize", positionElement);
+      window.removeEventListener("resize", resizeHeroes);
     };
   }, [ctx.assestsPreloaded]);
 
   useEffect(() => {
-    const refs = [fireRef, magicRef, candleRef];
-    const CHECK_INTERVAL = 100;
-
-    let intervalId: number;
-
-    const areAllVideosReady = () => {
-      return refs.every((ref) => {
-        const video = ref.current;
-        return video && video.readyState >= 3;
-      });
-    };
-
-    const checkReadyStates = () => {
-      if (areAllVideosReady()) {
-        console.count("ready videos");
-
-        clearInterval(intervalId);
-        ctx.setAssestsPreloaded(true);
-      }
-    };
-
-    refs.forEach((ref) => {
-      ref.current?.load();
-    });
-
-    intervalId = window.setInterval(checkReadyStates, CHECK_INTERVAL);
-
-    return () => clearInterval(intervalId);
+    ctx.setAssestsPreloaded(true);
   }, []);
-
-  const handleMouseEnter = (videoRef: any) => {
-    videoRef.current?.play();
-  };
-
-  const handleMouseLeave = (videoRef: any) => {
-    videoRef.current.currentTime = 0;
-    videoRef.current?.pause();
-  };
 
   const isMouthOpenCheck = () =>
     catRef.current?.src.includes("open") ? true : false;
@@ -195,7 +246,6 @@ const HeroSection = () => {
     if (!catRef.current) return;
 
     const isMouthOpen = isMouthOpenCheck();
-
     if (!isMouthOpen) {
       catRef.current.src = "/images/section-hero/memcoin2.open.png";
       if (!audioRef.current) {
@@ -236,6 +286,69 @@ const HeroSection = () => {
     }
   };
 
+  // sprite animations configs
+
+  const fireAnimationConfig: SpriteAnimationConfig = {
+    frameWidth: heroesDimensions.current.get(fireRef)?.width || 200,
+    frameHeight: heroesDimensions.current.get(fireRef)?.height || 100,
+    columns: 5,
+    rows: 10,
+    spriteAnimationSpeed: 100,
+  };
+
+  const candleAnimationConfig: SpriteAnimationConfig = {
+    frameWidth: heroesDimensions.current.get(candleRef)?.width || 264,
+    frameHeight: heroesDimensions.current.get(candleRef)?.height || 264,
+    columns: 5,
+    rows: 8,
+    spriteAnimationSpeed: 100,
+  };
+
+  const whaleAnimationConfig: SpriteAnimationConfig = {
+    frameWidth: heroesDimensions.current.get(whaleRef)?.width || 264,
+    frameHeight: heroesDimensions.current.get(whaleRef)?.height || 264,
+    columns: 9,
+    rows: 10,
+    spriteAnimationSpeed: 100,
+  };
+
+  const magicAnimationConfig: SpriteAnimationConfig = {
+    frameWidth: heroesDimensions.current.get(magicRef)?.width || 300,
+    frameHeight: heroesDimensions.current.get(magicRef)?.height || 300,
+    columns: 5,
+    rows: 10,
+    spriteAnimationSpeed: 100,
+  };
+
+  const { playAnimation: playFireAnimation, stopAnimation: stopFireAnimation } =
+    useSpriteAnimationSimple({
+      spriteRef: fireRef,
+      config: fireAnimationConfig,
+    });
+
+  const {
+    playAnimation: playMagicAnimation,
+    stopAnimation: stopMagicAnimation,
+  } = useSpriteAnimationSimple({
+    spriteRef: magicRef,
+    config: magicAnimationConfig,
+  });
+  const {
+    playAnimation: playWhaleAnimation,
+    stopAnimation: stopWhaleAnimation,
+  } = useSpriteAnimationSimple({
+    spriteRef: whaleRef,
+    config: whaleAnimationConfig,
+  });
+
+  const {
+    playAnimation: playCandleAnimation,
+    stopAnimation: stopCandleAnimation,
+  } = useSpriteAnimationSimple({
+    spriteRef: candleRef,
+    config: candleAnimationConfig,
+  });
+
   return (
     <motion.div
       initial={{
@@ -250,7 +363,7 @@ const HeroSection = () => {
         },
       }}
     >
-      <div className="relative  flex flex-col w-screen h-screen overflow-hidden bg-black bg-no-repeat bg-cover bg-hero-section-upper sm:overflow-clip">
+      <div className="relative   flex flex-col w-screen h-screen overflow-hidden bg-black bg-no-repeat bg-cover bg-hero-section-upper sm:overflow-clip">
         <TopBar />
         <div className="z-20 flex flex-row items-center justify-between px-4 py-2 md:px-10 md:py-5">
           <div className="flex items-center justify-center">
@@ -279,116 +392,126 @@ const HeroSection = () => {
 
         {/* Heroes */}
         {/* casltes  red*/}
-        <div className="block relative md:static top-[75%] md:top-auto">
-          <div className=" bg-hero-section-castle-red-1 max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-[1] md:bottom-[46%] lg:bottom-[50%]  bottom-[11rem] bg-left-bottom  md:left-0"></div>
+        <div className="block relative md:static top-[75%] md:top-auto ">
+          <div className=" bg-hero-section-castle-red-1 max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-[1] md:bottom-[40%] lg:bottom-[50%]  bottom-[11rem] bg-left-bottom  md:left-0">
+            {/* Command : red */}
+            <motion.div
+              initial={{ y: 20 }}
+              whileHover={{ y: -20 }}
+              transition={{
+                type: "spring",
+                stiffness: 80,
+                damping: 12,
+                mass: 0.5,
+              }}
+              className="bg-hero-section-frog hidden md:block   h-[47%] w-[50%] max-w-28 bg-contain bg-no-repeat z-10 absolute  left-0  bg-left-bottom -bottom-[5%]"
+            ></motion.div>
 
-          {/* Command : red */}
-          <motion.div
-            initial={{ y: 20 }}
-            whileHover={{ y: -20 }}
-            transition={{
-              type: "spring",
-              stiffness: 80,
-              damping: 12,
-              mass: 0.5,
-            }}
-            className="bg-hero-section-frog hidden md:block  max-w-[211px] max-h-[230px] h-[17%] w-[15.7%] min-h-[69px] md:bottom-[42%] lg:bottom-[50%] min-w-[61px] bg-contain bg-no-repeat z-10 absolute  left-0  bg-left-bottom"
-          ></motion.div>
+            {/* Archer: red */}
+            <div
+              id="archerRedContainer"
+              ref={archerRedContainerRef}
+              className="absolute w-[60%] max-w-[350px] -bottom-[10%] z-10 lg:right-10 sm:right-8 right-6 "
+            >
+              <div className="relative flex flex-col items-center justify-end h-full ">
+                <div
+                  data-range="lightening-range"
+                  ref={redRangeRef}
+                  className="fixed md:w-1/2 w-1/3  bottom-40 h-2/3  left-52 z-100"
+                >
+                  <div className="relative w-full h-full ">
+                    <svg
+                      ref={redSvgRef}
+                      style={{ position: "absolute", top: 0, left: 0 }}
+                    >
+                      <path
+                        ref={pathRedRef}
+                        stroke="none"
+                        strokeWidth="2"
+                        fill="none"
+                      />
+                    </svg>
 
-          {/* Archer: red */}
-          <div
-            id="archerRedContainer"
-            ref={archerRedContainerRef}
-            className="candleFireRef lg:w-[60%] md:w-[75%] h-fit  w-[85%] max-w-[370px] md:max-w-[550px] top-[30%] z-10 -left-24 absolute candleFireRef "
-          >
-            <div className="relative flex flex-col items-center justify-end h-full ">
-              <div className=" absolute h-full w-[20%] left-8 z-[999]"></div>
+                    <motion.div
+                      ref={arrowRedRef}
+                      className=" md:w-20 md:h-5 w-12 h-3"
+                      style={{
+                        opacity: "0",
+                        position: "absolute",
+                        transformOrigin: "center center",
+                        pointerEvents: "none",
+                      }}
+                    >
+                      <img
+                        src="/images/arrow-lightning.png"
+                        alt="arrow"
+                        style={{ width: "100%", height: "100%" }}
+                      />
+                    </motion.div>
 
-              <div
-                ref={redRangeRef}
-                className="fixed w-1/2 bottom-40 h-2/3 left-64 z-100"
-              >
-                <div className="relative w-full h-full">
-                  <svg
-                    ref={redSvgRef}
-                    style={{ position: "absolute", top: 0, left: 0 }}
-                  >
-                    <path
-                      ref={pathRedRef}
-                      stroke="none"
-                      strokeWidth="2"
-                      fill="none"
-                    />
-                  </svg>
-
-                  <motion.div
-                    ref={arrowRedRef}
-                    style={{
-                      opacity: "0",
-                      position: "absolute",
-                      width: "80px",
-                      height: "20px",
-                      transformOrigin: "center center",
-                      pointerEvents: "none",
-                    }}
-                  >
-                    <img
-                      src="/images/arrow-lightning.png"
-                      alt="arrow"
-                      style={{ width: "100%", height: "100%" }}
-                    />
-                  </motion.div>
-                  <div
-                    ref={redTrajectoryEndRef}
-                    className="absolute bottom-0 right-0 h-1  w-[300px] "
-                  ></div>
-
-                  <div
-                    ref={redTrajectoryStartRef}
-                    className="absolute top-[28%] left-0 w-1 h-4"
-                  ></div>
+                    <div
+                      ref={redTrajectoryStartRef}
+                      className="absolute top-[28%] left-0 w-1 h-4"
+                    ></div>
+                  </div>
                 </div>
-              </div>
 
-              <div
-                onMouseEnter={playLighteningArcherAnimation}
-                onMouseLeave={stopLighteningArcherAnimation}
-                ref={redSpriteRef}
-                className="sprite-container absolute top-0  z-0"
-                style={{
-                  width: `${animationRedConfig.frameWidth}px`,
-                  height: `${animationRedConfig.frameHeight}px`,
-                  backgroundImage:
-                    "url(images/archer-red-ezgif.com-gif-to-sprite-converter.png)",
-                  backgroundSize: `${animationRedConfig.columns * 100}% ${
-                    animationRedConfig.rows * 100
-                  }%`,
-                }}
-              ></div>
+                <div
+                  data-archer="arrow-archer"
+                  onMouseEnter={playLighteningArcherAnimation}
+                  onMouseLeave={stopLighteningArcherAnimation}
+                  ref={redSpriteRef}
+                  className="sprite-container absolute bottom-0 max-w-48 max-h-48 z-0"
+                  style={{
+                    width: `${animationRedConfig.frameWidth}px`,
+                    height: `${animationRedConfig.frameHeight}px`,
+                    backgroundImage:
+                      "url(images/animations/sprites/archer-red.png)",
+                    backgroundSize: `${animationRedConfig.columns * 100}% ${
+                      animationRedConfig.rows * 100
+                    }%`,
+                  }}
+                ></div>
+              </div>
             </div>
           </div>
 
-          <div className=" max-w-[400px] max-h-[435px] min-w-[162px] min-h-[230px] h-[50%] w-[37%] absolute bottom-[12%] ">
+          <div className="max-w-[400px] lg:max-h-[600px] max-h-[380px] h-[46%] w-[37%]   bg-bottom min-h-[221px] min-w-[168px]  absolute bottom-[12%] ">
             <div
               id="redCastleBottom"
               ref={redCastleBottomRef}
               className="relative z-30 w-full h-full bg-left-bottom bg-no-repeat bg-contain pointer-events-none bg-hero-section-castle-red-2"
             ></div>
-            <div className=" black-wall min-w-[120px] -mt-1 bg-left-bottom md:w-[65%] w-[60%] xs:w-[62%] lg:w-[62.2%] md:h-[68%] lg:h-[70%] sm:w-[50%] h-[70%]   bg-contain bg-no-repeat absolute bottom-0 z-10"></div>
+            <div className=" black-wall min-w-[120px]  -mt-1 bg-left-bottom md:w-[65%] w-[60%] xs:w-[62%] lg:w-[62.2%] md:h-[68%] lg:h-[70%] sm:w-[50%] h-[70%]   bg-contain bg-no-repeat absolute bottom-0 z-10"></div>
           </div>
           {/* Light Saber: red */}
-          <div className="bg-hero-section-memcoin-1 bg-left-bottom hidden md:block max-w-[273px] max-h-[319px] w-[20%] h-[24%] min-w-[70px] min-h-[78px] absolute lg:bottom-[11%] md:bottom-[11%] bottom-[5%] left-[0%] z-20 bg-contain bg-no-repeat"></div>
+          <div
+            ref={redCastleLightSaberRef}
+            className="bg-hero-section-memcoin-1 bg-left-bottom hidden md:block max-w-[164px] max-h-[319px] w-[20%] h-[24%] min-w-[70px] min-h-[78px] absolute lg:bottom-[11%] md:bottom-[11%] bottom-[5%] left-[0%] z-20 bg-contain bg-no-repeat"
+          ></div>
         </div>
 
-        <div className=" bg-hero-section-red-1 lg:w-[96px] lg:h-[88px] w-[50px] h-[54px]  bg-contain bg-no-repeat  absolute  bottom-[5%] lg:left-[30%] left-[5%] z-10"></div>
-        <div className="bg-hero-section-red-2 w-[72px] h-[72px] absolute bottom-[10%] left-[28%] z-10 hidden lg:block bg-contain"></div>
-        <div className=" bg-hero-section-shark-1 lg:w-[96px] lg:h-[96px] w-[50px] h-[50px]  bg-contain bg-no-repeat  absolute bottom-[8%] right-[25%] z-10"></div>
-        <div className="bg-hero-section-shark-2 w-[64px] h-[63px] absolute top-[86%] right-[2%] hidden lg:block bg-contain z-10"></div>
+        <div
+          ref={candleOneRef}
+          className=" bg-hero-section-red-1 lg:w-[96px] lg:h-[88px] w-[50px] h-[54px]  bg-contain bg-no-repeat  absolute  bottom-[5%] lg:left-[30%] left-[5%] z-10"
+        ></div>
+        <div
+          ref={candleTwoRef}
+          className="bg-hero-section-red-2 w-[72px] h-[72px] absolute bottom-[10%] left-[28%] z-10 hidden lg:block bg-contain"
+        ></div>
+        <div
+          ref={arrowOneRef}
+          className=" bg-hero-section-shark-1 lg:w-[96px] lg:h-[96px] w-[50px] h-[50px]  bg-contain bg-no-repeat  absolute bottom-[8%] right-[25%] z-10"
+        ></div>
+        <div
+          ref={arrowTwoRef}
+          className="bg-hero-section-shark-2 w-[64px] h-[63px] absolute top-[86%] right-[20%] hidden lg:block bg-contain z-10"
+        ></div>
         {/* Cavlary : red */}
 
         <div
           ref={catContainerRef}
-          className=" xs:w-[31%] w-[40%]  max-w-[275px] object-bottom h-auto   absolute bottom-0  md:left-[5%]  left-[15%] z-40"
+          className="w-[30%] max-w-48 object-bottom h-auto absolute bottom-0  md:left-[4%]  left-[15%] z-40"
         >
           <div className="relative flex flex-col items-center justify-start ">
             <div
@@ -407,173 +530,185 @@ const HeroSection = () => {
           </div>
         </div>
         {/* Wizard: red */}
-        <div className=" absolute object-contain w-[40%] lg:w-[26%] bottom-[5%] lg:min-w-[400px] max-w-[500px]  max-h-[600px] min-w-[230px] min-h-[176px]   md:bottom-[7%] sm:bottom-[9%] md:left-[12%] lg:left-[8%] -left-[12%] z-30">
-          <div className="relative flex flex-col items-center justify-end ">
-            <div
-              className=" absolute  md:h-48 lg:h-56 md:w-32 sm:h-48 sm:w-28 w-16 h-[50%] top-24 sm:-ml-28 -ml-16 sm:mb-2 md:top-40 sm:top-24  z-[999]"
-              onMouseEnter={() => handleMouseEnter(magicRef)}
-              onMouseLeave={() => handleMouseLeave(magicRef)}
-            ></div>
-            <AnimatedElement
-              videoRef={magicRef}
-              className=""
-              source={ANIMATION_WEBM_SOURCES["magic"]}
-            />
-          </div>
-        </div>
+
+        <div
+          onMouseEnter={playMagicAnimation}
+          onMouseLeave={stopMagicAnimation}
+          ref={magicRef}
+          className="sprite-container absolute md:bottom-[7%] sm:bottom-[15%] md:left-[15%] lg:left-[10%] min-w-42 min-h-42 left-0 z-30"
+          style={{
+            width: `${magicAnimationConfig.frameWidth}px`,
+            height: `${magicAnimationConfig.frameHeight}px`,
+            backgroundImage: "url(images/animations/sprites/magic-sprite.png)",
+            backgroundSize: `${magicAnimationConfig.columns * 100}% ${
+              magicAnimationConfig.rows * 100
+            }%`,
+          }}
+        ></div>
         <div className=" bg-hero-section-distant  lg:h-[68%] md:h-[65%] w-[100%] min-w-[300px] min-h-[200px] bg-contain sm:bg-repeat-x bg-no-repeat bg-bottom absolute sm:bottom-[16%] bottom-[18%] z-0"></div>
         {/* castle-blue */}
-        <div className=" relative md:static top-[75%] md:top-auto">
-          <div className="bg-hero-section-castle-blue-1  max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-0 md:bottom-[44%]  lg:bottom-[50%] bottom-[11rem] bg-right-bottom right-0"></div>
-          <motion.div
-            initial={{ y: 20 }}
-            whileHover={{ y: -20 }}
-            transition={{
-              type: "spring",
-              stiffness: 80,
-              damping: 12,
-              mass: 0.5,
-            }}
-            className="bg-hero-section-memcoin-4 hidden md:block  max-w-[140px] max-h-[229px] min-w-[71px] w-[15%] h-[17%] min-h-[82px] bg-contain bg-no-repeat z-10 absolute md:bottom-[42%] lg:bottom-[48%] right-0 bg-right-bottom"
-          ></motion.div>
+        <div className="block relative md:static top-[75%] md:top-auto">
+          <div className="bg-hero-section-castle-blue-1 max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-0 md:bottom-[40%]  lg:bottom-[50%] bottom-[11rem] bg-right-bottom right-0">
+            <motion.div
+              initial={{ y: 20 }}
+              whileHover={{ y: -20 }}
+              transition={{
+                type: "spring",
+                stiffness: 80,
+                damping: 12,
+                mass: 0.5,
+              }}
+              className="bg-hero-section-memcoin-4 hidden md:block  w-[50%] max-w-28 h-[47%] bg-contain bg-no-repeat z-10 absolute right-0 bg-right-bottom -bottom-[5%]"
+            ></motion.div>
 
-          <div
-            id="archerContainer"
-            ref={archerBlueContainerRef}
-            className="fixed candleFireRef lg:w-[60%] opacity-0 md:w-[75%] h-fit w-[85%] max-w-[370px] md:max-w-[550px] lg:max-w-[650px] top-[30%]  -right-24 z-0"
-          >
-            <div className="relative flex flex-col items-center justify-end h-full ">
-              <div
-                ref={blueRangeRef}
-                className="fixed w-1/2 bottom-40 h-2/3 right-64 z-100"
-              >
-                <div className="relative w-full h-full">
-                  <svg
-                    ref={blueSvgRef}
-                    style={{ position: "absolute", top: 0, left: 0 }}
-                  >
-                    <path
-                      ref={pathRef}
-                      stroke="none"
-                      strokeWidth="2"
-                      fill="none"
-                    />
-                  </svg>
+            <div
+              id="archerContainer"
+              ref={archerBlueContainerRef}
+              className="candleFireRef absolute  h-full w-[60%] max-w-[350px] -bottom-[10%] lg:left-10 sm:left-8 left-6 z-0"
+            >
+              <div className="relative flex flex-col items-center justify-end h-full ">
+                <div
+                  data-range="candle-range"
+                  ref={blueRangeRef}
+                  className="fixed w-1/2 bottom-40 h-2/3 right-64 z-100 pointer-events-none"
+                >
+                  <div className="relative w-full h-full">
+                    <svg
+                      ref={blueSvgRef}
+                      style={{ position: "absolute", top: 0, left: 0 }}
+                    >
+                      <path
+                        ref={pathRef}
+                        stroke="none"
+                        strokeWidth="2"
+                        fill="none"
+                      />
+                    </svg>
 
-                  <motion.div
-                    ref={candleFireRef}
-                    style={{
-                      opacity: "0",
-                      position: "absolute",
-                      width: "80px",
-                      height: "20px",
-                      transformOrigin: "center center",
-                      pointerEvents: "none",
-                    }}
-                  >
-                    <img
-                      src="/images/arrow-candle.png"
-                      alt="arrow"
-                      style={{ width: "100%", height: "100%" }}
-                    />
-                  </motion.div>
-                  <div
-                    ref={BlueTrajectoryEndRef}
-                    className="absolute bottom-0 left-0 h-1 w-[300px]"
-                  ></div>
+                    <motion.div
+                      className=" md:w-20 md:h-5 w-12 h-3"
+                      ref={candleFireRef}
+                      style={{
+                        opacity: "0",
+                        position: "absolute",
+                        transformOrigin: "center center",
+                        pointerEvents: "none",
+                      }}
+                    >
+                      <img
+                        src="/images/arrow-candle.png"
+                        alt="arrow"
+                        style={{ width: "100%", height: "100%" }}
+                      />
+                    </motion.div>
 
-                  <div
-                    ref={BlueTrajectoryStartRef}
-                    className="absolute top-[39%] right-0 w-1 h-4"
-                  ></div>
+                    <div
+                      ref={blueTrajectoryStartRef}
+                      className="absolute top-[39%] right-0 w-1 h-4"
+                    ></div>
+                  </div>
                 </div>
-              </div>
 
-              <div
-                onMouseEnter={playCandleArcherAnimation}
-                onMouseLeave={stopCandleArcherAnimation}
-                ref={blueSpriteRef}
-                className="sprite-container absolute top-0 z-0"
-                style={{
-                  width: `${animationConfig.frameWidth}px`,
-                  height: `${animationConfig.frameHeight}px`,
-                  backgroundImage:
-                    "url(/images/archer-blue-ezgif.com-gif-to-sprite-converter.png)",
-                  backgroundSize: `${animationConfig.columns * 100}% ${
-                    animationConfig.rows * 100
-                  }%`,
-                }}
-              ></div>
+                <div
+                  data-archer="candle-archer"
+                  onMouseEnter={playCandleArcherAnimation}
+                  onMouseLeave={stopCandleArcherAnimation}
+                  ref={blueSpriteRef}
+                  className="sprite-container absolute bottom-0 max-w-48 max-h-48 z-100"
+                  style={{
+                    width: `${animationConfig.frameWidth}px`,
+                    height: `${animationConfig.frameHeight}px`,
+                    backgroundImage:
+                      "url(/images/animations/sprites/archer-blue.png)",
+                    backgroundSize: `${animationConfig.columns * 100}% ${
+                      animationConfig.rows * 100
+                    }%`,
+                  }}
+                ></div>
+              </div>
             </div>
           </div>
 
           <div
             id="blueCastleBottom"
             ref={blueCastleBottomRef}
-            className="bg-hero-section-castle-blue-2   pointer-events-none  max-w-[465px] lg:max-h-[600px] max-h-[380px] h-[46%] w-[37%]  absolute min-h-[221px] min-w-[168px] bg-contain bg-no-repeat bg-right-bottom z-30 right-0 bottom-[12%]"
+            className="bg-hero-section-castle-blue-2  pointer-events-none  max-w-[465px] lg:max-h-[600px] max-h-[380px] h-[46%] w-[37%]  absolute min-h-[221px] min-w-[168px] bg-contain bg-no-repeat bg-right-bottom z-30 right-0 bottom-[12%]"
           ></div>
-          {/* whale */}
-          <div className=" absolute  object-contain pointer-events-none  xl:w-[18%] xl:min-w-[240px] md:min-w-[220px] max-w-[350px] max-h-[434px] min-w-[150px] min-h-[147px] lg:w-[20%] md:w-[24%] w-[26%]  h-[32%] xl:bottom-[9%]  md:bottom-[5%]  lg:right-[10%]  sm:right-[10%] right-[6%] z-40">
-            <div className="relative flex flex-col items-center justify-end ">
-              <div
-                className=" absolute  md:h-64 md:w-24 sm:h-48 sm:w-28 w-16 h-[70%]  ml-4 sm:mb-2 pointer-events-auto   z-[999]"
-                onMouseEnter={() => handleMouseEnter(whaleRef)}
-                onMouseLeave={() => handleMouseLeave(whaleRef)}
-              ></div>
-              <AnimatedElement
-                videoRef={whaleRef}
-                className=""
-                source={ANIMATION_WEBM_SOURCES["whale"]}
-              />
-            </div>
-          </div>
-
-          {/* <div className="bg-hero-section-memcoin-5 max-w-[346px] max-h-[432px] sm:w-[25.68%] w-[30%] h-[32%] min-w-[200px] min-h-[171px] bg-contain bg-no-repeat z-30 absolute -bottom-4 md:bottom-[10%] right-[10%] bg-right-bottom "></div> */}
-
-          {/* candle wizard */}
-
-          <div className=" absolute object-contain  xl:w-[13%] xl:min-w-[240px] pointer-events-none  md:min-w-[220px] max-w-[350px] max-h-[434px] min-w-[150px] min-h-[147px] lg:w-[14%] md:w-[21%] w-[25%]  h-[32%] xl:bottom-[6%]  md:bottom-[2%]  lg:right-[5%] bg-right-bottom -bottom-8 sm:right-[5%] right-[3%] z-40">
-            <div className="relative flex flex-col items-center justify-end ">
-              <div
-                className=" absolute  md:h-64 md:w-24 sm:h-48 sm:w-28 w-16 h-[70%] pointer-events-auto  ml-4 sm:mb-2   z-[999]"
-                onMouseEnter={() => handleMouseEnter(candleRef)}
-                onMouseLeave={() => handleMouseLeave(candleRef)}
-              ></div>
-              <AnimatedElement
-                videoRef={candleRef}
-                className=""
-                source={ANIMATION_WEBM_SOURCES["candle"]}
-              />
-            </div>
-          </div>
-
-          <div className="hidden lg:block  md:w-[400px] md:h-[300px] w-[250px] origin-center  h-[200px] bg-no-repeat z-[31]  absolute -bottom-[10%] lg:bottom-[4%] bg-bottom  lg:right-[18%] right-[0%]">
-            <div className="relative flex flex-col items-center justify-end ">
-              <div
-                className=" absolute h-28 w-24 -ml-2 top-52 z-[999]"
-                onMouseEnter={() => handleMouseEnter(fireRef)}
-                onMouseLeave={() => handleMouseLeave(fireRef)}
-              ></div>
-              <AnimatedElement
-                videoRef={fireRef}
-                className="object-contain "
-                source={ANIMATION_WEBM_SOURCES["fire"]}
-              />
-            </div>
-          </div>
-          <div className="bg-hero-section-memcoin-7 md:block hidden max-w-[299px] max-h-[351px] w-[22%] h-[26%] min-w-[119px] min-h-[147px] z-30 absolute top-[63%] bg-contain bg-no-repeat  -right-[0%] bg-right "></div>
         </div>
 
+        <div
+          onMouseEnter={playWhaleAnimation}
+          onMouseLeave={stopWhaleAnimation}
+          ref={whaleRef}
+          className="sprite-container absolute max-w-56 max-h-56 bottom-0 sm:right-[4%] right-0 z-40 "
+          style={{
+            width: `${whaleAnimationConfig.frameWidth}px`,
+            height: `${whaleAnimationConfig.frameHeight}px`,
+            backgroundImage: "url(/images/animations/sprites/whale-sprite.png)",
+            backgroundSize: `${whaleAnimationConfig.columns * 100}% ${
+              whaleAnimationConfig.rows * 100
+            }%`,
+          }}
+        ></div>
+
+        <div
+          ref={swordmanRef}
+          className="bg-hero-section-memcoin-7 md:block hidden max-w-24 w-[22%] h-[26%] min-w-[119px] z-30 absolute bg-contain bg-no-repeat -right-[0%] bg-right "
+        ></div>
+
+        <div
+          onMouseEnter={playFireAnimation}
+          onMouseLeave={stopFireAnimation}
+          ref={fireRef}
+          className="sprite-container absolute right-[30%] max-w-48 max-h-24 z-50 "
+          style={{
+            width: `${fireAnimationConfig.frameWidth}px`,
+            height: `${fireAnimationConfig.frameHeight}px`,
+            backgroundImage:
+              "url(/images/animations/sprites/fire-spritesheet.png)",
+            backgroundSize: `${fireAnimationConfig.columns * 100}% ${
+              fireAnimationConfig.rows * 100
+            }%`,
+          }}
+        ></div>
+
+        <div
+          onMouseEnter={playCandleAnimation}
+          onMouseLeave={stopCandleAnimation}
+          ref={candleRef}
+          className="sprite-container absolute bg-bottom min-w-32 min-h-32 right-[10%] bottom-0  z-50 "
+          style={{
+            width: `${candleAnimationConfig.frameWidth}px`,
+            height: `${candleAnimationConfig.frameHeight}px`,
+            backgroundImage:
+              "url(/images/animations/sprites/candle-sprite.png)",
+            backgroundSize: `${candleAnimationConfig.columns * 100}% ${
+              candleAnimationConfig.rows * 100
+            }%`,
+          }}
+        ></div>
+
         {/*anchor-2*/}
-        <div className="w-full h-0.5 absolute bottom-[15%] "></div>
+        <div
+          ref={anchor_2_Ref}
+          className="w-full h-0.5 absolute sm:bottom-[10%] bottom-[15%] "
+        ></div>
 
         {/*anchor-1*/}
-        <div className="w-full h-0.5 absolute bottom-[12%] "></div>
+        <div
+          ref={anchor_1_Ref}
+          className="w-full h-0.5 absolute sm:bottom-[7%] bottom-[12%]  "
+        ></div>
 
         {/*anchor-0*/}
         <div
           ref={anchor_0_Ref}
-          className="w-full h-0.5 absolute bottom-[5%] "
+          className="w-full h-0.5 absolute bottom-[4%]  "
+        ></div>
+
+        <div
+          ref={anchor_Ref}
+          className="w-full h-0.5 absolute bottom-[1%]  "
         ></div>
       </div>
     </motion.div>

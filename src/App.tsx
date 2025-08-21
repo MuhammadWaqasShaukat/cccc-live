@@ -108,6 +108,7 @@ function App() {
   return (
     <>
       <div ref={cursorRef} id="custom-cursor"></div>
+
       <div
         ref={preloadContainer}
         id="preload-container"
