@@ -55,7 +55,7 @@ const MintButton = () => {
     if (newNft.length > 0) {
       ctx.setCollectiable(newNft[0]);
       ctx.setRevealNFT(true);
-      ctx.setCurrentModal("claim-egg");
+      // ctx.setCurrentModal("claim-egg");
       ctx.setBookmark("nfts");
       ctx.setMyNfts([]);
     }

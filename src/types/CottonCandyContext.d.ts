@@ -63,9 +63,18 @@ export interface CottonCandyContextType {
   revealNFT: boolean;
   setRevealNFT: StateSetter<boolean>;
 
+  revealReward: "bad" | "good" | null;
+  setRevealReward: StateSetter<"bad" | "good" | null>;
+
+  isEggCracked: boolean;
+  setIsEggCracked: StateSetter<boolean>;
+
   assestsPreloaded: boolean;
   setAssestsPreloaded: StateSetter<boolean>;
 
   nftStates: Record<string, NftState>;
   setNftStates: StateSetter<Record<string, NftState>>;
+
+  sprites: Record<string, HTMLImageElement[]>;
+  setSprites: StateSetter<Record<string, HTMLImageElement[]>>;
 }

@@ -8,9 +8,12 @@ import {
   IMGS_SOURCES,
   VIDEO_SOURCES,
 } from "./constants/preloadingAssestList";
+import { useSpritePreloader } from "./hooks/useSpritePreloader";
 
 function App() {
   const ctx = useContext(CottonCandyContext);
+  const { loading: spriteLoading, progress: spriteProgress } =
+    useSpritePreloader();
 
   const preloadContainer = useRef<HTMLDivElement>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
@@ -80,6 +83,38 @@ function App() {
   }, []);
 
   useEffect(() => {
+    if (!spriteLoading && spriteProgress >= 100) {
+      ctx.setAssestsPreloaded(true);
+    }
+  }, [spriteLoading]);
+
+  // useEffect(() => {
+  //   const cursor = cursorRef.current;
+  //   if (!cursor) return;
+
+  //   const moveCursor = (e: MouseEvent) => {
+  //     cursor.style.left = `${e.clientX}px`;
+  //     cursor.style.top = `${e.clientY}px`;
+  //   };
+
+  //   const buttonDetector = () => {
+  //     cursor.style.transform = "translate(-25%, -10%) rotate(10deg)";
+
+  //     setTimeout(() => {
+  //       cursor.style.transform = "translate(-25%, -10%)";
+  //     }, 100);
+  //   };
+
+  //   document.addEventListener("click", buttonDetector);
+  //   document.addEventListener("mousemove", moveCursor);
+
+  //   return () => {
+  //     document.removeEventListener("mousemove", moveCursor);
+  //     document.removeEventListener("click", buttonDetector);
+  //   };
+  // }, []);
+
+  useEffect(() => {
     const cursor = cursorRef.current;
     if (!cursor) return;
 
@@ -88,20 +123,24 @@ function App() {
       cursor.style.top = `${e.clientY}px`;
     };
 
-    const buttonDetector = () => {
-      cursor.style.transform = "translate(-25%, -10%) rotate(10deg)";
-
-      setTimeout(() => {
-        cursor.style.transform = "translate(-25%, -10%)";
-      }, 100);
+    const pressCursor = () => {
+      cursor.style.transition = "transform 0.3s ease"; // smooth
+      cursor.style.transform = "translate(-25%, -10%) rotate(25deg)";
     };
 
-    document.addEventListener("click", buttonDetector);
+    const releaseCursor = () => {
+      cursor.style.transition = "transform 0.3s ease"; // smooth
+      cursor.style.transform = "translate(-25%, -10%) rotate(0deg)";
+    };
+
     document.addEventListener("mousemove", moveCursor);
+    document.addEventListener("mousedown", pressCursor);
+    document.addEventListener("mouseup", releaseCursor);
 
     return () => {
       document.removeEventListener("mousemove", moveCursor);
-      document.removeEventListener("click", buttonDetector);
+      document.removeEventListener("mousedown", pressCursor);
+      document.removeEventListener("mouseup", releaseCursor);
     };
   }, []);
 

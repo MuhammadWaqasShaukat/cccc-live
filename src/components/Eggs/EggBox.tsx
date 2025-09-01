@@ -87,7 +87,7 @@ const EggBox: React.FC<{ egg: any; nftMint: string }> = ({ egg, nftMint }) => {
     )
       return;
 
-    if (crackpoints < 100) {
+    if (crackpoints < 10) {
       setCrackPoints((prev: number) => {
         setEggHammeringTime(egg.mintAddress, prev + 1);
         return prev + 1;
@@ -130,6 +130,7 @@ const EggBox: React.FC<{ egg: any; nftMint: string }> = ({ egg, nftMint }) => {
       const { status, lotteryStatus } = await getEggFulFilledState(
         egg.mintAddress
       );
+
       setFulFilledState({ status, lotteryStatus });
     } catch (error: any) {
       console.error("Error: ", error.message);

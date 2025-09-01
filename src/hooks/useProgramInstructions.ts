@@ -32,7 +32,8 @@ const useProgramInstructions = () => {
   const { publicKey, wallet } = useWallet();
   const ctx = useContext(CottonCandyContext);
 
-  const { getProvider, connection, getConnectedWallet } = useWeb3Utils();
+  const { getProvider, connection, getConnectedWallet, getEggFulFilledState } =
+    useWeb3Utils();
 
   const estimateTransactionFee = async (
     transaction: Transaction
@@ -745,10 +746,19 @@ const useProgramInstructions = () => {
         })
         .rpc({ commitment: "confirmed" });
 
-      // const { status, lotteryStatus } = await getEggFulFilledState(
-      //   eggMintAddress.toBase58()
-      // );
-      // ctx.setCrackedEggStatus({ status, lotteryStatus });
+      ctx.setIsEggCracked(true);
+
+      const { status, lotteryStatus } = await getEggFulFilledState(
+        eggMintAddress.toBase58()
+      );
+
+      if (status === "done") {
+        if (lotteryStatus === "won") {
+          ctx.setRevealReward("good");
+        } else {
+          ctx.setRevealReward("bad");
+        }
+      }
     } catch (err: any) {
       console.error("Fulfill hatching failed:", err);
     }

@@ -58,6 +58,12 @@ export const CottonCandyContextProvider: React.FC<
   const [estimate, setEstimate] = useState<number | null>(null);
 
   const [assestsPreloaded, setAssestsPreloaded] = useState(false);
+  const [revealReward, setRevealReward] = useState<"bad" | "good" | null>(null);
+  const [isEggCracked, setIsEggCracked] = useState(false);
+
+  const [sprites, setSprites] = useState<Record<string, HTMLImageElement[]>>(
+    {}
+  );
 
   const [lotteryState, setLotteryState] =
     useState<LotteryState>(defaultLotteryState);
@@ -119,7 +125,6 @@ export const CottonCandyContextProvider: React.FC<
         totalValueToCollect,
         minPrice
       );
-
       setPrice(_price);
     }
 
@@ -241,6 +246,15 @@ export const CottonCandyContextProvider: React.FC<
 
     nftStates,
     setNftStates,
+
+    revealReward,
+    setRevealReward,
+
+    setIsEggCracked,
+    isEggCracked,
+
+    sprites,
+    setSprites,
   };
 
   return (

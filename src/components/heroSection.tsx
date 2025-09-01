@@ -1,24 +1,76 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { RefObject, useContext, useEffect, useRef, useState } from "react";
 import { CottonCandyContext } from "../providers/ContextProvider";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Nav from "./UI/Nav";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import TopBar from "./topbar";
 import { motion } from "framer-motion";
-import {
-  SpriteAnimationConfig,
-  useSpriteAnimation,
-} from "../hooks/useSpriteAnimation";
 import anchorElement from "../utils/anchorELement";
-import { useSpriteAnimationSimple } from "../hooks/useAnimations";
+
+import {
+  archerBlueAnimationConfig,
+  archerRedAnimationConfig,
+  candleAnimationConfig,
+  fireAnimationConfig,
+  kingFrogAnimationConfig,
+  lightSabreAnimationConfig,
+  sandwichAnimationConfig,
+  swordsmenAnimationConfig,
+  whaleAnimationsConfig,
+} from "../constants/animationsConfig";
+import { useHeroAnimator } from "../hooks/useHeroAnimator";
+import { useArcherSpriteAnimation } from "../hooks/useArcherSpriteAnimation";
+import usePopCat from "../hooks/usePopCat";
 
 type Dimensions = { width: number; height: number };
+
+export const updateProjectitlePath = (
+  spriteRef: RefObject<HTMLDivElement>,
+  startPathRef: RefObject<HTMLDivElement>,
+  svgRef: RefObject<SVGSVGElement>,
+  rangeRef: RefObject<HTMLDivElement>,
+  pathRef: RefObject<SVGPathElement>
+) => {
+  if (
+    !spriteRef.current ||
+    !startPathRef.current ||
+    !svgRef.current ||
+    !rangeRef.current ||
+    !pathRef.current
+  )
+    return;
+
+  const rangeRect = rangeRef.current.getBoundingClientRect();
+  const startEl = startPathRef.current;
+  const endPos = { x: window.innerWidth / 2, y: window.innerHeight * 0.9 };
+
+  const start = {
+    x: startEl.offsetLeft + startEl.offsetWidth / 2,
+    y: startEl.offsetTop + startEl.offsetHeight / 2,
+  };
+
+  const end = {
+    x: endPos.x - rangeRect.left,
+    y: endPos.y - rangeRect.top,
+  };
+
+  svgRef.current.setAttribute(
+    "viewBox",
+    `0 0 ${rangeRect.width} ${rangeRect.height}`
+  );
+  const midX = (start.x + end.x) / 2;
+  const midY = Math.min(start.y, end.y) - 150;
+  const newPath = `M ${start.x} ${start.y} Q ${midX} ${midY}, ${end.x} ${end.y}`;
+  pathRef.current.setAttribute("d", newPath);
+};
 
 const HeroSection = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const catRef = useRef<HTMLImageElement | null>(null);
   const catContainerRef = useRef<HTMLDivElement>(null);
   const ctx = useContext(CottonCandyContext);
+
+  const { handleMouseDown, handleMouseUp } = usePopCat(catRef, audioRef);
 
   const { connected, disconnect } = useWallet();
   const { setVisible } = useWalletModal();
@@ -27,12 +79,12 @@ const HeroSection = () => {
     new WeakMap<React.RefObject<HTMLElement>, Dimensions>()
   );
 
-  const [boltArcherDimension, setBoltArcherDimension] = useState<{
+  const [, setBoltArcherDimension] = useState<{
     width: number;
     height: number;
   }>({ width: 0, height: 0 });
 
-  const [candleArcherDimension, setCandleArcherDimension] = useState<{
+  const [, setCandleArcherDimension] = useState<{
     width: number;
     height: number;
   }>({ width: 0, height: 0 });
@@ -42,6 +94,8 @@ const HeroSection = () => {
   const candleRef = useRef<HTMLDivElement>(null);
   const whaleRef = useRef<HTMLDivElement>(null);
   const swordmanRef = useRef<HTMLDivElement>(null);
+  const sandwichmenRef = useRef<HTMLDivElement>(null);
+  const kingFrogRef = useRef<HTMLDivElement>(null);
 
   // anchors
   const anchor_Ref = useRef<HTMLDivElement>(null);
@@ -52,8 +106,6 @@ const HeroSection = () => {
   // menu ref
   const tombstoneRef = useRef<any>(null);
 
-  // fired projectilrs refs
-
   const candleOneRef = useRef<HTMLDivElement>(null);
   const candleTwoRef = useRef<HTMLDivElement>(null);
 
@@ -63,24 +115,6 @@ const HeroSection = () => {
   // heroes ref
 
   const redCastleLightSaberRef = useRef<HTMLDivElement>(null);
-
-  const animationConfig: SpriteAnimationConfig = {
-    frameWidth: candleArcherDimension.width || 96,
-    frameHeight: candleArcherDimension.height || 96,
-    columns: 5,
-    rows: 9,
-    spriteAnimationSpeed: 50,
-    bowReleasedFrame: 24,
-  };
-
-  const animationRedConfig: SpriteAnimationConfig = {
-    frameWidth: boltArcherDimension.width || 96,
-    frameHeight: boltArcherDimension.height || 96,
-    columns: 5,
-    rows: 10,
-    spriteAnimationSpeed: 50,
-    bowReleasedFrame: 7,
-  };
 
   // red
 
@@ -105,30 +139,95 @@ const HeroSection = () => {
   const blueRangeRef = useRef<HTMLDivElement>(null);
   const blueTrajectoryStartRef = useRef<HTMLDivElement>(null);
 
-  const {
-    playAnimation: playCandleArcherAnimation,
-    stopAnimation: stopCandleArcherAnimation,
-  } = useSpriteAnimation({
-    spriteRef: blueSpriteRef,
-    pathRef,
-    rangeRef: blueRangeRef,
-    svgRef: blueSvgRef,
-    startPathRef: blueTrajectoryStartRef,
-    projectileRef: candleFireRef,
-    config: animationConfig,
-  });
-  const {
-    playAnimation: playLighteningArcherAnimation,
-    stopAnimation: stopLighteningArcherAnimation,
-  } = useSpriteAnimation({
-    spriteRef: redSpriteRef,
-    pathRef: pathRedRef,
-    rangeRef: redRangeRef,
-    svgRef: redSvgRef,
-    startPathRef: redTrajectoryStartRef,
-    projectileRef: arrowRedRef,
-    config: animationRedConfig,
-  });
+  const resizeHeroes = () => {
+    // lightening heroes
+
+    const redCastleEl = document.getElementById("redCastleBottom");
+    const castleRect = redCastleEl?.getBoundingClientRect();
+
+    if (castleRect) {
+      if (magicRef.current) {
+        heroesDimensions.current.set(magicRef, {
+          width: castleRect.width * 0.75,
+          height: castleRect.width * 0.75,
+        });
+      }
+      if (candleRef.current) {
+        heroesDimensions.current.set(candleRef, {
+          width: castleRect.width * 0.4,
+          height: castleRect.width * 0.4,
+        });
+      }
+      if (whaleRef.current) {
+        heroesDimensions.current.set(whaleRef, {
+          width: castleRect.width * 0.9,
+          height: castleRect.width * 0.9,
+        });
+      }
+      if (fireRef.current) {
+        heroesDimensions.current.set(fireRef, {
+          width: castleRect.width * 0.3,
+          height: (castleRect.width * 0.3) / 2,
+        });
+      }
+      if (swordmanRef.current) {
+        heroesDimensions.current.set(swordmanRef, {
+          width: castleRect.width * 0.6,
+          height: castleRect.width * 0.6,
+        });
+      }
+
+      if (redCastleLightSaberRef.current) {
+        heroesDimensions.current.set(redCastleLightSaberRef, {
+          width: castleRect.width * 0.32,
+          height: castleRect.width * 0.32,
+        });
+      }
+
+      if (sandwichmenRef.current) {
+        heroesDimensions.current.set(sandwichmenRef, {
+          width: castleRect.width * 0.4,
+          height: castleRect.width * 0.4,
+        });
+      }
+
+      if (kingFrogRef.current) {
+        heroesDimensions.current.set(kingFrogRef, {
+          width: castleRect.width * 0.4,
+          height: castleRect.width * 0.4,
+        });
+      }
+
+      if (redSpriteRef.current) {
+        heroesDimensions.current.set(redSpriteRef, {
+          width: castleRect.width * 0.4,
+          height: castleRect.width * 0.4,
+        });
+      }
+
+      if (blueSpriteRef.current) {
+        heroesDimensions.current.set(blueSpriteRef, {
+          width: castleRect.width * 0.5,
+          height: castleRect.width * 0.5,
+        });
+      }
+    }
+  };
+
+  const positionElement = () => {
+    anchorElement(anchor_0_Ref, tombstoneRef, { bottom: true });
+    anchorElement(anchor_0_Ref, catContainerRef, { bottom: true });
+    anchorElement(anchor_0_Ref, candleOneRef, { bottom: true });
+    anchorElement(anchor_1_Ref, candleTwoRef, { bottom: true });
+    anchorElement(anchor_0_Ref, arrowOneRef, { bottom: true });
+    anchorElement(anchor_1_Ref, arrowTwoRef, { bottom: true });
+    anchorElement(anchor_Ref, fireRef, { bottom: true });
+    anchorElement(anchor_1_Ref, swordmanRef, { bottom: true });
+    anchorElement(anchor_0_Ref, candleRef, { bottom: true });
+    anchorElement(anchor_2_Ref, redCastleLightSaberRef, { bottom: true });
+    anchorElement(anchor_1_Ref, whaleRef, { bottom: true });
+    anchorElement(anchor_2_Ref, magicRef, { bottom: true });
+  };
 
   const positionedArcher = () => {
     const blueCastleEl = document.getElementById("blueCastleBottom");
@@ -147,11 +246,19 @@ const HeroSection = () => {
         blueTrajectoryStartRef.current
       ) {
         const archer = blueSpriteRef.current.getBoundingClientRect();
+
         blueRangeRef.current.style.right = `${
           window.innerWidth - archer?.left
         }px`;
-        blueTrajectoryStartRef.current.style.top = `${archer.top}px`;
+        // blueTrajectoryStartRef.current.style.top = `${archer.top}px`;
       }
+      updateProjectitlePath(
+        blueSpriteRef,
+        blueTrajectoryStartRef,
+        blueSvgRef,
+        blueRangeRef,
+        pathRef
+      );
     }
 
     if (redCastleEl) {
@@ -165,42 +272,15 @@ const HeroSection = () => {
       ) {
         const archer = redSpriteRef.current.getBoundingClientRect();
         redRangeRef.current.style.left = `${archer.right}px`;
-        redTrajectoryStartRef.current.style.top = `${archer.top}px`;
+        // redTrajectoryStartRef.current.style.top = `${archer.top}px`;
       }
-    }
-  };
-
-  const resizeHeroes = () => {
-    // lightening heroes
-
-    const redCastleEl = document.getElementById("redCastleBottom");
-    const castleRect = redCastleEl?.getBoundingClientRect();
-
-    if (castleRect) {
-      if (magicRef.current) {
-        heroesDimensions.current.set(magicRef, {
-          width: castleRect.width * 0.75,
-          height: castleRect.width * 0.75,
-        });
-      }
-      if (candleRef.current) {
-        heroesDimensions.current.set(candleRef, {
-          width: castleRect.width * 0.5,
-          height: castleRect.width * 0.5,
-        });
-      }
-      if (whaleRef.current) {
-        heroesDimensions.current.set(whaleRef, {
-          width: castleRect.width * 0.75,
-          height: castleRect.width * 0.75,
-        });
-      }
-      if (fireRef.current) {
-        heroesDimensions.current.set(fireRef, {
-          width: castleRect.width * 0.5,
-          height: (castleRect.width * 0.5) / 2,
-        });
-      }
+      updateProjectitlePath(
+        redSpriteRef,
+        redTrajectoryStartRef,
+        redSvgRef,
+        redRangeRef,
+        pathRedRef
+      );
     }
   };
 
@@ -208,64 +288,37 @@ const HeroSection = () => {
     if (!ctx.assestsPreloaded) return;
 
     tombstoneRef.current = document.getElementById("tombstone");
-    const positionElement = () => {
-      anchorElement(anchor_0_Ref, tombstoneRef, { bottom: true });
-      anchorElement(anchor_0_Ref, catContainerRef, { bottom: true });
-      anchorElement(anchor_0_Ref, candleOneRef, { bottom: true });
-      anchorElement(anchor_1_Ref, candleTwoRef, { bottom: true });
-      anchorElement(anchor_0_Ref, arrowOneRef, { bottom: true });
-      anchorElement(anchor_1_Ref, arrowTwoRef, { bottom: true });
-      anchorElement(anchor_Ref, fireRef, { bottom: true });
-      anchorElement(anchor_1_Ref, swordmanRef, { bottom: true });
-      anchorElement(anchor_0_Ref, candleRef, { bottom: true });
-      anchorElement(anchor_1_Ref, whaleRef, { bottom: true });
-      anchorElement(anchor_2_Ref, magicRef, { bottom: true });
+
+    requestAnimationFrame(() => {
+      resizeHeroes();
+
+      requestAnimationFrame(() => {
+        positionElement();
+
+        requestAnimationFrame(() => {
+          positionedArcher();
+        });
+      });
+    });
+
+    const handleResize = () => {
+      requestAnimationFrame(() => {
+        resizeHeroes();
+        requestAnimationFrame(() => {
+          positionElement();
+          requestAnimationFrame(() => {
+            positionedArcher();
+          });
+        });
+      });
     };
-    resizeHeroes();
-    positionElement();
-    positionedArcher();
-    window.addEventListener("resize", positionedArcher);
-    window.addEventListener("resize", positionElement);
-    window.addEventListener("resize", resizeHeroes);
+
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener("resize", positionedArcher);
-      window.removeEventListener("resize", positionElement);
-      window.removeEventListener("resize", resizeHeroes);
+      window.removeEventListener("resize", handleResize);
     };
   }, [ctx.assestsPreloaded]);
-
-  useEffect(() => {
-    ctx.setAssestsPreloaded(true);
-  }, []);
-
-  const isMouthOpenCheck = () =>
-    catRef.current?.src.includes("open") ? true : false;
-
-  const handleMouseDown = () => {
-    if (!catRef.current) return;
-
-    const isMouthOpen = isMouthOpenCheck();
-    if (!isMouthOpen) {
-      catRef.current.src = "/images/section-hero/memcoin2.open.png";
-      if (!audioRef.current) {
-        audioRef.current = new Audio("./sound/pop-cat.mp3");
-        audioRef.current.volume = 1;
-      }
-      audioRef.current.currentTime = 0;
-      audioRef.current.play();
-    }
-  };
-
-  const handleMouseUp = () => {
-    if (!catRef.current) return;
-
-    const isMouthOpen = isMouthOpenCheck();
-
-    if (isMouthOpen) {
-      catRef.current.src = "/images/section-hero/memcoin2.png";
-    }
-  };
 
   const handleConnect = async () => {
     if (!connected) {
@@ -286,68 +339,72 @@ const HeroSection = () => {
     }
   };
 
-  // sprite animations configs
-
-  const fireAnimationConfig: SpriteAnimationConfig = {
-    frameWidth: heroesDimensions.current.get(fireRef)?.width || 200,
-    frameHeight: heroesDimensions.current.get(fireRef)?.height || 100,
-    columns: 5,
-    rows: 10,
-    spriteAnimationSpeed: 100,
-  };
-
-  const candleAnimationConfig: SpriteAnimationConfig = {
-    frameWidth: heroesDimensions.current.get(candleRef)?.width || 264,
-    frameHeight: heroesDimensions.current.get(candleRef)?.height || 264,
-    columns: 5,
-    rows: 8,
-    spriteAnimationSpeed: 100,
-  };
-
-  const whaleAnimationConfig: SpriteAnimationConfig = {
-    frameWidth: heroesDimensions.current.get(whaleRef)?.width || 264,
-    frameHeight: heroesDimensions.current.get(whaleRef)?.height || 264,
-    columns: 9,
-    rows: 10,
-    spriteAnimationSpeed: 100,
-  };
-
-  const magicAnimationConfig: SpriteAnimationConfig = {
-    frameWidth: heroesDimensions.current.get(magicRef)?.width || 300,
-    frameHeight: heroesDimensions.current.get(magicRef)?.height || 300,
-    columns: 5,
-    rows: 10,
-    spriteAnimationSpeed: 100,
-  };
-
-  const { playAnimation: playFireAnimation, stopAnimation: stopFireAnimation } =
-    useSpriteAnimationSimple({
-      spriteRef: fireRef,
-      config: fireAnimationConfig,
-    });
-
   const {
-    playAnimation: playMagicAnimation,
-    stopAnimation: stopMagicAnimation,
-  } = useSpriteAnimationSimple({
-    spriteRef: magicRef,
-    config: magicAnimationConfig,
+    playAnimation: playCandleArcherAnimation,
+    stopAnimation: stopCandleArcherAnimation,
+  } = useArcherSpriteAnimation({
+    spriteRef: blueSpriteRef,
+    pathRef,
+    rangeRef: blueRangeRef,
+    svgRef: blueSvgRef,
+    startPathRef: blueTrajectoryStartRef,
+    projectileRef: candleFireRef,
+    config: archerBlueAnimationConfig,
+    spritekey: "archer-blue",
   });
+
   const {
-    playAnimation: playWhaleAnimation,
+    playAnimation: playLighteningArcherAnimation,
+    stopAnimation: stopLighteningArcherAnimation,
+  } = useArcherSpriteAnimation({
+    spriteRef: redSpriteRef,
+    pathRef: pathRedRef,
+    rangeRef: redRangeRef,
+    svgRef: redSvgRef,
+    startPathRef: redTrajectoryStartRef,
+    projectileRef: arrowRedRef,
+    config: archerRedAnimationConfig,
+    spritekey: "archer-red",
+  });
+
+  const {
+    startAnimation: playLightSabreAnimation,
+    stopAnimation: stopLightSabreAnimation,
+  } = useHeroAnimator(
+    redCastleLightSaberRef,
+    lightSabreAnimationConfig,
+    "light-sabre"
+  );
+
+  const {
+    startAnimation: playWhaleAnimation,
     stopAnimation: stopWhaleAnimation,
-  } = useSpriteAnimationSimple({
-    spriteRef: whaleRef,
-    config: whaleAnimationConfig,
-  });
+  } = useHeroAnimator(whaleRef, whaleAnimationsConfig, "whale-monkey");
 
   const {
-    playAnimation: playCandleAnimation,
+    startAnimation: playSowrdAnimation,
+    stopAnimation: stopSowrdAnimation,
+  } = useHeroAnimator(swordmanRef, swordsmenAnimationConfig, "swords-warrior");
+
+  const {
+    startAnimation: playFireAnimation,
+    stopAnimation: stopFireAnimation,
+  } = useHeroAnimator(fireRef, fireAnimationConfig, "fire");
+
+  const {
+    startAnimation: playSandwichAnimation,
+    stopAnimation: stopSandWichAnimation,
+  } = useHeroAnimator(sandwichmenRef, sandwichAnimationConfig, "king-blue");
+
+  const {
+    startAnimation: playKingFrogAnimation,
+    stopAnimation: stopKingFrogAnimation,
+  } = useHeroAnimator(kingFrogRef, kingFrogAnimationConfig, "archer-red");
+
+  const {
+    startAnimation: playCandleAnimation,
     stopAnimation: stopCandleAnimation,
-  } = useSpriteAnimationSimple({
-    spriteRef: candleRef,
-    config: candleAnimationConfig,
-  });
+  } = useHeroAnimator(candleRef, candleAnimationConfig, "candle-warrior");
 
   return (
     <motion.div
@@ -363,7 +420,7 @@ const HeroSection = () => {
         },
       }}
     >
-      <div className="relative   flex flex-col w-screen h-screen overflow-hidden bg-black bg-no-repeat bg-cover bg-hero-section-upper sm:overflow-clip">
+      <div className="relative  flex flex-col w-screen h-screen overflow-hidden bg-black bg-no-repeat bg-cover bg-hero-section-upper sm:overflow-clip">
         <TopBar />
         <div className="z-20 flex flex-row items-center justify-between px-4 py-2 md:px-10 md:py-5">
           <div className="flex items-center justify-center">
@@ -395,32 +452,35 @@ const HeroSection = () => {
         <div className="block relative md:static top-[75%] md:top-auto ">
           <div className=" bg-hero-section-castle-red-1 max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-[1] md:bottom-[40%] lg:bottom-[50%]  bottom-[11rem] bg-left-bottom  md:left-0">
             {/* Command : red */}
-            <motion.div
-              initial={{ y: 20 }}
-              whileHover={{ y: -20 }}
-              transition={{
-                type: "spring",
-                stiffness: 80,
-                damping: 12,
-                mass: 0.5,
+
+            <div
+              onMouseEnter={playKingFrogAnimation}
+              onMouseLeave={stopKingFrogAnimation}
+              ref={kingFrogRef}
+              style={{
+                width: `${heroesDimensions.current.get(kingFrogRef)?.width}px`,
+                height: `${
+                  heroesDimensions.current.get(kingFrogRef)?.height
+                }px`,
               }}
-              className="bg-hero-section-frog hidden md:block   h-[47%] w-[50%] max-w-28 bg-contain bg-no-repeat z-10 absolute  left-0  bg-left-bottom -bottom-[5%]"
-            ></motion.div>
+              className="sprite-container  bg-no-repeat  absolute max-w-56 max-h-56 bg-left-bottom -bottom-1/4  z-40 aspect-square -left-[10%] "
+            />
 
             {/* Archer: red */}
             <div
               id="archerRedContainer"
               ref={archerRedContainerRef}
-              className="absolute w-[60%] max-w-[350px] -bottom-[10%] z-10 lg:right-10 sm:right-8 right-6 "
+              className="absolute w-[60%] max-w-[350px]  -bottom-[10%] z-10 lg:right-10 sm:right-8 right-6 "
             >
               <div className="relative flex flex-col items-center justify-end h-full ">
                 <div
                   data-range="lightening-range"
                   ref={redRangeRef}
-                  className="fixed md:w-1/2 w-1/3  bottom-40 h-2/3  left-52 z-100"
+                  className="fixed md:w-1/2 w-1/3  bottom-40 h-[70%]  left-52 z-100"
                 >
-                  <div className="relative w-full h-full ">
+                  <div className="relative w-full h-full">
                     <svg
+                      className=""
                       ref={redSvgRef}
                       style={{ position: "absolute", top: 0, left: 0 }}
                     >
@@ -451,7 +511,7 @@ const HeroSection = () => {
 
                     <div
                       ref={redTrajectoryStartRef}
-                      className="absolute top-[28%] left-0 w-1 h-4"
+                      className="absolute top-[35%] left-0 w-1 h-4 "
                     ></div>
                   </div>
                 </div>
@@ -461,35 +521,42 @@ const HeroSection = () => {
                   onMouseEnter={playLighteningArcherAnimation}
                   onMouseLeave={stopLighteningArcherAnimation}
                   ref={redSpriteRef}
-                  className="sprite-container absolute bottom-0 max-w-48 max-h-48 z-0"
+                  className="sprite-container absolute bottom-0 max-w-40 max-h-40  z-100"
                   style={{
-                    width: `${animationRedConfig.frameWidth}px`,
-                    height: `${animationRedConfig.frameHeight}px`,
-                    backgroundImage:
-                      "url(images/animations/sprites/archer-red.png)",
-                    backgroundSize: `${animationRedConfig.columns * 100}% ${
-                      animationRedConfig.rows * 100
-                    }%`,
+                    width: `${
+                      heroesDimensions.current.get(redSpriteRef)?.width
+                    }px`,
+                    height: `${
+                      heroesDimensions.current.get(redSpriteRef)?.height
+                    }px`,
                   }}
                 ></div>
               </div>
             </div>
           </div>
 
-          <div className="max-w-[400px] lg:max-h-[600px] max-h-[380px] h-[46%] w-[37%]   bg-bottom min-h-[221px] min-w-[168px]  absolute bottom-[12%] ">
-            <div
-              id="redCastleBottom"
-              ref={redCastleBottomRef}
-              className="relative z-30 w-full h-full bg-left-bottom bg-no-repeat bg-contain pointer-events-none bg-hero-section-castle-red-2"
-            ></div>
-            <div className=" black-wall min-w-[120px]  -mt-1 bg-left-bottom md:w-[65%] w-[60%] xs:w-[62%] lg:w-[62.2%] md:h-[68%] lg:h-[70%] sm:w-[50%] h-[70%]   bg-contain bg-no-repeat absolute bottom-0 z-10"></div>
-          </div>
-          {/* Light Saber: red */}
           <div
-            ref={redCastleLightSaberRef}
-            className="bg-hero-section-memcoin-1 bg-left-bottom hidden md:block max-w-[164px] max-h-[319px] w-[20%] h-[24%] min-w-[70px] min-h-[78px] absolute lg:bottom-[11%] md:bottom-[11%] bottom-[5%] left-[0%] z-20 bg-contain bg-no-repeat"
+            id="redCastleBottom"
+            ref={redCastleBottomRef}
+            className="bg-hero-section-castle-red-2  pointer-events-none  max-w-[465px] lg:max-h-[600px] max-h-[380px] h-[46%] w-[37%]  absolute min-h-[221px] min-w-[168px] bg-contain bg-no-repeat  bg-left-bottom  z-30 left-0 bottom-[12%]"
           ></div>
         </div>
+
+        {/* Light Saber: red */}
+        <div
+          onMouseEnter={playLightSabreAnimation}
+          onMouseLeave={stopLightSabreAnimation}
+          ref={redCastleLightSaberRef}
+          style={{
+            width: `${
+              heroesDimensions.current.get(redCastleLightSaberRef)?.width
+            }px`,
+            height: `${
+              heroesDimensions.current.get(redCastleLightSaberRef)?.height
+            }px`,
+          }}
+          className=" bg-left-bottom hidden md:block absolute left-[0%] z-40 bg-contain bg-no-repeat  max-w-64 max-h-64 bottom-0  aspect-square "
+        ></div>
 
         <div
           ref={candleOneRef}
@@ -511,9 +578,9 @@ const HeroSection = () => {
 
         <div
           ref={catContainerRef}
-          className="w-[30%] max-w-48 object-bottom h-auto absolute bottom-0  md:left-[4%]  left-[15%] z-40"
+          className="w-[30%] max-w-56 object-bottom h-auto absolute bottom-0  md:left-[8%]  left-[15%] z-40"
         >
-          <div className="relative flex flex-col items-center justify-start ">
+          <div className="relative flex flex-col items-center justify-start mt-5">
             <div
               className=" absolute h-28 w-28 top-[15%] -ml-9 pointer-events-auto"
               onMouseDown={handleMouseDown}
@@ -531,35 +598,24 @@ const HeroSection = () => {
         </div>
         {/* Wizard: red */}
 
-        <div
-          onMouseEnter={playMagicAnimation}
-          onMouseLeave={stopMagicAnimation}
-          ref={magicRef}
-          className="sprite-container absolute md:bottom-[7%] sm:bottom-[15%] md:left-[15%] lg:left-[10%] min-w-42 min-h-42 left-0 z-30"
-          style={{
-            width: `${magicAnimationConfig.frameWidth}px`,
-            height: `${magicAnimationConfig.frameHeight}px`,
-            backgroundImage: "url(images/animations/sprites/magic-sprite.png)",
-            backgroundSize: `${magicAnimationConfig.columns * 100}% ${
-              magicAnimationConfig.rows * 100
-            }%`,
-          }}
-        ></div>
         <div className=" bg-hero-section-distant  lg:h-[68%] md:h-[65%] w-[100%] min-w-[300px] min-h-[200px] bg-contain sm:bg-repeat-x bg-no-repeat bg-bottom absolute sm:bottom-[16%] bottom-[18%] z-0"></div>
         {/* castle-blue */}
         <div className="block relative md:static top-[75%] md:top-auto">
           <div className="bg-hero-section-castle-blue-1 max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-0 md:bottom-[40%]  lg:bottom-[50%] bottom-[11rem] bg-right-bottom right-0">
-            <motion.div
-              initial={{ y: 20 }}
-              whileHover={{ y: -20 }}
-              transition={{
-                type: "spring",
-                stiffness: 80,
-                damping: 12,
-                mass: 0.5,
+            <div
+              onMouseEnter={playSandwichAnimation}
+              onMouseLeave={stopSandWichAnimation}
+              ref={sandwichmenRef}
+              style={{
+                width: `${
+                  heroesDimensions.current.get(sandwichmenRef)?.width
+                }px`,
+                height: `${
+                  heroesDimensions.current.get(sandwichmenRef)?.height
+                }px`,
               }}
-              className="bg-hero-section-memcoin-4 hidden md:block  w-[50%] max-w-28 h-[47%] bg-contain bg-no-repeat z-10 absolute right-0 bg-right-bottom -bottom-[5%]"
-            ></motion.div>
+              className="sprite-container  absolute max-w-56 max-h-56 -bottom-1/4  -right-[10%]  z-40 aspect-square "
+            />
 
             <div
               id="archerContainer"
@@ -572,7 +628,7 @@ const HeroSection = () => {
                   ref={blueRangeRef}
                   className="fixed w-1/2 bottom-40 h-2/3 right-64 z-100 pointer-events-none"
                 >
-                  <div className="relative w-full h-full">
+                  <div className="relative w-full h-full ">
                     <svg
                       ref={blueSvgRef}
                       style={{ position: "absolute", top: 0, left: 0 }}
@@ -604,7 +660,7 @@ const HeroSection = () => {
 
                     <div
                       ref={blueTrajectoryStartRef}
-                      className="absolute top-[39%] right-0 w-1 h-4"
+                      className="absolute top-[35%] right-0 w-1 h-4"
                     ></div>
                   </div>
                 </div>
@@ -614,15 +670,14 @@ const HeroSection = () => {
                   onMouseEnter={playCandleArcherAnimation}
                   onMouseLeave={stopCandleArcherAnimation}
                   ref={blueSpriteRef}
-                  className="sprite-container absolute bottom-0 max-w-48 max-h-48 z-100"
+                  className="sprite-container absolute bottom-0 max-w-40 max-h-40 z-100"
                   style={{
-                    width: `${animationConfig.frameWidth}px`,
-                    height: `${animationConfig.frameHeight}px`,
-                    backgroundImage:
-                      "url(/images/animations/sprites/archer-blue.png)",
-                    backgroundSize: `${animationConfig.columns * 100}% ${
-                      animationConfig.rows * 100
-                    }%`,
+                    width: `${
+                      heroesDimensions.current.get(blueSpriteRef)?.width
+                    }px`,
+                    height: `${
+                      heroesDimensions.current.get(blueSpriteRef)?.height
+                    }px`,
                   }}
                 ></div>
               </div>
@@ -640,20 +695,22 @@ const HeroSection = () => {
           onMouseEnter={playWhaleAnimation}
           onMouseLeave={stopWhaleAnimation}
           ref={whaleRef}
-          className="sprite-container absolute max-w-56 max-h-56 bottom-0 sm:right-[4%] right-0 z-40 "
           style={{
-            width: `${whaleAnimationConfig.frameWidth}px`,
-            height: `${whaleAnimationConfig.frameHeight}px`,
-            backgroundImage: "url(/images/animations/sprites/whale-sprite.png)",
-            backgroundSize: `${whaleAnimationConfig.columns * 100}% ${
-              whaleAnimationConfig.rows * 100
-            }%`,
+            width: `${heroesDimensions.current.get(whaleRef)?.width}px`,
+            height: `${heroesDimensions.current.get(whaleRef)?.height}px`,
           }}
-        ></div>
+          className="sprite-container  absolute max-w-64 max-h-64 bottom-0 sm:right-[4%] right-0 z-40 aspect-square "
+        />
 
         <div
           ref={swordmanRef}
-          className="bg-hero-section-memcoin-7 md:block hidden max-w-24 w-[22%] h-[26%] min-w-[119px] z-30 absolute bg-contain bg-no-repeat -right-[0%] bg-right "
+          onMouseEnter={playSowrdAnimation}
+          onMouseLeave={stopSowrdAnimation}
+          className=" md:block hidden max-w-48 max-h-48 z-40 absolute bg-contain bg-no-repeat -right-[2%] bg-right "
+          style={{
+            width: `${heroesDimensions.current.get(swordmanRef)?.width}px`,
+            height: `${heroesDimensions.current.get(swordmanRef)?.height}px`,
+          }}
         ></div>
 
         <div
@@ -662,31 +719,21 @@ const HeroSection = () => {
           ref={fireRef}
           className="sprite-container absolute right-[30%] max-w-48 max-h-24 z-50 "
           style={{
-            width: `${fireAnimationConfig.frameWidth}px`,
-            height: `${fireAnimationConfig.frameHeight}px`,
-            backgroundImage:
-              "url(/images/animations/sprites/fire-spritesheet.png)",
-            backgroundSize: `${fireAnimationConfig.columns * 100}% ${
-              fireAnimationConfig.rows * 100
-            }%`,
+            width: `${heroesDimensions.current.get(fireRef)?.width}px`,
+            height: `${heroesDimensions.current.get(fireRef)?.height}px`,
           }}
-        ></div>
+        />
 
         <div
           onMouseEnter={playCandleAnimation}
           onMouseLeave={stopCandleAnimation}
           ref={candleRef}
-          className="sprite-container absolute bg-bottom min-w-32 min-h-32 right-[10%] bottom-0  z-50 "
+          className="sprite-container absolute bg-bottom max-h-60 max-w-60 right-[13%] bottom-0  z-50 "
           style={{
-            width: `${candleAnimationConfig.frameWidth}px`,
-            height: `${candleAnimationConfig.frameHeight}px`,
-            backgroundImage:
-              "url(/images/animations/sprites/candle-sprite.png)",
-            backgroundSize: `${candleAnimationConfig.columns * 100}% ${
-              candleAnimationConfig.rows * 100
-            }%`,
+            width: `${heroesDimensions.current.get(candleRef)?.width}px`,
+            height: `${heroesDimensions.current.get(candleRef)?.height}px`,
           }}
-        ></div>
+        />
 
         {/*anchor-2*/}
         <div

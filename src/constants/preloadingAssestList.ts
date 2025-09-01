@@ -1,22 +1,60 @@
 export const VIDEO_SOURCES = [
-  "/images/animations/fire.webm",
-  "/images/animations/Magic.webm",
-  "/images/animations/particles.webm",
-  "/images/animations/candle.webm",
   "/images/animations/about.webm",
-  // "/images/animations/archer-blue.webm",
-  // "/images/animations/archer-red.webm",
   "/images/animations/hammer.webm",
-  "/images/animations/whale.webm",
 ];
+
+export const SPRITES_SOURCES = {
+  "archer-blue": [
+    "/images/animations/sprites/archer-blue/sprite1.png",
+    "/images/animations/sprites/archer-blue/sprite2.png",
+    "/images/animations/sprites/archer-blue/sprite3.png",
+  ],
+
+  "archer-red": [
+    "/images/animations/sprites/archer-red/sprite1.png",
+    "/images/animations/sprites/archer-red/sprite2.png",
+    "/images/animations/sprites/archer-red/sprite3.png",
+  ],
+
+  "king-frog": [
+    "/images/animations/sprites/frog-king/sprite1.png",
+    "/images/animations/sprites/frog-king/sprite2.png",
+    "/images/animations/sprites/frog-king/sprite3.png",
+  ],
+
+  "light-sabre": [
+    "/images/animations/sprites/light-sabre/sprite1.png",
+    "/images/animations/sprites/light-sabre/sprite2.png",
+    "/images/animations/sprites/light-sabre/sprite3.png",
+  ],
+
+  "whale-monkey": [
+    "/images/animations/sprites/monkey/sprite1.png",
+    "/images/animations/sprites/monkey/sprite2.png",
+    "/images/animations/sprites/monkey/sprite3.png",
+    "/images/animations/sprites/monkey/sprite4.png",
+    "/images/animations/sprites/monkey/sprite5.png",
+  ],
+  "king-blue": [
+    "/images/animations/sprites/sandwich/sprite1.png",
+    "/images/animations/sprites/sandwich/sprite2.png",
+    "/images/animations/sprites/sandwich/sprite3.png",
+  ],
+  "swords-warrior": [
+    "/images/animations/sprites/swordsmen/sprite1.png",
+    "/images/animations/sprites/swordsmen/sprite2.png",
+    "/images/animations/sprites/swordsmen/sprite3.png",
+  ],
+  "candle-warrior": ["/images/animations/sprites/candle-sprite.png"],
+  fire: ["/images/animations/sprites/fire-spritesheet.png"],
+  wizard: ["/images/animations/sprites/magic-sprite.png"],
+};
 
 export const IMGS_SOURCES = [
   "/images/section-about/grass.png",
-  "/images/section-hero/chillguy.png",
   "/images/section-hero/castle-red-1.png",
-  "/images/section-hero/frog.png",
   "/images/section-hero/castle-red-top.png",
-  "/images/section-hero/memcoin1.png",
+
   "/images/cursor-glove.png",
   "/images/section-hero/memcoin2.png",
   "/images/section-hero/logo-lg.png",
@@ -24,12 +62,9 @@ export const IMGS_SOURCES = [
   "/images/section-hero/distant-bg.png",
   "/images/section-hero/castle-blue.png",
   "/images/section-hero/castle-blue-top.png",
+
   "/images/section-hero/bg-upper.png",
-  "/images/section-hero/memcoin4.png",
-  "/images/section-hero/memcoin5.png",
-  "/images/section-hero/memcoin6.png",
-  "/images/section-hero/memcoin7.png",
-  "/images/section-hero/memcoin8.png",
+
   "/images/section-hero/menu-button.png",
   "/images/section-hero/menu-tombstone.png",
   "/images/section-hero/red1.png",
@@ -75,6 +110,7 @@ export const IMGS_SOURCES = [
   "/images/bookmarks/bookmark-egg.png",
   "/images/bookmarks/bookmark-egg-1.png",
   "/images/plus.svg",
+  "/images/how-it-works.png",
   "/images/minus.svg",
   "/images/egg.png",
   "/images/egg-1.png",
@@ -82,6 +118,11 @@ export const IMGS_SOURCES = [
   "/images/egg-glow-1.png",
   "/images/section-about/castle.about.png",
   "/images/section-about/castle.about.sm.png",
+
+  "/images/how-it-works.png",
+  "/images/arm.png",
+  "/images/section-mint/mint-over-bg.png",
+  "/images/section-mint/book-mint-over.png",
 ];
 
 export const AUDIO_SOURCES = ["/sound/pop-cat.mp3"];
