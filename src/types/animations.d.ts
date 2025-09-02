@@ -6,7 +6,7 @@ export type SpriteKeys =
   | "whale-monkey"
   | "swords-warrior"
   | "king-blue"
-  | "candle-warrior"
+  | "candle-wizard"
   | "fire"
   | "magic-wizard";
 

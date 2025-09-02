@@ -411,15 +411,11 @@ const HeroSection = () => {
   const {
     startAnimation: playCandleAnimation,
     stopAnimation: stopCandleAnimation,
-  } = useHeroAnimator(
-    candleRef,
-    config.candleAnimationConfig,
-    "candle-warrior"
-  );
+  } = useHeroAnimator(candleRef, config.candleAnimationConfig, "candle-wizard");
 
-  useEffect(() => {
-    ctx.setAssestsPreloaded(true);
-  }, []);
+  // useEffect(() => {
+  //   ctx.setAssestsPreloaded(true);
+  // }, []);
 
   return (
     <motion.div

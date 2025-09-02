@@ -15,13 +15,15 @@ import { usePreloader } from "./hooks/usePreloader";
 function App() {
   const ctx = useContext(CottonCandyContext);
 
-  const { done } = usePreloader(CRITICAL_ASSETS, "image");
+  const { promise } = usePreloader(CRITICAL_ASSETS, "image");
 
   useEffect(() => {
-    if (done) {
-      setTimeout(() => ctx.setAssestsPreloaded(true), 1500);
+    if (promise) {
+      promise.then(() => {
+        ctx.setAssestsPreloaded(true);
+      });
     }
-  }, [done]);
+  }, [promise]);
 
   usePreloader(VIDEO_SOURCES, "video", true);
   usePreloader(AUDIO_SOURCES, "audio", true);
@@ -154,19 +156,14 @@ function App() {
       document.removeEventListener("mousedown", pressCursor);
       document.removeEventListener("mouseup", releaseCursor);
     };
-  }, []);
+  }, [ctx.assestsPreloaded]);
+
+  if (!ctx.assestsPreloaded) return <SnakeLoader className="!bg-black" />;
 
   return (
     <>
       <div ref={cursorRef} id="custom-cursor"></div>
 
-      {/* <div
-        ref={preloadContainer}
-        id="preload-container"
-        className="absolute "
-      ></div> */}
-
-      {!ctx.assestsPreloaded && <SnakeLoader className="!bg-black z-[99999]" />}
       <div className="overflow-x-hidden">
         <Home />
       </div>

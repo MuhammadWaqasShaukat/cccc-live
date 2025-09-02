@@ -123,7 +123,7 @@ export const CRITICAL_ASSETS = [
   "/images/section-hero/menu-button.png",
 
   "/images/section-hero/castle-red-top.png",
-  "/images/section-hero/castle-red-1.png",
+  "/images/section-hero/castle-red.png",
   "/images/section-hero/castle-blue.png",
   "/images/section-hero/castle-blue-top.png",
 

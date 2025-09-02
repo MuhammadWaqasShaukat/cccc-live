@@ -9,7 +9,7 @@ const SnakeLoader: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
       <motion.img
         src={"/images/snake-loader.png"}
         alt="Loading..."
-        className={`size-44`}
+        className={`size-44 z-100`}
         animate={{
           rotate: [0, 360],
         }}
