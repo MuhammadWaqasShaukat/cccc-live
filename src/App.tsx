@@ -41,7 +41,7 @@ function App() {
 
     const pressCursor = () => {
       cursor.style.transition = "transform 0.3s ease"; // smooth
-      cursor.style.transform = "translate(-25%, -10%) rotate(25deg)";
+      cursor.style.transform = "translate(-25%, -10%) rotate(-25deg)";
     };
 
     const releaseCursor = () => {

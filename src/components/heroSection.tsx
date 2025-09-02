@@ -784,7 +784,7 @@ const HeroSection = () => {
           onMouseEnter={playFireAnimation}
           onMouseLeave={stopFireAnimation}
           ref={fireRef}
-          className="sprite-container absolute right-[30%] max-w-48 max-h-24 z-50 "
+          className="sprite-container absolute right-[30%] max-w-48 max-h-24 z-40 "
           style={{
             width: `${heroesDimensions.current.get(fireRef)?.width}px`,
             height: `${heroesDimensions.current.get(fireRef)?.height}px`,
@@ -795,7 +795,7 @@ const HeroSection = () => {
           onMouseEnter={playCandleAnimation}
           onMouseLeave={stopCandleAnimation}
           ref={candleRef}
-          className="sprite-container absolute bg-bottom max-h-60 max-w-60 right-[13%] bottom-0  z-50 "
+          className="sprite-container absolute bg-bottom max-h-60 max-w-60 right-[13%] bottom-0  z-40 "
           style={{
             width: `${heroesDimensions.current.get(candleRef)?.width}px`,
             height: `${heroesDimensions.current.get(candleRef)?.height}px`,
