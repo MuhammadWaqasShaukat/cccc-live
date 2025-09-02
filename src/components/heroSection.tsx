@@ -11,6 +11,7 @@ import * as config from "../constants/animationsConfig";
 import { useHeroAnimator } from "../hooks/useHeroAnimator";
 import { useArcherSpriteAnimation } from "../hooks/useArcherSpriteAnimation";
 import usePopCat from "../hooks/usePopCat";
+import { useSpritePreloader } from "../hooks/useSpritePreloader";
 
 type Dimensions = { width: number; height: number };
 
@@ -59,6 +60,8 @@ const HeroSection = () => {
   const catRef = useRef<HTMLImageElement | null>(null);
   const catContainerRef = useRef<HTMLDivElement>(null);
   const ctx = useContext(CottonCandyContext);
+
+  useSpritePreloader();
 
   const { handleMouseDown, handleMouseUp } = usePopCat(catRef, audioRef);
 
@@ -413,9 +416,9 @@ const HeroSection = () => {
     stopAnimation: stopCandleAnimation,
   } = useHeroAnimator(candleRef, config.candleAnimationConfig, "candle-wizard");
 
-  // useEffect(() => {
-  //   ctx.setAssestsPreloaded(true);
-  // }, []);
+  useEffect(() => {
+    ctx.setAssestsPreloaded(true);
+  }, []);
 
   return (
     <motion.div
