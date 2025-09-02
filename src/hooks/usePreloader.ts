@@ -12,7 +12,7 @@ interface PreloadState {
 export function usePreloader(
   sources: string[],
   type: PreloadType,
-  defer: boolean = false // if true → preload during idle
+  defer: boolean = false
 ): PreloadState {
   const [state, setState] = useState<PreloadState>({
     progress: 0,
@@ -52,10 +52,8 @@ export function usePreloader(
             return;
         }
 
-        el.src = src;
-        container.appendChild(el); // 👈 append to hidden div
-
-        el.onloadeddata = el.onload = () => {
+        // Attach listeners *before* setting src
+        el.onload = el.onloadeddata = () => {
           if (cancelled) return;
           loaded++;
           setState((prev) => ({
@@ -76,6 +74,17 @@ export function usePreloader(
             done: loaded === sources.length,
           }));
         };
+
+        // 1. Append to hidden container
+        container.appendChild(el);
+
+        // 2. Only then set src to start loading
+        el.src = src;
+
+        // Force video/audio to load
+        if (type === "video" || type === "audio") {
+          (el as HTMLMediaElement).load();
+        }
       });
     };
 

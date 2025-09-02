@@ -167,7 +167,7 @@ function App() {
         className="absolute "
       ></div>
 
-      {!ctx.assestsPreloaded && <SnakeLoader className="!bg-black" />}
+      {!ctx.assestsPreloaded && <SnakeLoader className="!bg-black z-[99999]" />}
       <div className="overflow-x-hidden">
         <Home />
       </div>

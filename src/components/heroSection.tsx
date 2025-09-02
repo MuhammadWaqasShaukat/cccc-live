@@ -310,10 +310,6 @@ const HeroSection = () => {
     };
   }, [ctx.assestsPreloaded]);
 
-  useEffect(() => {
-    ctx.setAssestsPreloaded(true);
-  }, []);
-
   const handleConnect = async () => {
     if (!connected) {
       if (!connected) {
@@ -420,6 +416,10 @@ const HeroSection = () => {
     config.candleAnimationConfig,
     "candle-warrior"
   );
+
+  useEffect(() => {
+    ctx.setAssestsPreloaded(true);
+  }, []);
 
   return (
     <motion.div
