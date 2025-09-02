@@ -28,7 +28,6 @@ function App() {
   usePreloader(IMGS_SOURCES, "image", true);
   useSpritePreloader();
 
-  const preloadContainer = useRef<HTMLDivElement>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
 
   // const preloadVideosAndAudio = () => {
