@@ -113,6 +113,20 @@ export const IMGS_SOURCES = [
 export const CRITICAL_ASSETS = [
   "/images/cursor-glove.png",
 
+  "/images/section-hero/bg-upper.png",
+  "/images/section-hero/distant-bg.png",
+  "/images/section-hero/field.png",
+
+  "/images/section-hero/logo-lg.png",
+  "/images/section-hero/connect.png",
+  "/images/section-hero/menu-tombstone.png",
+  "/images/section-hero/menu-button.png",
+
+  "/images/section-hero/castle-red-top.png",
+  "/images/section-hero/castle-red-1.png",
+  "/images/section-hero/castle-blue.png",
+  "/images/section-hero/castle-blue-top.png",
+
   "/images/animations/sprites/archer-blue/thumbnail.png",
   "/images/animations/sprites/archer-red/thumbnail.png",
   "/images/animations/sprites/candle-wizard/thumbnail.png",
@@ -122,22 +136,9 @@ export const CRITICAL_ASSETS = [
   "/images/animations/sprites/monkey/thumbnail.png",
   "/images/animations/sprites/sandwich/thumbnail.png",
   "/images/animations/sprites/swordsmen/thumbnail.png",
-
-  "/images/section-hero/bg-upper.png",
-
-  "/images/section-about/grass.png",
-  "/images/section-hero/castle-red-1.png",
-  "/images/section-hero/castle-red-top.png",
-
   "/images/section-hero/memcoin2.png",
-  "/images/section-hero/logo-lg.png",
-  "/images/section-hero/field.png",
-  "/images/section-hero/distant-bg.png",
-  "/images/section-hero/castle-blue.png",
-  "/images/section-hero/castle-blue-top.png",
+  "/images/animations/sprites/fire-spritesheet.png",
 
-  "/images/section-hero/menu-button.png",
-  "/images/section-hero/menu-tombstone.png",
   "/images/section-hero/red1.png",
   "/images/section-hero/red2.png",
   "/images/section-hero/shark1.png",
@@ -145,10 +146,6 @@ export const CRITICAL_ASSETS = [
   "/images/cow-face.png",
   "/images/logo-header.png",
   "/images/sheep-face.png",
-
-  "/images/section-hero/connect.png",
-
-  "/images/animations/sprites/fire-spritesheet.png",
 ];
 
 export const AUDIO_SOURCES = ["/sound/pop-cat.mp3"];

@@ -19,7 +19,7 @@ function App() {
 
   useEffect(() => {
     if (done) {
-      ctx.setAssestsPreloaded(true);
+      setTimeout(() => ctx.setAssestsPreloaded(true), 1500);
     }
   }, [done]);
 
@@ -161,11 +161,11 @@ function App() {
     <>
       <div ref={cursorRef} id="custom-cursor"></div>
 
-      <div
+      {/* <div
         ref={preloadContainer}
         id="preload-container"
         className="absolute "
-      ></div>
+      ></div> */}
 
       {!ctx.assestsPreloaded && <SnakeLoader className="!bg-black z-[99999]" />}
       <div className="overflow-x-hidden">
