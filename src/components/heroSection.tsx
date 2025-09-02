@@ -7,17 +7,7 @@ import TopBar from "./topbar";
 import { motion } from "framer-motion";
 import anchorElement from "../utils/anchorELement";
 
-import {
-  archerBlueAnimationConfig,
-  archerRedAnimationConfig,
-  candleAnimationConfig,
-  fireAnimationConfig,
-  kingFrogAnimationConfig,
-  lightSabreAnimationConfig,
-  sandwichAnimationConfig,
-  swordsmenAnimationConfig,
-  whaleAnimationsConfig,
-} from "../constants/animationsConfig";
+import * as config from "../constants/animationsConfig";
 import { useHeroAnimator } from "../hooks/useHeroAnimator";
 import { useArcherSpriteAnimation } from "../hooks/useArcherSpriteAnimation";
 import usePopCat from "../hooks/usePopCat";
@@ -320,6 +310,10 @@ const HeroSection = () => {
     };
   }, [ctx.assestsPreloaded]);
 
+  useEffect(() => {
+    ctx.setAssestsPreloaded(true);
+  }, []);
+
   const handleConnect = async () => {
     if (!connected) {
       if (!connected) {
@@ -349,7 +343,7 @@ const HeroSection = () => {
     svgRef: blueSvgRef,
     startPathRef: blueTrajectoryStartRef,
     projectileRef: candleFireRef,
-    config: archerBlueAnimationConfig,
+    config: config.archerBlueAnimationConfig,
     spritekey: "archer-blue",
   });
 
@@ -363,7 +357,7 @@ const HeroSection = () => {
     svgRef: redSvgRef,
     startPathRef: redTrajectoryStartRef,
     projectileRef: arrowRedRef,
-    config: archerRedAnimationConfig,
+    config: config.archerRedAnimationConfig,
     spritekey: "archer-red",
   });
 
@@ -372,39 +366,60 @@ const HeroSection = () => {
     stopAnimation: stopLightSabreAnimation,
   } = useHeroAnimator(
     redCastleLightSaberRef,
-    lightSabreAnimationConfig,
+    config.lightSabreAnimationConfig,
     "light-sabre"
   );
 
   const {
     startAnimation: playWhaleAnimation,
     stopAnimation: stopWhaleAnimation,
-  } = useHeroAnimator(whaleRef, whaleAnimationsConfig, "whale-monkey");
+  } = useHeroAnimator(whaleRef, config.whaleAnimationsConfig, "whale-monkey");
+
+  const {
+    startAnimation: playMagicAnimation,
+    stopAnimation: stopMagicAnimation,
+  } = useHeroAnimator(magicRef, config.magicAnimationConfig, "magic-wizard");
 
   const {
     startAnimation: playSowrdAnimation,
     stopAnimation: stopSowrdAnimation,
-  } = useHeroAnimator(swordmanRef, swordsmenAnimationConfig, "swords-warrior");
+  } = useHeroAnimator(
+    swordmanRef,
+    config.swordsmenAnimationConfig,
+    "swords-warrior"
+  );
 
   const {
     startAnimation: playFireAnimation,
     stopAnimation: stopFireAnimation,
-  } = useHeroAnimator(fireRef, fireAnimationConfig, "fire");
+  } = useHeroAnimator(fireRef, config.fireAnimationConfig, "fire");
 
   const {
     startAnimation: playSandwichAnimation,
     stopAnimation: stopSandWichAnimation,
-  } = useHeroAnimator(sandwichmenRef, sandwichAnimationConfig, "king-blue");
+  } = useHeroAnimator(
+    sandwichmenRef,
+    config.sandwichAnimationConfig,
+    "king-blue"
+  );
 
   const {
     startAnimation: playKingFrogAnimation,
     stopAnimation: stopKingFrogAnimation,
-  } = useHeroAnimator(kingFrogRef, kingFrogAnimationConfig, "archer-red");
+  } = useHeroAnimator(
+    kingFrogRef,
+    config.kingFrogAnimationConfig,
+    "archer-red"
+  );
 
   const {
     startAnimation: playCandleAnimation,
     stopAnimation: stopCandleAnimation,
-  } = useHeroAnimator(candleRef, candleAnimationConfig, "candle-warrior");
+  } = useHeroAnimator(
+    candleRef,
+    config.candleAnimationConfig,
+    "candle-warrior"
+  );
 
   return (
     <motion.div
@@ -416,7 +431,7 @@ const HeroSection = () => {
       }}
       transition={{
         opacity: {
-          duration: 0.3,
+          duration: 0.5,
         },
       }}
     >
@@ -462,6 +477,11 @@ const HeroSection = () => {
                 height: `${
                   heroesDimensions.current.get(kingFrogRef)?.height
                 }px`,
+                backgroundImage:
+                  "url('/images/animations/sprites/frog-king/thumbnail.png')",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "100% 100%",
+                backgroundPosition: "0% 0%",
               }}
               className="sprite-container  bg-no-repeat  absolute max-w-56 max-h-56 bg-left-bottom -bottom-1/4  z-40 aspect-square -left-[10%] "
             />
@@ -529,6 +549,12 @@ const HeroSection = () => {
                     height: `${
                       heroesDimensions.current.get(redSpriteRef)?.height
                     }px`,
+
+                    backgroundImage:
+                      "url('/images/animations/sprites/archer-red/thumbnail.png')",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "100% 100%",
+                    backgroundPosition: "0% 0%",
                   }}
                 ></div>
               </div>
@@ -554,8 +580,30 @@ const HeroSection = () => {
             height: `${
               heroesDimensions.current.get(redCastleLightSaberRef)?.height
             }px`,
+
+            backgroundImage:
+              "url('/images/animations/sprites/light-sabre/thumbnail.png')",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "100% 100%",
+            backgroundPosition: "0% 0%",
           }}
           className=" bg-left-bottom hidden md:block absolute left-[0%] z-40 bg-contain bg-no-repeat  max-w-64 max-h-64 bottom-0  aspect-square "
+        ></div>
+
+        <div
+          onMouseEnter={playMagicAnimation}
+          onMouseLeave={stopMagicAnimation}
+          ref={magicRef}
+          style={{
+            width: `${heroesDimensions.current.get(magicRef)?.width}px`,
+            height: `${heroesDimensions.current.get(magicRef)?.height}px`,
+            backgroundImage:
+              "url('/images/animations/sprites/magic-wizard/thumbnail.png')",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "100% 100%",
+            backgroundPosition: "0% 0%",
+          }}
+          className=" bg-left-bottom hidden md:block absolute left-[15%] z-40 bg-contain bg-no-repeat  max-w-64 max-h-64 bottom-0  aspect-square "
         ></div>
 
         <div
@@ -613,6 +661,11 @@ const HeroSection = () => {
                 height: `${
                   heroesDimensions.current.get(sandwichmenRef)?.height
                 }px`,
+                backgroundImage:
+                  "url('/images/animations/sprites/sandwich/thumbnail.png')",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "100% 100%",
+                backgroundPosition: "0% 0%",
               }}
               className="sprite-container  absolute max-w-56 max-h-56 -bottom-1/4  -right-[10%]  z-40 aspect-square "
             />
@@ -678,6 +731,11 @@ const HeroSection = () => {
                     height: `${
                       heroesDimensions.current.get(blueSpriteRef)?.height
                     }px`,
+                    backgroundImage:
+                      "url('/images/animations/sprites/archer-blue/thumbnail.png')",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "100% 100%",
+                    backgroundPosition: "0% 0%",
                   }}
                 ></div>
               </div>
@@ -698,6 +756,11 @@ const HeroSection = () => {
           style={{
             width: `${heroesDimensions.current.get(whaleRef)?.width}px`,
             height: `${heroesDimensions.current.get(whaleRef)?.height}px`,
+            backgroundImage:
+              "url('/images/animations/sprites/monkey/thumbnail.png')",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "100% 100%",
+            backgroundPosition: "0% 0%",
           }}
           className="sprite-container  absolute max-w-64 max-h-64 bottom-0 sm:right-[4%] right-0 z-40 aspect-square "
         />
@@ -710,6 +773,11 @@ const HeroSection = () => {
           style={{
             width: `${heroesDimensions.current.get(swordmanRef)?.width}px`,
             height: `${heroesDimensions.current.get(swordmanRef)?.height}px`,
+            backgroundImage:
+              "url('/images/animations/sprites/swordsmen/thumbnail.png')",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "100% 100%",
+            backgroundPosition: "0% 0%",
           }}
         ></div>
 
@@ -732,6 +800,11 @@ const HeroSection = () => {
           style={{
             width: `${heroesDimensions.current.get(candleRef)?.width}px`,
             height: `${heroesDimensions.current.get(candleRef)?.height}px`,
+            backgroundImage:
+              "url('/images/animations/sprites/candle-wizard/thumbnail.png')",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "100% 100%",
+            backgroundPosition: "0% 0%",
           }}
         />
 

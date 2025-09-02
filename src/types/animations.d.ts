@@ -8,7 +8,7 @@ export type SpriteKeys =
   | "king-blue"
   | "candle-warrior"
   | "fire"
-  | "wizard";
+  | "magic-wizard";
 
 export type SpriteSheet = {
   url: string;

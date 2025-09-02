@@ -6,6 +6,11 @@ import {
 export const whaleAnimationsConfig: MultiSpriteConfig = {
   sheets: [
     {
+      url: "/images/animations/sprites/monkey/thumbnail.png",
+      columns: 1,
+      rows: 1,
+    },
+    {
       url: "/images/animations/sprites/monkey/sprite1.png",
       columns: 8,
       rows: 8,
@@ -53,6 +58,11 @@ export const fireAnimationConfig: MultiSpriteConfig = {
 export const swordsmenAnimationConfig: MultiSpriteConfig = {
   sheets: [
     {
+      url: "/images/animations/sprites/swordsmen/thumbnail.png",
+      columns: 1,
+      rows: 1,
+    },
+    {
       url: "/images/animations/sprites/swordsmen/sprite1.png",
       columns: 8,
       rows: 8,
@@ -77,10 +87,49 @@ export const swordsmenAnimationConfig: MultiSpriteConfig = {
 export const candleAnimationConfig: MultiSpriteConfig = {
   sheets: [
     {
-      url: "/images/animations/sprites/candle-sprite.png",
-      columns: 5,
+      url: "/images/animations/sprites/candle-wizard/thumbnail.png",
+      columns: 1,
+      rows: 1,
+    },
+    {
+      url: "/images/animations/sprites/candle-wizard/sprite1.png",
+      columns: 8,
       rows: 8,
-      frameCount: 39,
+    },
+    {
+      url: "/images/animations/sprites/candle-wizard/sprite2.png",
+      columns: 8,
+      rows: 8,
+      frameCount: 56,
+    },
+  ],
+  spriteAnimationSpeed: 30,
+  startFrameIndex: 1,
+  loop: true,
+};
+
+export const magicAnimationConfig: MultiSpriteConfig = {
+  sheets: [
+    {
+      url: "/images/animations/sprites/magic-wizard/thumbnail.png",
+      columns: 1,
+      rows: 1,
+    },
+    {
+      url: "/images/animations/sprites/magic-wizard/sprite1.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/magic-wizard/sprite2.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/magic-wizard/sprite3.png",
+      columns: 5,
+      rows: 5,
+      frameCount: 17,
     },
   ],
   spriteAnimationSpeed: 60,
@@ -90,6 +139,11 @@ export const candleAnimationConfig: MultiSpriteConfig = {
 
 export const lightSabreAnimationConfig: MultiSpriteConfig = {
   sheets: [
+    {
+      url: "/images/animations/sprites/light-sabre/thumbnail.png",
+      columns: 1,
+      rows: 1,
+    },
     {
       url: "/images/animations/sprites/light-sabre/sprite1.png",
       columns: 8,
@@ -112,32 +166,13 @@ export const lightSabreAnimationConfig: MultiSpriteConfig = {
   loop: true,
 };
 
-export const commandRedAnimationConfig: MultiSpriteConfig = {
-  sheets: [
-    {
-      url: "/images/animations/sprites/light-sabre/sprite1.png",
-      columns: 8,
-      rows: 8,
-    },
-    {
-      url: "/images/animations/sprites/light-sabre/sprite2.png",
-      columns: 8,
-      rows: 8,
-    },
-    {
-      url: "/images/animations/sprites/light-sabre/sprite3.png",
-      columns: 8,
-      rows: 8,
-      frameCount: 22,
-    },
-  ],
-  spriteAnimationSpeed: 5,
-  startFrameIndex: 1,
-  loop: true,
-};
-
 export const sandwichAnimationConfig: MultiSpriteConfig = {
   sheets: [
+    {
+      url: "/images/animations/sprites/sandwich/thumbnail.png",
+      columns: 1,
+      rows: 1,
+    },
     {
       url: "/images/animations/sprites/sandwich/sprite1.png",
       columns: 8,
@@ -162,6 +197,11 @@ export const sandwichAnimationConfig: MultiSpriteConfig = {
 
 export const kingFrogAnimationConfig: MultiSpriteConfig = {
   sheets: [
+    {
+      url: "/images/animations/sprites/frog-king/thumbnail.png",
+      columns: 1,
+      rows: 1,
+    },
     {
       url: "/images/animations/sprites/frog-king/sprite1.png",
       columns: 8,
@@ -189,6 +229,11 @@ export const kingFrogAnimationConfig: MultiSpriteConfig = {
 export const archerBlueAnimationConfig: ArchersMultiSpriteAnimationConfig = {
   sheets: [
     {
+      url: "/images/animations/sprites/archer-blue/thumbnail.png",
+      columns: 1,
+      rows: 1,
+    },
+    {
       url: "/images/animations/sprites/archer-blue/sprite1.png",
       columns: 8,
       rows: 8,
@@ -211,6 +256,11 @@ export const archerBlueAnimationConfig: ArchersMultiSpriteAnimationConfig = {
 
 export const archerRedAnimationConfig: ArchersMultiSpriteAnimationConfig = {
   sheets: [
+    {
+      url: "/images/animations/sprites/archer-red/thumbnail.png",
+      columns: 1,
+      rows: 1,
+    },
     {
       url: "/images/animations/sprites/archer-red/sprite1.png",
       columns: 8,

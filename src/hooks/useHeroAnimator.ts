@@ -37,6 +37,19 @@ export const useHeroAnimator = (
     return { framesPerSheet, starts, totalFrames, clampedEnd };
   }, [sheets, endFrameIndex]);
 
+  // Show thumbnail immediately (sheet 0)
+  useEffect(() => {
+    if (spritekey === "fire") return;
+
+    if (ref.current && sheets.length > 0) {
+      const thumbSheet = sheets[0];
+      ref.current.style.backgroundImage = `url("${thumbSheet.url}")`;
+      ref.current.style.backgroundRepeat = "no-repeat";
+      ref.current.style.backgroundSize = `100% 100%`;
+      ref.current.style.backgroundPosition = "0% 0%";
+    }
+  }, [ref, sheets]);
+
   // --- Preload images to avoid any jerk when switching sheets
   const imagesRef = useRef<HTMLImageElement[]>([]);
   useEffect(() => {

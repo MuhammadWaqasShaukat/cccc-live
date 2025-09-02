@@ -5,88 +5,101 @@ import SnakeLoader from "./components/UI/SnakeLoader";
 import { CottonCandyContext } from "./providers/ContextProvider";
 import {
   AUDIO_SOURCES,
+  CRITICAL_ASSETS,
   IMGS_SOURCES,
   VIDEO_SOURCES,
 } from "./constants/preloadingAssestList";
 import { useSpritePreloader } from "./hooks/useSpritePreloader";
+import { usePreloader } from "./hooks/usePreloader";
 
 function App() {
   const ctx = useContext(CottonCandyContext);
-  const { loading: spriteLoading, progress: spriteProgress } =
-    useSpritePreloader();
+
+  const { done } = usePreloader(CRITICAL_ASSETS, "image");
+
+  useEffect(() => {
+    if (done) {
+      ctx.setAssestsPreloaded(true);
+    }
+  }, [done]);
+
+  usePreloader(VIDEO_SOURCES, "video", true);
+  usePreloader(AUDIO_SOURCES, "audio", true);
+  usePreloader(IMGS_SOURCES, "image", true);
+  useSpritePreloader();
 
   const preloadContainer = useRef<HTMLDivElement>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
 
-  const preloadVideosAndAudio = () => {
-    const container = preloadContainer.current;
+  // const preloadVideosAndAudio = () => {
+  //   const container = preloadContainer.current;
 
-    if (!container) return;
-    container.style.display = "none";
+  //   if (!container) return;
+  //   container.style.display = "none";
 
-    const videoPromises = VIDEO_SOURCES.map((src) => {
-      return new Promise<void>((resolve) => {
-        const video = document.createElement("video");
-        video.src = src;
-        video.preload = "auto";
-        video.dataset.key = src;
-        video.muted = true;
-        video.oncanplaythrough = () => resolve();
-        video.onerror = () => resolve();
-        container.appendChild(video);
-      });
-    });
+  //   const videoPromises = VIDEO_SOURCES.map((src) => {
+  //     return new Promise<void>((resolve) => {
+  //       const video = document.createElement("video");
+  //       video.src = src;
+  //       video.preload = "auto";
+  //       video.dataset.key = src;
+  //       video.muted = true;
+  //       video.oncanplaythrough = () => resolve();
+  //       video.onerror = () => resolve();
+  //       container.appendChild(video);
+  //     });
+  //   });
 
-    const audioPromises = AUDIO_SOURCES.map((src) => {
-      return new Promise<void>((resolve) => {
-        const audio = document.createElement("audio");
-        audio.src = src;
-        audio.dataset.key = src;
-        audio.preload = "auto";
-        audio.oncanplaythrough = () => resolve();
-        audio.onerror = () => resolve();
-        container.appendChild(audio);
-      });
-    });
+  //   const audioPromises = AUDIO_SOURCES.map((src) => {
+  //     return new Promise<void>((resolve) => {
+  //       const audio = document.createElement("audio");
+  //       audio.src = src;
+  //       audio.dataset.key = src;
+  //       audio.preload = "auto";
+  //       audio.oncanplaythrough = () => resolve();
+  //       audio.onerror = () => resolve();
+  //       container.appendChild(audio);
+  //     });
+  //   });
 
-    return Promise.all([...videoPromises, ...audioPromises]);
-  };
+  //   return Promise.all([...videoPromises, ...audioPromises]);
+  // };
 
-  const preloadAssets = async () => {
-    const _preloaderContainer = preloadContainer.current;
+  // const preloadAssets = async () => {
+  //   const _preloaderContainer = preloadContainer.current;
 
-    const imageElements: HTMLImageElement[] = [];
+  //   const imageElements: HTMLImageElement[] = [];
 
-    const imagePromises = IMGS_SOURCES.map((src) => {
-      return new Promise<void>((resolve) => {
-        const img = new Image();
-        img.src = src;
-        img.dataset.key = src;
-        img.style.display = "none";
-        img.onload = img.onerror = () => resolve();
-        _preloaderContainer?.appendChild(img);
-        imageElements.push(img);
-      });
-    });
+  //   const imagePromises = IMGS_SOURCES.map((src) => {
+  //     return new Promise<void>((resolve) => {
+  //       const img = new Image();
+  //       img.src = src;
+  //       img.dataset.key = src;
+  //       img.style.display = "none";
+  //       img.onload = img.onerror = () => resolve();
+  //       _preloaderContainer?.appendChild(img);
+  //       imageElements.push(img);
+  //     });
+  //   });
 
-    const videoAndAudioPromises = await preloadVideosAndAudio();
+  //   const videoAndAudioPromises = await preloadVideosAndAudio();
 
-    if (videoAndAudioPromises) {
-      await Promise.all([...imagePromises, ...videoAndAudioPromises]);
-    } else {
-      await Promise.all([...imagePromises]);
-    }
-  };
+  //   if (videoAndAudioPromises) {
+  //     await Promise.all([...imagePromises, ...videoAndAudioPromises]);
+  //   } else {
+  //     await Promise.all([...imagePromises]);
+  //   }
+  // };
 
-  useEffect(() => {
-    preloadAssets();
-  }, []);
+  // useEffect(() => {
+  //   preloadAssets();
+  // }, []);
 
-  useEffect(() => {
-    if (!spriteLoading && spriteProgress >= 100) {
-      ctx.setAssestsPreloaded(true);
-    }
-  }, [spriteLoading]);
+  // useEffect(() => {
+  //   if (!spriteLoading && spriteProgress >= 100) {
+  //     ctx.setAssestsPreloaded(true);
+  //   }
+  // }, [spriteLoading]);
 
   // useEffect(() => {
   //   const cursor = cursorRef.current;
