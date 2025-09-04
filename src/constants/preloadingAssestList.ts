@@ -57,6 +57,20 @@ export const SPRITES_SOURCES = {
     "/images/animations/sprites/swordsmen/sprite3.png",
   ],
   fire: ["/images/animations/sprites/fire-spritesheet.png"],
+
+  "bad-egg": [
+    "/images/animations/sprites/eggs/bad/sprite1.png",
+    "/images/animations/sprites/eggs/bad/sprite2.png",
+    "/images/animations/sprites/eggs/bad/sprite3.png",
+    "/images/animations/sprites/eggs/bad/sprite4.png",
+  ],
+
+  "good-egg": [
+    "/images/animations/sprites/eggs/good/sprite1.png",
+    "/images/animations/sprites/eggs/good/sprite2.png",
+    "/images/animations/sprites/eggs/good/sprite3.png",
+    "/images/animations/sprites/eggs/good/sprite4.png",
+  ],
 };
 
 export const IMGS_SOURCES = [
@@ -108,6 +122,15 @@ export const IMGS_SOURCES = [
   "/images/arm.png",
   "/images/section-mint/mint-over-bg.png",
   "/images/section-mint/book-mint-over.png",
+
+  "/images/how-it-works/card-1.png",
+  "/images/how-it-works/card-2.png",
+  "/images/how-it-works/card-3.png",
+  "/images/how-it-works/card-4.png",
+  "/images/how-it-works/label-1.png",
+  "/images/how-it-works/label-2.png",
+  "/images/how-it-works/label-3.png",
+  "/images/how-it-works/label-4.png",
 ];
 
 export const CRITICAL_ASSETS = [

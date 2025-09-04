@@ -1,7 +1,8 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { EggAnimationConfig, IParticle } from "../Eggs/EggRevealAnimation";
+import { IParticle } from "../Eggs/EggRevealAnimation";
 import { useEggBreakAnimation } from "../../hooks/useEggBreakAnimation";
 import { CottonCandyContext } from "../../providers/ContextProvider";
+import { nftRevealAnimation } from "../../constants/animationsConfig";
 
 const NftReveal = () => {
   const ctx = useContext(CottonCandyContext);
@@ -10,33 +11,32 @@ const NftReveal = () => {
   const [isDone, setIsDone] = useState<boolean>(false);
   const [startSpinning, setStartSpinning] = useState<boolean>(false);
 
-  const particlesConfig: EggAnimationConfig = {
+  const particlesConfig = {
     frameWidth: 682,
     frameHeight: 682,
-    columns: 5,
-    rows: 13,
-    spriteAnimationSpeed: 50,
-    startFrameIndex: 39,
-    repeatFrameIndex: 39,
-    endRepeatFrameIndex: 61,
+    // columns: 5,
+    // rows: 13,
+    // spriteAnimationSpeed: 50,
+    // startFrameIndex: 39,
+    // repeatFrameIndex: 39,
+    // endRepeatFrameIndex: 61,
   };
 
-  const { playAnimation, currentFrameNo, stopAnimation } = useEggBreakAnimation(
-    {
+  const { startAnimation, currentFrameNo, stopAnimation } =
+    useEggBreakAnimation({
       spriteRef: spriteRef,
-      config: particlesConfig,
+      config: nftRevealAnimation,
       setIsLooping: () => {},
-    }
-  );
+    });
 
   useEffect(() => {
     if (startSpinning) {
-      playAnimation();
+      startAnimation();
     }
   }, [startSpinning]);
 
   useEffect(() => {
-    if (currentFrameNo >= particlesConfig.endRepeatFrameIndex) {
+    if (currentFrameNo >= nftRevealAnimation.endRepeatFrameIndex!) {
       stopAnimation();
       setStartSpinning(false);
       ctx.setRevealNFT(false);
@@ -172,7 +172,7 @@ const NftReveal = () => {
 
         const percentCovered = (lineY / CANVAS_SIZE) * 100;
 
-        if (!startSpinning && percentCovered > 90) {
+        if (!startSpinning && percentCovered > 80) {
           setStartSpinning(true);
         }
         if (lineY >= CANVAS_SIZE) {
@@ -209,10 +209,10 @@ const NftReveal = () => {
             style={{
               width: `${particlesConfig.frameWidth}px`,
               height: `${particlesConfig.frameHeight}px`,
-              backgroundImage: "url(images/particels-sprite.png)",
-              backgroundSize: `${particlesConfig.columns * 100}% ${
-                particlesConfig.rows * 100
-              }%`,
+              // backgroundImage: "url(images/particels-sprite.png)",
+              // backgroundSize: `${particlesConfig.columns * 100}% ${
+              //   particlesConfig.rows * 100
+              // }%`,
             }}
           ></div>
         )}

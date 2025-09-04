@@ -7,7 +7,7 @@ import { Buffer } from "buffer";
 
 import IDL from "../constants/solana_lottery.json";
 import { FulFilledState } from "../types/Nft";
-import { Lottery } from "../types/Lottery";
+import { Lottery, MintStatus } from "../types/Lottery";
 import { Metadata } from "../types/Metadata";
 
 const useWeb3Utils = () => {
@@ -16,9 +16,26 @@ const useWeb3Utils = () => {
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
   const { publicKey, connected, wallet } = useWallet();
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const connection = useMemo(() => {
     return new Connection(endpoint, "confirmed");
   }, [endpoint]);
+
+  const fetchData = async (url: string) => {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) {
+        throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`);
+      }
+      const data = await res.json();
+      const nfts = data;
+      return nfts;
+    } catch (error) {
+      console.error("Error fetching NFTs:", error);
+      return [];
+    }
+  };
 
   const getConnectedWallet = async (wallet: Wallet) => {
     if (wallet.adapter.name == "Solflare") {
@@ -61,28 +78,12 @@ const useWeb3Utils = () => {
   ): Promise<Metadata[]> => {
     if (!connected || !publicKey) return [];
     let nfts: any[] = [];
-    const apiUrl = import.meta.env.VITE_API_URL;
 
-    const url = `${apiUrl}?owner=${publicKey}&type=${type}&collection=${collection}`;
-    nfts = await fetchNFTs(url);
+    const url = `${apiUrl}/get-nfts?owner=${publicKey}&type=${type}&collection=${collection}`;
+    nfts = await fetchData(url);
 
     let sorted = nfts.sort((a, b) => a.address.localeCompare(b.address));
     return sorted;
-  };
-
-  const fetchNFTs = async (url: string) => {
-    try {
-      const res = await fetch(url);
-      if (!res.ok) {
-        throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`);
-      }
-      const data = await res.json();
-      const nfts = data;
-      return nfts;
-    } catch (error) {
-      console.error("Error fetching NFTs:", error);
-      return [];
-    }
   };
 
   const getNftState = async (mintAddress: string) => {
@@ -104,26 +105,35 @@ const useWeb3Utils = () => {
   };
 
   const getLotteryState = async (): Promise<Lottery> => {
-    const provider = await getProvider(connection);
-    const program = new Program(IDL as any, provider);
+    const url = `${apiUrl}/lottery-status`;
+    const status = await fetchData(url);
+    return status;
+    // const provider = await getProvider(connection);
+    // const program = new Program(IDL as any, provider);
 
-    const [lottery] = PublicKey.findProgramAddressSync(
-      [Buffer.from("lottery")],
-      program.programId
-    );
+    // const [lottery] = PublicKey.findProgramAddressSync(
+    //   [Buffer.from("lottery")],
+    //   program.programId
+    // );
 
-    //@ts-ignore
-    const state = await program.account.state.fetch(lottery);
+    // //@ts-ignore
+    // const state = await program.account.state.fetch(lottery);
 
-    return {
-      maxPlayers: state.maxPlayers.toNumber(),
-      totalMinted: state.totalMinted.toNumber(),
-      totalValueToCollect: state.totalValueToCollect.toNumber(),
-      minPrice: state.minPrice.toNumber(),
-      eggAfterHatchCooldown: state.eggAfterHatchCooldown.toNumber(),
-      egg: state.egg.toBase58(),
-      nft: state.nft.toBase58(),
-    };
+    // return {
+    //   maxPlayers: state.maxPlayers.toNumber(),
+    //   totalMinted: state.totalMinted.toNumber(),
+    //   totalValueToCollect: state.totalValueToCollect.toNumber(),
+    //   minPrice: state.minPrice.toNumber(),
+    //   eggAfterHatchCooldown: state.eggAfterHatchCooldown.toNumber(),
+    //   egg: state.egg.toBase58(),
+    //   nft: state.nft.toBase58(),
+    // };
+  };
+
+  const getMintStatus = async (): Promise<MintStatus> => {
+    const url = `${apiUrl}/mint-status`;
+    const status = await fetchData(url);
+    return status;
   };
 
   const getVaultState = async () => {
@@ -178,6 +188,7 @@ const useWeb3Utils = () => {
     getLotteryState,
     getEggFulFilledState,
     getVaultState,
+    getMintStatus,
   };
 };
 

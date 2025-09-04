@@ -125,9 +125,21 @@ export default {
       "mint-over-heading": "url('/images/section-mint/mint-over-bg.png')",
       "mint-over": "url('/images/section-mint/book-mint-over.png')",
 
+      "how-it-works-leaf": "url('/images/section-mint/mint-old-page.png')",
+
       "close-btn": "url('/images/btn-close.png')",
 
-      "hero-sprite": "",
+      "old-book": "url('/images/section-mint/old-book.png')",
+
+      "tutorial-step-1": "url('/images/how-it-works/card-1.png')",
+      "tutorial-step-2": "url('/images/how-it-works/card-2.png')",
+      "tutorial-step-3": "url('/images/how-it-works/card-3.png')",
+      "tutorial-step-4": "url('/images/how-it-works/card-4.png')",
+
+      "tutorial-label-step-1": "url('/images/how-it-works/label-1.png')",
+      "tutorial-label-step-2": "url('/images/how-it-works/label-2.png')",
+      "tutorial-label-step-3": "url('/images/how-it-works/label-3.png')",
+      "tutorial-label-step-4": "url('/images/how-it-works/label-4.png')",
     },
   },
   plugins: [],

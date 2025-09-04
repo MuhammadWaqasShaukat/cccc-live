@@ -7,3 +7,9 @@ export type Lottery = {
   egg: string;
   nft: string;
 };
+
+export type MintStatus = {
+  price: number;
+  remaining: number;
+  total: number;
+};

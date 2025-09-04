@@ -1,3 +1,4 @@
+import { EggAnimationSpriteConfig } from "../hooks/useEggBreakAnimation";
 import {
   ArchersMultiSpriteAnimationConfig,
   MultiSpriteConfig,
@@ -280,4 +281,77 @@ export const archerRedAnimationConfig: ArchersMultiSpriteAnimationConfig = {
   ],
   spriteAnimationSpeed: 10,
   bowReleasedFrame: 23,
+};
+
+export const goodEggRevealAnimationConfig: EggAnimationSpriteConfig = {
+  sheets: [
+    {
+      url: "/images/animations/sprites/eggs/good/sprite1.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/eggs/good/sprite2.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/eggs/good/sprite3.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/eggs/good/sprite4.png",
+      columns: 8,
+      rows: 8,
+      frameCount: 44,
+    },
+  ],
+  startFrameIndex: 48,
+  repeatFrameIndex: 198,
+  endRepeatFrameIndex: 236,
+  spriteAnimationSpeed: 10,
+};
+
+export const badEggRevealAnimationConfig: EggAnimationSpriteConfig = {
+  sheets: [
+    {
+      url: "/images/animations/sprites/eggs/bad/sprite1.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/eggs/bad/sprite2.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/eggs/bad/sprite3.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/eggs/bad/sprite4.png",
+      columns: 7,
+      rows: 7,
+      frameCount: 44,
+    },
+  ],
+  startFrameIndex: 48,
+  repeatFrameIndex: 199,
+  endRepeatFrameIndex: 236,
+  spriteAnimationSpeed: 10,
+};
+
+export const nftRevealAnimation: EggAnimationSpriteConfig = {
+  sheets: [
+    {
+      url: "/images/animations/sprites/particels-sprite.png",
+      columns: 5,
+      rows: 13,
+    },
+  ],
+  startFrameIndex: 39,
+  endRepeatFrameIndex: 58,
+  spriteAnimationSpeed: 10,
 };

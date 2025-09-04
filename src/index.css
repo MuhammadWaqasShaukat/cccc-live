@@ -407,3 +407,30 @@ body * {
     background-size: contain;
   }
 }
+
+
+.custom-pagintaion .swiper-pagination {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-pagintaion .swiper-pagination-bullet {
+  border-radius: 9999px;
+}
+
+
+.custom-pagintaion .swiper-pagination-bullet {
+  background: #917558;
+  opacity: 0.3;
+  width: 12px;
+  height: 12px;
+}
+
+.custom-pagintaion .swiper-pagination-bullet-active {
+  background: #4C4136;
+  opacity: 1;
+  width: 16px;
+  height: 16px;
+}

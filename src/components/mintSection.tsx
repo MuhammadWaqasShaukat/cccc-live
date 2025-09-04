@@ -6,9 +6,10 @@ import { BookMark } from "../types/BookMarks";
 import Bookmark from "./UI/bookmark";
 import Modal from "./UI/Modal";
 import { motion } from "framer-motion";
-import HowItWorks from "./UI/HowItWorks";
+import HowItWorksNav from "./UI/HowItWorks";
 import MintingOverPage from "./Mint/MintingOver";
 import Mints from "./Mint/Mints";
+import HowItWorks from "./Mint/HowItWorks";
 
 const BookmarkSM = () => {
   const { bookmark, setBookmark } = useContext(CottonCandyContext);
@@ -66,6 +67,9 @@ const BookmarkSM = () => {
       </button>
 
       <button
+        onClick={() => {
+          handleBookmarkChange("tutorial");
+        }}
         className={`h-[38px] w-[35px] bg-no-repeat bg-contain bg-bm-help`}
       >
         <div className="flex flex-row items-center justify-center h-full gap-1 bg-no-repeat bg-contain">
@@ -99,7 +103,11 @@ const MintSection = () => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.3 }}
-        className="block h-screen pb-4 bg-repeat-y bg-cover bg-sm-mint-section-book md:hidden w-dvw"
+        className={`block h-screen pb-4 bg-repeat-y bg-cover  md:hidden w-dvw ${
+          ctx.bookmark === "tutorial"
+            ? "bg-how-it-works-leaf bg-center"
+            : "bg-sm-mint-section-book"
+        }`}
       >
         <div className="fixed top-0 left-0 right-0 h-[70px] px-5 bg-right bg-cover  md:hidden bg-bm-sm-header z-[51] ">
           <div className="flex flex-row items-center justify-start gap-3 pt-5 xs:pt-4 sm:w-2/3">
@@ -113,6 +121,7 @@ const MintSection = () => {
         {!ctx.lotteryState.ended && ctx.bookmark === "mint" && <Mints />}
         {ctx.bookmark === "nfts" && <NFTs />}
         {ctx.bookmark === "eggs" && <Eggs />}
+        {ctx.bookmark === "tutorial" && <HowItWorks />}
       </motion.div>
 
       <motion.div
@@ -123,6 +132,8 @@ const MintSection = () => {
         className={`${
           ctx.lotteryState.ended && ctx.bookmark === "mint"
             ? "bg-mint-over"
+            : ctx.bookmark === "tutorial"
+            ? "bg-old-book"
             : "bg-mint-section-book"
         } md:block hidden mt-16 -ml-10 w-full bg-no-repeat bg-center md:bg-contain bg-cover md:w-[720px] md:h-[470px] lg:w-[850px] lg:h-[560px] xl:w-[950px] xl:h-[620px] xl:pr-[120px] xl:pl-[136px] lg:pr-[98px] md:pr-20 md:pl-24  lg:pl-[107px] lg:pt-[75px] lg:pb-[95px] xl:max-w-[1163px] md:pt-16 md:pb-20 h-full z-50 relative`}
       >
@@ -161,7 +172,7 @@ const MintSection = () => {
             <span className="sr-only">Eggs</span>
           </Bookmark>
           {/* How it works */}
-          <HowItWorks />
+          <HowItWorksNav />
         </div>
 
         {!ctx.lotteryState.ended && ctx.bookmark === "mint" && <Mints />}
@@ -170,6 +181,7 @@ const MintSection = () => {
         )}
         {ctx.bookmark === "nfts" && <NFTs />}
         {ctx.bookmark === "eggs" && <Eggs />}
+        {ctx.bookmark === "tutorial" && <HowItWorks />}
       </motion.div>
     </Modal>
   );

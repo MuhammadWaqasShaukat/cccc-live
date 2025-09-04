@@ -55,6 +55,25 @@ export const updateProjectitlePath = (
   pathRef.current.setAttribute("d", newPath);
 };
 
+const positionCastleTop = (
+  castleTop: RefObject<HTMLDivElement>,
+  castleAnchor: RefObject<HTMLDivElement>
+) => {
+  if (castleTop.current && castleAnchor.current) {
+    const roofRect = castleAnchor.current.getBoundingClientRect();
+    const topRect = castleTop.current.getBoundingClientRect();
+    const parentRect = castleTop.current.offsetParent?.getBoundingClientRect();
+
+    if (parentRect) {
+      // Distance from parent's top to roof's top
+      const roofTopRelative = roofRect.top - parentRect.top;
+
+      // Place topRed so its bottom aligns with roofRed's top
+      castleTop.current.style.top = `${roofTopRelative - topRect.height}px`;
+    }
+  }
+};
+
 const HeroSection = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const catRef = useRef<HTMLImageElement | null>(null);
@@ -71,6 +90,13 @@ const HeroSection = () => {
   const heroesDimensions = useRef(
     new WeakMap<React.RefObject<HTMLElement>, Dimensions>()
   );
+
+  // roofs:
+
+  const roofRed = useRef<HTMLDivElement>(null);
+  const topRed = useRef<HTMLDivElement>(null);
+  const roofBlue = useRef<HTMLDivElement>(null);
+  const topBlue = useRef<HTMLDivElement>(null);
 
   const [, setBoltArcherDimension] = useState<{
     width: number;
@@ -147,8 +173,8 @@ const HeroSection = () => {
       }
       if (candleRef.current) {
         heroesDimensions.current.set(candleRef, {
-          width: castleRect.width * 0.4,
-          height: castleRect.width * 0.4,
+          width: castleRect.width * 0.45,
+          height: castleRect.width * 0.45,
         });
       }
       if (whaleRef.current) {
@@ -172,8 +198,8 @@ const HeroSection = () => {
 
       if (redCastleLightSaberRef.current) {
         heroesDimensions.current.set(redCastleLightSaberRef, {
-          width: castleRect.width * 0.32,
-          height: castleRect.width * 0.32,
+          width: castleRect.width * 0.35,
+          height: castleRect.width * 0.35,
         });
       }
 
@@ -193,8 +219,8 @@ const HeroSection = () => {
 
       if (redSpriteRef.current) {
         heroesDimensions.current.set(redSpriteRef, {
-          width: castleRect.width * 0.4,
-          height: castleRect.width * 0.4,
+          width: castleRect.width * 0.5,
+          height: castleRect.width * 0.5,
         });
       }
 
@@ -209,7 +235,7 @@ const HeroSection = () => {
 
   const positionElement = () => {
     anchorElement(anchor_0_Ref, tombstoneRef, { bottom: true });
-    anchorElement(anchor_0_Ref, catContainerRef, { bottom: true });
+    anchorElement(anchor_Ref, catContainerRef, { bottom: true });
     anchorElement(anchor_0_Ref, candleOneRef, { bottom: true });
     anchorElement(anchor_1_Ref, candleTwoRef, { bottom: true });
     anchorElement(anchor_0_Ref, arrowOneRef, { bottom: true });
@@ -220,6 +246,9 @@ const HeroSection = () => {
     anchorElement(anchor_2_Ref, redCastleLightSaberRef, { bottom: true });
     anchorElement(anchor_1_Ref, whaleRef, { bottom: true });
     anchorElement(anchor_2_Ref, magicRef, { bottom: true });
+
+    positionCastleTop(topRed, roofRed);
+    positionCastleTop(topBlue, roofBlue);
   };
 
   const positionedArcher = () => {
@@ -464,7 +493,11 @@ const HeroSection = () => {
         {/* Heroes */}
         {/* casltes  red*/}
         <div className="block relative md:static top-[75%] md:top-auto ">
-          <div className=" bg-hero-section-castle-red-1 max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-[1] md:bottom-[40%] lg:bottom-[50%]  bottom-[11rem] bg-left-bottom  md:left-0">
+          <div
+            ref={topRed}
+            // md:bottom-[40%] lg:bottom-[50%]  bottom-[11rem]
+            className=" bg-hero-section-castle-red-1 max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-[1]  bg-left-bottom  md:left-0"
+          >
             {/* Command : red */}
 
             <div
@@ -482,14 +515,14 @@ const HeroSection = () => {
                 backgroundSize: "100% 100%",
                 backgroundPosition: "0% 0%",
               }}
-              className="sprite-container  bg-no-repeat  absolute max-w-56 max-h-56 bg-left-bottom -bottom-1/4  z-40 aspect-square -left-[10%] "
+              className="sprite-container  bg-no-repeat  absolute max-w-56 max-h-56 min-h-24 min-w-24 bg-left-bottom -bottom-[13%]  z-40 aspect-square -left-[10%] "
             />
 
             {/* Archer: red */}
             <div
               id="archerRedContainer"
               ref={archerRedContainerRef}
-              className="absolute w-[60%] max-w-[350px]  -bottom-[10%] z-10 lg:right-10 sm:right-8 right-6 "
+              className="absolute w-[60%] max-w-[350px] -bottom-[10%] z-10 lg:right-10 sm:right-8 right-0 "
             >
               <div className="relative flex flex-col items-center justify-end h-full ">
                 <div
@@ -563,8 +596,12 @@ const HeroSection = () => {
           <div
             id="redCastleBottom"
             ref={redCastleBottomRef}
-            className="bg-hero-section-castle-red-2  pointer-events-none  max-w-[465px] lg:max-h-[600px] max-h-[380px] h-[46%] w-[37%]  absolute min-h-[221px] min-w-[168px] bg-contain bg-no-repeat  bg-left-bottom  z-30 left-0 bottom-[12%]"
-          ></div>
+            className="bg-hero-section-castle-red-2  pointer-events-none  max-w-[465px] lg:max-h-[600px] max-h-[380px] h-[46%] w-[25%] md:w-[37%]  absolute min-h-[221px] min-w-[168px] bg-contain bg-no-repeat  bg-left-bottom  z-30 left-0 bottom-[12%]"
+          >
+            <div className=" relative  flex flex-row justify-center z-[31] pointer-events-none ">
+              <div ref={roofRed} className=" h-1 w-1 mt-[20%] "></div>
+            </div>
+          </div>
         </div>
 
         {/* Light Saber: red */}
@@ -586,7 +623,7 @@ const HeroSection = () => {
             backgroundSize: "100% 100%",
             backgroundPosition: "0% 0%",
           }}
-          className=" bg-left-bottom hidden md:block absolute left-[0%] z-40 bg-contain bg-no-repeat  max-w-64 max-h-64 bottom-0  aspect-square "
+          className=" bg-left-bottom hidden md:block absolute left-[0%] min-w-32 min-h-32 z-40 bg-contain bg-no-repeat  max-w-64 max-h-64 bottom-0  aspect-square "
         ></div>
 
         <div
@@ -602,7 +639,7 @@ const HeroSection = () => {
             backgroundSize: "100% 100%",
             backgroundPosition: "0% 0%",
           }}
-          className=" bg-left-bottom hidden md:block absolute left-[15%] z-40 bg-contain bg-no-repeat  max-w-64 max-h-64 bottom-0  aspect-square "
+          className=" bg-left-bottom absolute left-[5%] md:left-[15%] z-40 bg-contain bg-no-repeat  max-w-64 max-h-64 min-h-40 min-w-40 bottom-0  aspect-square "
         ></div>
 
         <div
@@ -625,7 +662,7 @@ const HeroSection = () => {
 
         <div
           ref={catContainerRef}
-          className="w-[30%] max-w-56 object-bottom h-auto absolute bottom-0  md:left-[8%]  left-[15%] z-40"
+          className="w-[25%] max-w-56 min-w-36  object-bottom h-auto absolute bottom-0  md:left-[8%]  left-[15%] z-40"
         >
           <div className="relative flex flex-col items-center justify-start mt-5">
             <div
@@ -648,7 +685,11 @@ const HeroSection = () => {
         <div className=" bg-hero-section-distant  lg:h-[68%] md:h-[65%] w-[100%] min-w-[300px] min-h-[200px] bg-contain sm:bg-repeat-x bg-no-repeat bg-bottom absolute sm:bottom-[16%] bottom-[18%] z-0"></div>
         {/* castle-blue */}
         <div className="block relative md:static top-[75%] md:top-auto">
-          <div className="bg-hero-section-castle-blue-1 max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-0 md:bottom-[40%]  lg:bottom-[50%] bottom-[11rem] bg-right-bottom right-0">
+          {/* md:bottom-[40%]  lg:bottom-[50%] bottom-[11rem] */}
+          <div
+            ref={topBlue}
+            className="bg-hero-section-castle-blue-1 max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-0  bg-right-bottom right-0"
+          >
             <div
               onMouseEnter={playSandwichAnimation}
               onMouseLeave={stopSandWichAnimation}
@@ -666,13 +707,13 @@ const HeroSection = () => {
                 backgroundSize: "100% 100%",
                 backgroundPosition: "0% 0%",
               }}
-              className="sprite-container  absolute max-w-56 max-h-56 -bottom-1/4  -right-[10%]  z-40 aspect-square "
+              className="sprite-container  absolute max-w-56 max-h-56 min-h-24 min-w-24 -bottom-[13%] -right-[10%]  z-40 aspect-square "
             />
 
             <div
               id="archerContainer"
               ref={archerBlueContainerRef}
-              className="candleFireRef absolute  h-full w-[60%] max-w-[350px] -bottom-[10%] lg:left-10 sm:left-8 left-6 z-0"
+              className="candleFireRef absolute  h-full w-[60%] max-w-[350px] -bottom-[10%] lg:left-10 sm:left-8 left-0 z-0"
             >
               <div className="relative flex flex-col items-center justify-end h-full ">
                 <div
@@ -744,8 +785,12 @@ const HeroSection = () => {
           <div
             id="blueCastleBottom"
             ref={blueCastleBottomRef}
-            className="bg-hero-section-castle-blue-2  pointer-events-none  max-w-[465px] lg:max-h-[600px] max-h-[380px] h-[46%] w-[37%]  absolute min-h-[221px] min-w-[168px] bg-contain bg-no-repeat bg-right-bottom z-30 right-0 bottom-[12%]"
-          ></div>
+            className="bg-hero-section-castle-blue-2  pointer-events-none  max-w-[465px] lg:max-h-[600px] max-h-[380px] h-[46%] md:w-[37%] w-[25%]  absolute min-h-[221px] min-w-[168px] bg-contain bg-no-repeat bg-right-bottom z-30 right-0 bottom-[12%]"
+          >
+            <div className=" relative  flex flex-row justify-center z-[31] pointer-events-none">
+              <div ref={roofBlue} className=" h-1 w-1 mt-[20%] "></div>
+            </div>
+          </div>
         </div>
 
         <div
@@ -761,14 +806,14 @@ const HeroSection = () => {
             backgroundSize: "100% 100%",
             backgroundPosition: "0% 0%",
           }}
-          className="sprite-container  absolute max-w-64 max-h-64 bottom-0 sm:right-[4%] right-0 z-40 aspect-square "
+          className="sprite-container absolute max-w-64 max-h-64 min-w-40 min-h-40 bottom-0 sm:right-[4%] right-0 z-40 aspect-square "
         />
 
         <div
           ref={swordmanRef}
           onMouseEnter={playSowrdAnimation}
           onMouseLeave={stopSowrdAnimation}
-          className=" md:block hidden max-w-48 max-h-48 z-40 absolute bg-contain bg-no-repeat -right-[2%] bg-right "
+          className=" md:block hidden max-w-48 max-h-48 min-w-28 min-h-28 z-40 absolute bg-contain bg-no-repeat -right-[2%] bg-right "
           style={{
             width: `${heroesDimensions.current.get(swordmanRef)?.width}px`,
             height: `${heroesDimensions.current.get(swordmanRef)?.height}px`,
@@ -784,7 +829,7 @@ const HeroSection = () => {
           onMouseEnter={playFireAnimation}
           onMouseLeave={stopFireAnimation}
           ref={fireRef}
-          className="sprite-container absolute right-[30%] max-w-48 max-h-24 z-40 "
+          className="sprite-container absolute right-[30%] max-w-48 max-h-24  z-40 "
           style={{
             width: `${heroesDimensions.current.get(fireRef)?.width}px`,
             height: `${heroesDimensions.current.get(fireRef)?.height}px`,
@@ -795,7 +840,7 @@ const HeroSection = () => {
           onMouseEnter={playCandleAnimation}
           onMouseLeave={stopCandleAnimation}
           ref={candleRef}
-          className="sprite-container absolute bg-bottom max-h-60 max-w-60 right-[13%] bottom-0  z-40 "
+          className="sprite-container absolute bg-bottom max-h-60 max-w-60 min-w-36 min-h-36 right-[13%] bottom-0  z-40 "
           style={{
             width: `${heroesDimensions.current.get(candleRef)?.width}px`,
             height: `${heroesDimensions.current.get(candleRef)?.height}px`,

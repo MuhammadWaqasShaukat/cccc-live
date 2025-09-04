@@ -1,12 +1,49 @@
-import { useContext } from "react";
+import { useCallback, useContext, useMemo, useState } from "react";
 import { CottonCandyContext } from "../../providers/ContextProvider";
 import Remaining from "../UI/Remaining";
 import Price from "../UI/Price";
 import Counter from "../UI/Counter";
 import MintButton from "../UI/MintButton";
+import { useEffect } from "react";
+import useWeb3Utils from "../../hooks/useWeb3Utils";
+import { MintStatus } from "../../types/Lottery";
+
+const defaultMintStatus: MintStatus = {
+  total: 0,
+  remaining: 0,
+  price: 0,
+};
 
 const Mints = () => {
   const ctx = useContext(CottonCandyContext);
+  const [mintStatus, setMintStatus] = useState<MintStatus>(defaultMintStatus);
+
+  const { getMintStatus } = useWeb3Utils();
+  
+  const fetchMintStatus = useCallback(async () => {
+    try {
+      const status = (await getMintStatus()) || defaultMintStatus;
+      setMintStatus((prev) =>
+        JSON.stringify(prev) === JSON.stringify(status) ? prev : status
+      );
+    } catch (err) {
+      console.error("Failed to fetch mint status:", err);
+    }
+  }, [getMintStatus]);
+
+  const shouldPoll = useMemo(
+    () => ctx.activeMenu === "mint" && ctx.bookmark === "mint",
+    [ctx.activeMenu, ctx.bookmark]
+  );
+
+  useEffect(() => {
+    if (!shouldPoll) return;
+
+    fetchMintStatus();
+    const interval = setInterval(fetchMintStatus, 5000);
+
+    return () => clearInterval(interval);
+  }, [shouldPoll, fetchMintStatus]);
 
   return (
     <>
@@ -43,8 +80,11 @@ const Mints = () => {
         </div>
 
         <div className="flex flex-row items-start justify-center w-full px-12 sm:justify-between">
-          <Remaining />
-          <Price />
+          <Remaining
+            total={mintStatus.total}
+            remaining={mintStatus.remaining}
+          />
+          <Price price={mintStatus.price} />
         </div>
 
         <div className="flex flex-row items-center justify-between w-full px-12">
@@ -64,7 +104,7 @@ const Mints = () => {
             </div>
             <div>
               <span className="text-xl text-black font-patrick-hand-sc">
-                {ctx.estimate ?? ctx.price} Sol
+                {ctx.estimate ?? mintStatus.price} Sol
               </span>
             </div>
           </div>
@@ -88,7 +128,8 @@ const Mints = () => {
             </div>
             <div>
               <span className="text-xl text-black font-patrick-hand-sc">
-                {(ctx.gasFee + (ctx.estimate ?? ctx.price)).toFixed(9)} Sol
+                {(ctx.gasFee + (ctx.estimate ?? mintStatus.price)).toFixed(9)}{" "}
+                Sol
               </span>
             </div>
           </div>
@@ -137,8 +178,11 @@ const Mints = () => {
           </div>
 
           <div className="flex flex-row items-start justify-center w-full px-12 sm:justify-between sm:p-0">
-            <Remaining />
-            <Price />
+            <Remaining
+              total={mintStatus.total}
+              remaining={mintStatus.remaining}
+            />
+            <Price price={mintStatus.price} />
           </div>
 
           <div className="flex flex-row items-center justify-between w-full px-12 sm:p-0">
@@ -160,7 +204,7 @@ const Mints = () => {
               </div>
               <div>
                 <span className="text-xl text-black font-patrick-hand-sc xl:text-3xl lg:text-2xl md:text-xl">
-                  {ctx.estimate ?? ctx.price} Sol
+                  {ctx.estimate ?? mintStatus.price} Sol
                 </span>
               </div>
             </div>
@@ -186,7 +230,8 @@ const Mints = () => {
               </div>
               <div>
                 <span className="text-xl text-black font-patrick-hand-sc xl:text-3xl lg:text-2xl md:text-xl">
-                  {(ctx.gasFee + (ctx.estimate ?? ctx.price)).toFixed(9)} Sol
+                  {(ctx.gasFee + (ctx.estimate ?? mintStatus.price)).toFixed(9)}{" "}
+                  Sol
                 </span>
               </div>
             </div>

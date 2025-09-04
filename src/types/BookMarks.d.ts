@@ -1,1 +1,1 @@
-export type BookMark = "mint" | "nfts" | "eggs";
+export type BookMark = "mint" | "nfts" | "eggs" | "tutorial";

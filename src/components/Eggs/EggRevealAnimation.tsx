@@ -2,6 +2,10 @@ import React, { useRef, useEffect, useState, useContext } from "react";
 import { useEggBreakAnimation } from "../../hooks/useEggBreakAnimation";
 import { motion } from "framer-motion";
 import { CottonCandyContext } from "../../providers/ContextProvider";
+import {
+  badEggRevealAnimationConfig,
+  goodEggRevealAnimationConfig,
+} from "../../constants/animationsConfig";
 
 export type EggAnimationConfig = {
   frameWidth: number;
@@ -26,6 +30,11 @@ export interface IParticle {
   draw(ctx: CanvasRenderingContext2D): void;
 }
 
+const eggShakeConfig = {
+  frameWidth: 500,
+  frameHeight: 500,
+};
+
 const GoodReveal: React.FC<{
   setShakingEgg: (param: boolean) => void;
 }> = ({ setShakingEgg }) => {
@@ -33,26 +42,26 @@ const GoodReveal: React.FC<{
   const shakerRef = useRef<HTMLDivElement>(null);
   const [isLooping, setIsLooping] = useState(false);
 
-  const eggShakeConfig: EggAnimationConfig = {
-    frameWidth: 500,
-    frameHeight: 500,
-    columns: 8,
-    rows: 32,
-    spriteAnimationSpeed: 50,
-    startFrameIndex: 41,
-    repeatFrameIndex: 206,
-    endRepeatFrameIndex: 235,
-  };
+  // const eggShakeConfig: EggAnimationConfig = {
+  //   frameWidth: 500,
+  //   frameHeight: 500,
+  //   columns: 8,
+  //   rows: 32,
+  //   spriteAnimationSpeed: 50,
+  //   startFrameIndex: 41,
+  //   repeatFrameIndex: 206,
+  //   endRepeatFrameIndex: 235,
+  // };
 
-  const { playAnimation, currentFrameNo } = useEggBreakAnimation({
+  const { startAnimation, currentFrameNo } = useEggBreakAnimation({
     spriteRef: shakerRef,
-    config: eggShakeConfig,
+    config: goodEggRevealAnimationConfig, //eggShakeConfig,
     setIsLooping,
     speed: 1,
   });
 
   useEffect(() => {
-    playAnimation();
+    startAnimation();
   }, []);
 
   const handleClose = () => {
@@ -73,10 +82,10 @@ const GoodReveal: React.FC<{
         style={{
           width: `${eggShakeConfig.frameWidth}px`,
           height: `${eggShakeConfig.frameHeight}px`,
-          backgroundImage: "url(images/animations/sprites/win.png)",
-          backgroundSize: `${eggShakeConfig.columns * 100}% ${
-            eggShakeConfig.rows * 100
-          }%`,
+          // backgroundImage: "url(images/animations/sprites/win.png)",
+          // backgroundSize: `${eggShakeConfig.columns * 100}% ${
+          //   eggShakeConfig.rows * 100
+          // }%`,
         }}
       ></div>
 
@@ -103,20 +112,20 @@ const BadReveal: React.FC<{
   const shakerRef = useRef<HTMLDivElement>(null);
   const [isLooping, setIsLooping] = useState(false);
 
-  const eggShakeConfig: EggAnimationConfig = {
-    frameWidth: 500,
-    frameHeight: 500,
-    columns: 8,
-    rows: 32,
-    spriteAnimationSpeed: 50,
-    startFrameIndex: 41,
-    repeatFrameIndex: 172,
-    endRepeatFrameIndex: 191,
-  };
+  // const eggShakeConfig: EggAnimationConfig = {
+  //   frameWidth: 500,
+  //   frameHeight: 500,
+  //   columns: 8,
+  //   rows: 32,
+  //   spriteAnimationSpeed: 50,
+  //   startFrameIndex: 41,
+  //   repeatFrameIndex: 172,
+  //   endRepeatFrameIndex: 191,
+  // };
 
-  const { playAnimation, currentFrameNo } = useEggBreakAnimation({
+  const { startAnimation, currentFrameNo } = useEggBreakAnimation({
     spriteRef: shakerRef,
-    config: eggShakeConfig,
+    config: badEggRevealAnimationConfig, //eggShakeConfig,
     setIsLooping,
     speed: 1,
   });
@@ -129,7 +138,7 @@ const BadReveal: React.FC<{
   };
 
   useEffect(() => {
-    playAnimation();
+    startAnimation();
   }, []);
 
   useEffect(() => {
@@ -143,10 +152,10 @@ const BadReveal: React.FC<{
         style={{
           width: `${eggShakeConfig.frameWidth}px`,
           height: `${eggShakeConfig.frameHeight}px`,
-          backgroundImage: "url(images/animations/sprites/lost.png",
-          backgroundSize: `${eggShakeConfig.columns * 100}% ${
-            eggShakeConfig.rows * 100
-          }%`,
+          // backgroundImage: "url(images/animations/sprites/lost.png",
+          // backgroundSize: `${eggShakeConfig.columns * 100}% ${
+          //   eggShakeConfig.rows * 100
+          // }%`,
         }}
       ></div>
 

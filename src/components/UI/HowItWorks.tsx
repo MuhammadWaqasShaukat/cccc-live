@@ -1,11 +1,14 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { CottonCandyContext } from "../../providers/ContextProvider";
 
-const HowItWorks: React.FC = () => {
+const HowItWorksNav: React.FC = () => {
+  const ctx = useContext(CottonCandyContext);
   const [hovered] = useState(true);
 
   return (
     <motion.div
+      onClick={() => ctx.setBookmark("tutorial")}
       className="relative mx-auto w-[125px] h-[180px] mt-6 overflow-hidden"
       // onHoverStart={() => setHovered(true)}
       // onHoverEnd={() => setHovered(false)}
@@ -24,4 +27,4 @@ const HowItWorks: React.FC = () => {
   );
 };
 
-export default HowItWorks;
+export default HowItWorksNav;
