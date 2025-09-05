@@ -4,13 +4,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 const HowItWorks = () => {
   return (
     <>
-      <div className="flex flex-col items-center ">
+      <div className=" md:hidden flex flex-col items-center ">
         <div className=" font-black absolute top-[70px]  font-patrick-hand-sc text-3xl">
           <span>How It Works</span>
         </div>
 
         <Swiper
-          className=" md:hidden flex h-full custom-pagintaion"
+          className=" flex h-full custom-pagintaion"
           modules={[Pagination, A11y]}
           spaceBetween={0}
           slidesPerView={1}

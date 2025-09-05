@@ -486,7 +486,7 @@ const HeroSection = () => {
             </span>
           </button>
         </div>
-        <Nav className={"flex-1 absolute bottom-[25%] z-40"} />
+        <Nav className={"flex-1 absolute bottom-[25%] z-[41]"} />
         <div className="bg-hero-section-lower  bg-no-repeat bg-cover h-[20%] bg-end absolute bottom-0 left-0 right-0"></div>
         <div className="bg-hero-section-logo max-w-[700px] max-h-[400px] min-w-[288px] h-[35%] w-[50%] min-h-[149px] bg-no-repeat bg-contain bg-bottom absolute left-[50%] -translate-x-[50%] top-[5%]"></div>
 
@@ -829,7 +829,7 @@ const HeroSection = () => {
           onMouseEnter={playFireAnimation}
           onMouseLeave={stopFireAnimation}
           ref={fireRef}
-          className="sprite-container absolute right-[30%] max-w-48 max-h-24  z-40 "
+          className="sprite-container absolute right-[30%] max-w-48 max-h-24 z-50 "
           style={{
             width: `${heroesDimensions.current.get(fireRef)?.width}px`,
             height: `${heroesDimensions.current.get(fireRef)?.height}px`,

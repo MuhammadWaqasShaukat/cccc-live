@@ -6,6 +6,7 @@ export type Lottery = {
   eggAfterHatchCooldown: number;
   egg: string;
   nft: string;
+  startTime: number;
 };
 
 export type MintStatus = {

@@ -41,11 +41,6 @@ const AboutSection = () => {
         {/* for mobile screens */}
         <div className="bg-center bg-no-repeat xs:w-[350px] xs:h-[475px]  h-[435px] w-[300px] bg-contain sm:hidden bg-about-section-castle-sm relative  flex flex-col justify-center items-center">
           <div className="h-[40%] text-center w-[63%] -top-[30%] min-w-[150px] flex flex-col justify-end items-center absolute">
-            {/* <img
-              src="./images/section-about/memnft-about.png"
-              alt=""
-              className=""
-            /> */}
             <div className="relative ">
               <div
                 className=" absolute h-full w-full z-[999]"

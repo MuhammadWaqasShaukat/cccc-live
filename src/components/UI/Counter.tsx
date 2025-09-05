@@ -47,7 +47,7 @@ const Counter = () => {
 
   useEffect(() => {
     updateDisabledState();
-  }, [ctx.count, ctx.lotteryState.ended]);
+  }, [ctx.count, ctx.lotteryState.status]);
 
   const lockCounter = () => {
     setDisabled({ min: true, max: true });

@@ -1,4 +1,3 @@
-import { useWallet } from "@solana/wallet-adapter-react";
 import { motion } from "framer-motion";
 import React from "react";
 
@@ -17,11 +16,8 @@ const Bookmark: React.FC<BookMarkProps> = ({
   disabledClasss,
   style,
 }) => {
-  const { connected } = useWallet();
-
   return (
     <motion.button
-      disabled={!connected}
       onClick={onClick}
       type="button"
       animate={{}}

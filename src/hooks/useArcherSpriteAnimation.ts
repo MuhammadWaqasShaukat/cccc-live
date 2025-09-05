@@ -1,16 +1,8 @@
-import {
-  useEffect,
-  useRef,
-  RefObject,
-  useMemo,
-  // useContext,
-  useCallback,
-} from "react";
+import { useEffect, useRef, RefObject, useMemo, useCallback } from "react";
 import {
   ArchersMultiSpriteAnimationConfig,
   SpriteKeys,
 } from "../types/animations";
-// import { CottonCandyContext } from "../providers/ContextProvider";
 
 export const useArcherSpriteAnimation = ({
   spriteRef,

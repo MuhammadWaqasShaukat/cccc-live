@@ -1,7 +1,5 @@
 export type LotteryState = {
-  clamable: boolean;
-  myClaimedNfts: number;
-  ended: boolean;
+  status: "in-progress" | "ended" | "not-started";
 };
 
 type StateSetter<T> = React.Dispatch<React.SetStateAction<T>>;
@@ -15,6 +13,7 @@ export interface CottonCandyContextType {
   setPrice: StateSetter<number>;
   calculatePrice: () => Promise<void>;
   lotteryState: LotteryState;
+  setLotteryState: StateSetter<LotteryState>;
 
   currentModal: Modals | null;
   setCurrentModal: StateSetter<Modals | null>;

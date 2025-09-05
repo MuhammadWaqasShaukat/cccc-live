@@ -42,16 +42,7 @@ const GoodReveal: React.FC<{
   const shakerRef = useRef<HTMLDivElement>(null);
   const [isLooping, setIsLooping] = useState(false);
 
-  // const eggShakeConfig: EggAnimationConfig = {
-  //   frameWidth: 500,
-  //   frameHeight: 500,
-  //   columns: 8,
-  //   rows: 32,
-  //   spriteAnimationSpeed: 50,
-  //   startFrameIndex: 41,
-  //   repeatFrameIndex: 206,
-  //   endRepeatFrameIndex: 235,
-  // };
+
 
   const { startAnimation, currentFrameNo } = useEggBreakAnimation({
     spriteRef: shakerRef,

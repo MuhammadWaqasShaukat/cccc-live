@@ -10,11 +10,14 @@ import HowItWorksNav from "./UI/HowItWorks";
 import MintingOverPage from "./Mint/MintingOver";
 import Mints from "./Mint/Mints";
 import HowItWorks from "./Mint/HowItWorks";
+import { useWallet } from "@solana/wallet-adapter-react";
+import PublicMint from "./Mint/PublicMint";
 
 const BookmarkSM = () => {
   const { bookmark, setBookmark } = useContext(CottonCandyContext);
-
+  const { connected } = useWallet();
   const handleBookmarkChange = (newChapter: BookMark) => {
+    if (!connected && newChapter !== "mint") return;
     setBookmark(newChapter);
   };
 
@@ -25,7 +28,7 @@ const BookmarkSM = () => {
           handleBookmarkChange("mint");
         }}
         className={`w-[85px] xs:w-[112px] xs:h-[45px]  bg-no-repeat bg-contain ${
-          bookmark === "mint"
+          bookmark === "mint" || bookmark === "tutorial"
             ? "bg-bm-sm-mint xs:h-[44px] h-[31px]"
             : "bg-bm-sm-1 xs:h-[43px] h-[28px]"
         }`}
@@ -65,25 +68,16 @@ const BookmarkSM = () => {
           <p className="text-lg text-white font-patrick-hand">EGGs</p>
         </div>
       </button>
-
-      <button
-        onClick={() => {
-          handleBookmarkChange("tutorial");
-        }}
-        className={`h-[38px] w-[35px] bg-no-repeat bg-contain bg-bm-help`}
-      >
-        <div className="flex flex-row items-center justify-center h-full gap-1 bg-no-repeat bg-contain">
-          <p className="text-2xl text-white font-patrick-hand">?</p>
-        </div>
-      </button>
     </>
   );
 };
 
 const MintSection = () => {
   const ctx = useContext(CottonCandyContext);
+  const { connected } = useWallet();
 
   const handleBookmarkChange = (newChapter: BookMark) => {
+    if (!connected && newChapter !== "mint") return;
     ctx.setBookmark(newChapter);
   };
 
@@ -111,14 +105,26 @@ const MintSection = () => {
       >
         <div className="fixed top-0 left-0 right-0 h-[70px] px-5 bg-right bg-cover  md:hidden bg-bm-sm-header z-[51] ">
           <div className="flex flex-row items-center justify-start gap-3 pt-5 xs:pt-4 sm:w-2/3">
-            <BookmarkSM />
+            {/* back button */}
+            <button
+              className=" bg-back-btn size-8 bg-contain bg-no-repeat "
+              onClick={() => ctx.setActiveMenu("none")}
+            ></button>
+            <div className="flex flex-row items-center justify-center gap-3 flex-1">
+              <BookmarkSM />
+            </div>
           </div>
         </div>
 
-        {ctx.lotteryState.ended && ctx.bookmark === "mint" && (
+        {ctx.lotteryState.status === "ended" && ctx.bookmark === "mint" && (
           <MintingOverPage />
         )}
-        {!ctx.lotteryState.ended && ctx.bookmark === "mint" && <Mints />}
+        {ctx.lotteryState.status == "in-progress" &&
+          ctx.bookmark === "mint" && <Mints />}
+
+        {ctx.lotteryState.status === "not-started" &&
+          ctx.bookmark === "mint" && <PublicMint />}
+
         {ctx.bookmark === "nfts" && <NFTs />}
         {ctx.bookmark === "eggs" && <Eggs />}
         {ctx.bookmark === "tutorial" && <HowItWorks />}
@@ -130,7 +136,7 @@ const MintSection = () => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.3 }}
         className={`${
-          ctx.lotteryState.ended && ctx.bookmark === "mint"
+          ctx.lotteryState.status === "ended" && ctx.bookmark === "mint"
             ? "bg-mint-over"
             : ctx.bookmark === "tutorial"
             ? "bg-old-book"
@@ -140,7 +146,7 @@ const MintSection = () => {
         {/* nav */}
         <div className="absolute flex-col hidden md:flex xl:-right-11 lg:-right-14 md:-right-16 gap-7 lg:gap-3 md:gap-2">
           <Bookmark
-            active={ctx.bookmark === "mint"}
+            active={ctx.bookmark === "mint" || ctx.bookmark === "tutorial"}
             onClick={() => {
               handleBookmarkChange("mint");
             }}
@@ -175,10 +181,14 @@ const MintSection = () => {
           <HowItWorksNav />
         </div>
 
-        {!ctx.lotteryState.ended && ctx.bookmark === "mint" && <Mints />}
-        {ctx.lotteryState.ended && ctx.bookmark === "mint" && (
+        {ctx.lotteryState.status === "ended" && ctx.bookmark === "mint" && (
           <MintingOverPage />
         )}
+        {ctx.lotteryState.status == "in-progress" &&
+          ctx.bookmark === "mint" && <Mints />}
+
+        {ctx.lotteryState.status === "not-started" &&
+          ctx.bookmark === "mint" && <PublicMint />}
         {ctx.bookmark === "nfts" && <NFTs />}
         {ctx.bookmark === "eggs" && <Eggs />}
         {ctx.bookmark === "tutorial" && <HowItWorks />}

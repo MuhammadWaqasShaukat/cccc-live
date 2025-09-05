@@ -19,7 +19,7 @@ const Mints = () => {
   const [mintStatus, setMintStatus] = useState<MintStatus>(defaultMintStatus);
 
   const { getMintStatus } = useWeb3Utils();
-  
+
   const fetchMintStatus = useCallback(async () => {
     try {
       const status = (await getMintStatus()) || defaultMintStatus;
@@ -136,6 +136,16 @@ const Mints = () => {
         </div>
         <div className="flex flex-row items-start justify-center w-full mx-auto">
           <MintButton />
+        </div>
+
+        <div
+          className="w-full flex text-base flex-row justify-center items-center gap-2"
+          onClick={() => ctx.setBookmark("tutorial")}
+        >
+          <div className=" bg-help-icon size-8 bg-contain bg-no-repeat"></div>
+          <span className="font-patrick-hand-sc uppercase text-[#6E5639] text-[1.5em]">
+            How It Works
+          </span>
         </div>
       </div>
 

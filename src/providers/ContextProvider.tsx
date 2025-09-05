@@ -16,9 +16,7 @@ import {
 } from "../types/CottonCandyContext";
 
 const defaultLotteryState: LotteryState = {
-  clamable: false,
-  myClaimedNfts: 0,
-  ended: false,
+  status: "not-started",
 };
 
 const defaultContextValue: CottonCandyContextType =
@@ -113,8 +111,6 @@ export const CottonCandyContextProvider: React.FC<
     const provider = await getProvider(connection);
     const program = new Program(IDL as any, provider);
 
-    let _userMintCount = 0;
-
     const remaining = maxPlayers - totalMinted;
 
     if (remaining > 0) {
@@ -137,20 +133,15 @@ export const CottonCandyContextProvider: React.FC<
       try {
         //@ts-ignore
         const userState = await program.account.userState?.fetch(userStatePda);
-        if (userState) {
-          _userMintCount = userState.userMintCount.toNumber();
-        }
+        // if (userState) {
+        //   _userMintCount = userState.userMintCount.toNumber();
+        // }
       } catch (error) {}
     }
 
     if (totalMinted >= maxPlayers) {
       const _lotteryState: LotteryState = {} as LotteryState;
-      _lotteryState.ended = true;
-
-      if (_userMintCount) {
-        _lotteryState.clamable = true;
-        _lotteryState.myClaimedNfts = _userMintCount;
-      }
+      _lotteryState.status = "ended";
 
       setLotteryState(_lotteryState);
       return;
@@ -167,14 +158,14 @@ export const CottonCandyContextProvider: React.FC<
     return await getNftByType("Egg", EGG_COLLECTION);
   }
 
-  React.useEffect(() => {
-    if (!connected) return;
-    const interval = setInterval(() => {
-      calculatePrice();
-    }, 5000);
-    calculatePrice();
-    return () => clearInterval(interval);
-  }, [connection, connected]);
+  // React.useEffect(() => {
+  //   if (!connected) return;
+  //   const interval = setInterval(() => {
+  //     calculatePrice();
+  //   }, 5000);
+  //   calculatePrice();
+  //   return () => clearInterval(interval);
+  // }, [connection, connected]);
 
   React.useEffect(() => {
     (async () => {
@@ -197,6 +188,25 @@ export const CottonCandyContextProvider: React.FC<
     if (myNfts.length > 0) getNftToEggMap(myNfts);
   }, [myNfts, myEggs]);
 
+  React.useEffect(() => {
+    (async () => {
+      const { maxPlayers, totalMinted, startTime } = await getLotteryState();
+
+      const remaining = maxPlayers - totalMinted;
+      if (remaining <= 0) {
+        setLotteryState({ status: "ended" });
+      } else {
+        const ts = startTime;
+        const now = Date.now();
+        if (ts <= now) {
+          setLotteryState({ status: "in-progress" });
+        } else if (ts > now) {
+          setLotteryState({ status: "not-started" });
+        }
+      }
+    })();
+  }, []);
+
   const value: CottonCandyContextType = {
     price,
     count,
@@ -204,6 +214,7 @@ export const CottonCandyContextProvider: React.FC<
     setPrice,
     calculatePrice,
     lotteryState,
+    setLotteryState,
     currentModal,
     setCurrentModal,
     collectable,

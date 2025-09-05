@@ -128,8 +128,11 @@ export default {
       "how-it-works-leaf": "url('/images/section-mint/mint-old-page.png')",
 
       "close-btn": "url('/images/btn-close.png')",
+      "back-btn": "url('/images/section-mint/back-btn.png')",
 
       "old-book": "url('/images/section-mint/old-book.png')",
+
+      "help-icon": "url('/images/section-mint/help-icon.png')",
 
       "tutorial-step-1": "url('/images/how-it-works/card-1.png')",
       "tutorial-step-2": "url('/images/how-it-works/card-2.png')",

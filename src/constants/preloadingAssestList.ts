@@ -122,7 +122,9 @@ export const IMGS_SOURCES = [
   "/images/arm.png",
   "/images/section-mint/mint-over-bg.png",
   "/images/section-mint/book-mint-over.png",
-
+  "/images/section-mint/old-book.png",
+  "/images/section-mint/mint-old-page.png",
+  "/images/section-mint/help-icon.png",
   "/images/how-it-works/card-1.png",
   "/images/how-it-works/card-2.png",
   "/images/how-it-works/card-3.png",

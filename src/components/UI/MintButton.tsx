@@ -38,13 +38,10 @@ const MintButton = () => {
     }
 
     try {
-      // ctx.setIsPortalOpen(true);
       setisMinting(true);
       await BuyNFT(ctx.count);
-      ctx.calculatePrice();
     } catch (error: any) {
       console.error("Error: ", error.message);
-      // ctx.setIsPortalOpen(false);
       setisMinting(false);
     } finally {
       setisMinting(false);
@@ -55,7 +52,6 @@ const MintButton = () => {
     if (newNft.length > 0) {
       ctx.setCollectiable(newNft[0]);
       ctx.setRevealNFT(true);
-      // ctx.setCurrentModal("claim-egg");
       ctx.setBookmark("nfts");
       ctx.setMyNfts([]);
     }

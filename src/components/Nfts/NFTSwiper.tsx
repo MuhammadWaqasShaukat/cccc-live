@@ -14,7 +14,7 @@ const SlideItem: React.FC<NftState> = (nftState) => {
   const { isEggClaimed } = nftState;
   return (
     <div
-      onClick={() => ctx.setCurrentModal("claim-egg")}
+      onClick={() => ctx.setCurrentModal("nft-preview")}
       className="z-50 flex flex-col items-center justify-center w-full h-full gap-6 p-4 bg-center bg-no-repeat bg-cover bg-claim-egg-bg rounded-2xl"
     >
       <div
@@ -84,6 +84,13 @@ const NFTSwiper = () => {
       onBackgroundClick={() => {}}
       className="z-[51] bg-swiper bg-repeat-y bg-contain justify-start "
     >
+      <button
+        className="absolute top-10 left-10 bg-back-btn size-8 sm:size-12 bg-contain bg-no-repeat z-100"
+        onClick={() => {
+          ctx.setCurrentModal("none");
+          ctx.setActiveMenu("mint");
+        }}
+      ></button>
       <div className="h-screen hidden md:block fade-left-half w-[50%] absolute left-0 z-20 pointer-events-none"></div>
       <div className="h-screen hidden md:block fade-right-half w-[50%] absolute right-0 z-20 pointer-events-none"></div>
       <div className="relative flex flex-col items-center justify-start gap-6 py-4 sm:justify-center l md:gap-10">
