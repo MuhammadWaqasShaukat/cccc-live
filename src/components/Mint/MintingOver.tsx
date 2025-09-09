@@ -1,16 +1,19 @@
 const MintingOverLeaf = () => {
   return (
-    <div className="flex flex-col justify-around items-center  w-full h-full gap-4 mt-4">
-      <div className="bg-mint-over-heading w-[80%] bg-contain bg-no-repeat mx-auto grid place-content-center bg-center lg:h-16 h-14">
-        <span className=" font-patrick-hand-sc lg:text-[28px] text-xl text-[#292726]">
-          MITING IS OVER
-        </span>
+    <div className="flex flex-col justify-around items-center  w-full h-full sm:mt-4">
+      <div className="w-full flex flex-col items-center justify-center gap-2">
+        <div className="bg-mint-over-heading w-[80%] bg-contain bg-no-repeat mx-auto grid place-content-center bg-center lg:h-16 h-14">
+          <span className=" font-patrick-hand-sc lg:text-[28px] text-xl text-[#292726]">
+            MITING IS OVER
+          </span>
+        </div>
+        <div className="">
+          <span className=" font-patrick-hand-sc text-2xl text-[#292726]">
+            10k nfts were just minted
+          </span>
+        </div>
       </div>
-      <div className="">
-        <span className=" font-patrick-hand-sc text-2xl text-[#292726]">
-          10k nfts were just minted
-        </span>
-      </div>
+
       <div className=" w-[80%]">
         <img src="/images/section-mint/mint-over.png" alt="" />
       </div>
@@ -21,7 +24,7 @@ const MintingOverLeaf = () => {
 const MintingOverPage = () => {
   return (
     <>
-      <div className="flex flex-col items-center justify-between h-full gap-6 pt-20 overflow-auto  md:hidden">
+      <div className="flex flex-col items-center justify-between h-full overflow-auto md:hidden">
         <MintingOverLeaf />
       </div>
 

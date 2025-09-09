@@ -47,7 +47,7 @@ const Mints = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-between h-full gap-6 pt-20 overflow-auto  md:hidden">
+      <div className="flex flex-col items-center w-full justify-between h-full gap-6 overflow-auto md:hidden overflow-x-hidden overflow-y-auto">
         <div className="flex flex-row items-end justify-center w-full p-2 bg-bottom bg-cover md:hidden md:justify-start md:bg-none bg-mint-section-heading md:p-0 ">
           <img
             src="./images/letter-m-mint.png"

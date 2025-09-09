@@ -4,31 +4,31 @@ import { Swiper, SwiperSlide } from "swiper/react";
 const HowItWorks = () => {
   return (
     <>
-      <div className=" md:hidden flex flex-col items-center ">
-        <div className=" font-black absolute top-[70px]  font-patrick-hand-sc text-3xl">
+      <div className=" md:hidden flex flex-col items-center justify-center h-full w-full">
+        <div className="font-black font-patrick-hand-sc text-3xl mt-4">
           <span>How It Works</span>
         </div>
 
         <Swiper
-          className=" flex h-full custom-pagintaion"
+          className=" flex  custom-pagintaion flex-1"
           modules={[Pagination, A11y]}
           spaceBetween={0}
           slidesPerView={1}
           pagination={{ clickable: true }}
         >
-          <SwiperSlide className="h-dvh w-dvw flex flex-col justify-center items-center pt-4">
+          <SwiperSlide className="w-dvw flex flex-col justify-center items-center">
             <div className=" bg-tutorial-label-step-1 aspect-square h-20 w-20 bg-no-repeat bg-contain z-10"></div>
             <div className="bg-tutorial-step-1 bg-contain bg-no-repeat aspect-[240/314] w-[80%] -mt-8 "></div>
           </SwiperSlide>
-          <SwiperSlide className="h-dvh w-dvw flex flex-col justify-center items-center pt-4">
+          <SwiperSlide className="w-dvw flex flex-col justify-center items-center">
             <div className=" bg-tutorial-label-step-2 aspect-square h-20 w-20 bg-no-repeat bg-contain z-10"></div>
             <div className="bg-tutorial-step-2 bg-contain bg-no-repeat aspect-[240/314] w-[80%] -mt-8 "></div>
           </SwiperSlide>
-          <SwiperSlide className="h-dvh w-dvw flex flex-col justify-center items-center pt-4">
+          <SwiperSlide className="w-dvw flex flex-col justify-center items-center">
             <div className=" bg-tutorial-label-step-3 aspect-square h-20 w-20 bg-no-repeat bg-contain z-10"></div>
             <div className="bg-tutorial-step-3 bg-contain bg-no-repeat aspect-[240/314] w-[80%] -mt-8 "></div>
           </SwiperSlide>
-          <SwiperSlide className="h-dvh w-dvw flex flex-col justify-center items-center pt-4">
+          <SwiperSlide className="w-dvw flex flex-col justify-center items-center">
             <div className=" bg-tutorial-label-step-4 aspect-square h-20 w-18 bg-no-repeat bg-contain z-10"></div>
             <div className="bg-tutorial-step-4 bg-contain bg-no-repeat aspect-[240/363] w-[70%] -mt-8 "></div>
           </SwiperSlide>

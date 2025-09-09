@@ -97,13 +97,14 @@ const MintSection = () => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.3 }}
-        className={`block h-screen pb-4 bg-repeat-y bg-cover  md:hidden w-dvw ${
+        className={`h-dvh pb-4 bg-repeat-y bg-cover flex flex-col justify-start items-start  md:hidden overflow-hidden w-dvw ${
           ctx.bookmark === "tutorial"
             ? "bg-how-it-works-leaf bg-center"
             : "bg-sm-mint-section-book"
         }`}
       >
-        <div className="fixed top-0 left-0 right-0 h-[70px] px-5 bg-right bg-cover  md:hidden bg-bm-sm-header z-[51] ">
+        {/* fixed top-0 left-0 right-0  */}
+        <div className="h-[70px] sticky top-0 w-full  px-5 bg-right bg-cover  md:hidden bg-bm-sm-header z-[51] ">
           <div className="flex flex-row items-center justify-start gap-3 pt-5 xs:pt-4 sm:w-2/3">
             {/* back button */}
             <button
@@ -117,7 +118,8 @@ const MintSection = () => {
         </div>
 
         {ctx.lotteryState.status === "ended" && ctx.bookmark === "mint" && (
-          <MintingOverPage />
+          <PublicMint />
+          // <MintingOverPage />
         )}
         {ctx.lotteryState.status == "in-progress" &&
           ctx.bookmark === "mint" && <Mints />}

@@ -27,7 +27,7 @@ const PublicMint = () => {
   }, []);
   return (
     <>
-      <div className="flex flex-col items-center gap-4 pt-20 justify-normal md:hidden">
+      <div className="flex flex-col items-center gap-4 w-full justify-normal md:hidden overflow-auto">
         <div className="relative grid gap-2 mt-2 place-content-center w-[324px] ">
           <div className="absolute top-0 right-0 w-20 h-20 bg-no-repeat bg-contain bg-mint-section-book-tr"></div>
           <div className="absolute top-0 left-0 w-20 h-20 -rotate-90 bg-no-repeat bg-contain bg-mint-section-book-tr"></div>
