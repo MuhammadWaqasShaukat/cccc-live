@@ -118,8 +118,7 @@ const MintSection = () => {
         </div>
 
         {ctx.lotteryState.status === "ended" && ctx.bookmark === "mint" && (
-          <PublicMint />
-          // <MintingOverPage />
+          <MintingOverPage />
         )}
         {ctx.lotteryState.status == "in-progress" &&
           ctx.bookmark === "mint" && <Mints />}
