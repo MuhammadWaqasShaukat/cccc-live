@@ -251,8 +251,8 @@ export const archerBlueAnimationConfig: ArchersMultiSpriteAnimationConfig = {
       frameCount: 22,
     },
   ],
-  spriteAnimationSpeed: 10,
-  bowReleasedFrame: 82,
+  spriteAnimationSpeed: 30,
+  bowReleasedFrame: 81,
 };
 
 export const archerRedAnimationConfig: ArchersMultiSpriteAnimationConfig = {
@@ -279,8 +279,8 @@ export const archerRedAnimationConfig: ArchersMultiSpriteAnimationConfig = {
       frameCount: 22,
     },
   ],
-  spriteAnimationSpeed: 10,
-  bowReleasedFrame: 23,
+  spriteAnimationSpeed: 30,
+  bowReleasedFrame: 22,
 };
 
 export const goodEggRevealAnimationConfig: EggAnimationSpriteConfig = {

@@ -41,8 +41,15 @@ const NFTPreview = () => {
   }
 
   return (
-    <Modal onBackgroundClick={handleKeepNFT} className="z-[51] bg-swiper ">
-      <div className="z-50 flex flex-col items-center justify-center w-dvw h-dvh p-4 gap-10 bg-center bg-no-repeat bg-cover bg-claim-egg-bg overflow-hidden">
+    <Modal
+      onBackgroundClick={handleKeepNFT}
+      className="z-[51] bg-swiper pointer-events-auto"
+    >
+      <div
+        onClick={handleKeepNFT}
+        data-preview-modal
+        className="z-50 flex flex-col items-center justify-center w-dvw h-dvh p-4 gap-10 bg-center bg-no-repeat bg-cover bg-claim-egg-bg overflow-hidden"
+      >
         <div className="bg-banner-claim-nft w-full bg-contain bg-no-repeat  max-w-[400px] aspect-[584/159] flex flex-col justify-center items-center">
           <h1 className=" uppercase text-[#1F1F1F] font-patrick-hand-sc lg:text-5xl md:text-4xl text-3xl mb-5">
             NFT #1341

@@ -1,22 +1,32 @@
 import Modal from "./UI/Modal";
 import { CottonCandyContext } from "../providers/ContextProvider";
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import AnimatedElement from "./UI/AnimatedElement";
 import { ANIMATION_WEBM_SOURCES } from "../constants/animatedElements";
 import { motion } from "framer-motion";
 
+const AboutVideoPlay = () => {
+  const aboutRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (aboutRef.current) {
+      aboutRef.current.play().catch((error) => {
+        console.error("Error attempting to play", error);
+      });
+    }
+  }, []);
+
+  return (
+    <AnimatedElement
+      videoRef={aboutRef}
+      className=""
+      source={ANIMATION_WEBM_SOURCES["about"]}
+    />
+  );
+};
+
 const AboutSection = () => {
   const ctx = useContext(CottonCandyContext);
-  const aboutRef = useRef<HTMLVideoElement>(null);
-  const smAboutRef = useRef<HTMLVideoElement>(null);
-
-  const handleMouseEnter = (videoRef: any) => {
-    videoRef.current?.play();
-  };
-
-  const handleMouseLeave = (videoRef: any) => {
-    videoRef.current?.pause();
-  };
 
   return (
     <Modal
@@ -42,16 +52,7 @@ const AboutSection = () => {
         <div className="bg-center bg-no-repeat xs:w-[350px] xs:h-[475px]  h-[435px] w-[300px] bg-contain sm:hidden bg-about-section-castle-sm relative  flex flex-col justify-center items-center">
           <div className="h-[40%] text-center w-[63%] -top-[30%] min-w-[150px] flex flex-col justify-end items-center absolute">
             <div className="relative ">
-              <div
-                className=" absolute h-full w-full z-[999]"
-                onMouseEnter={() => handleMouseEnter(aboutRef)}
-                onMouseLeave={() => handleMouseLeave(aboutRef)}
-              ></div>
-              <AnimatedElement
-                videoRef={aboutRef}
-                className=""
-                source={ANIMATION_WEBM_SOURCES["about"]}
-              />
+              <AboutVideoPlay />
             </div>
           </div>
 
@@ -96,16 +97,7 @@ const AboutSection = () => {
         className={`hidden sm:bg-about-section-castle bg-about-section-castle-sm w-[530px] h-[580px]   md:w-[650px] md:h-[700px] xl:w-[700px] xl:h-[750px] xl:max-w-[1163px]  bg-no-repeat sm:flex flex-col justify-end  bg-contain md:bg-center bg-bottom`}
       >
         <div className="relative h-[40%] text-center w-[47.5%] min-w-[150px] mx-auto pt-8 flex flex-col justify-end items-center sm:mb-8 mb-16">
-          <div
-            className=" absolute h-full w-full z-[999] -ml-4"
-            onMouseEnter={() => handleMouseEnter(smAboutRef)}
-            onMouseLeave={() => handleMouseLeave(smAboutRef)}
-          ></div>
-          <AnimatedElement
-            videoRef={smAboutRef}
-            className="-ml-4"
-            source={ANIMATION_WEBM_SOURCES["about"]}
-          />
+          <AboutVideoPlay />
         </div>
 
         <div className=" sm:h-[55%] h-[60%] bg-no-repeat bg-center md:px-16 xl:px-20 px-14 pt-4 text-center sm:w-[90%] w-[70%] mx-auto sm:pt-12">

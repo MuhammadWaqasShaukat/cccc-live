@@ -8,12 +8,18 @@ const Remaining: React.FC<{ total: number; remaining: number }> = ({
         Remaining
       </h4>
       <div className="ml-4 font-semibold font-heavitas">
-        <span className="text-lg md:text-xl lg:text-2xl xl:text-3xl  text-[#292726]">
-          {remaining}
-          <span className="text-base lg:text-xl md:text-lg xl:text-2xl  text-[#29272699]">
-            / {total}
+        {remaining && total ? (
+          <span className="text-lg md:text-xl lg:text-2xl xl:text-3xl  text-[#292726]">
+            {remaining}
+            <span className="text-base lg:text-xl md:text-lg xl:text-2xl  text-[#29272699]">
+              / {total}
+            </span>
           </span>
-        </span>
+        ) : (
+          <span className="text-sm lg:text-lg md:text-base xl:text-xl  text-[#29272699]">
+            loading...
+          </span>
+        )}
       </div>
     </div>
   );

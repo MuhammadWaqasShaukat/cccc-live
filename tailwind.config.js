@@ -80,6 +80,7 @@ export default {
       "menu-btn": "url('/images/section-hero/menu-button.png')",
 
       "menu-btn-hovered": "url('/images/section-hero/menu-button-hovered.png')",
+      "menu-btn-disabled": "url('/images/section-hero/menu-button-disabled.png')",
       "hero-connect": "url('/images/section-hero/connect.png')",
       "hero-section-logo": "url('/images/section-hero/logo-lg.png')",
       "top-bar-cow-face": "url('/images/cow-face.png')",

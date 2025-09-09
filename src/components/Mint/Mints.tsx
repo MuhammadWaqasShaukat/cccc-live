@@ -104,7 +104,7 @@ const Mints = () => {
             </div>
             <div>
               <span className="text-xl text-black font-patrick-hand-sc">
-                {ctx.estimate ?? mintStatus.price} Sol
+                {ctx.estimate?.toFixed(4) ?? mintStatus.price?.toFixed(4)} Sol
               </span>
             </div>
           </div>
@@ -117,7 +117,7 @@ const Mints = () => {
             </div>
             <div>
               <span className="text-xl text-black font-patrick-hand-sc">
-                {ctx.gasFee} Sol
+                {ctx.gasFee?.toFixed(4)} Sol
               </span>
             </div>
           </div>
@@ -128,7 +128,9 @@ const Mints = () => {
             </div>
             <div>
               <span className="text-xl text-black font-patrick-hand-sc">
-                {(ctx.gasFee + (ctx.estimate ?? mintStatus.price)).toFixed(9)}{" "}
+                {(ctx?.gasFee + (ctx?.estimate ?? mintStatus?.price)).toFixed(
+                  4
+                )}{" "}
                 Sol
               </span>
             </div>
@@ -214,7 +216,7 @@ const Mints = () => {
               </div>
               <div>
                 <span className="text-xl text-black font-patrick-hand-sc xl:text-3xl lg:text-2xl md:text-xl">
-                  {ctx.estimate ?? mintStatus.price} Sol
+                  {ctx.estimate?.toFixed(4) ?? mintStatus.price?.toFixed(4)} Sol
                 </span>
               </div>
             </div>
@@ -227,7 +229,7 @@ const Mints = () => {
               </div>
               <div>
                 <span className="text-xl text-black font-patrick-hand-sc xl:text-3xl lg:text-2xl md:text-xl">
-                  {ctx.gasFee} Sol
+                  {ctx.gasFee?.toFixed(4)} Sol
                 </span>
               </div>
             </div>
@@ -240,7 +242,9 @@ const Mints = () => {
               </div>
               <div>
                 <span className="text-xl text-black font-patrick-hand-sc xl:text-3xl lg:text-2xl md:text-xl">
-                  {(ctx.gasFee + (ctx.estimate ?? mintStatus.price)).toFixed(9)}{" "}
+                  {(ctx?.gasFee + (ctx?.estimate ?? mintStatus?.price)).toFixed(
+                    4
+                  )}{" "}
                   Sol
                 </span>
               </div>

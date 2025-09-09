@@ -32,12 +32,17 @@ const NFTActions = ({
 
   return (
     <div className="flex flex-row items-center justify-center  gap-4 sm:gap-9">
-      <button className="bg-sell-nft-btn h-14 w-40 relative bg-contain bg-no-repeat group z-40">
+      <a
+        className="bg-sell-nft-btn h-14 w-40 relative bg-contain bg-no-repeat group z-40"
+        href="https://magiceden.io/"
+        target="_blank"
+        rel="noreferrer"
+      >
         <span className="absolute inset-0 z-50 transition duration-200 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20"></span>
         <span className="absolute inset-0 grid w-full h-full text-2xl leading-none text-white uppercase place-content-center font-patrick-hand z-60">
           Sell NFT
         </span>
-      </button>
+      </a>
 
       <button
         disabled={!canSummonEgg || isEggClaimed}

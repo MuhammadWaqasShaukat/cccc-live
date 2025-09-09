@@ -37,7 +37,7 @@ const Nav: React.FC<NavProps> = ({ className }) => {
               mint
             </button>
           </li>
-          <li className="space-y-1 bg-menu-btn hover:bg-menu-btn-hovered w-[60%] min-w-40 max-w-60 min-h-14 h-16 max-h-20 bg-center  bg-no-repeat bg-contain  pointer-events-auto">
+          <li className="space-y-1 bg-menu-btn-disabled  w-[60%] min-w-40 max-w-60 min-h-14 h-16 max-h-20 bg-center  bg-no-repeat bg-contain  pointer-events-auto">
             <button
               disabled
               onClick={() => {

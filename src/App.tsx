@@ -64,7 +64,7 @@ function App() {
     <>
       <div ref={cursorRef} className="sm:block hidden" id="custom-cursor"></div>
 
-      {loading && <SnakeLoader className="!bg-black" />}
+      {loading && <SnakeLoader className="!bg-[#848484]" />}
 
       <div className="overflow-x-hidden">
         <Home />
