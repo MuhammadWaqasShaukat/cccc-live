@@ -107,7 +107,7 @@ const MintSection = () => {
           <div className="flex flex-row items-center justify-start gap-3 pt-5 xs:pt-4 sm:w-2/3">
             {/* back button */}
             <button
-              className=" bg-back-btn size-8 bg-contain bg-no-repeat "
+              className=" bg-back-btn aspect-square size-8 bg-contain bg-no-repeat "
               onClick={() => ctx.setActiveMenu("none")}
             ></button>
             <div className="flex flex-row items-center justify-center gap-3 flex-1">
