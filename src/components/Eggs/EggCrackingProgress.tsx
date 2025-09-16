@@ -1,14 +1,9 @@
-import { useEffect } from "react";
 import {
   buildStyles,
   CircularProgressbarWithChildren,
 } from "react-circular-progressbar";
 
 const EggCrackingProgress = ({ crackpoints }: { crackpoints: number }) => {
-  useEffect(() => {
-    console.log(crackpoints);
-  }, [crackpoints]);
-
   return (
     <CircularProgressbarWithChildren
       text={`${crackpoints}/10k`}

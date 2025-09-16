@@ -8,10 +8,10 @@ import { motion } from "framer-motion";
 import anchorElement from "../utils/anchorELement";
 
 import * as config from "../constants/animationsConfig";
-import { useHeroAnimator } from "../hooks/useHeroAnimator";
 import { useArcherSpriteAnimation } from "../hooks/useArcherSpriteAnimation";
 import usePopCat from "../hooks/usePopCat";
 import { useSpritePreloader } from "../hooks/useSpritePreloader";
+import { useAnimationConfigs } from "../hooks/useAnimationConfigs";
 
 type Dimensions = { width: number; height: number };
 
@@ -79,6 +79,7 @@ const HeroSection = () => {
   const catRef = useRef<HTMLImageElement | null>(null);
   const catContainerRef = useRef<HTMLDivElement>(null);
   const ctx = useContext(CottonCandyContext);
+  const animations = useAnimationConfigs();
 
   useSpritePreloader();
 
@@ -108,14 +109,6 @@ const HeroSection = () => {
     height: number;
   }>({ width: 0, height: 0 });
 
-  const fireRef = useRef<HTMLDivElement>(null);
-  const magicRef = useRef<HTMLDivElement>(null);
-  const candleRef = useRef<HTMLDivElement>(null);
-  const whaleRef = useRef<HTMLDivElement>(null);
-  const swordmanRef = useRef<HTMLDivElement>(null);
-  const sandwichmenRef = useRef<HTMLDivElement>(null);
-  const kingFrogRef = useRef<HTMLDivElement>(null);
-
   // anchors
   const anchor_Ref = useRef<HTMLDivElement>(null);
   const anchor_0_Ref = useRef<HTMLDivElement>(null);
@@ -132,8 +125,6 @@ const HeroSection = () => {
   const arrowTwoRef = useRef<HTMLDivElement>(null);
 
   // heroes ref
-
-  const redCastleLightSaberRef = useRef<HTMLDivElement>(null);
 
   // red
 
@@ -161,57 +152,72 @@ const HeroSection = () => {
   const resizeHeroes = () => {
     // lightening heroes
 
+    heroesDimensions.current.set(animations.logo.ref, {
+      width: window.innerWidth * 0.25,
+      height: window.innerWidth * 0.25,
+    });
+
+    heroesDimensions.current.set(animations.gold.ref, {
+      width: window.innerWidth * 0.65,
+      height: window.innerWidth * 0.65,
+    });
+
+    heroesDimensions.current.set(animations.sheep.ref, {
+      width: window.innerWidth * 0.65,
+      height: window.innerWidth * 0.65,
+    });
+
     const redCastleEl = document.getElementById("redCastleBottom");
     const castleRect = redCastleEl?.getBoundingClientRect();
 
     if (castleRect) {
-      if (magicRef.current) {
-        heroesDimensions.current.set(magicRef, {
+      if (animations.magic.ref.current) {
+        heroesDimensions.current.set(animations.magic.ref, {
           width: castleRect.width * 0.75,
           height: castleRect.width * 0.75,
         });
       }
-      if (candleRef.current) {
-        heroesDimensions.current.set(candleRef, {
+      if (animations.candle.ref.current) {
+        heroesDimensions.current.set(animations.candle.ref, {
           width: castleRect.width * 0.45,
           height: castleRect.width * 0.45,
         });
       }
-      if (whaleRef.current) {
-        heroesDimensions.current.set(whaleRef, {
+      if (animations.whale.ref.current) {
+        heroesDimensions.current.set(animations.whale.ref, {
           width: castleRect.width * 0.9,
           height: castleRect.width * 0.9,
         });
       }
-      if (fireRef.current) {
-        heroesDimensions.current.set(fireRef, {
+      if (animations.fire.ref.current) {
+        heroesDimensions.current.set(animations.fire.ref, {
           width: castleRect.width * 0.3,
           height: (castleRect.width * 0.3) / 2,
         });
       }
-      if (swordmanRef.current) {
-        heroesDimensions.current.set(swordmanRef, {
+      if (animations.swordman.ref.current) {
+        heroesDimensions.current.set(animations.swordman.ref, {
           width: castleRect.width * 0.6,
           height: castleRect.width * 0.6,
         });
       }
 
-      if (redCastleLightSaberRef.current) {
-        heroesDimensions.current.set(redCastleLightSaberRef, {
+      if (animations.lightSabre.ref.current) {
+        heroesDimensions.current.set(animations.lightSabre.ref, {
           width: castleRect.width * 0.35,
           height: castleRect.width * 0.35,
         });
       }
 
-      if (sandwichmenRef.current) {
-        heroesDimensions.current.set(sandwichmenRef, {
+      if (animations.sandwichmen.ref.current) {
+        heroesDimensions.current.set(animations.sandwichmen.ref, {
           width: castleRect.width * 0.4,
           height: castleRect.width * 0.4,
         });
       }
 
-      if (kingFrogRef.current) {
-        heroesDimensions.current.set(kingFrogRef, {
+      if (animations.kingFrog.ref.current) {
+        heroesDimensions.current.set(animations.kingFrog.ref, {
           width: castleRect.width * 0.4,
           height: castleRect.width * 0.4,
         });
@@ -234,18 +240,18 @@ const HeroSection = () => {
   };
 
   const positionElement = () => {
-    anchorElement(anchor_0_Ref, tombstoneRef, { bottom: true });
-    anchorElement(anchor_Ref, catContainerRef, { bottom: true });
+    anchorElement(anchor_2_Ref, tombstoneRef, { bottom: true });
+    // anchorElement(anchor_Ref, catContainerRef, { bottom: true });
     anchorElement(anchor_0_Ref, candleOneRef, { bottom: true });
     anchorElement(anchor_1_Ref, candleTwoRef, { bottom: true });
     anchorElement(anchor_0_Ref, arrowOneRef, { bottom: true });
     anchorElement(anchor_1_Ref, arrowTwoRef, { bottom: true });
-    anchorElement(anchor_Ref, fireRef, { bottom: true });
-    anchorElement(anchor_1_Ref, swordmanRef, { bottom: true });
-    anchorElement(anchor_0_Ref, candleRef, { bottom: true });
-    anchorElement(anchor_2_Ref, redCastleLightSaberRef, { bottom: true });
-    anchorElement(anchor_1_Ref, whaleRef, { bottom: true });
-    anchorElement(anchor_2_Ref, magicRef, { bottom: true });
+    anchorElement(anchor_Ref, animations.fire.ref, { bottom: true });
+    anchorElement(anchor_1_Ref, animations.swordman.ref, { bottom: true });
+    anchorElement(anchor_0_Ref, animations.candle.ref, { bottom: true });
+    anchorElement(anchor_2_Ref, animations.lightSabre.ref, { bottom: true });
+    anchorElement(anchor_1_Ref, animations.whale.ref, { bottom: true });
+    anchorElement(anchor_2_Ref, animations.magic.ref, { bottom: true });
 
     positionCastleTop(topRed, roofRed);
     positionCastleTop(topBlue, roofBlue);
@@ -351,12 +357,8 @@ const HeroSection = () => {
     } else {
       await disconnect();
       ctx.setCollectiable(null);
-      ctx.setMyEggs([]);
-      ctx.setMyNfts([]);
       ctx.setNftToEggMap({});
       ctx.setCurrentModal(null);
-      ctx.setNftMint(null);
-      ctx.setRefreshNftState("");
       ctx.setBookmark("mint");
     }
   };
@@ -389,65 +391,15 @@ const HeroSection = () => {
     spritekey: "archer-red",
   });
 
-  const {
-    startAnimation: playLightSabreAnimation,
-    stopAnimation: stopLightSabreAnimation,
-  } = useHeroAnimator(
-    redCastleLightSaberRef,
-    config.lightSabreAnimationConfig,
-    "light-sabre"
-  );
-
-  const {
-    startAnimation: playWhaleAnimation,
-    stopAnimation: stopWhaleAnimation,
-  } = useHeroAnimator(whaleRef, config.whaleAnimationsConfig, "whale-monkey");
-
-  const {
-    startAnimation: playMagicAnimation,
-    stopAnimation: stopMagicAnimation,
-  } = useHeroAnimator(magicRef, config.magicAnimationConfig, "magic-wizard");
-
-  const {
-    startAnimation: playSowrdAnimation,
-    stopAnimation: stopSowrdAnimation,
-  } = useHeroAnimator(
-    swordmanRef,
-    config.swordsmenAnimationConfig,
-    "swords-warrior"
-  );
-
-  const {
-    startAnimation: playFireAnimation,
-    stopAnimation: stopFireAnimation,
-  } = useHeroAnimator(fireRef, config.fireAnimationConfig, "fire");
-
-  const {
-    startAnimation: playSandwichAnimation,
-    stopAnimation: stopSandWichAnimation,
-  } = useHeroAnimator(
-    sandwichmenRef,
-    config.sandwichAnimationConfig,
-    "king-blue"
-  );
-
-  const {
-    startAnimation: playKingFrogAnimation,
-    stopAnimation: stopKingFrogAnimation,
-  } = useHeroAnimator(
-    kingFrogRef,
-    config.kingFrogAnimationConfig,
-    "archer-red"
-  );
-
-  const {
-    startAnimation: playCandleAnimation,
-    stopAnimation: stopCandleAnimation,
-  } = useHeroAnimator(candleRef, config.candleAnimationConfig, "candle-wizard");
-
   useEffect(() => {
     ctx.setAssestsPreloaded(true);
   }, []);
+
+  console.log(heroesDimensions.current.get(animations.sheep.ref));
+
+  useEffect(() => {
+    animations.gold.startAnimation();
+  }, [animations, animations.gold.startAnimation]);
 
   return (
     <motion.div
@@ -486,28 +438,65 @@ const HeroSection = () => {
             </span>
           </button>
         </div>
-        <Nav className={"flex-1 absolute bottom-[25%] z-[41]"} />
+        <Nav
+          className={"flex-1 absolute bottom-[25%] z-40 pointer-events-none"}
+        />
+        <div
+          ref={animations.gold.ref}
+          style={{
+            width: `${
+              heroesDimensions.current.get(animations.gold.ref)?.width
+            }px`,
+            height: `${
+              heroesDimensions.current.get(animations.gold.ref)?.height
+            }px`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "100% 100%",
+            backgroundPosition: "0% 0%",
+          }}
+          className=" pointer-events-none  max-h-[400px] max-w-[400px] min-w-[200px] min-h-[200px] bg-no-repeat bg-contain bg-bottom absolute left-[50%] -translate-x-[50%] -bottom-[10%] z-40"
+        ></div>
         <div className="bg-hero-section-lower  bg-no-repeat bg-cover h-[20%] bg-end absolute bottom-0 left-0 right-0"></div>
-        <div className="bg-hero-section-logo max-w-[700px] max-h-[400px] min-w-[288px] h-[35%] w-[50%] min-h-[149px] bg-no-repeat bg-contain bg-bottom absolute left-[50%] -translate-x-[50%] top-[5%]"></div>
+
+        <div
+          onMouseEnter={animations.logo.startAnimation}
+          onMouseLeave={animations.logo.stopAnimation}
+          ref={animations.logo.ref}
+          style={{
+            width: `${
+              heroesDimensions.current.get(animations.logo.ref)?.width
+            }px`,
+            height: `${
+              heroesDimensions.current.get(animations.logo.ref)?.height
+            }px`,
+            backgroundImage:
+              "url('/images/animations/sprites/logo/thumbnail.png')",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "100% 100%",
+            backgroundPosition: "0% 0%",
+          }}
+          className="  max-h-[350px] max-w-[350px] min-w-[200px] min-h-[200px] bg-no-repeat bg-contain bg-bottom absolute left-[50%] -translate-x-[50%] z-40"
+        ></div>
 
         {/* Heroes */}
         {/* casltes  red*/}
         <div className="block relative md:static top-[75%] md:top-auto ">
           <div
             ref={topRed}
-            // md:bottom-[40%] lg:bottom-[50%]  bottom-[11rem]
             className=" bg-hero-section-castle-red-1 max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-[1]  bg-left-bottom  md:left-0"
           >
             {/* Command : red */}
 
             <div
-              onMouseEnter={playKingFrogAnimation}
-              onMouseLeave={stopKingFrogAnimation}
-              ref={kingFrogRef}
+              onMouseEnter={animations.kingFrog.startAnimation}
+              onMouseLeave={animations.kingFrog.stopAnimation}
+              ref={animations.kingFrog.ref}
               style={{
-                width: `${heroesDimensions.current.get(kingFrogRef)?.width}px`,
+                width: `${
+                  heroesDimensions.current.get(animations.kingFrog.ref)?.width
+                }px`,
                 height: `${
-                  heroesDimensions.current.get(kingFrogRef)?.height
+                  heroesDimensions.current.get(animations.kingFrog.ref)?.height
                 }px`,
                 backgroundImage:
                   "url('/images/animations/sprites/frog-king/thumbnail.png')",
@@ -606,15 +595,15 @@ const HeroSection = () => {
 
         {/* Light Saber: red */}
         <div
-          onMouseEnter={playLightSabreAnimation}
-          onMouseLeave={stopLightSabreAnimation}
-          ref={redCastleLightSaberRef}
+          onMouseEnter={animations.lightSabre.startAnimation}
+          onMouseLeave={animations.lightSabre.stopAnimation}
+          ref={animations.lightSabre.ref}
           style={{
             width: `${
-              heroesDimensions.current.get(redCastleLightSaberRef)?.width
+              heroesDimensions.current.get(animations.lightSabre.ref)?.width
             }px`,
             height: `${
-              heroesDimensions.current.get(redCastleLightSaberRef)?.height
+              heroesDimensions.current.get(animations.lightSabre.ref)?.height
             }px`,
 
             backgroundImage:
@@ -627,12 +616,16 @@ const HeroSection = () => {
         ></div>
 
         <div
-          onMouseEnter={playMagicAnimation}
-          onMouseLeave={stopMagicAnimation}
-          ref={magicRef}
+          onMouseEnter={animations.magic.startAnimation}
+          onMouseLeave={animations.magic.stopAnimation}
+          ref={animations.magic.ref}
           style={{
-            width: `${heroesDimensions.current.get(magicRef)?.width}px`,
-            height: `${heroesDimensions.current.get(magicRef)?.height}px`,
+            width: `${
+              heroesDimensions.current.get(animations.magic.ref)?.width
+            }px`,
+            height: `${
+              heroesDimensions.current.get(animations.magic.ref)?.height
+            }px`,
             backgroundImage:
               "url('/images/animations/sprites/magic-wizard/thumbnail.png')",
             backgroundRepeat: "no-repeat",
@@ -660,7 +653,7 @@ const HeroSection = () => {
         ></div>
         {/* Cavlary : red */}
 
-        <div
+        {/* <div
           ref={catContainerRef}
           className="w-[25%] max-w-56 min-w-36  object-bottom h-auto absolute bottom-0  md:left-[8%]  left-[15%] z-40"
         >
@@ -679,27 +672,69 @@ const HeroSection = () => {
               className=""
             ></img>
           </div>
+        </div> */}
+
+        <div
+          onMouseEnter={animations.sheep.startAnimation}
+          onMouseLeave={animations.sheep.stopAnimation}
+          ref={animations.sheep.ref}
+          style={{
+            width: `${
+              heroesDimensions.current.get(animations.sheep.ref)?.width
+            }px`,
+            height: `${
+              heroesDimensions.current.get(animations.sheep.ref)?.height
+            }px`,
+            backgroundImage:
+              "url('/images/animations/sprites/sheep/thumbnail.png')",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "100% 100%",
+            backgroundPosition: "0% 0%",
+          }}
+          className="bg-left-bottom absolute left-[5%] md:left-[8%] z-40 bg-contain bg-no-repeat  max-w-64 max-h-64 min-h-40 min-w-40 -bottom-[5%]  aspect-square "
+        >
+          <div className=" h-full w-full relative">
+            <div ref={catContainerRef} className=" absolute -top-[35%]">
+              <div className="relative flex flex-col items-center justify-start mt-5">
+                <div
+                  className=" absolute w-[26%] aspect-square top-[18.8%] left-[13.8%] pointer-events-auto"
+                  onMouseDown={handleMouseDown}
+                  onMouseUp={handleMouseUp}
+                  onMouseLeave={handleMouseUp}
+                ></div>
+                <img
+                  ref={catRef}
+                  src="/images/section-hero/popcat.png"
+                  draggable={false}
+                  alt=""
+                  className=""
+                ></img>
+              </div>
+            </div>
+          </div>
         </div>
+
         {/* Wizard: red */}
 
         <div className=" bg-hero-section-distant  lg:h-[68%] md:h-[65%] w-[100%] min-w-[300px] min-h-[200px] bg-contain sm:bg-repeat-x bg-no-repeat bg-bottom absolute sm:bottom-[16%] bottom-[18%] z-0"></div>
         {/* castle-blue */}
         <div className="block relative md:static top-[75%] md:top-auto">
-          {/* md:bottom-[40%]  lg:bottom-[50%] bottom-[11rem] */}
           <div
             ref={topBlue}
             className="bg-hero-section-castle-blue-1 max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-0  bg-right-bottom right-0"
           >
             <div
-              onMouseEnter={playSandwichAnimation}
-              onMouseLeave={stopSandWichAnimation}
-              ref={sandwichmenRef}
+              onMouseEnter={animations.sandwichmen.startAnimation}
+              onMouseLeave={animations.sandwichmen.stopAnimation}
+              ref={animations.sandwichmen.ref}
               style={{
                 width: `${
-                  heroesDimensions.current.get(sandwichmenRef)?.width
+                  heroesDimensions.current.get(animations.sandwichmen.ref)
+                    ?.width
                 }px`,
                 height: `${
-                  heroesDimensions.current.get(sandwichmenRef)?.height
+                  heroesDimensions.current.get(animations.sandwichmen.ref)
+                    ?.height
                 }px`,
                 backgroundImage:
                   "url('/images/animations/sprites/sandwich/thumbnail.png')",
@@ -794,12 +829,16 @@ const HeroSection = () => {
         </div>
 
         <div
-          onMouseEnter={playWhaleAnimation}
-          onMouseLeave={stopWhaleAnimation}
-          ref={whaleRef}
+          onMouseEnter={animations.whale.startAnimation}
+          onMouseLeave={animations.whale.stopAnimation}
+          ref={animations.whale.ref}
           style={{
-            width: `${heroesDimensions.current.get(whaleRef)?.width}px`,
-            height: `${heroesDimensions.current.get(whaleRef)?.height}px`,
+            width: `${
+              heroesDimensions.current.get(animations.whale.ref)?.width
+            }px`,
+            height: `${
+              heroesDimensions.current.get(animations.whale.ref)?.height
+            }px`,
             backgroundImage:
               "url('/images/animations/sprites/monkey/thumbnail.png')",
             backgroundRepeat: "no-repeat",
@@ -810,13 +849,17 @@ const HeroSection = () => {
         />
 
         <div
-          ref={swordmanRef}
-          onMouseEnter={playSowrdAnimation}
-          onMouseLeave={stopSowrdAnimation}
+          ref={animations.swordman.ref}
+          onMouseEnter={animations.swordman.startAnimation}
+          onMouseLeave={animations.swordman.stopAnimation}
           className=" md:block hidden max-w-48 max-h-48 min-w-28 min-h-28 z-40 absolute bg-contain bg-no-repeat -right-[2%] bg-right "
           style={{
-            width: `${heroesDimensions.current.get(swordmanRef)?.width}px`,
-            height: `${heroesDimensions.current.get(swordmanRef)?.height}px`,
+            width: `${
+              heroesDimensions.current.get(animations.swordman.ref)?.width
+            }px`,
+            height: `${
+              heroesDimensions.current.get(animations.swordman.ref)?.height
+            }px`,
             backgroundImage:
               "url('/images/animations/sprites/swordsmen/thumbnail.png')",
             backgroundRepeat: "no-repeat",
@@ -826,24 +869,32 @@ const HeroSection = () => {
         ></div>
 
         <div
-          onMouseEnter={playFireAnimation}
-          onMouseLeave={stopFireAnimation}
-          ref={fireRef}
+          onMouseEnter={animations.fire.startAnimation}
+          onMouseLeave={animations.fire.stopAnimation}
+          ref={animations.fire.ref}
           className="sprite-container absolute right-[30%] max-w-48 max-h-24 z-50 "
           style={{
-            width: `${heroesDimensions.current.get(fireRef)?.width}px`,
-            height: `${heroesDimensions.current.get(fireRef)?.height}px`,
+            width: `${
+              heroesDimensions.current.get(animations.fire.ref)?.width
+            }px`,
+            height: `${
+              heroesDimensions.current.get(animations.fire.ref)?.height
+            }px`,
           }}
         />
 
         <div
-          onMouseEnter={playCandleAnimation}
-          onMouseLeave={stopCandleAnimation}
-          ref={candleRef}
+          onMouseEnter={animations.candle.startAnimation}
+          onMouseLeave={animations.candle.stopAnimation}
+          ref={animations.candle.ref}
           className="sprite-container absolute bg-bottom max-h-60 max-w-60 min-w-36 min-h-36 right-[13%] bottom-0  z-40 "
           style={{
-            width: `${heroesDimensions.current.get(candleRef)?.width}px`,
-            height: `${heroesDimensions.current.get(candleRef)?.height}px`,
+            width: `${
+              heroesDimensions.current.get(animations.candle.ref)?.width
+            }px`,
+            height: `${
+              heroesDimensions.current.get(animations.candle.ref)?.height
+            }px`,
             backgroundImage:
               "url('/images/animations/sprites/candle-wizard/thumbnail.png')",
             backgroundRepeat: "no-repeat",

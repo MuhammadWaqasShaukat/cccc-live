@@ -1,34 +1,15 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import NFTBox from "./NFTBox";
-import { CottonCandyContext } from "../../providers/ContextProvider";
 import NftLoader from "../UI/NftLoader";
 import NFTInstructions from "./NFTInstructions";
+import { useGetAllNfts } from "../../hooks/useGetAllNFTs";
+import { CottonCandyContext } from "../../providers/ContextProvider";
 
 export const NFTs = () => {
-  const ctx = useContext(CottonCandyContext);
-  const [loading, setLoading] = useState<boolean>(false);
+  const { data: nfts, isLoading: loading } = useGetAllNfts();
+  const { refreshNFTS } = useContext(CottonCandyContext);
 
   const [viewInstruction, setViewInstruction] = useState(false);
-
-  useEffect(() => {
-    if (ctx.myNfts.length === 0) {
-      (async () => {
-        try {
-          setLoading(true);
-          ctx.setMyNfts(await ctx.getNFTs());
-        } catch (error: any) {
-          console.error("Error:", error.message);
-        } finally {
-          setLoading(false);
-        }
-      })();
-    }
-
-    return () => {
-      setLoading(false);
-      setViewInstruction(false);
-    };
-  }, []);
 
   return (
     <>
@@ -36,7 +17,7 @@ export const NFTs = () => {
         <NFTInstructions setViewInstruction={setViewInstruction} />
       )}
 
-      <div className="flex flex-col items-start justify-start h-full gap-5 px-5 py-2 overflow-y-auto md:hidden ">
+      <div className="flex flex-col items-start justify-start h-full gap-5 px-5 py-2 overflow-y-auto md:hidden  w-full">
         {/* top bar */}
         <div className="flex flex-row items-start justify-between w-full ">
           <div className="flex flex-row justify-start w-[90%] md:w-full items-center md:bg-none z-40 bg-cover bg-bottom md:pt-2.5 md:pl-4">
@@ -54,9 +35,9 @@ export const NFTs = () => {
         </div>
         {loading ? (
           <NftLoader />
-        ) : !loading && ctx.myNfts.length > 0 ? (
+        ) : !loading && nfts && nfts.length > 0 ? (
           <div className="grid w-full grid-cols-3 gap-4 sm:grid-cols-4 md:pr-2 md:gap-2 ">
-            {ctx.myNfts.map((nft, index) => (
+            {nfts.map((nft, index) => (
               <NFTBox key={index} nft={nft} nftIndex={index} />
             ))}
           </div>
@@ -117,16 +98,19 @@ export const NFTs = () => {
         </div>
         {/*right page  */}
         <div className="flex flex-col items-center flex-1 w-full h-full sm:justify-between md:justify-start sm:gap-7 lg:gap-4 md:gap-3">
-          {loading ? (
+          {loading || refreshNFTS ? (
             <NftLoader />
-          ) : !loading && ctx.myNfts.length > 0 ? (
-            <div className="grid grid-cols-3 gap-4 pr-6 overflow-y-auto md:pr-2 md:gap-2 md:auto-rows-auto">
-              {ctx.myNfts.map((nft, index) => (
+          ) : !loading && nfts && nfts.length > 0 ? (
+            <div
+              className="grid grid-cols-3 gap-4 pr-6 overflow-y-auto md:pr-2 md:gap-2 md:auto-rows-auto"
+              style={{ scrollbarGutter: "stable" }}
+            >
+              {nfts.map((nft, index) => (
                 <NFTBox key={index} nft={nft} nftIndex={index} />
               ))}
             </div>
           ) : (
-            <></>
+            <div className="bg-no-repeat bg-contain bg-no-nfts bg-bottom w-full h-full"></div>
           )}
         </div>
       </div>

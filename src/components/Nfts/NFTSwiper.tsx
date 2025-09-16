@@ -1,13 +1,14 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { A11y, Navigation } from "swiper/modules";
 import { NftState } from "../../types/NFTCardTypes";
 import { CottonCandyContext } from "../../providers/ContextProvider";
-import { Metadata } from "../../types/Metadata";
-import useWeb3Utils from "../../hooks/useWeb3Utils";
 import NFTActions from "../Nfts/NFTActions";
 import Modal from "../UI/Modal";
 import IconButton from "../UI/IconButton";
+import { Token } from "../../types/Nft";
+import { useGetAllNfts } from "../../hooks/useGetAllNFTs";
+import SnakeLoader from "../UI/SnakeLoader";
 
 const SlideItem: React.FC<NftState> = (nftState) => {
   const ctx = useContext(CottonCandyContext);
@@ -42,7 +43,9 @@ const SlideItem: React.FC<NftState> = (nftState) => {
 
 const NFTSwiper = () => {
   const ctx = useContext(CottonCandyContext);
-  const { getLotteryState } = useWeb3Utils();
+
+  const { data: nfts, isLoading: nftLoading } = useGetAllNfts();
+
   const [canSummonEgg, setCanSummonEgg] = useState(false);
   const [isTutorial, setIsTutorial] = useState<string | null>(null);
   const [currentNftState, setCurrentNftState] = useState<NftState>(
@@ -54,18 +57,7 @@ const NFTSwiper = () => {
     setIsTutorial(localStorage.getItem("tutorial"));
   };
 
-  useEffect(() => {
-    (async () => {
-      const { totalMinted, maxPlayers } = await getLotteryState();
-      if (totalMinted === maxPlayers) {
-        setCanSummonEgg(true);
-      }
-    })();
-
-    if (ctx.myNfts.length === 0) {
-      (async () => ctx.setMyNfts(await ctx.getNFTs()))();
-    }
-
+  useLayoutEffect(() => {
     const isTutorial: string | null = localStorage.getItem("tutorial");
 
     if (isTutorial) {
@@ -73,13 +65,23 @@ const NFTSwiper = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (!ctx.lottery) return;
+    const { totalMinted, maxPlayers } = ctx.lottery;
+    if (totalMinted === maxPlayers) {
+      setCanSummonEgg(true);
+    }
+  }, []);
+
   const handleSlideChange = (slideIndex: number) => {
-    ctx.setCollectiable(ctx.myNfts[slideIndex]);
-    const currentNftState = ctx.nftStates[ctx.myNfts[slideIndex].mintAddress];
-    setCurrentNftState(currentNftState);
+    if (!nfts) return;
+    ctx.setCollectiable(nfts[slideIndex]);
+    setCurrentNftState(nfts[slideIndex].state as NftState);
   };
 
-  return (
+  return nftLoading ? (
+    <SnakeLoader />
+  ) : (
     <Modal
       onBackgroundClick={() => {}}
       className="z-[51] bg-swiper bg-repeat-y bg-contain justify-start "
@@ -96,10 +98,10 @@ const NFTSwiper = () => {
       <div className="relative flex flex-col items-center justify-start gap-6 py-4 sm:justify-center l md:gap-10">
         <div className="flex w-[100vw] flex-col justify-start relative items-center gap-4 ">
           <h1 className="w-full text-4xl text-center text-white font-patrick-hand">
-            Minted {ctx.myNfts.length} NFTs:
+            Minted {nfts && nfts.length} NFTs:
           </h1>
 
-          {ctx.myNfts.length > 1 && (
+          {nfts && nfts.length > 1 && (
             <>
               <IconButton className="swiper-button-prev bg-slider-btn rounded-full size-12 bg-[#B69772] z-20  grid place-content-center">
                 <span className="block -ml-1 bg-center bg-no-repeat bg-contain size-5 bg-icon-arrow-left aspect-square"></span>
@@ -148,15 +150,16 @@ const NFTSwiper = () => {
             }}
             onSlideChange={(swiper) => handleSlideChange(swiper.activeIndex)}
           >
-            {ctx.myNfts.map((slide: Metadata, index: number) => {
-              const nftMintAddress: string = slide.mintAddress as any;
+            {nfts &&
+              nfts.map((slide: Token, index: number) => {
+                const slideState = slide.state as NftState;
 
-              return (
-                <SwiperSlide key={index} className="">
-                  <SlideItem {...ctx.nftStates[nftMintAddress]} />
-                </SwiperSlide>
-              );
-            })}
+                return (
+                  <SwiperSlide key={index} className="">
+                    <SlideItem {...slideState} />
+                  </SwiperSlide>
+                );
+              })}
           </Swiper>
         </div>
         <div className="flex flex-col items-start justify-start min-h-40 max-h-40">

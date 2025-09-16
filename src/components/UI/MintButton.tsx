@@ -3,32 +3,51 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { CottonCandyContext } from "../../providers/ContextProvider";
 import useProgramInstructions from "../../hooks/useProgramInstructions";
+import { Token } from "../../types/Nft";
+import { useGetAllNfts } from "../../hooks/useGetAllNFTs";
 
 const MintButton = () => {
   const ctx = useContext(CottonCandyContext);
   const { BuyNFT } = useProgramInstructions();
 
   const [isMinting, setisMinting] = useState<boolean>(false);
+  const { data: nfts, refetch: fetchNfts } = useGetAllNfts();
 
   const { connected, connecting } = useWallet();
   const { setVisible, visible } = useWalletModal();
 
   const getNewBoughtNft = async () => {
-    const currentMap = new Map(ctx.myNfts.map((nft) => [nft.mintAddress, nft]));
+    if (!nfts) {
+      const { data: latestNfts } = await fetchNfts();
+      return latestNfts ?? [];
+    } else {
+      // check
 
-    const latestNfts = await ctx.getNFTs();
+      const currentMap = new Map(
+        nfts.map((nft: Token) => [nft.metadata.mintAddress, nft])
+      );
 
-    const latestMap = new Map(latestNfts.map((nft) => [nft.mintAddress, nft]));
+      const { data: latestNfts } = await fetchNfts();
 
-    const newNfts = [];
+      if (!latestNfts) return [];
 
-    for (const [mintAddr, nft] of latestMap) {
-      if (!currentMap.has(mintAddr)) {
-        newNfts.push(nft);
+      if (latestNfts?.length > nfts.length) {
+        ctx.setNfts(latestNfts);
       }
-    }
 
-    return newNfts;
+      const latestMap = new Map(
+        latestNfts.map((nft) => [nft.metadata.mintAddress, nft])
+      );
+
+      const newNfts = [];
+
+      for (const [mintAddr, nft] of latestMap) {
+        if (!currentMap.has(mintAddr)) {
+          newNfts.push(nft);
+        }
+      }
+      return newNfts;
+    }
   };
 
   const handleNFTMintClick = async () => {
@@ -36,24 +55,20 @@ const MintButton = () => {
       setVisible(true);
       return;
     }
-
     try {
       setisMinting(true);
       await BuyNFT(ctx.count);
+      const newNft = await getNewBoughtNft();
+      if (newNft.length > 0) {
+        ctx.setCollectiable(newNft[0]);
+        ctx.setRevealNFT(true);
+        ctx.setBookmark("nfts");
+      }
     } catch (error: any) {
       console.error("Error: ", error.message);
       setisMinting(false);
     } finally {
       setisMinting(false);
-    }
-
-    const newNft = await getNewBoughtNft();
-
-    if (newNft.length > 0) {
-      ctx.setCollectiable(newNft[0]);
-      ctx.setRevealNFT(true);
-      ctx.setBookmark("nfts");
-      ctx.setMyNfts([]);
     }
   };
 

@@ -1,6 +1,10 @@
 import { useContext } from "react";
 import { CottonCandyContext } from "../../providers/ContextProvider";
 import useProgramInstructions from "../../hooks/useProgramInstructions";
+import { useGetAllNfts } from "../../hooks/useGetAllNFTs";
+import useGetUpdatedTokenByMintAddress from "../../hooks/useGetTokenByMintAddress";
+import { NftState } from "../../types/NFTCardTypes";
+import { useGetAllEggs } from "../../hooks/useGetAllEggs";
 
 const NFTActions = ({
   canSummonEgg,
@@ -9,23 +13,39 @@ const NFTActions = ({
   canSummonEgg: boolean;
   isEggClaimed: boolean;
 }) => {
-  const { collectable, setCurrentModal, setIsPortalOpen, setRefreshNftState } =
+  const { collectable, setCurrentModal, setIsPortalOpen, setBookmark } =
     useContext(CottonCandyContext);
 
   const { SummonEgg } = useProgramInstructions();
 
+  const { getUpdatedNft, getEggByMintAddress } =
+    useGetUpdatedTokenByMintAddress();
+  const { updateNftInCache } = useGetAllNfts();
+  const { updateEggInCache } = useGetAllEggs();
+
   const handleSummonEgg = async () => {
-    if (collectable) {
+    if (collectable && collectable.metadata) {
       try {
         setCurrentModal(null);
         setIsPortalOpen(true);
-        await SummonEgg(collectable.mintAddress);
+        await SummonEgg(collectable.metadata.mintAddress as any);
+
+        const updatedNft = await getUpdatedNft(collectable);
+        if (updatedNft) {
+          updateNftInCache({ ...updatedNft });
+          const nftEgg = await getEggByMintAddress(
+            (updatedNft.state as NftState).eggMint as any
+          );
+
+          if (nftEgg) {
+            updateEggInCache(nftEgg);
+          }
+        }
+        setIsPortalOpen(false);
+        setBookmark("eggs");
       } catch (error: any) {
         console.error("Error : ", error.message);
         setIsPortalOpen(false);
-      } finally {
-        setIsPortalOpen(false);
-        setRefreshNftState(collectable.mintAddress);
       }
     }
   };

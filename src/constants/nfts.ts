@@ -1,0 +1,175 @@
+export type Trait = { filename: string; title: string };
+
+export type NFTCharacter = {
+  rootDir: string;
+  layerOrder: string[];
+  dir: Record<string, Trait[]>;
+};
+
+export type NFTSourceMap = Record<string, NFTCharacter>;
+
+export const NFT_SOURCE_MAP: NFTSourceMap = {
+  archer: {
+    rootDir: "/images/nfts/archer",
+    layerOrder: ["bg", "back", "bow", "cloth", "face"],
+    dir: {
+      bg: [
+        { filename: "1.png", title: "trait type 1" },
+        { filename: "2.png", title: "trait type 2" },
+        { filename: "3.png", title: "trait type 3" },
+        { filename: "4.png", title: "trait type 4" },
+        { filename: "5.png", title: "trait type 5" },
+        { filename: "6.png", title: "trait type 6" },
+        { filename: "7.png", title: "trait type 7" },
+      ],
+      back: [
+        { filename: "1.png", title: "trait type 1" },
+        { filename: "2.png", title: "trait type 2" },
+        { filename: "3.png", title: "trait type 3" },
+        { filename: "4.png", title: "trait type 4" },
+        { filename: "5.png", title: "trait type 5" },
+        { filename: "6.png", title: "trait type 6" },
+      ],
+      bow: [
+        { filename: "1.png", title: "trait type 1" },
+        { filename: "2.png", title: "trait type 2" },
+        { filename: "3.png", title: "trait type 3" },
+        { filename: "4.png", title: "trait type 4" },
+        { filename: "5.png", title: "trait type 5" },
+        { filename: "6.png", title: "trait type 6" },
+        { filename: "7.png", title: "trait type 7" },
+        { filename: "8.png", title: "trait type 8" },
+        { filename: "9.png", title: "trait type 9" },
+        { filename: "10.png", title: "trait type 10" },
+      ],
+      cloth: [
+        { filename: "1.png", title: "trait type 1" },
+        { filename: "2.png", title: "trait type 2" },
+        { filename: "3.png", title: "trait type 3" },
+        { filename: "4.png", title: "trait type 4" },
+        { filename: "5.png", title: "trait type 5" },
+        { filename: "6.png", title: "trait type 6" },
+      ],
+      face: [
+        { filename: "1.png", title: "trait type 1" },
+        { filename: "2.png", title: "trait type 2" },
+        { filename: "3.png", title: "trait type 3" },
+        { filename: "4.png", title: "trait type 4" },
+        { filename: "5.png", title: "trait type 5" },
+        { filename: "6.png", title: "trait type 6" },
+        { filename: "7.png", title: "trait type 7" },
+        { filename: "8.png", title: "trait type 8" },
+        { filename: "9.png", title: "trait type 9" },
+      ],
+    },
+  },
+  rider: {
+    rootDir: "/images/nfts/rider",
+    layerOrder: ["bg", "spear", "transport", "cloth", "face", "shield"],
+    dir: {
+      bg: [
+        { filename: "1.png", title: "trait type 1" },
+        { filename: "2.png", title: "trait type 2" },
+        { filename: "3.png", title: "trait type 3" },
+        { filename: "4.png", title: "trait type 4" },
+        { filename: "5.png", title: "trait type 5" },
+        { filename: "6.png", title: "trait type 6" },
+        { filename: "7.png", title: "trait type 7" },
+      ],
+      shield: [
+        { filename: "1.png", title: "trait type 1" },
+        { filename: "2.png", title: "trait type 2" },
+        { filename: "3.png", title: "trait type 3" },
+        { filename: "4.png", title: "trait type 4" },
+        { filename: "5.png", title: "trait type 5" },
+        { filename: "6.png", title: "trait type 6" },
+        { filename: "7.png", title: "trait type 7" },
+        { filename: "8.png", title: "trait type 8" },
+      ],
+      spear: [
+        { filename: "1.png", title: "trait type 1" },
+        { filename: "2.png", title: "trait type 2" },
+        { filename: "3.png", title: "trait type 3" },
+      ],
+      cloth: [
+        { filename: "1.png", title: "trait type 1" },
+        { filename: "2.png", title: "trait type 2" },
+        { filename: "3.png", title: "trait type 3" },
+        { filename: "4.png", title: "trait type 4" },
+        { filename: "5.png", title: "trait type 5" },
+        { filename: "6.png", title: "trait type 6" },
+      ],
+      face: [
+        { filename: "1.png", title: "trait type 1" },
+        { filename: "2.png", title: "trait type 2" },
+        { filename: "3.png", title: "trait type 3" },
+        { filename: "4.png", title: "trait type 4" },
+        { filename: "5.png", title: "trait type 5" },
+        { filename: "6.png", title: "trait type 6" },
+        { filename: "7.png", title: "trait type 7" },
+        { filename: "8.png", title: "trait type 8" },
+      ],
+      transport: [
+        { filename: "1.png", title: "trait type 1" },
+        { filename: "2.png", title: "trait type 2" },
+        { filename: "3.png", title: "trait type 3" },
+        { filename: "4.png", title: "trait type 4" },
+        { filename: "5.png", title: "trait type 5" },
+        { filename: "6.png", title: "trait type 6" },
+        { filename: "7.png", title: "trait type 7" },
+        { filename: "8.png", title: "trait type 8" },
+      ],
+    },
+  },
+  warrior: {
+    rootDir: "/images/nfts/warrior",
+    layerOrder: ["bg", "cloth", "head", "weapon", "hand"],
+    dir: {
+      bg: [
+        { filename: "1.png", title: "trait type 1" },
+        { filename: "2.png", title: "trait type 2" },
+        { filename: "3.png", title: "trait type 3" },
+        { filename: "4.png", title: "trait type 4" },
+        { filename: "5.png", title: "trait type 5" },
+        { filename: "6.png", title: "trait type 6" },
+        { filename: "7.png", title: "trait type 7" },
+      ],
+      hand: [
+        { filename: "1.png", title: "trait type 1" },
+        { filename: "2.png", title: "trait type 2" },
+        { filename: "3.png", title: "trait type 3" },
+        { filename: "4.png", title: "trait type 4" },
+        { filename: "5.png", title: "trait type 5" },
+        { filename: "6.png", title: "trait type 6" },
+      ],
+      weapon: [
+        { filename: "1.png", title: "trait type 1" },
+        { filename: "2.png", title: "trait type 2" },
+        { filename: "3.png", title: "trait type 3" },
+        { filename: "4.png", title: "trait type 4" },
+        { filename: "5.png", title: "trait type 5" },
+        { filename: "6.png", title: "trait type 6" },
+        { filename: "7.png", title: "trait type 7" },
+        { filename: "8.png", title: "trait type 8" },
+        { filename: "9.png", title: "trait type 9" },
+        { filename: "10.png", title: "trait type 10" },
+      ],
+      cloth: [
+        { filename: "1.png", title: "trait type 1" },
+        { filename: "2.png", title: "trait type 2" },
+      ],
+      head: [
+        { filename: "1.png", title: "trait type 1" },
+        { filename: "2.png", title: "trait type 2" },
+        { filename: "3.png", title: "trait type 3" },
+        { filename: "4.png", title: "trait type 4" },
+        { filename: "5.png", title: "trait type 5" },
+        { filename: "6.png", title: "trait type 6" },
+        { filename: "7.png", title: "trait type 7" },
+        { filename: "8.png", title: "trait type 8" },
+        { filename: "9.png", title: "trait type 9" },
+        { filename: "10.png", title: "trait type 10" },
+      ],
+    },
+  },
+};

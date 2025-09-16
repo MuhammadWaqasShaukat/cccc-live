@@ -1,9 +1,11 @@
+import { SpriteKeys } from "../types/animations";
+
 export const VIDEO_SOURCES = [
   "/images/animations/about.webm",
   "/images/animations/hammer.webm",
 ];
 
-export const SPRITES_SOURCES = {
+export const SPRITES_SOURCES: Record<SpriteKeys, string[]> = {
   "archer-blue": [
     "/images/animations/sprites/archer-blue/sprite1.png",
     "/images/animations/sprites/archer-blue/sprite2.png",
@@ -70,6 +72,24 @@ export const SPRITES_SOURCES = {
     "/images/animations/sprites/eggs/good/sprite2.png",
     "/images/animations/sprites/eggs/good/sprite3.png",
     "/images/animations/sprites/eggs/good/sprite4.png",
+  ],
+
+  logo: [
+    "/images/animations/sprites/logo/sprite1.png",
+    "/images/animations/sprites/logo/sprite2.png",
+  ],
+
+  "gold-stash": [
+    "/images/animations/sprites/eggs/gold/sprite1.png",
+    "/images/animations/sprites/eggs/gold/sprite2.png",
+    "/images/animations/sprites/eggs/gold/sprite3.png",
+  ],
+
+  sheep: [
+    "/images/animations/sprites/eggs/sheep/sprite1.png",
+    "/images/animations/sprites/eggs/sheep/sprite2.png",
+    "/images/animations/sprites/eggs/sheep/sprite3.png",
+    "/images/animations/sprites/eggs/sheep/sprite4.png",
   ],
 };
 
@@ -142,7 +162,6 @@ export const CRITICAL_ASSETS = [
   "/images/section-hero/distant-bg.png",
   "/images/section-hero/field.png",
 
-  "/images/section-hero/logo-lg.png",
   "/images/section-hero/connect.png",
   "/images/section-hero/menu-tombstone.png",
   "/images/section-hero/menu-button.png",
@@ -152,6 +171,8 @@ export const CRITICAL_ASSETS = [
   "/images/section-hero/castle-blue.png",
   "/images/section-hero/castle-blue-top.png",
 
+  "/images/animations/sprites/eggs/sheep/thumbnail.png",
+  "/images/animations/sprites/logo/thumbnail.png",
   "/images/animations/sprites/archer-blue/thumbnail.png",
   "/images/animations/sprites/archer-red/thumbnail.png",
   "/images/animations/sprites/candle-wizard/thumbnail.png",
@@ -161,7 +182,6 @@ export const CRITICAL_ASSETS = [
   "/images/animations/sprites/monkey/thumbnail.png",
   "/images/animations/sprites/sandwich/thumbnail.png",
   "/images/animations/sprites/swordsmen/thumbnail.png",
-  "/images/section-hero/memcoin2.png",
   "/images/animations/sprites/fire-spritesheet.png",
 
   "/images/section-hero/red1.png",

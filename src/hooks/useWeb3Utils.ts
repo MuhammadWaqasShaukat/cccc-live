@@ -6,9 +6,8 @@ import { useMemo } from "react";
 import { Buffer } from "buffer";
 
 import IDL from "../constants/solana_lottery.json";
-import { FulFilledState } from "../types/Nft";
+import { FulFilledState, Token } from "../types/Nft";
 import { Lottery, MintStatus } from "../types/Lottery";
-import { Metadata } from "../types/Metadata";
 
 const useWeb3Utils = () => {
   const network = WalletAdapterNetwork.Devnet;
@@ -75,7 +74,7 @@ const useWeb3Utils = () => {
   const getNftByType = async (
     type: "Nft" | "Egg",
     collection: string
-  ): Promise<Metadata[]> => {
+  ): Promise<Token[]> => {
     if (!connected || !publicKey) return [];
     let nfts: any[] = [];
 

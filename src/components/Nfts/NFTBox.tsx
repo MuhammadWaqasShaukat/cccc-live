@@ -1,67 +1,22 @@
 import { CottonCandyContext } from "../../providers/ContextProvider";
-import { useContext, useEffect, useState } from "react";
-import useWeb3Utils from "../../hooks/useWeb3Utils";
+import { useContext } from "react";
+import { Token } from "../../types/Nft";
 import { NftState } from "../../types/NFTCardTypes";
 
-const NFTBox: React.FC<{ nft: any; nftIndex: number }> = ({
+const NFTBox: React.FC<{ nft: Token; nftIndex: number }> = ({
   nft,
   nftIndex,
 }) => {
-  const {
-    setCollectiable,
-    setCurrentModal,
-    refreshNftState,
-    setSeletedNftIndex,
-    setNftStates,
-  } = useContext(CottonCandyContext);
-  const { getNftState } = useWeb3Utils();
+  const { setCollectiable, setCurrentModal, setSeletedNftIndex } =
+    useContext(CottonCandyContext);
 
-  const [nftState, setNftState] = useState<NftState | null>(null);
-
-  const { uri } = nft;
+  const { uri } = nft.metadata;
 
   const handleNFTClicked = () => {
     setCollectiable(nft);
     setSeletedNftIndex(nftIndex);
     setCurrentModal("nfts");
   };
-
-  const setNftStateHelper = (nftMintAddress: string, nftState: NftState) => {
-    setNftStates((prev) => ({
-      ...prev,
-      [nftMintAddress]: nftState,
-    }));
-  };
-
-  useEffect(() => {
-    (async () => {
-      if (!nft) return;
-      const { isEggClaimed, eggMint, eggHatchedAt } = await getNftState(
-        nft.mintAddress
-      );
-      setNftState({ isEggClaimed, eggHatchedAt, eggMint });
-      setNftStateHelper(nft.mintAddress, {
-        isEggClaimed,
-        eggHatchedAt,
-        eggMint,
-      });
-    })();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      if (nft.mintAddress !== refreshNftState) return;
-      const { isEggClaimed, eggMint, eggHatchedAt } = await getNftState(
-        nft.mintAddress
-      );
-      setNftState({ isEggClaimed, eggHatchedAt, eggMint });
-      setNftStateHelper(nft.mintAddress, {
-        isEggClaimed,
-        eggHatchedAt,
-        eggMint,
-      });
-    })();
-  }, [refreshNftState]);
 
   const imageSrc =
     uri === "https://example.com/nft.json"
@@ -81,7 +36,7 @@ const NFTBox: React.FC<{ nft: any; nftIndex: number }> = ({
       <h3 className="absolute text-2xl tracking-wide text-white rounded top-2 right-4 md:right-1 md:top-0 font-patrick-hand-sc md:text-lg lg:text-xl xl:text-2xl outlined-text-sm">
         #{1613 + 1}
       </h3>
-      {nftState && !nftState.isEggClaimed && (
+      {nft.state && !(nft.state as NftState).isEggClaimed && (
         <div className="absolute bottom-2 md:size-12 lg:size-14 xl:size-16 group">
           <div className="transition-all duration-100 bg-center bg-no-repeat bg-contain bg-egg-glow group-hover:bg-egg-glow-1 size-16 md:size-12 lg:size-14 xl:size-16"></div>
         </div>

@@ -8,7 +8,7 @@ const Price: React.FC<{ price: number }> = ({ price }) => {
         Price
       </h4>
       <div className="ml-4 font-heavitas">
-        {ctx.estimate || price ? (
+        {price ? (
           <span className="text-lg md:text-xl lg:text-2xl xl:text-3xl  text-[#292726] ">
             {ctx.estimate?.toFixed(3) ?? price?.toFixed(4)}&nbsp;
             <span className="text-base lg:text-xl md:text-lg xl:text-2xl  text-[#29272699] ">

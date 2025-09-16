@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
-import useWeb3Utils from "../../hooks/useWeb3Utils";
+import { useGetLotteryState } from "../../hooks/useGetLotteryState";
 
 const PublicMint = () => {
-  const { getLotteryState } = useWeb3Utils();
+  const { data: lottery } = useGetLotteryState();
+
   const [countdown, setCountdown] = useState<{
     d: number;
     h: number;
     m: number;
   }>({ d: 0, h: 0, m: 0 });
 
-  const getCountDown = async () => {
-    const { startTime } = await getLotteryState();
+  const getCountDown = () => {
+    if (!lottery) return;
+    const { startTime } = lottery;
 
     const diff = startTime - Date.now();
 

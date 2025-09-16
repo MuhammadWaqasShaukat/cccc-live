@@ -12,7 +12,7 @@ const Nav: React.FC<NavProps> = ({ className }) => {
     >
       <div
         id="tombstone"
-        className="absolute top-[60%] md:top-[65%] left-1/2 -translate-x-1/2 max-w-[500px] md:w-[40%] sm:w-[35%] w-[80%] md:h-[60%] h-[40%] md:bg-hero-section-tombstone  bg-contain bg-center bg-no-repeat"
+        className="absolute top-[60%] md:top-[65%] left-1/2 -translate-x-1/2 max-w-[500px] md:w-[40%] sm:w-[35%] w-[80%] md:h-[50%] h-[40%] md:bg-hero-section-tombstone  bg-contain bg-center bg-no-repeat"
       >
         <ul className="flex flex-col items-center justify-center h-full space-y-2 sm:mt-5 lg:space-y-3">
           <li

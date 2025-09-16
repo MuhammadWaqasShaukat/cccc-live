@@ -1,7 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { CottonCandyContext } from "../../providers/ContextProvider";
-import useWeb3Utils from "../../hooks/useWeb3Utils";
-import { FulFilledState } from "../../types/Nft";
+import { FulFilledState, Token } from "../../types/Nft";
 import useProgramInstructions from "../../hooks/useProgramInstructions";
 import { PublicKey } from "@solana/web3.js";
 import { motion } from "framer-motion";
@@ -12,12 +11,19 @@ import {
   setEggHammeringTime,
 } from "../../utils/hammerTimers";
 import EggCrackingProgress from "./EggCrackingProgress";
+import { useGetAllEggs } from "../../hooks/useGetAllEggs";
+import useGetUpdatedTokenByMintAddress from "../../hooks/useGetTokenByMintAddress";
 
-const EggBox: React.FC<{ egg: any; nftMint: string }> = ({ egg, nftMint }) => {
+const EGG_CRACK_LIMIT = 10;
+
+const EggBox: React.FC<{ egg: Token; nftMint: string }> = ({
+  egg,
+  nftMint,
+}) => {
   const ctx = useContext(CottonCandyContext);
-  const [fulfilledState, setFulFilledState] = useState<FulFilledState | null>(
-    null
-  );
+
+  const { getUpdatedEgg } = useGetUpdatedTokenByMintAddress();
+  const { updateEggInCache } = useGetAllEggs();
 
   const { FulfillHatching } = useProgramInstructions();
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -27,15 +33,18 @@ const EggBox: React.FC<{ egg: any; nftMint: string }> = ({ egg, nftMint }) => {
 
   const [crackpoints, setCrackPoints] = useState(0);
 
-  const isEggCracking = getEggHammeringTime(egg.mintAddress);
+  const eggId = egg.metadata.mintAddress as any;
 
-  const getCurrentEggState = async () => {
-    await getEggState();
+  const isEggCracking = getEggHammeringTime(eggId);
+  const isHatchingRef = useRef(false);
+
+  const resetEggcreacking = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    if (showProgress.current) showProgress.current = null;
   };
 
   useEffect(() => {
-    getCurrentEggState();
-
     if (isEggCracking && !timeoutRef.current) {
       const now = Date.now();
       const timeoutEnd = isEggCracking.timestamp + 30_000;
@@ -55,9 +64,7 @@ const EggBox: React.FC<{ egg: any; nftMint: string }> = ({ egg, nftMint }) => {
     }
 
     return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      if (showProgress.current) showProgress.current = null;
+      resetEggcreacking();
     };
   }, []);
 
@@ -67,7 +74,7 @@ const EggBox: React.FC<{ egg: any; nftMint: string }> = ({ egg, nftMint }) => {
         clearInterval(intervalRef.current!);
         intervalRef.current = null;
         showProgress.current = null;
-        deleteEggHammeringTime(egg.mintAddress);
+        deleteEggHammeringTime(eggId);
         return 0;
       }
       return prev - 1;
@@ -78,20 +85,19 @@ const EggBox: React.FC<{ egg: any; nftMint: string }> = ({ egg, nftMint }) => {
     intervalRef.current = setInterval(afterEggReviveTimeoutCB, 500);
   };
 
-  const handleCrackEgg = async () => {
+  const handleCrackEgg = () => {
     if (
-      !egg.mintAddress ||
+      !egg.metadata.mintAddress ||
       !nftMint ||
-      !fulfilledState ||
-      fulfilledState?.lotteryStatus !== "none"
-    )
+      (egg.state as FulFilledState).lotteryStatus !== "none" ||
+      isHatchingRef.current
+    ) {
       return;
+    }
 
-    if (crackpoints < 10) {
-      setCrackPoints((prev: number) => {
-        setEggHammeringTime(egg.mintAddress, prev + 1);
-        return prev + 1;
-      });
+    setCrackPoints((prev: number) => {
+      const next = prev + 1;
+      setEggHammeringTime(eggId, next);
 
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
@@ -101,46 +107,46 @@ const EggBox: React.FC<{ egg: any; nftMint: string }> = ({ egg, nftMint }) => {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
       }
+
       timeoutRef.current = setTimeout(beforeEggReviveTimeoutCB, 30000);
-      return;
-    }
+
+      if (next >= EGG_CRACK_LIMIT && !isHatchingRef.current) {
+        isHatchingRef.current = true;
+        hatchEgg();
+      }
+
+      return next;
+    });
+  };
+
+  const hatchEgg = async () => {
     try {
+      deleteEggHammeringTime(eggId);
       ctx.setCurrentModal(null);
       ctx.setIsPortalOpen(true);
-      if (egg.mintAddress && nftMint) {
+
+      if (egg.metadata.mintAddress && nftMint) {
         await FulfillHatching(
-          new PublicKey(egg.mintAddress),
+          new PublicKey(egg.metadata.mintAddress),
           new PublicKey(nftMint)
         );
       }
+      resetEggcreacking();
 
-      ctx.setRefreshNftState(egg.mintAddress);
+      const updatedEgg = await getUpdatedEgg(egg);
+      if (updatedEgg) {
+        if (updatedEgg) {
+          updateEggInCache({ ...updatedEgg });
+        }
+      }
     } catch (error: any) {
-      console.error("Error : ", error.message);
+      console.error("Error during hatching:", error.message);
       ctx.setIsPortalOpen(false);
     } finally {
       ctx.setIsPortalOpen(false);
+      isHatchingRef.current = false;
     }
   };
-
-  const { getEggFulFilledState } = useWeb3Utils();
-
-  const getEggState = async () => {
-    try {
-      const { status, lotteryStatus } = await getEggFulFilledState(
-        egg.mintAddress
-      );
-
-      setFulFilledState({ status, lotteryStatus });
-    } catch (error: any) {
-      console.error("Error: ", error.message);
-    }
-  };
-
-  useEffect(() => {
-    if (egg.mintAddress !== ctx.refreshNftState) return;
-    getCurrentEggState();
-  }, [ctx.refreshNftState]);
 
   const imageSrc = "./images/section-mint/nfts/egg.png";
 
@@ -151,8 +157,8 @@ const EggBox: React.FC<{ egg: any; nftMint: string }> = ({ egg, nftMint }) => {
       className={`aspect-square border-2 border-black rounded-xl grid place-content-center grid-cols-1 grid-rows-1 h-full w-full sm:min-w-28 xs:min-w-20 md:min-w-[72px] lg:min-w-24  overflow-hidden  relative group`}
     >
       {/* reward */}
-      {fulfilledState?.status === "done" &&
-        fulfilledState?.lotteryStatus === "won" && (
+      {(egg.state as FulFilledState).status === "done" &&
+        (egg.state as FulFilledState).lotteryStatus === "won" && (
           <motion.div
             key="won"
             initial={{ opacity: 0 }}
@@ -162,8 +168,8 @@ const EggBox: React.FC<{ egg: any; nftMint: string }> = ({ egg, nftMint }) => {
           ></motion.div>
         )}
       {/* no reward */}
-      {fulfilledState?.status === "done" &&
-        fulfilledState?.lotteryStatus === "none" && (
+      {(egg.state as FulFilledState).status === "done" &&
+        (egg.state as FulFilledState).lotteryStatus === "none" && (
           <motion.div
             key="lost"
             initial={{ opacity: 0 }}
@@ -172,7 +178,7 @@ const EggBox: React.FC<{ egg: any; nftMint: string }> = ({ egg, nftMint }) => {
             className="absolute top-0 bottom-0 left-0 right-0 z-10 w-full h-full bg-hatch-lost"
           ></motion.div>
         )}
-      {fulfilledState?.status === "pending" && (
+      {(egg.state as FulFilledState).status === "pending" && (
         <motion.div
           initial={{ opacity: 0 }}
           whileHover={{ opacity: 1 }}
@@ -183,11 +189,12 @@ const EggBox: React.FC<{ egg: any; nftMint: string }> = ({ egg, nftMint }) => {
         </motion.div>
       )}
 
-      {fulfilledState?.status === "pending" && crackpoints > 0 && (
-        <motion.div className="absolute z-10 block p-1 bg-black/70 group-hover:hidden">
-          <EggCrackingProgress crackpoints={crackpoints} />
-        </motion.div>
-      )}
+      {(egg.state as FulFilledState).status === "pending" &&
+        crackpoints > 0 && (
+          <motion.div className="absolute z-10 block p-1 bg-black/70 group-hover:hidden">
+            <EggCrackingProgress crackpoints={crackpoints} />
+          </motion.div>
+        )}
 
       <img
         src={imageSrc ?? ""}

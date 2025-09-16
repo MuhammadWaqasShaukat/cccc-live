@@ -3,32 +3,23 @@ import EggBox from "./EggBox";
 import { CottonCandyContext } from "../../providers/ContextProvider";
 import NftLoader from "../UI/NftLoader";
 import EggInstruction from "./EggInstruction";
+import { useGetAllEggs } from "../../hooks/useGetAllEggs";
+import { useGetAllNfts } from "../../hooks/useGetAllNFTs";
+import { Token } from "../../types/Nft";
 
 const Eggs = () => {
-  const ctx = useContext(CottonCandyContext);
-  const [viewInstruction, setViewInstruction] = useState(false);
+  const { nftToEggMap, getNftToEggMap, refreshEggs } =
+    useContext(CottonCandyContext);
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const [viewInstruction, setViewInstruction] = useState(false);
+  const { data: eggs, isLoading: loading } = useGetAllEggs();
+  const { data: nfts } = useGetAllNfts();
 
   useEffect(() => {
-    if (ctx.myEggs.length === 0) {
-      (async () => {
-        try {
-          setLoading(true);
-          ctx.setMyEggs(await ctx.getEggNFTs());
-        } catch (error: any) {
-          console.error("Error:", error.message);
-        } finally {
-          setLoading(false);
-        }
-      })();
+    if (nfts.length > 0) {
+      getNftToEggMap(nfts);
     }
-
-    return () => {
-      setLoading(false);
-      setViewInstruction(false);
-    };
-  }, []);
+  }, [nfts]);
 
   return (
     <>
@@ -36,7 +27,7 @@ const Eggs = () => {
         <EggInstruction setViewInstruction={setViewInstruction} />
       )}
 
-      <div className="flex flex-col items-start justify-start w-full  h-full gap-5 px-5 py-2 overflow-y-auto md:hidden">
+      <div className="flex flex-col items-start justify-start h-full gap-5 px-5 py-2 overflow-y-auto md:hidden w-full">
         {/* top bar */}
         <div className="flex flex-row items-center justify-between w-full ">
           <div className="flex flex-row justify-start w-[90%] md:w-full items-center md:bg-none z-40   bg-cover bg-bottom md:pt-2.5 md:pl-4">
@@ -54,13 +45,13 @@ const Eggs = () => {
         </div>
         {loading ? (
           <NftLoader />
-        ) : !loading && ctx.myEggs.length > 0 ? (
+        ) : !loading && eggs && eggs.length > 0 ? (
           <div className="grid w-full grid-cols-3 gap-4 sm:grid-cols-4 md:pr-2 md:gap-2 ">
-            {ctx.myEggs.map((egg, index) => (
+            {eggs.map((egg: Token, index: number) => (
               <EggBox
-                key={index + "eggs"}
+                key={"egg" + index}
                 egg={egg}
-                nftMint={ctx.nftToEggMap[egg.mintAddress as any]}
+                nftMint={nftToEggMap[egg.metadata.mintAddress as any]}
               />
             ))}
           </div>
@@ -122,22 +113,23 @@ const Eggs = () => {
         </div>
         {/*right page  */}
         <div className="flex flex-col items-center flex-1 w-full h-full sm:justify-between md:justify-start sm:gap-7 lg:gap-4 md:gap-3">
-          {loading ? (
+          {loading || refreshEggs ? (
             <NftLoader />
-          ) : !loading && ctx.myEggs.length > 0 ? (
-            <div className="grid h-full grid-cols-3 gap-4 pr-6 overflow-y-auto md:pr-2 auto-rows-[max-content] ">
-              {ctx.myEggs.map((egg) => {
-                return (
-                  <EggBox
-                    key={ctx.nftToEggMap[egg.mintAddress as any]}
-                    egg={egg}
-                    nftMint={ctx.nftToEggMap[egg.mintAddress as any]}
-                  />
-                );
-              })}
+          ) : !loading && eggs && eggs.length > 0 ? (
+            <div
+              className=" grid h-full grid-cols-3 lg:gap-2 md:gap-3 gap-4  pr-6 overflow-y-auto md:pr-2 auto-rows-[max-content] "
+              style={{ scrollbarGutter: "stable" }}
+            >
+              {eggs.map((egg: Token, index: number) => (
+                <EggBox
+                  key={"egg" + index}
+                  egg={egg}
+                  nftMint={nftToEggMap[egg.metadata.mintAddress as any]}
+                />
+              ))}
             </div>
           ) : (
-            <></>
+            <div className="bg-no-repeat bg-contain bg-no-eggs bg-bottom w-full h-full"></div>
           )}
         </div>
       </div>

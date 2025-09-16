@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { CottonCandyContext } from "../../providers/ContextProvider";
-import useWeb3Utils from "../../hooks/useWeb3Utils";
 import { calculatePayment } from "../../utils/calculatePayment";
+import { useGetLotteryState } from "../../hooks/useGetLotteryState";
 
 type CounterState = {
   min: boolean;
@@ -15,13 +15,14 @@ const defaultCounter: CounterState = {
 
 const Counter = () => {
   const ctx = useContext(CottonCandyContext);
-  const { getLotteryState } = useWeb3Utils();
+  const { data: lottery } = useGetLotteryState();
 
   const [disabled, setDisabled] = useState<CounterState>(defaultCounter);
 
   const updateDisabledState = async () => {
-    const { totalMinted, maxPlayers, totalValueToCollect, minPrice } =
-      await getLotteryState();
+    if (!lottery) return;
+
+    const { totalMinted, maxPlayers, totalValueToCollect, minPrice } = lottery;
 
     const remaining = maxPlayers - totalMinted;
 

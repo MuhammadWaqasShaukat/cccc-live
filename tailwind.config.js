@@ -60,27 +60,17 @@ export default {
       "hero-section-red-2": "url('/images/section-hero/red2.png')",
       "hero-section-shark-1": "url('/images/section-hero/shark1.png')",
       "hero-section-shark-2": "url('/images/section-hero/shark2.png')",
-      "hero-section-chillguy": "url('/images/section-hero/chillguy.png')",
-      "hero-section-frog": "url('/images/section-hero/frog.png')",
       "hero-section-distant": "url('/images/section-hero/distant-bg.png')",
       "hero-section-main": "url('/images/section-hero/battle-main.png')",
-      "hero-section-memcoin-1": "url('/images/section-hero/memcoin1.png')",
-      "hero-section-memcoin-2": "url('/images/section-hero/memcoin2.png')",
-      "hero-section-memcoin-2-open":
-        "url('/images/section-hero/memcoin2.open.png')",
-      "hero-section-memcoin-3": "url('/images/section-hero/memcoin3.png')",
-      "hero-section-memcoin-4": "url('/images/section-hero/memcoin4.png')",
-      "hero-section-memcoin-6": "url('/images/section-hero/memcoin6.png')",
-      "hero-section-memcoin-5": "url('/images/section-hero/memcoin5.png')",
-      "hero-section-memcoin-7": "url('/images/section-hero/memcoin7.png')",
-      "hero-section-memcoin-8": "url('/images/section-hero/memcoin8.png')",
+
       "hero-section-tombstone":
         "url('/images/section-hero/menu-tombstone.png')",
 
       "menu-btn": "url('/images/section-hero/menu-button.png')",
 
       "menu-btn-hovered": "url('/images/section-hero/menu-button-hovered.png')",
-      "menu-btn-disabled": "url('/images/section-hero/menu-button-disabled.png')",
+      "menu-btn-disabled":
+        "url('/images/section-hero/menu-button-disabled.png')",
       "hero-connect": "url('/images/section-hero/connect.png')",
       "hero-section-logo": "url('/images/section-hero/logo-lg.png')",
       "top-bar-cow-face": "url('/images/cow-face.png')",
@@ -134,6 +124,9 @@ export default {
       "old-book": "url('/images/section-mint/old-book.png')",
 
       "help-icon": "url('/images/section-mint/help-icon.png')",
+
+      "no-eggs": "url('/images/section-mint/empty-eggs.png')",
+      "no-nfts": "url('/images/section-mint/empty-nfts.png')",
 
       "tutorial-step-1": "url('/images/how-it-works/card-1.png')",
       "tutorial-step-2": "url('/images/how-it-works/card-2.png')",

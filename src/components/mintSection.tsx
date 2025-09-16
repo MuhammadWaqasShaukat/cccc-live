@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { CottonCandyContext } from "../providers/ContextProvider";
 import { NFTs } from "./Nfts/NFTs";
 import Eggs from "./Eggs/Eggs";
@@ -12,6 +12,8 @@ import Mints from "./Mint/Mints";
 import HowItWorks from "./Mint/HowItWorks";
 import { useWallet } from "@solana/wallet-adapter-react";
 import PublicMint from "./Mint/PublicMint";
+import { useSpritePreloader } from "../hooks/useSpritePreloader";
+import { SPRITES_SOURCES } from "../constants/preloadingAssestList";
 
 const BookmarkSM = () => {
   const { bookmark, setBookmark } = useContext(CottonCandyContext);
@@ -20,6 +22,13 @@ const BookmarkSM = () => {
     if (!connected && newChapter !== "mint") return;
     setBookmark(newChapter);
   };
+
+  const { ensureSprites } = useSpritePreloader();
+
+  useEffect(() => {
+    ensureSprites("bad-egg", SPRITES_SOURCES["bad-egg"]);
+    ensureSprites("good-egg", SPRITES_SOURCES["good-egg"]);
+  }, []);
 
   return (
     <>

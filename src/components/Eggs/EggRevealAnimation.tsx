@@ -1,11 +1,11 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
-import { useEggBreakAnimation } from "../../hooks/useEggBreakAnimation";
 import { motion } from "framer-motion";
 import { CottonCandyContext } from "../../providers/ContextProvider";
 import {
   badEggRevealAnimationConfig,
   goodEggRevealAnimationConfig,
 } from "../../constants/animationsConfig";
+import { useEggAnimator } from "../../hooks/useEggBreakAnimator";
 
 export type EggAnimationConfig = {
   frameWidth: number;
@@ -40,16 +40,13 @@ const GoodReveal: React.FC<{
 }> = ({ setShakingEgg }) => {
   const ctx = useContext(CottonCandyContext);
   const shakerRef = useRef<HTMLDivElement>(null);
-  const [isLooping, setIsLooping] = useState(false);
 
-
-
-  const { startAnimation, currentFrameNo } = useEggBreakAnimation({
-    spriteRef: shakerRef,
-    config: goodEggRevealAnimationConfig, //eggShakeConfig,
-    setIsLooping,
-    speed: 1,
-  });
+  const { startAnimation, looping } = useEggAnimator(
+    shakerRef,
+    goodEggRevealAnimationConfig,
+    "good-egg",
+    0.3
+  );
 
   useEffect(() => {
     startAnimation();
@@ -63,8 +60,8 @@ const GoodReveal: React.FC<{
   };
 
   useEffect(() => {
-    if (currentFrameNo > 41) setShakingEgg(true);
-  }, [currentFrameNo]);
+    setShakingEgg(true);
+  }, []);
   return (
     <div className="relative  flex flex-col justify-center items-center">
       <div
@@ -73,10 +70,7 @@ const GoodReveal: React.FC<{
         style={{
           width: `${eggShakeConfig.frameWidth}px`,
           height: `${eggShakeConfig.frameHeight}px`,
-          // backgroundImage: "url(images/animations/sprites/win.png)",
-          // backgroundSize: `${eggShakeConfig.columns * 100}% ${
-          //   eggShakeConfig.rows * 100
-          // }%`,
+          backgroundRepeat: "no-repeat",
         }}
       ></div>
 
@@ -84,7 +78,7 @@ const GoodReveal: React.FC<{
         onClick={handleClose}
         className="absolute bottom-0 bg-close-btn bg-contain bg-no-repeat bg-center w-56 h-16 z-10"
         initial={{ opacity: 0 }}
-        animate={{ opacity: isLooping ? 1 : 0 }}
+        animate={{ opacity: looping ? 1 : 0 }}
         transition={{ duration: 0.5, ease: "easeInOut" }}
       >
         <span className="absolute inset-0 z-50 transition duration-200 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20"></span>
@@ -101,25 +95,13 @@ const BadReveal: React.FC<{
 }> = ({ setShakingEgg }) => {
   const ctx = useContext(CottonCandyContext);
   const shakerRef = useRef<HTMLDivElement>(null);
-  const [isLooping, setIsLooping] = useState(false);
 
-  // const eggShakeConfig: EggAnimationConfig = {
-  //   frameWidth: 500,
-  //   frameHeight: 500,
-  //   columns: 8,
-  //   rows: 32,
-  //   spriteAnimationSpeed: 50,
-  //   startFrameIndex: 41,
-  //   repeatFrameIndex: 172,
-  //   endRepeatFrameIndex: 191,
-  // };
-
-  const { startAnimation, currentFrameNo } = useEggBreakAnimation({
-    spriteRef: shakerRef,
-    config: badEggRevealAnimationConfig, //eggShakeConfig,
-    setIsLooping,
-    speed: 1,
-  });
+  const { startAnimation, looping } = useEggAnimator(
+    shakerRef,
+    badEggRevealAnimationConfig,
+    "bad-egg",
+    0.3
+  );
 
   const handleClose = () => {
     if (ctx.revealReward) {
@@ -133,8 +115,8 @@ const BadReveal: React.FC<{
   }, []);
 
   useEffect(() => {
-    if (currentFrameNo > 41) setShakingEgg(true);
-  }, [currentFrameNo]);
+    setShakingEgg(true);
+  }, []);
   return (
     <div className="relative  flex flex-col justify-center items-center">
       <div
@@ -143,10 +125,7 @@ const BadReveal: React.FC<{
         style={{
           width: `${eggShakeConfig.frameWidth}px`,
           height: `${eggShakeConfig.frameHeight}px`,
-          // backgroundImage: "url(images/animations/sprites/lost.png",
-          // backgroundSize: `${eggShakeConfig.columns * 100}% ${
-          //   eggShakeConfig.rows * 100
-          // }%`,
+          backgroundRepeat: "no-repeat",
         }}
       ></div>
 
@@ -154,7 +133,7 @@ const BadReveal: React.FC<{
         onClick={handleClose}
         className="absolute bottom-0 bg-close-btn bg-contain bg-no-repeat bg-center w-56 h-16"
         initial={{ opacity: 0 }}
-        animate={{ opacity: isLooping ? 1 : 0 }}
+        animate={{ opacity: looping ? 1 : 0 }}
         transition={{ duration: 0.5, ease: "easeInOut" }}
       >
         <span className="absolute inset-0 z-50 transition duration-200 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20"></span>

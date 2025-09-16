@@ -601,7 +601,7 @@ const useProgramInstructions = () => {
       //     tokenMetadataProgram: MPL_TOKEN_METADATA_PROGRAM_ID,
       //   })
       //   .rpc({ commitment: "confirmed" });
-      ctx.setMyEggs([]);
+      // ctx.setMyEggs([]);
     } catch (err: any) {
       console.error("Hatch failed:", err);
     }
@@ -688,10 +688,10 @@ const useProgramInstructions = () => {
     } catch (error: any) {
       console.error("SummonEgg error:", error.message);
       throw new Error("Failed to summon egg: " + error.message);
-    } finally {
-      ctx.setMyEggs([]);
-      ctx.setBookmark("eggs");
     }
+    // finally {
+    //   ctx.setBookmark("eggs");
+    // }
   };
 
   //********************************************************

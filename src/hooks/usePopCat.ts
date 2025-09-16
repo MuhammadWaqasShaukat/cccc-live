@@ -14,7 +14,7 @@ const usePopCat = (
 
     const isMouthOpen = isMouthOpenCheck();
     if (!isMouthOpen) {
-      catRef.current.src = "/images/section-hero/memcoin2.open.png";
+      catRef.current.src = "/images/section-hero/popcat-open-mouth.png";
       if (!internalAudioRef.current) {
         //@ts-ignore
         internalAudioRef.current = new Audio("./sound/pop-cat.mp3");
@@ -31,7 +31,7 @@ const usePopCat = (
     const isMouthOpen = isMouthOpenCheck();
 
     if (isMouthOpen) {
-      catRef.current.src = "/images/section-hero/memcoin2.png";
+      catRef.current.src = "/images/section-hero/popcat.png";
     }
   };
 

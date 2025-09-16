@@ -1,4 +1,5 @@
-import { EggAnimationSpriteConfig } from "../hooks/useEggBreakAnimation";
+import { EggAnimationSpriteConfig } from "../hooks/useEggBreakAnimator";
+import { NFTRevealConfig } from "../hooks/useNFTRevealAnimator";
 import {
   ArchersMultiSpriteAnimationConfig,
   MultiSpriteConfig,
@@ -225,6 +226,88 @@ export const kingFrogAnimationConfig: MultiSpriteConfig = {
   loop: true,
 };
 
+export const logoAnimationConfig: MultiSpriteConfig = {
+  sheets: [
+    {
+      url: "/images/animations/sprites/logo/thumbnail.png",
+      columns: 1,
+      rows: 1,
+    },
+    {
+      url: "/images/animations/sprites/logo/sprite1.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/logo/sprite2.png",
+      columns: 6,
+      rows: 6,
+      frameCount: 26,
+    },
+  ],
+  spriteAnimationSpeed: 25,
+  startFrameIndex: 1,
+  loop: true,
+};
+
+export const goldStashAnimationConfig: MultiSpriteConfig = {
+  sheets: [
+    {
+      url: "/images/animations/sprites/gold/sprite1.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/gold/sprite2.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/gold/sprite3.png",
+      columns: 5,
+      rows: 5,
+      frameCount: 22,
+    },
+  ],
+  spriteAnimationSpeed: 70,
+  startFrameIndex: 1,
+  loop: true,
+};
+
+export const sheepAnimationConfig: MultiSpriteConfig = {
+  sheets: [
+    {
+      url: "/images/animations/sprites/sheep/thumbnail.png",
+      columns: 1,
+      rows: 1,
+    },
+    {
+      url: "/images/animations/sprites/sheep/sprite1.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/sheep/sprite2.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/sheep/sprite3.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/sheep/sprite4.png",
+      columns: 7,
+      rows: 7,
+      frameCount: 48,
+    },
+  ],
+  spriteAnimationSpeed: 20,
+  startFrameIndex: 1,
+  loop: true,
+};
+
 // Archers Config
 
 export const archerBlueAnimationConfig: ArchersMultiSpriteAnimationConfig = {
@@ -343,7 +426,7 @@ export const badEggRevealAnimationConfig: EggAnimationSpriteConfig = {
   spriteAnimationSpeed: 10,
 };
 
-export const nftRevealAnimation: EggAnimationSpriteConfig = {
+export const nftRevealAnimation: NFTRevealConfig = {
   sheets: [
     {
       url: "/images/animations/sprites/particels-sprite.png",

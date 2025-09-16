@@ -1,44 +1,28 @@
 import { useContext, useEffect, useState } from "react";
 import { CottonCandyContext } from "../../providers/ContextProvider";
 import Modal from "../UI/Modal";
-import useWeb3Utils from "../../hooks/useWeb3Utils";
-import { NftState } from "../../types/NFTCardTypes";
 import { motion } from "framer-motion";
 import NFTActions from "./NFTActions";
+import { NftState } from "../../types/NFTCardTypes";
 
 const NFTPreview = () => {
-  const { setCollectiable, collectable, setCurrentModal } =
+  const { setCollectiable, collectable, setCurrentModal, lottery } =
     useContext(CottonCandyContext);
-  const { getNftState, getLotteryState } = useWeb3Utils();
 
-  const [nftState, setNftState] = useState<NftState | null>(null);
   const [canSummonEgg, setCanSummonEgg] = useState(false);
 
   const handleKeepNFT = async () => {
     setCurrentModal(null);
     setCollectiable(null);
-    setNftState(null);
   };
 
   useEffect(() => {
-    (async () => {
-      if (!collectable) return;
-      const { isEggClaimed, eggMint, eggHatchedAt } = await getNftState(
-        collectable.mintAddress
-      );
-
-      const { totalMinted, maxPlayers } = await getLotteryState();
-
-      if (totalMinted === maxPlayers) {
-        setCanSummonEgg(true);
-      }
-      setNftState({ isEggClaimed, eggHatchedAt, eggMint });
-    })();
+    if (!lottery) return;
+    const { totalMinted, maxPlayers } = lottery;
+    if (totalMinted === maxPlayers) {
+      setCanSummonEgg(true);
+    }
   }, []);
-
-  if (nftState === null) {
-    return null;
-  }
 
   return (
     <Modal
@@ -75,7 +59,7 @@ const NFTPreview = () => {
               src={`./images/section-mint/nfts/nft1.jpg`}
               alt=""
             />
-            {nftState && !nftState.isEggClaimed ? (
+            {collectable && !(collectable.state as NftState).isEggClaimed ? (
               <div className="absolute flex flex-row items-center justify-center w-full gap-3 p-4 rounded bottom-2 group">
                 <div className="transition-all duration-100 bg-center bg-no-repeat bg-contain bg-egg-glow group-hover:bg-egg-glow-1 size-16 md:size-20 lg:size-24"></div>
                 <span className="text-5xl text-white text-outline-0 font-patrick-hand-sc">
@@ -88,10 +72,10 @@ const NFTPreview = () => {
           </div>
         </motion.div>
 
-        {nftState && !nftState.isEggClaimed ? (
+        {collectable && !(collectable.state as NftState).isEggClaimed ? (
           <NFTActions
             canSummonEgg={canSummonEgg}
-            isEggClaimed={nftState.isEggClaimed}
+            isEggClaimed={(collectable.state as NftState).isEggClaimed}
           />
         ) : (
           ""

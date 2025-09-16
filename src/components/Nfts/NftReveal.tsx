@@ -1,8 +1,8 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { IParticle } from "../Eggs/EggRevealAnimation";
-import { useEggBreakAnimation } from "../../hooks/useEggBreakAnimation";
 import { CottonCandyContext } from "../../providers/ContextProvider";
 import { nftRevealAnimation } from "../../constants/animationsConfig";
+import { useNFTRevealAnimator } from "../../hooks/useNFTRevealAnimator";
 
 const NftReveal = () => {
   const ctx = useContext(CottonCandyContext);
@@ -14,19 +14,17 @@ const NftReveal = () => {
   const [showScanLine, setShowScanLine] = useState(true);
 
   const { startAnimation, currentFrameNo, stopAnimation } =
-    useEggBreakAnimation({
+    useNFTRevealAnimator({
       spriteRef: spriteRef,
       config: nftRevealAnimation,
       setIsLooping: () => {},
       speed: 0.3,
     });
 
-  // kick off spinning once triggered
   useEffect(() => {
     if (startSpinning) startAnimation();
   }, [startSpinning]);
 
-  // stop sprite when animation finishes
   useEffect(() => {
     if (currentFrameNo >= nftRevealAnimation.endRepeatFrameIndex!) {
       stopAnimation();

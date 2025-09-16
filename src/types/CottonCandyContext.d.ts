@@ -1,3 +1,5 @@
+import { Token } from "./Nft";
+
 export type LotteryState = {
   status: "in-progress" | "ended" | "not-started";
 };
@@ -11,7 +13,6 @@ export interface CottonCandyContextType {
   setGasFee: StateSetter<number>;
   setCount: StateSetter<number>;
   setPrice: StateSetter<number>;
-  calculatePrice: () => Promise<void>;
   lotteryState: LotteryState;
   setLotteryState: StateSetter<LotteryState>;
 
@@ -21,17 +22,11 @@ export interface CottonCandyContextType {
   estimate: number | null;
   setEstimate: StateSetter<number | null>;
 
-  collectable: any;
-  setCollectiable: StateSetter<any>;
-
-  nftState: NftState | undefined | null;
-  setNftState: StateSetter<NftState | undefined | null>;
+  collectable: Token | null;
+  setCollectiable: StateSetter<Token | null>;
 
   isPortalOpen: boolean;
   setIsPortalOpen: StateSetter<boolean>;
-
-  nftMint: string | null;
-  setNftMint: StateSetter<string | null>;
 
   bookmark: BookMark;
   setBookmark: StateSetter<BookMark>;
@@ -40,18 +35,6 @@ export interface CottonCandyContextType {
   setNftToEggMap: StateSetter<Record<string, string>>;
 
   getNftToEggMap: (nfts: any[]) => void;
-
-  myNfts: any[];
-  setMyNfts: StateSetter<any[]>;
-
-  myEggs: any[];
-  setMyEggs: StateSetter<any[]>;
-
-  getNFTs: () => Promise<any[]>;
-  getEggNFTs: () => Promise<any[]>;
-
-  refreshNftState?: string;
-  setRefreshNftState: StateSetter<string>;
 
   activeMenu: Nav;
   setActiveMenu: StateSetter<Nav>;
@@ -71,9 +54,21 @@ export interface CottonCandyContextType {
   assestsPreloaded: boolean;
   setAssestsPreloaded: StateSetter<boolean>;
 
-  nftStates: Record<string, NftState>;
-  setNftStates: StateSetter<Record<string, NftState>>;
-
   sprites: Record<string, HTMLImageElement[]>;
   setSprites: StateSetter<Record<string, HTMLImageElement[]>>;
+
+  refreshEggs: boolean;
+  setRefreshEggs: StateSetter<boolean>;
+
+  refreshNFTS: boolean;
+  setRefreshNFTS: StateSetter<boolean>;
+
+  lottery: Lottery;
+  setLottery: StateSetter<Lottery>;
+
+  nfts: Token[] | null;
+  eggs: Token[] | null;
+
+  setNfts: StateSetter<Token[] | null>;
+  setEggs: StateSetter<Token[] | null>;
 }

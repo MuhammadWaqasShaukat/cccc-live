@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { pathToId } from "../utils/pathToId";
 
 type PreloadType = "image" | "video" | "audio";
 
@@ -57,6 +58,8 @@ export function usePreloader(
                 resolve();
                 return;
             }
+
+            el.id = pathToId(src);
 
             const done = () => {
               if (cancelled) return;
