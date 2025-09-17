@@ -37,7 +37,7 @@ export function useGenerateNft() {
     formData.append("nft", blob, "image.png");
     formData.append("metadata", JSON.stringify(metadata));
 
-    await fetch(`${apiUrl}/upload-nft`, {
+    await fetch(`${apiUrl}/nfts/upload-nft`, {
       method: "POST",
       body: formData,
     });

@@ -19,7 +19,7 @@ const useGetUpdatedTokenByMintAddress = () => {
   const getUpdatedNft = async (nft: Token): Promise<Token | null> => {
     if (!nft) return null;
 
-    const url = `${apiUrl}/nftstate?mintAddress=${nft.metadata.mintAddress}`;
+    const url = `${apiUrl}/nfts/state/${nft.metadata.mintAddress}`;
     const updatedState: NftState = await fetchData(url);
     const updatedNft: Token = {
       metadata: nft.metadata,
@@ -30,7 +30,7 @@ const useGetUpdatedTokenByMintAddress = () => {
   const getUpdatedEgg = async (egg: Token): Promise<Token | null> => {
     if (!publicKey || !egg) return null;
 
-    const url = `${apiUrl}/eggstate?owner=${publicKey}&mintAddress=${egg.metadata.mintAddress}`;
+    const url = `${apiUrl}/eggs/state/${publicKey}/${egg.metadata.mintAddress}`;
     const updatedState: FulFilledState = await fetchData(url);
 
     const updatedEgg: Token = {
@@ -45,7 +45,7 @@ const useGetUpdatedTokenByMintAddress = () => {
   ): Promise<Token | null> => {
     if (!publicKey || !mintAddress) return null;
 
-    const url = `${apiUrl}/egg?owner=${publicKey}&mintAddress=${mintAddress}&collection=${lottery.egg}`;
+    const url = `${apiUrl}/eggs/${publicKey}/${lottery.egg}/${mintAddress}`;
     const egg: Token = await fetchData(url);
     return egg;
   };

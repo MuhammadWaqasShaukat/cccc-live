@@ -24,11 +24,10 @@ export const useGetAllNfts = () => {
   }, [lottery?.nft]);
 
   const getNftByType = async (
-    type: "Nft",
     collection: string,
     owner: string
   ): Promise<Token[]> => {
-    const url = `${apiUrl}/get-nfts?owner=${owner}&type=${type}&collection=${collection}`;
+    const url = `${apiUrl}/nfts/${owner}/${collection}`;
     const nfts: Token[] = await fetchData(url);
     return nfts ?? [];
   };
@@ -38,7 +37,7 @@ export const useGetAllNfts = () => {
     queryKey,
     () =>
       connected && publicKey && collection
-        ? getNftByType("Nft", collection, publicKey.toBase58())
+        ? getNftByType(collection, publicKey.toBase58())
         : Promise.resolve([]),
     {
       enabled: false, //connected && !!publicKey && !!collection,

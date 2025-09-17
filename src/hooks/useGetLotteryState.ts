@@ -10,7 +10,7 @@ const fetchData = async (url: string) => {
 };
 
 const fetchLotteryState = async (): Promise<Lottery> => {
-  const url = `${apiUrl}/lottery-status`;
+  const url = `${apiUrl}/lottery/state`;
   const status = await fetchData(url);
   return status;
 };

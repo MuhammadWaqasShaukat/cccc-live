@@ -22,11 +22,10 @@ export const useGetAllEggs = () => {
   }, [lottery?.nft]);
 
   const getNftByType = async (
-    type: "Egg",
     collection: string,
     owner: string
   ): Promise<Token[]> => {
-    const url = `${apiUrl}/get-nfts?owner=${owner}&type=${type}&collection=${collection}`;
+    const url = `${apiUrl}/eggs/${owner}/${collection}`;
     const eggs: Token[] = await fetchData(url);
     return eggs ?? [];
   };
@@ -37,7 +36,7 @@ export const useGetAllEggs = () => {
     queryKey,
     () =>
       connected && publicKey && collection
-        ? getNftByType("Egg", collection, publicKey.toBase58())
+        ? getNftByType(collection, publicKey.toBase58())
         : Promise.resolve([]),
     {
       enabled: false, //connected && !!publicKey && !!collection,
