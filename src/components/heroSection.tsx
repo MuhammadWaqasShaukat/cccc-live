@@ -395,8 +395,6 @@ const HeroSection = () => {
     ctx.setAssestsPreloaded(true);
   }, []);
 
-  console.log(heroesDimensions.current.get(animations.sheep.ref));
-
   useEffect(() => {
     animations.gold.startAnimation();
   }, [animations, animations.gold.startAnimation]);
@@ -872,7 +870,7 @@ const HeroSection = () => {
           onMouseEnter={animations.fire.startAnimation}
           onMouseLeave={animations.fire.stopAnimation}
           ref={animations.fire.ref}
-          className="sprite-container absolute right-[30%] max-w-48 max-h-24 z-50 "
+          className="sprite-container absolute right-[30%] max-w-48 max-h-24 z-40 "
           style={{
             width: `${
               heroesDimensions.current.get(animations.fire.ref)?.width

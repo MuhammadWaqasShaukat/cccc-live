@@ -153,6 +153,11 @@ export const IMGS_SOURCES = [
   "/images/how-it-works/label-2.png",
   "/images/how-it-works/label-3.png",
   "/images/how-it-works/label-4.png",
+
+  "/images/section-mint/super-offer-bg-sm.png",
+  "/images/section-mint/super-offer-bg.png",
+  "/images/section-mint/super-offer.png",
+  "/images/section-mint/super-offer-title.png",
 ];
 
 export const CRITICAL_ASSETS = [

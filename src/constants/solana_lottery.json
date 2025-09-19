@@ -1,5 +1,5 @@
 {
-  "address": "4gfsxpAqrf1xFiTR9W54UsK5NcqBFUv4aSG6zo3vS3RT",
+  "address": "F63nNMtGUvxwBC5ATRGdJAFyMtss8MpA4noCjPsnseDV",
   "metadata": {
     "name": "solana_lottery",
     "version": "0.1.0",
@@ -329,6 +329,7 @@
         },
         {
           "name": "state",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -2096,6 +2097,10 @@
           },
           {
             "name": "total_minted_egg",
+            "type": "u64"
+          },
+          {
+            "name": "total_cracked_egg",
             "type": "u64"
           },
           {

@@ -137,6 +137,13 @@ export default {
       "tutorial-label-step-2": "url('/images/how-it-works/label-2.png')",
       "tutorial-label-step-3": "url('/images/how-it-works/label-3.png')",
       "tutorial-label-step-4": "url('/images/how-it-works/label-4.png')",
+
+      "super-offer-lg": "url('/images/section-mint/super-offer-bg.png')",
+      "super-offer-sm": "url('/images/section-mint/super-offer-bg-sm.png')",
+      "super-offer": "url('/images/section-mint/super-offer.png')",
+      "super-offer-title": "url('/images/section-mint/supper-offer-title.png')",
+      "supper-offer-mint-btn":
+        "url('/images/section-mint/supper-offer-mint-btn.png')",
     },
   },
   plugins: [],

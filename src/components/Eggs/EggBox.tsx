@@ -169,7 +169,7 @@ const EggBox: React.FC<{ egg: Token; nftMint: string }> = ({
         )}
       {/* no reward */}
       {(egg.state as FulFilledState).status === "done" &&
-        (egg.state as FulFilledState).lotteryStatus === "none" && (
+        (egg.state as FulFilledState).lotteryStatus === "lost" && (
           <motion.div
             key="lost"
             initial={{ opacity: 0 }}

@@ -18,7 +18,7 @@ const fetchData = async (url: string) => {
 };
 
 const getMintStatus = async (): Promise<MintStatus> => {
-  const url = `${apiUrl}/mint/state`;
+  const url = `${apiUrl}/mint-status`;
   return fetchData(url);
 };
 

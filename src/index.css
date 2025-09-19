@@ -33,6 +33,29 @@ body {
   cursor: none;
 }
 
+/* On small screens (max-width: 640px) restore default cursor */
+@media (max-width: 640px) {
+
+  html,
+  body,
+  *,
+  *:before,
+  *:after,
+  button,
+  a,
+  input[type="submit"],
+  input[type="button"],
+  input[type="text"],
+  input[type="password"],
+  select,
+  textarea,
+  video,
+  img,
+  body {
+    cursor: auto;
+  }
+}
+
 
 
 button * {
