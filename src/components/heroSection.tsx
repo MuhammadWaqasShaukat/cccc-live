@@ -150,19 +150,12 @@ const HeroSection = () => {
   const blueTrajectoryStartRef = useRef<HTMLDivElement>(null);
 
   const resizeHeroes = () => {
-    // lightening heroes
-
     heroesDimensions.current.set(animations.logo.ref, {
       width: window.innerWidth * 0.25,
       height: window.innerWidth * 0.25,
     });
 
     heroesDimensions.current.set(animations.gold.ref, {
-      width: window.innerWidth * 0.65,
-      height: window.innerWidth * 0.65,
-    });
-
-    heroesDimensions.current.set(animations.sheep.ref, {
       width: window.innerWidth * 0.65,
       height: window.innerWidth * 0.65,
     });
@@ -179,8 +172,8 @@ const HeroSection = () => {
       }
       if (animations.candle.ref.current) {
         heroesDimensions.current.set(animations.candle.ref, {
-          width: castleRect.width * 0.45,
-          height: castleRect.width * 0.45,
+          width: castleRect.width * 0.5,
+          height: castleRect.width * 0.5,
         });
       }
       if (animations.whale.ref.current) {
@@ -204,44 +197,48 @@ const HeroSection = () => {
 
       if (animations.lightSabre.ref.current) {
         heroesDimensions.current.set(animations.lightSabre.ref, {
-          width: castleRect.width * 0.35,
-          height: castleRect.width * 0.35,
+          width: castleRect.width * 0.4,
+          height: castleRect.width * 0.4,
         });
       }
 
       if (animations.sandwichmen.ref.current) {
         heroesDimensions.current.set(animations.sandwichmen.ref, {
-          width: castleRect.width * 0.4,
-          height: castleRect.width * 0.4,
+          width: castleRect.width * 0.6,
+          height: castleRect.width * 0.6,
         });
       }
 
       if (animations.kingFrog.ref.current) {
         heroesDimensions.current.set(animations.kingFrog.ref, {
-          width: castleRect.width * 0.4,
-          height: castleRect.width * 0.4,
+          width: castleRect.width * 0.6,
+          height: castleRect.width * 0.6,
         });
       }
 
       if (redSpriteRef.current) {
         heroesDimensions.current.set(redSpriteRef, {
-          width: castleRect.width * 0.5,
-          height: castleRect.width * 0.5,
+          width: castleRect.width * 0.7,
+          height: castleRect.width * 0.7,
         });
       }
 
       if (blueSpriteRef.current) {
         heroesDimensions.current.set(blueSpriteRef, {
-          width: castleRect.width * 0.5,
-          height: castleRect.width * 0.5,
+          width: castleRect.width * 0.7,
+          height: castleRect.width * 0.7,
         });
       }
+
+      heroesDimensions.current.set(animations.sheep.ref, {
+        width: castleRect.width * 0.9,
+        height: castleRect.width * 0.9,
+      });
     }
   };
 
   const positionElement = () => {
     anchorElement(anchor_2_Ref, tombstoneRef, { bottom: true });
-    // anchorElement(anchor_Ref, catContainerRef, { bottom: true });
     anchorElement(anchor_0_Ref, candleOneRef, { bottom: true });
     anchorElement(anchor_1_Ref, candleTwoRef, { bottom: true });
     anchorElement(anchor_0_Ref, arrowOneRef, { bottom: true });
@@ -396,6 +393,69 @@ const HeroSection = () => {
   }, []);
 
   useEffect(() => {
+    const spriteContainers =
+      document.querySelectorAll<HTMLElement>(".sprite-container");
+    let activeId: string | null = null;
+
+    function handleMouseMove(e: MouseEvent) {
+      let closestEl: HTMLElement | null = null;
+      let minDist = Infinity;
+
+      spriteContainers.forEach((el) => {
+        const rect = (el as HTMLElement).getBoundingClientRect();
+
+        const inside =
+          e.clientX >= rect.left &&
+          e.clientX <= rect.right &&
+          e.clientY >= rect.top &&
+          e.clientY <= rect.bottom;
+
+        if (!inside) return;
+
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const dist = Math.sqrt(
+          (e.clientX - centerX) ** 2 + (e.clientY - centerY) ** 2
+        );
+
+        if (dist < minDist) {
+          minDist = dist;
+          closestEl = el;
+        }
+      });
+
+      if (!closestEl) return;
+
+      const closestId = (closestEl as HTMLElement).id;
+
+      if (activeId !== closestId) {
+        if (activeId) animations[activeId]?.stopAnimation();
+        animations[closestId]?.startAnimation();
+        activeId = closestId;
+      }
+    }
+
+    function handleMouseLeave(this: HTMLElement) {
+      if (activeId === this.id) {
+        animations[this.id]?.stopAnimation();
+        activeId = null;
+      }
+    }
+
+    spriteContainers.forEach((el) => {
+      el.addEventListener("mousemove", handleMouseMove);
+      el.addEventListener("mouseleave", handleMouseLeave as EventListener);
+    });
+
+    return () => {
+      spriteContainers.forEach((el) => {
+        el.removeEventListener("mousemove", handleMouseMove);
+        el.removeEventListener("mouseleave", handleMouseLeave as EventListener);
+      });
+    };
+  }, []);
+
+  useEffect(() => {
     animations.gold.startAnimation();
   }, [animations, animations.gold.startAnimation]);
 
@@ -418,7 +478,7 @@ const HeroSection = () => {
         <div className="z-20 flex flex-row items-center justify-between px-4 py-2 md:px-10 md:py-5">
           <div className="flex items-center justify-center">
             <img
-              src="/images/logo-header.png"
+              src="/images/logo-header.webp"
               className="w-12 mr-1 md:w-20 md:mr-2"
             />
             <h1 className="text-sm text-white uppercase font-impact md:text-xl lg:text-3xl md:tracking-wider md:leading-8">
@@ -436,9 +496,8 @@ const HeroSection = () => {
             </span>
           </button>
         </div>
-        <Nav
-          className={"flex-1 absolute bottom-[25%] z-40 pointer-events-none"}
-        />
+
+        <Nav className={"absolute  pointer-events-none"} style={{}} />
         <div
           ref={animations.gold.ref}
           style={{
@@ -452,13 +511,12 @@ const HeroSection = () => {
             backgroundSize: "100% 100%",
             backgroundPosition: "0% 0%",
           }}
-          className=" pointer-events-none  max-h-[400px] max-w-[400px] min-w-[200px] min-h-[200px] bg-no-repeat bg-contain bg-bottom absolute left-[50%] -translate-x-[50%] -bottom-[10%] z-40"
+          className="hidden md:block pointer-events-none  max-h-[400px] max-w-[400px] min-w-[200px] min-h-[200px] bg-no-repeat bg-contain bg-bottom absolute left-[50%] -translate-x-[50%] -bottom-[10%] z-40"
         ></div>
         <div className="bg-hero-section-lower  bg-no-repeat bg-cover h-[20%] bg-end absolute bottom-0 left-0 right-0"></div>
 
         <div
-          onMouseEnter={animations.logo.startAnimation}
-          onMouseLeave={animations.logo.stopAnimation}
+          id="logo"
           ref={animations.logo.ref}
           style={{
             width: `${
@@ -473,7 +531,7 @@ const HeroSection = () => {
             backgroundSize: "100% 100%",
             backgroundPosition: "0% 0%",
           }}
-          className="  max-h-[350px] max-w-[350px] min-w-[200px] min-h-[200px] bg-no-repeat bg-contain bg-bottom absolute left-[50%] -translate-x-[50%] z-40"
+          className="sprite-container  max-h-[350px] max-w-[350px] min-w-[200px] min-h-[200px] bg-no-repeat bg-contain bg-bottom absolute left-[50%] -translate-x-[50%] z-40"
         ></div>
 
         {/* Heroes */}
@@ -486,8 +544,7 @@ const HeroSection = () => {
             {/* Command : red */}
 
             <div
-              onMouseEnter={animations.kingFrog.startAnimation}
-              onMouseLeave={animations.kingFrog.stopAnimation}
+              id="kingFrog"
               ref={animations.kingFrog.ref}
               style={{
                 width: `${
@@ -542,7 +599,7 @@ const HeroSection = () => {
                       }}
                     >
                       <img
-                        src="/images/arrow-lightning.png"
+                        src="/images/arrow-lightning.webp"
                         alt="arrow"
                         style={{ width: "100%", height: "100%" }}
                       />
@@ -560,7 +617,7 @@ const HeroSection = () => {
                   onMouseEnter={playLighteningArcherAnimation}
                   onMouseLeave={stopLighteningArcherAnimation}
                   ref={redSpriteRef}
-                  className="sprite-container absolute bottom-0 max-w-40 max-h-40  z-100"
+                  className="absolute bottom-0 max-w-48 max-h-48  z-100"
                   style={{
                     width: `${
                       heroesDimensions.current.get(redSpriteRef)?.width
@@ -593,8 +650,7 @@ const HeroSection = () => {
 
         {/* Light Saber: red */}
         <div
-          onMouseEnter={animations.lightSabre.startAnimation}
-          onMouseLeave={animations.lightSabre.stopAnimation}
+          id="lightSabre"
           ref={animations.lightSabre.ref}
           style={{
             width: `${
@@ -610,12 +666,11 @@ const HeroSection = () => {
             backgroundSize: "100% 100%",
             backgroundPosition: "0% 0%",
           }}
-          className=" bg-left-bottom hidden md:block absolute left-[0%] min-w-32 min-h-32 z-40 bg-contain bg-no-repeat  max-w-64 max-h-64 bottom-0  aspect-square "
+          className="sprite-container  bg-left-bottom hidden md:block absolute left-[0%] min-w-32 min-h-32 z-40 bg-contain bg-no-repeat  max-w-48 max-h-48 bottom-0  aspect-square "
         ></div>
 
         <div
-          onMouseEnter={animations.magic.startAnimation}
-          onMouseLeave={animations.magic.stopAnimation}
+          id="magic"
           ref={animations.magic.ref}
           style={{
             width: `${
@@ -630,7 +685,7 @@ const HeroSection = () => {
             backgroundSize: "100% 100%",
             backgroundPosition: "0% 0%",
           }}
-          className=" bg-left-bottom absolute left-[5%] md:left-[15%] z-40 bg-contain bg-no-repeat  max-w-64 max-h-64 min-h-40 min-w-40 bottom-0  aspect-square "
+          className="sprite-container  bg-left-bottom absolute left-[5%] md:left-[15%] z-40 bg-contain bg-no-repeat  max-w-80 max-h-80 min-h-40 min-w-40 bottom-0  aspect-square "
         ></div>
 
         <div
@@ -651,30 +706,8 @@ const HeroSection = () => {
         ></div>
         {/* Cavlary : red */}
 
-        {/* <div
-          ref={catContainerRef}
-          className="w-[25%] max-w-56 min-w-36  object-bottom h-auto absolute bottom-0  md:left-[8%]  left-[15%] z-40"
-        >
-          <div className="relative flex flex-col items-center justify-start mt-5">
-            <div
-              className=" absolute h-28 w-28 top-[15%] -ml-9 pointer-events-auto"
-              onMouseDown={handleMouseDown}
-              onMouseUp={handleMouseUp}
-              onMouseLeave={handleMouseUp}
-            ></div>
-            <img
-              ref={catRef}
-              src="/images/section-hero/memcoin2.png"
-              draggable={false}
-              alt=""
-              className=""
-            ></img>
-          </div>
-        </div> */}
-
         <div
-          onMouseEnter={animations.sheep.startAnimation}
-          onMouseLeave={animations.sheep.stopAnimation}
+          id="sheep"
           ref={animations.sheep.ref}
           style={{
             width: `${
@@ -689,7 +722,7 @@ const HeroSection = () => {
             backgroundSize: "100% 100%",
             backgroundPosition: "0% 0%",
           }}
-          className="bg-left-bottom absolute left-[5%] md:left-[8%] z-40 bg-contain bg-no-repeat  max-w-64 max-h-64 min-h-40 min-w-40 -bottom-[5%]  aspect-square "
+          className="sprite-container  bg-left-bottom absolute left-[5%] md:left-[8%] z-40 bg-contain bg-no-repeat max-w-80 max-h-80  min-h-40 min-w-40 -bottom-[5%]  aspect-square "
         >
           <div className=" h-full w-full relative">
             <div ref={catContainerRef} className=" absolute -top-[35%]">
@@ -702,7 +735,7 @@ const HeroSection = () => {
                 ></div>
                 <img
                   ref={catRef}
-                  src="/images/section-hero/popcat.png"
+                  src="/images/section-hero/popcat.webp"
                   draggable={false}
                   alt=""
                   className=""
@@ -722,8 +755,7 @@ const HeroSection = () => {
             className="bg-hero-section-castle-blue-1 max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-0  bg-right-bottom right-0"
           >
             <div
-              onMouseEnter={animations.sandwichmen.startAnimation}
-              onMouseLeave={animations.sandwichmen.stopAnimation}
+              id="sandwichmen"
               ref={animations.sandwichmen.ref}
               style={{
                 width: `${
@@ -778,7 +810,7 @@ const HeroSection = () => {
                       }}
                     >
                       <img
-                        src="/images/arrow-candle.png"
+                        src="/images/arrow-candle.webp"
                         alt="arrow"
                         style={{ width: "100%", height: "100%" }}
                       />
@@ -796,7 +828,7 @@ const HeroSection = () => {
                   onMouseEnter={playCandleArcherAnimation}
                   onMouseLeave={stopCandleArcherAnimation}
                   ref={blueSpriteRef}
-                  className="sprite-container absolute bottom-0 max-w-40 max-h-40 z-100"
+                  className="absolute bottom-0 max-w-48 max-h-48 z-100"
                   style={{
                     width: `${
                       heroesDimensions.current.get(blueSpriteRef)?.width
@@ -827,8 +859,7 @@ const HeroSection = () => {
         </div>
 
         <div
-          onMouseEnter={animations.whale.startAnimation}
-          onMouseLeave={animations.whale.stopAnimation}
+          id="whale"
           ref={animations.whale.ref}
           style={{
             width: `${
@@ -843,14 +874,13 @@ const HeroSection = () => {
             backgroundSize: "100% 100%",
             backgroundPosition: "0% 0%",
           }}
-          className="sprite-container absolute max-w-64 max-h-64 min-w-40 min-h-40 bottom-0 sm:right-[4%] right-0 z-40 aspect-square "
+          className="sprite-container absolute max-w-80 max-h-80 min-w-40 min-h-40 bottom-0 sm:right-[4%] right-0 z-40 aspect-square "
         />
 
         <div
+          id="swordman"
           ref={animations.swordman.ref}
-          onMouseEnter={animations.swordman.startAnimation}
-          onMouseLeave={animations.swordman.stopAnimation}
-          className=" md:block hidden max-w-48 max-h-48 min-w-28 min-h-28 z-40 absolute bg-contain bg-no-repeat -right-[2%] bg-right "
+          className="sprite-container  md:block hidden max-w-56 max-h-56 min-w-28 min-h-28 z-40 absolute bg-contain bg-no-repeat -right-[2%] bg-right "
           style={{
             width: `${
               heroesDimensions.current.get(animations.swordman.ref)?.width
@@ -867,8 +897,7 @@ const HeroSection = () => {
         ></div>
 
         <div
-          onMouseEnter={animations.fire.startAnimation}
-          onMouseLeave={animations.fire.stopAnimation}
+          id="fire"
           ref={animations.fire.ref}
           className="sprite-container absolute right-[30%] max-w-48 max-h-24 z-40 "
           style={{
@@ -882,10 +911,9 @@ const HeroSection = () => {
         />
 
         <div
-          onMouseEnter={animations.candle.startAnimation}
-          onMouseLeave={animations.candle.stopAnimation}
+          id="candle"
           ref={animations.candle.ref}
-          className="sprite-container absolute bg-bottom max-h-60 max-w-60 min-w-36 min-h-36 right-[13%] bottom-0  z-40 "
+          className="sprite-container absolute bg-bottom max-h-64 max-w-64 min-w-36 min-h-36 right-[13%] bottom-0  z-40 "
           style={{
             width: `${
               heroesDimensions.current.get(animations.candle.ref)?.width

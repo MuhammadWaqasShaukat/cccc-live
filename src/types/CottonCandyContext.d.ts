@@ -1,3 +1,4 @@
+import { MultiSpriteConfig } from "./animations";
 import { Token } from "./Nft";
 
 export type LotteryState = {
@@ -8,11 +9,14 @@ type StateSetter<T> = React.Dispatch<React.SetStateAction<T>>;
 
 export interface CottonCandyContextType {
   price: number;
+  setPrice: StateSetter<number>;
+
   count: number;
+  setCount: StateSetter<number>;
+
   gasFee: number;
   setGasFee: StateSetter<number>;
-  setCount: StateSetter<number>;
-  setPrice: StateSetter<number>;
+
   lotteryState: LotteryState;
   setLotteryState: StateSetter<LotteryState>;
 
@@ -31,6 +35,9 @@ export interface CottonCandyContextType {
   bookmark: BookMark;
   setBookmark: StateSetter<BookMark>;
 
+  viewSupperOffer: boolean;
+  setViewSuperOffer: StateSetter<boolean>;
+
   nftToEggMap: Record<string, string>;
   setNftToEggMap: StateSetter<Record<string, string>>;
 
@@ -45,6 +52,12 @@ export interface CottonCandyContextType {
   revealNFT: boolean;
   setRevealNFT: StateSetter<boolean>;
 
+  isEggSummoned: boolean;
+  setIsEggSummoned: StateSetter<boolean>;
+
+  currentSummonedEggAnimationConfig: MultiSpriteConfig | null;
+  setCurrentSummonedEggAnimationConfig: StateSetter<MultiSpriteConfig | null>;
+
   revealReward: "bad" | "good" | null;
   setRevealReward: StateSetter<"bad" | "good" | null>;
 
@@ -56,12 +69,6 @@ export interface CottonCandyContextType {
 
   sprites: Record<string, HTMLImageElement[]>;
   setSprites: StateSetter<Record<string, HTMLImageElement[]>>;
-
-  refreshEggs: boolean;
-  setRefreshEggs: StateSetter<boolean>;
-
-  refreshNFTS: boolean;
-  setRefreshNFTS: StateSetter<boolean>;
 
   lottery: Lottery;
   setLottery: StateSetter<Lottery>;

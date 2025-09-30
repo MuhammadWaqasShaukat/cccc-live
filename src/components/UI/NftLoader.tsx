@@ -4,7 +4,7 @@ const NftLoader = () => {
   return (
     <div className="grid w-full h-full ml-0 sm:-ml-6 place-content-center">
       <motion.img
-        src={"/images/snake-loader.png"}
+        src={"/images/snake-loader.webp"}
         alt="Loading..."
         className={`size-24`}
         animate={{

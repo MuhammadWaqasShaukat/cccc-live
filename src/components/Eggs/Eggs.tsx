@@ -8,8 +8,7 @@ import { useGetAllNfts } from "../../hooks/useGetAllNFTs";
 import { Token } from "../../types/Nft";
 
 const Eggs = () => {
-  const { nftToEggMap, getNftToEggMap, refreshEggs } =
-    useContext(CottonCandyContext);
+  const { nftToEggMap, getNftToEggMap } = useContext(CottonCandyContext);
 
   const [viewInstruction, setViewInstruction] = useState(false);
   const { data: eggs, isLoading: loading } = useGetAllEggs();
@@ -31,7 +30,7 @@ const Eggs = () => {
         {/* top bar */}
         <div className="flex flex-row items-center justify-between w-full ">
           <div className="flex flex-row justify-start w-[90%] md:w-full items-center md:bg-none z-40   bg-cover bg-bottom md:pt-2.5 md:pl-4">
-            <img src="./images/letter-y-eggs.png" alt="" className="size-10" />
+            <img src="./images/letter-y-eggs.webp" alt="" className="size-10" />
             <h3 className="text-2xl uppercase font-patrick-hand-sc">
               our <span className="text-3xl">EGG</span>s
             </h3>
@@ -69,7 +68,7 @@ const Eggs = () => {
 
           <div className="flex flex-row md:justify-start justify-end w-[90%] md:w-full items-end md:bg-none   bg-cover bg-bottom md:pt-2.5 md:pl-4">
             <img
-              src="./images/letter-y-eggs.png"
+              src="./images/letter-y-eggs.webp"
               alt=""
               className="h-[70%]  md:h-auto lg:size-10 md:size-8"
             />
@@ -82,7 +81,7 @@ const Eggs = () => {
               {/* icon */}
               <div className="grid w-full col-span-1 place-content-center h-max">
                 <img
-                  src={`./images/hammer.png`}
+                  src={`./images/hammer.webp`}
                   alt="claimable egg"
                   className="w-[100px] md:w-16"
                 />
@@ -98,7 +97,7 @@ const Eggs = () => {
               {/* icon */}
               <div className="grid w-full place-content-center h-max">
                 <img
-                  src={`./images/hourglass.png`}
+                  src={`./images/hourglass.webp`}
                   alt="claimable egg"
                   className=" w-[80px] md:w-16"
                 />
@@ -113,7 +112,7 @@ const Eggs = () => {
         </div>
         {/*right page  */}
         <div className="flex flex-col items-center flex-1 w-full h-full sm:justify-between md:justify-start sm:gap-7 lg:gap-4 md:gap-3">
-          {loading || refreshEggs ? (
+          {loading ? (
             <NftLoader />
           ) : !loading && eggs && eggs.length > 0 ? (
             <div

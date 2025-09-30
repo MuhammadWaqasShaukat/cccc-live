@@ -26,7 +26,7 @@ const NFTInstructions = ({
             {/* icon */}
             <div className="grid w-full col-span-1 place-content-center">
               <img
-                src={`./images/egg.png`}
+                src={`./images/egg.webp`}
                 alt="claimable egg"
                 className="w-16"
               />
@@ -41,7 +41,8 @@ const NFTInstructions = ({
             {/* icon */}
             <div className="grid w-full col-span-1 place-content-center">
               <img
-                src={`./images/lucky-ticket.png`}
+                src={`./images/lucky-ticket.webp
+                  `}
                 alt="claimable egg"
                 className="w-20"
               />

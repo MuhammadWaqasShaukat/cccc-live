@@ -66,7 +66,7 @@ const GoodReveal: React.FC<{
     <div className="relative  flex flex-col justify-center items-center">
       <div
         ref={shakerRef}
-        className="sprite-container max-w-[500px] max-h-[500px] z-0 pointer-events-none"
+        className="max-w-[500px] max-h-[500px] z-0 pointer-events-none"
         style={{
           width: `${eggShakeConfig.frameWidth}px`,
           height: `${eggShakeConfig.frameHeight}px`,
@@ -121,7 +121,7 @@ const BadReveal: React.FC<{
     <div className="relative  flex flex-col justify-center items-center">
       <div
         ref={shakerRef}
-        className="sprite-container max-w-[500px] max-h-[500px] z-0 pointer-events-none"
+        className="max-w-[500px] max-h-[500px] z-0 pointer-events-none"
         style={{
           width: `${eggShakeConfig.frameWidth}px`,
           height: `${eggShakeConfig.frameHeight}px`,

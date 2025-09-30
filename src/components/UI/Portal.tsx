@@ -5,7 +5,7 @@ const Portal = () => {
   return (
     <Modal onBackgroundClick={() => {}}>
       <motion.img
-        src={"./images/portal.png"}
+        src={"./images/portal.webp"}
         alt="Loading..."
         className="w-[80%]"
         animate={{

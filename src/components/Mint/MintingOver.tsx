@@ -15,7 +15,7 @@ const MintingOverLeaf = () => {
       </div>
 
       <div className=" w-[80%]">
-        <img src="/images/section-mint/mint-over.png" alt="" />
+        <img src="/images/section-mint/mint-over.webp" alt="" />
       </div>
     </div>
   );

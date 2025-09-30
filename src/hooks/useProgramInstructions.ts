@@ -399,7 +399,7 @@ const useProgramInstructions = () => {
   //                    CLAIM NFT
   //********************************************************
 
-  const ClaimNFT = async (nftAddress: string, nftMintKeypair: Keypair) => {
+  const ClaimNFT = async (nftAddress: string /*nftMintKeypair : string*/) => {
     const connectedWallet = await getConnectedWallet(wallet!);
 
     const provider = await getProvider(connection);
@@ -416,7 +416,7 @@ const useProgramInstructions = () => {
     }
 
     try {
-      // const nftMintKeypair = Keypair.generate();
+      const nftMintKeypair = Keypair.generate();
 
       const [collectionAuthorityPda] = PublicKey.findProgramAddressSync(
         [encode("collection_authority")],
@@ -504,7 +504,7 @@ const useProgramInstructions = () => {
         await provider.connection.getLatestBlockhash()
       ).blockhash;
 
-      return transaction;
+      // return transaction;
 
       const signedTx = await connectedWallet.signTransaction(transaction);
 
@@ -525,6 +525,7 @@ const useProgramInstructions = () => {
       );
     } catch (err: any) {
       console.error("Claim failed:", err);
+      throw err;
     }
   };
 
@@ -536,6 +537,18 @@ const useProgramInstructions = () => {
     eggMintAddress: PublicKey,
     nftMintAddress: PublicKey
   ) => {
+    const eggMintPk =
+      typeof eggMintAddress === "string"
+        ? new PublicKey(eggMintAddress)
+        : eggMintAddress;
+
+    const nftMintPk =
+      typeof nftMintAddress === "string"
+        ? new PublicKey(nftMintAddress)
+        : nftMintAddress;
+
+    const connectedWallet = await getConnectedWallet(wallet!);
+
     const provider = await getProvider(connection);
     const program = new Program(IDL as any, provider);
 
@@ -553,7 +566,7 @@ const useProgramInstructions = () => {
 
     try {
       const tokenAccount = getAssociatedTokenAddressSync(
-        eggMintAddress,
+        eggMintPk,
         publicKey,
         false,
         TOKEN_PROGRAM_ID,
@@ -567,8 +580,8 @@ const useProgramInstructions = () => {
           treasury: treasury,
           network: networkStateAccountAddress(),
           vrf: vrf.programId,
-          eggNftMint: eggMintAddress,
-          nftMint: nftMintAddress,
+          eggNftMint: eggMintPk,
+          nftMint: nftMintPk,
           tokenAccount,
           tokenMetadataProgram: MPL_TOKEN_METADATA_PROGRAM_ID,
         })
@@ -586,7 +599,22 @@ const useProgramInstructions = () => {
         await provider.connection.getLatestBlockhash()
       ).blockhash;
 
-      return transaction;
+      const signedTx = await connectedWallet.signTransaction(transaction);
+
+      const txId = await provider.connection.sendRawTransaction(
+        signedTx.serialize()
+      );
+      const latestBlockhash = await provider.connection.getLatestBlockhash();
+      await provider.connection.confirmTransaction(
+        {
+          signature: txId,
+          blockhash: latestBlockhash.blockhash,
+          lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
+        },
+        "confirmed"
+      );
+
+      // return transaction;
 
       // const transaction = await program.methods
       //   .hatch()
@@ -601,9 +629,9 @@ const useProgramInstructions = () => {
       //     tokenMetadataProgram: MPL_TOKEN_METADATA_PROGRAM_ID,
       //   })
       //   .rpc({ commitment: "confirmed" });
-      // ctx.setMyEggs([]);
     } catch (err: any) {
       console.error("Hatch failed:", err);
+      throw err;
     }
   };
 
@@ -620,7 +648,7 @@ const useProgramInstructions = () => {
     let eggMintAddress: PublicKey = nftMintKeypair.publicKey;
 
     try {
-      const claimedNftTx = await ClaimNFT(nftAddress, nftMintKeypair);
+      const claimedNftTx = await ClaimNFT(nftAddress /*nftMintKeypair*/);
       const hatchNftTx = await HatchNFT(
         eggMintAddress,
         new PublicKey(nftAddress)
@@ -768,6 +796,8 @@ const useProgramInstructions = () => {
     BuyNFT,
     FulfillHatching,
     SummonEgg,
+    ClaimNFT,
+    HatchNFT,
   };
 };
 

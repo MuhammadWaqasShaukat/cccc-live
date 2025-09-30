@@ -13,6 +13,7 @@ import { Lottery } from "../types/Lottery";
 import { useGetAllEggs } from "../hooks/useGetAllEggs";
 import { useGetAllNfts } from "../hooks/useGetAllNFTs";
 import { NftState } from "../types/NFTCardTypes";
+import { MultiSpriteConfig } from "../types/animations";
 
 const defaultLotteryState: LotteryState = {
   status: "not-started",
@@ -48,17 +49,23 @@ export const CottonCandyContextProvider: React.FC<
 
   const [estimate, setEstimate] = useState<number | null>(null);
 
+  const [
+    currentSummonedEggAnimationConfig,
+    setCurrentSummonedEggAnimationConfig,
+  ] = useState<MultiSpriteConfig | null>(null);
+
   const [assestsPreloaded, setAssestsPreloaded] = useState(false);
   const [revealReward, setRevealReward] = useState<"bad" | "good" | null>(null);
   const [isEggCracked, setIsEggCracked] = useState(false);
 
-  const [refreshEggs, setRefreshEggs] = useState<boolean>(false);
-  const [refreshNFTS, setRefreshNFTS] = useState<boolean>(false);
+  const [isEggSummoned, setIsEggSummoned] = useState(false);
 
   const [lottery, setLottery] = useState<Lottery | null>(null);
 
   const [nfts, setNfts] = useState<Token[] | null>([]);
   const [eggs, setEggs] = useState<Token[] | null>([]);
+
+  const [viewSupperOffer, setViewSuperOffer] = useState(false);
 
   const { data: currentLottery } = useGetLotteryState();
   const { refetch: fetchNfts } = useGetAllNfts();
@@ -98,19 +105,15 @@ export const CottonCandyContextProvider: React.FC<
   React.useEffect(() => {
     if (!connected || !lottery) return;
 
-    if (eggs?.length === 0 || refreshEggs) {
+    if (eggs?.length === 0) {
       (async () => {
         const { data: eggs } = await fetchEggs();
         if (eggs && eggs.length > 0) {
           setEggs(eggs);
         }
-
-        if (refreshEggs) {
-          setRefreshEggs(false);
-        }
       })();
     }
-  }, [connected, lottery, eggs, refreshEggs]);
+  }, [connected, lottery, eggs]);
 
   React.useEffect(() => {
     if (!connected || !lottery) return;
@@ -149,24 +152,34 @@ export const CottonCandyContextProvider: React.FC<
 
   const value: CottonCandyContextType = {
     price,
+    setPrice,
+
     count,
     setCount,
-    setPrice,
+
     lotteryState,
     setLotteryState,
+
     currentModal,
     setCurrentModal,
+
     collectable,
     setCollectiable,
+
     isPortalOpen,
     setIsPortalOpen,
+
     bookmark,
     setBookmark,
+
     nftToEggMap,
     setNftToEggMap,
+
     getNftToEggMap,
+
     activeMenu,
     setActiveMenu,
+
     selectedNftIndex,
     setSeletedNftIndex,
 
@@ -191,12 +204,6 @@ export const CottonCandyContextProvider: React.FC<
     sprites,
     setSprites,
 
-    refreshEggs,
-    setRefreshEggs,
-
-    refreshNFTS,
-    setRefreshNFTS,
-
     lottery,
     setLottery,
 
@@ -205,6 +212,15 @@ export const CottonCandyContextProvider: React.FC<
 
     eggs,
     setEggs,
+
+    viewSupperOffer,
+    setViewSuperOffer,
+
+    isEggSummoned,
+    setIsEggSummoned,
+
+    currentSummonedEggAnimationConfig,
+    setCurrentSummonedEggAnimationConfig,
   };
 
   return (

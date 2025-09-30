@@ -10,10 +10,19 @@ import NFTSwiper from "../components/Nfts/NFTSwiper";
 import EggRevealAnimation from "../components/Eggs/EggRevealAnimation";
 import NftReveal from "../components/Nfts/NftReveal";
 import NFTPreview from "../components/Nfts/NFTPreview";
+import SummonedEggAnimation from "../components/Nfts/SummonedEggAnimation";
+// import { SummonedEggAnimations } from "../constants/animationsConfig";
+
 // import NFTGenerator from "../components/generate-nft";
 
 const Home = () => {
   const ctx = useContext(CottonCandyContext);
+
+  // useEffect(() => {
+  //   const index = Math.floor(Math.random() * SummonedEggAnimations.length);
+  //   ctx.setCurrentSummonedEggAnimationConfig(SummonedEggAnimations[index]);
+  //   ctx.setIsEggSummoned(true);
+  // }, []);
 
   return (
     <>
@@ -28,6 +37,9 @@ const Home = () => {
         <EggRevealAnimation reveal={ctx.revealReward} />
       )}
       {ctx.revealNFT && <NftReveal />}
+      {ctx.isEggSummoned && ctx.currentSummonedEggAnimationConfig && (
+        <SummonedEggAnimation config={ctx.currentSummonedEggAnimationConfig} />
+      )}
     </>
   );
 };

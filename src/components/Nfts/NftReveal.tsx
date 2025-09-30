@@ -13,6 +13,8 @@ const NftReveal = () => {
   const [scanComplete, setScanComplete] = useState(false);
   const [showScanLine, setShowScanLine] = useState(true);
 
+  const [nftImageUrl, setNftImageUrl] = useState<string | null>(null);
+
   const { startAnimation, currentFrameNo, stopAnimation } =
     useNFTRevealAnimator({
       spriteRef: spriteRef,
@@ -34,8 +36,157 @@ const NftReveal = () => {
     }
   }, [currentFrameNo]);
 
-  // scanning + painting
   useEffect(() => {
+    const uri = ctx?.collectable?.metadata?.uri;
+    if (!uri) return;
+
+    (async () => {
+      try {
+        const res = await fetch(uri, { mode: "cors" });
+        const data = await res.json();
+        if (data && data.external_url) {
+          setNftImageUrl(data.external_url);
+        }
+      } catch (err) {
+        console.error("Failed to fetch NFT metadata", err);
+      }
+    })();
+  }, [ctx?.collectable?.metadata?.uri]);
+
+  // scanning + painting
+  // useEffect(() => {
+  //   const canvas = canvasRef.current;
+  //   if (!canvas) return;
+  //   const ctx2d = canvas.getContext("2d");
+  //   if (!ctx2d) return;
+
+  //   const SIZE = 500;
+  //   canvas.width = SIZE;
+  //   canvas.height = SIZE;
+
+  //   const imgReveal = new Image();
+  //   imgReveal.crossOrigin = "anonymous";
+  //   if (nftImageUrl) {
+  //     imgReveal.src = nftImageUrl;
+  //   } else {
+  //     imgReveal.src = "/images/revealing-nfts.png";
+  //   }
+
+  //   // const imgReveal = new Image();
+  //   // imgReveal.crossOrigin = "anonymous";
+  //   // imgReveal.src = "/images/revealing-nfts.png";
+
+  //   let lineY = 0;
+  //   const speed = 6;
+  //   const particles: IParticle[] = [];
+  //   let animationId: number;
+
+  //   class Particle implements IParticle {
+  //     x: number;
+  //     y: number;
+  //     size: number;
+  //     speedY: number;
+  //     opacity: number;
+  //     lifetime: number;
+  //     age: number;
+  //     constructor(x: number, y: number) {
+  //       this.x = x + Math.random() * SIZE;
+  //       this.y = y + 0.5;
+  //       this.size = Math.random() * 3 + 1;
+  //       this.speedY = Math.random() * 4 + 3;
+  //       this.opacity = 1;
+  //       this.lifetime = 60;
+  //       this.age = 0;
+  //     }
+  //     update() {
+  //       this.y += this.speedY;
+  //       this.age++;
+  //       this.opacity = 1 - this.age / this.lifetime;
+  //     }
+  //     draw(ctx: CanvasRenderingContext2D) {
+  //       ctx.save();
+  //       ctx.globalAlpha = this.opacity;
+  //       ctx.fillStyle = "cyan";
+  //       ctx.shadowBlur = 25;
+  //       ctx.shadowColor = "cyan";
+  //       ctx.beginPath();
+  //       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+  //       ctx.fill();
+  //       ctx.restore();
+  //     }
+  //   }
+
+  //   const drawScanLine = () => {
+  //     const glowHeight = 30;
+  //     const gradient = ctx2d.createLinearGradient(
+  //       0,
+  //       lineY - glowHeight,
+  //       0,
+  //       lineY + glowHeight
+  //     );
+  //     gradient.addColorStop(0, "rgba(0,255,255,0)");
+  //     gradient.addColorStop(0.45, "rgba(0,255,255,0.25)");
+  //     gradient.addColorStop(0.5, "rgba(255,255,255,0.9)");
+  //     gradient.addColorStop(0.55, "rgba(0,255,255,0.25)");
+  //     gradient.addColorStop(1, "rgba(0,255,255,0)");
+  //     ctx2d.save();
+  //     ctx2d.fillStyle = gradient;
+  //     ctx2d.fillRect(0, lineY - glowHeight, SIZE, glowHeight * 2);
+  //     ctx2d.restore();
+  //   };
+
+  //   const drawMaskedImage = (visibleHeight: number) => {
+  //     ctx2d.save();
+  //     ctx2d.beginPath();
+  //     ctx2d.rect(0, 0, SIZE, visibleHeight);
+  //     ctx2d.clip();
+  //     ctx2d.drawImage(imgReveal, 0, 0, SIZE, SIZE);
+  //     ctx2d.restore();
+  //   };
+
+  //   const animate = () => {
+  //     ctx2d.clearRect(0, 0, SIZE, SIZE);
+
+  //     const visibleHeight = scanComplete ? SIZE : Math.min(lineY, SIZE);
+  //     drawMaskedImage(visibleHeight);
+
+  //     // optional: add particles while scanning
+  //     if (!scanComplete) {
+  //       for (let i = 0; i < 4; i++) particles.push(new Particle(0, lineY));
+  //     }
+  //     for (let i = particles.length - 1; i >= 0; i--) {
+  //       const p = particles[i];
+  //       p.update();
+  //       p.draw(ctx2d);
+  //       if (p.opacity <= 0) particles.splice(i, 1);
+  //     }
+
+  //     if (showScanLine && !scanComplete) drawScanLine();
+
+  //     // advance the line until we fill the canvas
+  //     if (!scanComplete) {
+  //       lineY += speed;
+  //       const percent = (lineY / SIZE) * 100;
+  //       if (!startSpinning && percent >= 85) setStartSpinning(true);
+  //       if (lineY >= SIZE) {
+  //         setScanComplete(true);
+  //         setShowScanLine(false); // hide beam but NFT stays
+  //       }
+  //     }
+  //     animationId = requestAnimationFrame(animate);
+  //   };
+
+  //   imgReveal.onload = () => animate();
+  //   return () => cancelAnimationFrame(animationId);
+  // }, [scanComplete, nftImageUrl]);
+
+  useEffect(() => {
+    if (!nftImageUrl) return;
+
+    const imgReveal = new Image();
+    imgReveal.crossOrigin = "anonymous";
+    imgReveal.src = nftImageUrl;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx2d = canvas.getContext("2d");
@@ -44,10 +195,6 @@ const NftReveal = () => {
     const SIZE = 500;
     canvas.width = SIZE;
     canvas.height = SIZE;
-
-    const imgReveal = new Image();
-    imgReveal.crossOrigin = "anonymous";
-    imgReveal.src = "/images/revealing-nfts.png";
 
     let lineY = 0;
     const speed = 6;
@@ -123,7 +270,6 @@ const NftReveal = () => {
       const visibleHeight = scanComplete ? SIZE : Math.min(lineY, SIZE);
       drawMaskedImage(visibleHeight);
 
-      // optional: add particles while scanning
       if (!scanComplete) {
         for (let i = 0; i < 4; i++) particles.push(new Particle(0, lineY));
       }
@@ -136,22 +282,25 @@ const NftReveal = () => {
 
       if (showScanLine && !scanComplete) drawScanLine();
 
-      // advance the line until we fill the canvas
       if (!scanComplete) {
         lineY += speed;
         const percent = (lineY / SIZE) * 100;
         if (!startSpinning && percent >= 85) setStartSpinning(true);
         if (lineY >= SIZE) {
           setScanComplete(true);
-          setShowScanLine(false); // hide beam but NFT stays
+          setShowScanLine(false);
         }
       }
       animationId = requestAnimationFrame(animate);
     };
 
-    imgReveal.onload = () => animate();
+    // ✅ Only start animating once the image has loaded
+    imgReveal.onload = () => {
+      animate();
+    };
+
     return () => cancelAnimationFrame(animationId);
-  }, [scanComplete]);
+  }, [scanComplete, nftImageUrl]);
 
   return (
     <div className="absolute top-0 left-0">
@@ -169,7 +318,7 @@ const NftReveal = () => {
           ></div>
         )}
         {/* canvas stays in front */}
-        <canvas ref={canvasRef} className="z-10 w-[20%] aspect-square" />
+        <canvas ref={canvasRef} className="z-10 w-[20%] aspect-[1000/1400]" />
       </div>
     </div>
   );

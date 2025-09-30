@@ -4,10 +4,29 @@ import Modal from "../UI/Modal";
 import { motion } from "framer-motion";
 import NFTActions from "./NFTActions";
 import { NftState } from "../../types/NFTCardTypes";
+import { NftMetadata } from "../../types/Nft";
 
 const NFTPreview = () => {
   const { setCollectiable, collectable, setCurrentModal, lottery } =
     useContext(CottonCandyContext);
+
+  const [metadata, setMetadata] = useState<NftMetadata | null>(null);
+
+  useEffect(() => {
+    if (!collectable) return;
+
+    (async () => {
+      try {
+        const res = await fetch(collectable.metadata.uri, { mode: "cors" });
+        const data = await res.json();
+        if (data) {
+          setMetadata(data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch NFT metadata", err);
+      }
+    })();
+  }, [collectable]);
 
   const [canSummonEgg, setCanSummonEgg] = useState(false);
 
@@ -36,7 +55,7 @@ const NFTPreview = () => {
       >
         <div className="bg-banner-claim-nft w-full bg-contain bg-no-repeat  max-w-[400px] aspect-[584/159] flex flex-col justify-center items-center">
           <h1 className=" uppercase text-[#1F1F1F] font-patrick-hand-sc lg:text-5xl md:text-4xl text-3xl mb-5">
-            NFT #1341
+            NFT #{metadata?.name}
           </h1>
         </div>
 
@@ -56,7 +75,7 @@ const NFTPreview = () => {
           >
             <img
               className="w-full h-auto rounded-2xl"
-              src={`./images/section-mint/nfts/nft1.jpg`}
+              src={metadata?.external_url}
               alt=""
             />
             {collectable && !(collectable.state as NftState).isEggClaimed ? (
@@ -75,7 +94,12 @@ const NFTPreview = () => {
         {collectable && !(collectable.state as NftState).isEggClaimed ? (
           <NFTActions
             canSummonEgg={canSummonEgg}
-            isEggClaimed={(collectable.state as NftState).isEggClaimed}
+            isEggClaimed={
+              (collectable.state as NftState).isEggClaimed &&
+              (collectable.state as NftState).eggHatchedAt > 0
+                ? true
+                : false
+            }
           />
         ) : (
           ""

@@ -5,6 +5,7 @@ import MintButton from "../UI/MintButton";
 import { useGetMintState } from "../../hooks/useGetMintState";
 import { CottonCandyContext } from "../../providers/ContextProvider";
 import { useContext } from "react";
+import SupperOffer from "./SupperOffer";
 
 const Mints = () => {
   const ctx = useContext(CottonCandyContext);
@@ -12,10 +13,12 @@ const Mints = () => {
 
   return (
     <>
+      <SupperOffer />
+
       <div className="flex flex-col items-center w-full justify-between h-full gap-6 overflow-auto md:hidden overflow-x-hidden overflow-y-auto">
         <div className="flex flex-row items-end justify-center w-full p-2 bg-bottom bg-cover md:hidden md:justify-start md:bg-none bg-mint-section-heading md:p-0 ">
           <img
-            src="./images/letter-m-mint.png"
+            src="./images/letter-m-mint.webp"
             alt=""
             className="w-12 h-auto xs:w-14"
           />
@@ -27,17 +30,17 @@ const Mints = () => {
         <div className="flex flex-col items-center justify-center flex-1 w-full max-h-max">
           <div className="h-full relative xs:min-h-[320px] xs:min-w-[220px] min-h-[269px] min-w-[169px]">
             <img
-              src="./images/section-mint/minting-image.png"
+              src="./images/section-mint/minting-image.webp"
               alt=""
               className="absolute bottom-3 left-0 border-[3px] border-white rounded-xl card-shadow-1"
             />
             <img
-              src="./images/section-mint/nft-1.png"
+              src="./images/section-mint/nft-1.webp"
               alt=""
               className="absolute bottom-2.5 left-6 -rotate-2 border-[3px] border-white rounded-xl origin-bottom-left card-shadow-1 "
             />
             <img
-              src="./images/section-mint/minting-image.png"
+              src="./images/section-mint/minting-image.webp"
               alt=""
               className="absolute top-4 left-5  rotate-2 border-[3px] border-white rounded-xl card-shadow-1 "
             />
@@ -123,17 +126,17 @@ const Mints = () => {
         >
           <div className="h-[90%] w-[90%] min-w-64 relative">
             <img
-              src="./images/section-mint/minting-image.png"
+              src="./images/section-mint/minting-image.webp"
               alt=""
               className="h-[98%] min-w-[191px] aspect-[191/269]  absolute top-0 left-0 border-[3px] border-white rounded-xl card-shadow-1"
             />
             <img
-              src="./images/section-mint/nft-1.png"
+              src="./images/section-mint/nft-1.webp"
               alt=""
               className="h-[96%] min-w-[191px] aspect-[191/269] absolute bottom-2.5 left-6 -rotate-2 border-[3px] border-white rounded-xl origin-bottom-left card-shadow-1 "
             />
             <img
-              src="./images/section-mint/minting-image.png"
+              src="./images/section-mint/minting-image.webp"
               alt=""
               className="h-[98%] min-w-[191px] aspect-[191/269] absolute top-4 left-5  rotate-2 border-[3px] border-white rounded-xl card-shadow-1 "
             />
@@ -145,7 +148,7 @@ const Mints = () => {
         >
           <div className="md:flex hidden flex-row md:justify-start justify-end w-[90%] md:w-full items-end md:bg-none bg-mint-section-heading bg-cover bg-bottom md:p-0 p-2 ">
             <img
-              src="./images/letter-m-mint.png"
+              src="./images/letter-m-mint.webp"
               alt=""
               className="h-[70%] md:h-auto lg:size-10 md:size-8 xl:size-14"
             />

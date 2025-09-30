@@ -7,7 +7,7 @@ const SnakeLoader: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   return (
     <Modal onBackgroundClick={() => {}} className={className}>
       <motion.img
-        src={"/images/snake-loader.png"}
+        src={"/images/snake-loader.webp"}
         alt="Loading..."
         className={`size-44 z-100`}
         animate={{

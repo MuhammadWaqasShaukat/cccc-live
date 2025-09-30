@@ -1,11 +1,19 @@
-import { useCallback, useContext, useEffect, useMemo, useRef } from "react";
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { MultiSpriteConfig, SpriteKeys } from "../types/animations";
 import { CottonCandyContext } from "../providers/ContextProvider";
 
 export const useHeroAnimator = (
   ref: React.RefObject<HTMLDivElement>,
   config: MultiSpriteConfig,
-  spritekey: SpriteKeys
+  spritekey: SpriteKeys,
+  onAnimationEnd?: () => void
 ) => {
   const {
     sheets,
@@ -16,6 +24,8 @@ export const useHeroAnimator = (
   } = config;
 
   const ctx = useContext(CottonCandyContext);
+
+  const [isReady, setIsReady] = useState(false);
 
   const meta = useMemo(() => {
     const framesPerSheet = sheets.map(
@@ -37,16 +47,23 @@ export const useHeroAnimator = (
     return { framesPerSheet, starts, totalFrames, clampedEnd };
   }, [sheets, endFrameIndex]);
 
-  // --- Preload images to avoid any jerk when switching sheets
-  const imagesRef = useRef<HTMLImageElement[]>([]);
   useEffect(() => {
     let cancelled = false;
-    // const imgs: HTMLImageElement[] = [];
-    if (Object.entries(ctx.sprites).length > 0) {
-      imagesRef.current = ctx.sprites[spritekey];
-      const rangeStart = Math.max(0, startFrameIndex);
-      setFrame(rangeStart);
-    } else {
+    setIsReady(false);
+
+    // Safely get sprites for this key
+    const spritesFromCtx =
+      ctx.sprites && !Array.isArray(ctx.sprites) && ctx.sprites[spritekey]
+        ? ctx.sprites[spritekey]
+        : null;
+
+    if (spritesFromCtx && spritesFromCtx.length > 0) {
+      // Found in context
+      imagesRef.current = spritesFromCtx;
+      setFrame(0);
+      setIsReady(true);
+    } else if (sheets.length > 0) {
+      // Preload sheets
       Promise.all(
         sheets.map(
           (s) =>
@@ -54,27 +71,80 @@ export const useHeroAnimator = (
               const img = new Image();
               img.src = s.url;
               img.onload = () => resolve(img);
-              img.onerror = reject;
+              img.onerror = () =>
+                reject(new Error(`Failed to load sprite sheet: ${s.url}`));
             })
         )
       )
         .then((loaded) => {
           if (!cancelled) {
             imagesRef.current = loaded;
-            const rangeStart = Math.max(0, startFrameIndex);
-            setFrame(rangeStart);
+            setFrame(0);
+            setIsReady(true);
+
+            // Store in context if possible
+
+            if (spritekey !== "summoned-egg") {
+              if (ctx.setSprites) {
+                ctx.setSprites((prev) => ({
+                  ...(prev && !Array.isArray(prev) ? prev : {}),
+                  [spritekey]: loaded,
+                }));
+              }
+            }
           }
         })
-        .catch(() => {
-          // swallow errors; animation will just not run if an image fails
+        .catch((err) => {
+          if (!cancelled) {
+            setIsReady(false);
+          }
+          console.warn(err.message);
         });
+    } else {
+      setIsReady(false);
     }
+
     return () => {
       cancelled = true;
     };
   }, [sheets]);
 
-  useEffect(() => {}, []);
+  // --- Preload images to avoid any jerk when switching sheets
+  const imagesRef = useRef<HTMLImageElement[]>([]);
+  // useEffect(() => {
+  //   let cancelled = false;
+  //   // const imgs: HTMLImageElement[] = [];
+  //   if (Object.entries(ctx.sprites).length > 0) {
+  //     imagesRef.current = ctx.sprites[spritekey];
+  //     const rangeStart = Math.max(0, startFrameIndex);
+  //     setFrame(rangeStart);
+  //   } else {
+  //     Promise.all(
+  //       sheets.map(
+  //         (s) =>
+  //           new Promise<HTMLImageElement>((resolve, reject) => {
+  //             const img = new Image();
+  //             img.src = s.url;
+  //             img.onload = () => resolve(img);
+  //             img.onerror = reject;
+  //           })
+  //       )
+  //     )
+  //       .then((loaded) => {
+  //         if (!cancelled) {
+  //           imagesRef.current = loaded;
+  //           const rangeStart = Math.max(0, startFrameIndex);
+  //           setFrame(rangeStart);
+  //         }
+  //       })
+  //       .catch(() => {
+  //         // swallow errors; animation will just not run if an image fails
+  //       });
+  //   }
+  //   return () => {
+  //     cancelled = true;
+  //   };
+  // }, [sheets]);
 
   // --- State refs for the rAF loop
   const isRunningRef = useRef(false);
@@ -165,6 +235,9 @@ export const useHeroAnimator = (
               isRunningRef.current = false;
               rafRef.current && cancelAnimationFrame(rafRef.current);
               rafRef.current = null;
+
+              if (onAnimationEnd) onAnimationEnd();
+
               return;
             }
           }
@@ -226,5 +299,5 @@ export const useHeroAnimator = (
     setFrame(rangeStart);
   }, [setFrame, startFrameIndex]);
 
-  return { startAnimation, stopAnimation };
+  return { startAnimation, stopAnimation, isReady };
 };

@@ -25,7 +25,7 @@ const EggInstruction = ({
             {/* icon */}
             <div className="grid w-full col-span-1 place-content-center h-max">
               <img
-                src={`./images/hammer.png`}
+                src={`./images/hammer.webp`}
                 alt="claimable egg"
                 className="w-16"
               />
@@ -41,7 +41,7 @@ const EggInstruction = ({
             {/* icon */}
             <div className="grid w-full place-content-center h-max">
               <img
-                src={`./images/hourglass.png`}
+                src={`./images/hourglass.webp`}
                 alt="claimable egg"
                 className="w-16"
               />

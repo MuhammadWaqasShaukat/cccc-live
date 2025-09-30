@@ -5,6 +5,8 @@ import { useGetAllNfts } from "../../hooks/useGetAllNFTs";
 import useGetUpdatedTokenByMintAddress from "../../hooks/useGetTokenByMintAddress";
 import { NftState } from "../../types/NFTCardTypes";
 import { useGetAllEggs } from "../../hooks/useGetAllEggs";
+import { PublicKey } from "@solana/web3.js";
+import { SummonedEggAnimations } from "../../constants/animationsConfig";
 
 const NFTActions = ({
   canSummonEgg,
@@ -13,40 +15,84 @@ const NFTActions = ({
   canSummonEgg: boolean;
   isEggClaimed: boolean;
 }) => {
-  const { collectable, setCurrentModal, setIsPortalOpen, setBookmark } =
-    useContext(CottonCandyContext);
+  const {
+    collectable,
+    setCurrentModal,
+    setIsPortalOpen,
+    setCurrentSummonedEggAnimationConfig,
+    setIsEggSummoned,
+  } = useContext(CottonCandyContext);
 
-  const { SummonEgg } = useProgramInstructions();
+  const { ClaimNFT, HatchNFT } = useProgramInstructions();
 
   const { getUpdatedNft, getEggByMintAddress } =
     useGetUpdatedTokenByMintAddress();
   const { updateNftInCache } = useGetAllNfts();
   const { updateEggInCache } = useGetAllEggs();
 
+  const updateNftAndEggCache = async (
+    nft: typeof collectable,
+    eggMint: string | PublicKey
+  ) => {
+    if (!nft) return;
+
+    const updatedNft = await getUpdatedNft(nft);
+    if (updatedNft) {
+      updateNftInCache({ ...updatedNft });
+    }
+
+    const nftEgg = await getEggByMintAddress(eggMint as any);
+    if (nftEgg) {
+      updateEggInCache({ ...nftEgg });
+    }
+  };
+
+  function hanldeEggIsSummoned() {
+    const index = Math.floor(Math.random() * SummonedEggAnimations.length);
+    setCurrentSummonedEggAnimationConfig(SummonedEggAnimations[index]);
+    setIsEggSummoned(true);
+  }
+
   const handleSummonEgg = async () => {
-    if (collectable && collectable.metadata) {
-      try {
-        setCurrentModal(null);
-        setIsPortalOpen(true);
-        await SummonEgg(collectable.metadata.mintAddress as any);
+    if (!collectable?.metadata) return;
 
-        const updatedNft = await getUpdatedNft(collectable);
-        if (updatedNft) {
-          updateNftInCache({ ...updatedNft });
-          const nftEgg = await getEggByMintAddress(
-            (updatedNft.state as NftState).eggMint as any
-          );
+    try {
+      setCurrentModal(null);
+      setIsPortalOpen(true);
 
-          if (nftEgg) {
-            updateEggInCache(nftEgg);
+      const mintAddress = collectable.metadata.mintAddress;
+      const currentState = collectable.state as NftState;
+
+      if (currentState.isEggClaimed && currentState.eggHatchedAt === 0) {
+        await HatchNFT(currentState.eggMint, mintAddress);
+        await updateNftAndEggCache(collectable, currentState.eggMint);
+        hanldeEggIsSummoned();
+      } else {
+        try {
+          await ClaimNFT(mintAddress as any);
+
+          const updatedNft = await getUpdatedNft(collectable);
+          if (updatedNft) {
+            updateNftInCache(updatedNft);
+
+            const eggMint = (updatedNft.state as NftState).eggMint;
+
+            await HatchNFT(eggMint, mintAddress);
+
+            await updateNftAndEggCache(updatedNft, eggMint);
+            hanldeEggIsSummoned();
           }
+        } catch (err) {
+          console.error("Claim failed (user rejected or tx error):", err);
+          return;
         }
-        setIsPortalOpen(false);
-        setBookmark("eggs");
-      } catch (error: any) {
-        console.error("Error : ", error.message);
-        setIsPortalOpen(false);
       }
+
+
+    } catch (error: any) {
+      console.error("Error in handleSummonEgg:", error.message);
+    } finally {
+      setIsPortalOpen(false);
     }
   };
 
@@ -73,7 +119,7 @@ const NFTActions = ({
                 ? "bg-summon-egg-btn h-16 w-24"
                 : "bg-summon-disabled-btn h-14 w-24"
             } 
-         bg-contain bg-no-repeat  group z-40  relative`}
+         bg-contain bg-no-repeat group z-40  relative`}
       >
         {!canSummonEgg && (
           <div className="bg-contain size-12 bg-summon-disabled-peppos-btn absolute -top-[50%] right-0"></div>
@@ -85,7 +131,7 @@ const NFTActions = ({
         )}
 
         {canSummonEgg && isEggClaimed && (
-          <span className="absolute left-0 right-0 w-full text-lg text-left text-white -bottom-14 font-patrick-hand">
+          <span className="absolute whitespace-nowrap left-0 right-0 w-full text-lg text-left text-white -bottom-14 font-patrick-hand">
             Egg summoned already.
           </span>
         )}

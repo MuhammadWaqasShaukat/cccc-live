@@ -36,7 +36,7 @@ const PublicMint = () => {
 
           <div className="flex flex-row items-end justify-center w-full p-2">
             <img
-              src="./images/letter-p-public.png"
+              src="./images/letter-p-public.webp"
               alt=""
               className="h-[60%]"
             />
@@ -73,7 +73,7 @@ const PublicMint = () => {
             <div className="absolute bottom-0 left-0 w-40 h-40 bg-bottom bg-no-repeat bg-contain bg-mint-section-book-lg lg:w-52 lg:h-52"></div>
             <div className="absolute top-0 right-0 w-40 h-40 bg-top bg-no-repeat bg-contain bg-mint-section-book-lg-1 lg:w-52 lg:h-52"></div>
             <img
-              src="./images/section-mint/minting-image.png"
+              src="./images/section-mint/minting-image.webp"
               alt=""
               className=" border-[3px] border-white max-h-[366px] rounded-xl h-full card-shadow-1 w-full"
             />
@@ -85,7 +85,7 @@ const PublicMint = () => {
         {/*left page*/}
         <div className="relative flex flex-col items-center justify-start flex-1 w-full h-full -ml-3 ">
           <img
-            src="./images/section-mint/minting-image.png"
+            src="./images/section-mint/minting-image.webp"
             alt=""
             className="h-[95%]"
           />
@@ -102,7 +102,7 @@ const PublicMint = () => {
             <div className="grid h-full gap-2 -mt-5 place-content-center">
               <div className="flex flex-row items-end justify-center w-full p-2">
                 <img
-                  src="./images/letter-p-public.png"
+                  src="./images/letter-p-public.webp"
                   alt=""
                   className="h-[60%]"
                 />

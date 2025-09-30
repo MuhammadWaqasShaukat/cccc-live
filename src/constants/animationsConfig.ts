@@ -429,7 +429,7 @@ export const badEggRevealAnimationConfig: EggAnimationSpriteConfig = {
 export const nftRevealAnimation: NFTRevealConfig = {
   sheets: [
     {
-      url: "/images/animations/sprites/particels-sprite.png",
+      url: "/images/animations/sprites/particels-sprite.webp",
       columns: 5,
       rows: 13,
     },
@@ -438,3 +438,567 @@ export const nftRevealAnimation: NFTRevealConfig = {
   endRepeatFrameIndex: 58,
   spriteAnimationSpeed: 10,
 };
+
+// Nest Sheet Sprites
+export const nestSheet1: MultiSpriteConfig = {
+  sheets: [
+    {
+      url: "/images/animations/sprites/summon-egg/1/sprite1.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/1/sprite2.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/1/sprite3.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/1/sprite4.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/1/sprite5.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/1/sprite6.png",
+      columns: 7,
+      rows: 7,
+      frameCount: 40,
+    },
+  ],
+  spriteAnimationSpeed: 40,
+  startFrameIndex: 1,
+  loop: false,
+};
+
+export const nestSheet2: MultiSpriteConfig = {
+  sheets: [
+    {
+      url: "/images/animations/sprites/summon-egg/2/sprite1.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/2/sprite2.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/2/sprite3.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/2/sprite4.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/2/sprite5.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/2/sprite6.png",
+      columns: 7,
+      rows: 7,
+      frameCount: 40,
+    },
+  ],
+  spriteAnimationSpeed: 40,
+  startFrameIndex: 1,
+  loop: false,
+};
+
+export const nestSheet3: MultiSpriteConfig = {
+  sheets: [
+    {
+      url: "/images/animations/sprites/summon-egg/3/sprite1.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/3/sprite2.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/3/sprite3.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/3/sprite4.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/3/sprite5.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/3/sprite6.png",
+      columns: 7,
+      rows: 7,
+      frameCount: 40,
+    },
+  ],
+  spriteAnimationSpeed: 40,
+  startFrameIndex: 1,
+  loop: false,
+};
+
+export const nestSheet4: MultiSpriteConfig = {
+  sheets: [
+    {
+      url: "/images/animations/sprites/summon-egg/4/sprite1.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/4/sprite2.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/4/sprite3.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/4/sprite4.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/4/sprite5.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/4/sprite6.png",
+      columns: 7,
+      rows: 7,
+      frameCount: 40,
+    },
+  ],
+  spriteAnimationSpeed: 40,
+  startFrameIndex: 1,
+  loop: false,
+};
+
+export const nestSheet5: MultiSpriteConfig = {
+  sheets: [
+    {
+      url: "/images/animations/sprites/summon-egg/5/sprite1.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/5/sprite2.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/5/sprite3.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/5/sprite4.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/5/sprite5.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/5/sprite6.png",
+      columns: 7,
+      rows: 7,
+      frameCount: 40,
+    },
+  ],
+  spriteAnimationSpeed: 40,
+  startFrameIndex: 1,
+  loop: false,
+};
+
+export const nestSheet6: MultiSpriteConfig = {
+  sheets: [
+    {
+      url: "/images/animations/sprites/summon-egg/6/sprite1.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/6/sprite2.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/6/sprite3.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/6/sprite4.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/6/sprite5.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/6/sprite6.png",
+      columns: 7,
+      rows: 7,
+      frameCount: 40,
+    },
+  ],
+  spriteAnimationSpeed: 40,
+  startFrameIndex: 1,
+  loop: false,
+};
+
+export const nestSheet7: MultiSpriteConfig = {
+  sheets: [
+    {
+      url: "/images/animations/sprites/summon-egg/7/sprite1.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/7/sprite2.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/7/sprite3.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/7/sprite4.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/7/sprite5.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/7/sprite6.png",
+      columns: 7,
+      rows: 7,
+      frameCount: 40,
+    },
+  ],
+  spriteAnimationSpeed: 40,
+  startFrameIndex: 1,
+  loop: false,
+};
+
+export const nestSheet8: MultiSpriteConfig = {
+  sheets: [
+    {
+      url: "/images/animations/sprites/summon-egg/8/sprite1.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/8/sprite2.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/8/sprite3.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/8/sprite4.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/8/sprite5.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/8/sprite6.png",
+      columns: 7,
+      rows: 7,
+      frameCount: 40,
+    },
+  ],
+  spriteAnimationSpeed: 40,
+  startFrameIndex: 1,
+  loop: false,
+};
+
+export const nestSheet9: MultiSpriteConfig = {
+  sheets: [
+    {
+      url: "/images/animations/sprites/summon-egg/9/sprite1.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/9/sprite2.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/9/sprite3.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/9/sprite4.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/9/sprite5.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/9/sprite6.png",
+      columns: 7,
+      rows: 7,
+      frameCount: 40,
+    },
+  ],
+  spriteAnimationSpeed: 40,
+  startFrameIndex: 1,
+  loop: false,
+};
+
+export const nestSheet10: MultiSpriteConfig = {
+  sheets: [
+    {
+      url: "/images/animations/sprites/summon-egg/10/sprite1.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/10/sprite2.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/10/sprite3.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/10/sprite4.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/10/sprite5.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/10/sprite6.png",
+      columns: 7,
+      rows: 7,
+      frameCount: 40,
+    },
+  ],
+  spriteAnimationSpeed: 40,
+  startFrameIndex: 1,
+  loop: false,
+};
+
+export const nestSheet11: MultiSpriteConfig = {
+  sheets: [
+    {
+      url: "/images/animations/sprites/summon-egg/11/sprite1.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/11/sprite2.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/11/sprite3.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/11/sprite4.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/11/sprite5.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/11/sprite6.png",
+      columns: 7,
+      rows: 7,
+      frameCount: 40,
+    },
+  ],
+  spriteAnimationSpeed: 40,
+  startFrameIndex: 1,
+  loop: false,
+};
+
+export const nestSheet12: MultiSpriteConfig = {
+  sheets: [
+    {
+      url: "/images/animations/sprites/summon-egg/12/sprite1.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/12/sprite2.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/12/sprite3.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/12/sprite4.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/12/sprite5.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/12/sprite6.png",
+      columns: 7,
+      rows: 7,
+      frameCount: 40,
+    },
+  ],
+  spriteAnimationSpeed: 40,
+  startFrameIndex: 1,
+  loop: false,
+};
+
+export const nestSheet13: MultiSpriteConfig = {
+  sheets: [
+    {
+      url: "/images/animations/sprites/summon-egg/13/sprite1.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/13/sprite2.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/13/sprite3.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/13/sprite4.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/13/sprite5.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/13/sprite6.png",
+      columns: 7,
+      rows: 7,
+      frameCount: 40,
+    },
+  ],
+  spriteAnimationSpeed: 40,
+  startFrameIndex: 1,
+  loop: false,
+};
+
+export const nestSheet14: MultiSpriteConfig = {
+  sheets: [
+    {
+      url: "/images/animations/sprites/summon-egg/14/sprite1.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/14/sprite2.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/14/sprite3.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/14/sprite4.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/14/sprite5.png",
+      columns: 8,
+      rows: 8,
+    },
+    {
+      url: "/images/animations/sprites/summon-egg/14/sprite6.png",
+      columns: 7,
+      rows: 7,
+      frameCount: 40,
+    },
+  ],
+  spriteAnimationSpeed: 40,
+  startFrameIndex: 1,
+  loop: false,
+};
+
+export const SummonedEggAnimations: MultiSpriteConfig[] = [
+  nestSheet1,
+  nestSheet2,
+  nestSheet3,
+  nestSheet4,
+  nestSheet5,
+  nestSheet6,
+  nestSheet7,
+  nestSheet8,
+  nestSheet9,
+  nestSheet10,
+  nestSheet11,
+  nestSheet12,
+  nestSheet13,
+  nestSheet14,
+];

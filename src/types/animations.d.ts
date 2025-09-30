@@ -13,7 +13,8 @@ export type SpriteKeys =
   | "bad-egg"
   | "logo"
   | "gold-stash"
-  | "sheep";
+  | "sheep"
+  | "summoned-egg";
 
 export type SpriteSheet = {
   url: string;

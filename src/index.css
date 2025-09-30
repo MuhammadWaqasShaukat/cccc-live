@@ -72,7 +72,7 @@ button * {
   left: -10000px;
   width: 72px;
   height: 72px;
-  background-image: url("/images/cursor-glove.png");
+  background-image: url("/images/cursor-glove.webp");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: top left;
@@ -289,15 +289,15 @@ body * {
 
   .bg-swiper {
     background-image:
-      linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/swiper-bg.png');
+      linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/swiper-bg.webp');
     background-position: center;
     background-size: cover;
   }
 
   .bg-hatch-won {
     background-image:
-      url('/images/hatch-win.png'),
-      url('/images/hatch-win-1.png'),
+      url('/images/hatch-win.webp'),
+      url('/images/hatch-win-1.webp'),
       linear-gradient(rgba(92, 89, 89, 0.5), rgba(92, 89, 89, 0.5));
     background-position: center;
     background-size: 70%, contain, contain;
@@ -306,7 +306,7 @@ body * {
 
   .bg-hatch-lost {
     background-image:
-      url('/images/hatch-lose.png'),
+      url('/images/hatch-lose.webp'),
       linear-gradient(rgba(55, 107, 166, 0.55), rgba(55, 107, 166, 0.55));
     background-position: center;
     background-size: 70%, contain;
@@ -417,14 +417,14 @@ body * {
     border-radius: 10px;
     background-clip: padding-box;
     border: 6px solid transparent;
-    background-image: url("images/custom-scrollbar-track.png");
+    background-image: url("images/custom-scrollbar-track.webp");
     background-position: center;
     background-repeat: repeat-y;
     background-size: 6px 100%;
   }
 
   ::-webkit-scrollbar-thumb {
-    background-image: url("images/custom-scrollbar-thumb.png");
+    background-image: url("images/custom-scrollbar-thumb.webp");
     background-position: center top;
     background-repeat: no-repeat;
     background-size: contain;

@@ -112,12 +112,17 @@ const EggBox: React.FC<{ egg: Token; nftMint: string }> = ({
 
       if (next >= EGG_CRACK_LIMIT && !isHatchingRef.current) {
         isHatchingRef.current = true;
-        hatchEgg();
       }
 
       return next;
     });
   };
+
+  useEffect(() => {
+    if (isHatchingRef.current) {
+      hatchEgg();
+    }
+  }, [isHatchingRef.current]);
 
   const hatchEgg = async () => {
     try {
@@ -139,6 +144,7 @@ const EggBox: React.FC<{ egg: Token; nftMint: string }> = ({
           updateEggInCache({ ...updatedEgg });
         }
       }
+      isHatchingRef.current = false;
     } catch (error: any) {
       console.error("Error during hatching:", error.message);
       ctx.setIsPortalOpen(false);

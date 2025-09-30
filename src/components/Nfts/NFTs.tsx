@@ -1,14 +1,11 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import NFTBox from "./NFTBox";
 import NftLoader from "../UI/NftLoader";
 import NFTInstructions from "./NFTInstructions";
 import { useGetAllNfts } from "../../hooks/useGetAllNFTs";
-import { CottonCandyContext } from "../../providers/ContextProvider";
 
 export const NFTs = () => {
   const { data: nfts, isLoading: loading } = useGetAllNfts();
-  const { refreshNFTS } = useContext(CottonCandyContext);
-
   const [viewInstruction, setViewInstruction] = useState(false);
 
   return (
@@ -21,7 +18,7 @@ export const NFTs = () => {
         {/* top bar */}
         <div className="flex flex-row items-start justify-between w-full ">
           <div className="flex flex-row justify-start w-[90%] md:w-full items-center md:bg-none z-40 bg-cover bg-bottom md:pt-2.5 md:pl-4">
-            <img src="./images/letter-y-nfts.png" alt="" className="size-10" />
+            <img src="./images/letter-y-nfts.webp" alt="" className="size-10" />
             <h3 className="text-2xl uppercase font-patrick-hand-sc">
               our <span className="text-3xl">NFT</span>s
             </h3>
@@ -55,7 +52,7 @@ export const NFTs = () => {
 
           <div className="flex flex-row md:justify-start justify-end w-[90%] md:w-full items-end md:bg-none z-40   bg-cover bg-bottom md:pt-2.5 md:pl-4">
             <img
-              src="./images/letter-y-nfts.png"
+              src="./images/letter-y-nfts.webp"
               alt=""
               className="h-[70%] md:h-auto lg:size-10 md:size-8"
             />
@@ -68,7 +65,7 @@ export const NFTs = () => {
               {/* icon */}
               <div className="grid w-full col-span-1 place-content-center">
                 <img
-                  src={`./images/egg.png`}
+                  src={`./images/egg.webp`}
                   alt="claimable egg"
                   className=" w-[78px] md:w-12 lg:w-16"
                 />
@@ -83,7 +80,7 @@ export const NFTs = () => {
               {/* icon */}
               <div className="grid w-full col-span-1 place-content-center">
                 <img
-                  src={`./images/lucky-ticket.png`}
+                  src={`./images/lucky-ticket.webp`}
                   alt="claimable egg"
                   className=" w-[120px] md:w-14 lg:w-20"
                 />
@@ -98,11 +95,11 @@ export const NFTs = () => {
         </div>
         {/*right page  */}
         <div className="flex flex-col items-center flex-1 w-full h-full sm:justify-between md:justify-start sm:gap-7 lg:gap-4 md:gap-3">
-          {loading || refreshNFTS ? (
+          {loading ? (
             <NftLoader />
           ) : !loading && nfts && nfts.length > 0 ? (
             <div
-              className="grid grid-cols-3 gap-4 pr-6 overflow-y-auto md:pr-2 md:gap-2 md:auto-rows-auto"
+              className="grid grid-cols-3 gap-4 pr-6 overflow-y-auto md:pr-2 md:gap-2 guide"
               style={{ scrollbarGutter: "stable" }}
             >
               {nfts.map((nft, index) => (

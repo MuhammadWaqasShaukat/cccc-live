@@ -6,13 +6,31 @@ import { CottonCandyContext } from "../../providers/ContextProvider";
 import NFTActions from "../Nfts/NFTActions";
 import Modal from "../UI/Modal";
 import IconButton from "../UI/IconButton";
-import { Token } from "../../types/Nft";
+import { NftMetadata, Token } from "../../types/Nft";
 import { useGetAllNfts } from "../../hooks/useGetAllNFTs";
 import SnakeLoader from "../UI/SnakeLoader";
 
-const SlideItem: React.FC<NftState> = (nftState) => {
+const SlideItem: React.FC<Token> = (nft) => {
   const ctx = useContext(CottonCandyContext);
-  const { isEggClaimed } = nftState;
+
+  const [metadata, setMetadata] = useState<NftMetadata | null>(null);
+
+  useEffect(() => {
+    if (!nft) return;
+
+    (async () => {
+      try {
+        const res = await fetch(nft.metadata.uri, { mode: "cors" });
+        const data = await res.json();
+        if (data) {
+          setMetadata(data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch NFT metadata", err);
+      }
+    })();
+  }, [nft]);
+
   return (
     <div
       onClick={() => ctx.setCurrentModal("nft-preview")}
@@ -23,10 +41,10 @@ const SlideItem: React.FC<NftState> = (nftState) => {
       >
         <img
           className="w-full h-auto rounded-2xl"
-          src={`./images/section-mint/nfts/nft1.jpg`}
+          src={metadata?.external_url}
           alt=""
         />
-        {!isEggClaimed ? (
+        {!(nft.state as NftState).isEggClaimed ? (
           <div className="absolute flex flex-row items-center justify-center w-full p-4 rounded group bottom-2">
             <div className="transition-all duration-100 bg-center bg-no-repeat bg-contain bg-egg-glow group-hover:bg-egg-glow-1 size-16 md:size-20 lg:size-24"></div>
             <span className="text-5xl text-white text-outline-0 font-patrick-hand-sc">
@@ -152,11 +170,11 @@ const NFTSwiper = () => {
           >
             {nfts &&
               nfts.map((slide: Token, index: number) => {
-                const slideState = slide.state as NftState;
+                // const slideState = slide.state as NftState;
 
                 return (
                   <SwiperSlide key={index} className="">
-                    <SlideItem {...slideState} />
+                    <SlideItem {...slide} />
                   </SwiperSlide>
                 );
               })}
@@ -167,7 +185,7 @@ const NFTSwiper = () => {
             <div className="flex flex-col items-center gap-4">
               <div className="relative flex flex-col justify-center">
                 <img
-                  src="./images/tutorial-badge.png"
+                  src="./images/tutorial-badge.webp"
                   className="h-16 xs:h-20"
                 />
                 <span className=" text-white xs:text-lg text-base font-patrick-hand w-[70%] block absolute right-[5%] ">
@@ -190,7 +208,12 @@ const NFTSwiper = () => {
             <div className="mt-4">
               <NFTActions
                 canSummonEgg={canSummonEgg}
-                isEggClaimed={currentNftState.isEggClaimed}
+                isEggClaimed={
+                  currentNftState.isEggClaimed &&
+                  currentNftState.eggHatchedAt > 0
+                    ? true
+                    : false
+                }
               />
             </div>
           )}
