@@ -99,7 +99,7 @@ export const NFTs = () => {
             <NftLoader />
           ) : !loading && nfts && nfts.length > 0 ? (
             <div
-              className="grid grid-cols-3 gap-4 pr-6 overflow-y-auto md:pr-2 md:gap-2 guide"
+              className="grid grid-cols-3 gap-4 pr-6 overflow-y-auto md:pr-2 md:gap-2"
               style={{ scrollbarGutter: "stable" }}
             >
               {nfts.map((nft, index) => (
