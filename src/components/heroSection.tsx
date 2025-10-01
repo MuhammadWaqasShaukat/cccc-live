@@ -473,7 +473,7 @@ const HeroSection = () => {
         },
       }}
     >
-      <div className="relative  flex flex-col w-screen h-screen overflow-hidden bg-black bg-no-repeat bg-cover bg-hero-section-upper sm:overflow-clip">
+      <div className="relative  flex flex-col w-dvw h-dvh overflow-hidden bg-black bg-no-repeat bg-cover bg-hero-section-upper sm:overflow-clip">
         <TopBar />
         <div className="z-20 flex flex-row items-center justify-between px-4 py-2 md:px-10 md:py-5">
           <div className="flex items-center justify-center">
@@ -539,7 +539,7 @@ const HeroSection = () => {
         <div className="block relative md:static top-[75%] md:top-auto ">
           <div
             ref={topRed}
-            className=" bg-hero-section-castle-red-1 max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-[1]  bg-left-bottom  md:left-0"
+            className=" bg-hero-section-castle-red-1 max-w-[344px] max-h-[475px] min-h-[230px] sm:min-w-[200px] sm:min-h-[250px]  w-[30%] h-[35.24%] min-w-[200px] bg-contain bg-no-repeat absolute z-[1]  bg-left-bottom  xs:left-0 -left-14"
           >
             {/* Command : red */}
 
@@ -640,7 +640,7 @@ const HeroSection = () => {
           <div
             id="redCastleBottom"
             ref={redCastleBottomRef}
-            className="bg-hero-section-castle-red-2  pointer-events-none  max-w-[465px] lg:max-h-[600px] max-h-[380px] h-[46%] w-[25%] md:w-[37%]  absolute min-h-[221px] min-w-[168px] bg-contain bg-no-repeat  bg-left-bottom  z-30 left-0 bottom-[12%]"
+            className="bg-hero-section-castle-red-2  pointer-events-none  max-w-[465px] lg:max-h-[600px] max-h-[380px] h-[46%] w-[25%] md:w-[37%] sm:min-w-[250px] sm:min-h-[300px]  absolute min-h-[280px] min-w-[220px] bg-contain bg-no-repeat  bg-left-bottom  z-30 xs:left-0  -left-14 bottom-[12%]"
           >
             <div className=" relative  flex flex-row justify-center z-[31] pointer-events-none ">
               <div ref={roofRed} className=" h-1 w-1 mt-[20%] "></div>
@@ -685,7 +685,7 @@ const HeroSection = () => {
             backgroundSize: "100% 100%",
             backgroundPosition: "0% 0%",
           }}
-          className="sprite-container  bg-left-bottom absolute left-[5%] md:left-[15%] z-40 bg-contain bg-no-repeat  max-w-80 max-h-80 min-h-40 min-w-40 bottom-0  aspect-square "
+          className="sprite-container  bg-left-bottom absolute left-[15%] md:left-[15%] z-40 bg-contain bg-no-repeat  max-w-80 max-h-80 min-h-48 min-w-48 bottom-0  aspect-square "
         ></div>
 
         <div
@@ -722,7 +722,7 @@ const HeroSection = () => {
             backgroundSize: "100% 100%",
             backgroundPosition: "0% 0%",
           }}
-          className="sprite-container  bg-left-bottom absolute left-[5%] md:left-[8%] z-40 bg-contain bg-no-repeat max-w-80 max-h-80  min-h-40 min-w-40 -bottom-[5%]  aspect-square "
+          className="sprite-container  bg-left-bottom absolute left-[5%] md:left-[8%] z-40 bg-contain bg-no-repeat max-w-80 max-h-80  min-h-48 min-w-48 -bottom-[5%]  aspect-square "
         >
           <div className=" h-full w-full relative">
             <div ref={catContainerRef} className=" absolute -top-[35%]">
@@ -752,7 +752,7 @@ const HeroSection = () => {
         <div className="block relative md:static top-[75%] md:top-auto">
           <div
             ref={topBlue}
-            className="bg-hero-section-castle-blue-1 max-w-[344px] max-h-[475px] min-h-[181px] w-[30%] h-[35.24%] min-w-[134px] bg-contain bg-no-repeat absolute z-0  bg-right-bottom right-0"
+            className="bg-hero-section-castle-blue-1 max-w-[344px] max-h-[475px] sm:min-w-[200px] sm:min-h-[250px] min-h-[230px] w-[30%] h-[35.24%] min-w-[200px] bg-contain bg-no-repeat absolute z-0  bg-right-bottom xs:right-0 -right-14"
           >
             <div
               id="sandwichmen"
@@ -850,7 +850,7 @@ const HeroSection = () => {
           <div
             id="blueCastleBottom"
             ref={blueCastleBottomRef}
-            className="bg-hero-section-castle-blue-2  pointer-events-none  max-w-[465px] lg:max-h-[600px] max-h-[380px] h-[46%] md:w-[37%] w-[25%]  absolute min-h-[221px] min-w-[168px] bg-contain bg-no-repeat bg-right-bottom z-30 right-0 bottom-[12%]"
+            className="bg-hero-section-castle-blue-2  pointer-events-none  max-w-[465px] lg:max-h-[600px] max-h-[380px] h-[46%] md:w-[37%]  w-[25%] sm:min-w-[250px] sm:min-h-[300px]  absolute min-h-[280px] min-w-[220px] bg-contain bg-no-repeat bg-right-bottom z-30 xs:right-0 -right-14 bottom-[12%]"
           >
             <div className=" relative  flex flex-row justify-center z-[31] pointer-events-none">
               <div ref={roofBlue} className=" h-1 w-1 mt-[20%] "></div>

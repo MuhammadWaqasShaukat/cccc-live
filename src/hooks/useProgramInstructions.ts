@@ -237,6 +237,7 @@ const useProgramInstructions = () => {
       }
     } catch (error: any) {
       console.error("BuyNFT error:", error.message);
+      throw error;
     }
   };
 

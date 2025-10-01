@@ -38,6 +38,9 @@ export const CottonCandyContextProvider: React.FC<
   const [collectable, setCollectiable] = useState<Token | null>(null);
   const [isPortalOpen, setIsPortalOpen] = useState<boolean>(false);
 
+  const [nftImageToReveal, setNftImageToReveal] =
+    useState<HTMLImageElement | null>(null);
+
   const [revealNFT, setRevealNFT] = useState<boolean>(false);
 
   const [selectedNftIndex, setSeletedNftIndex] = useState<number>(0);
@@ -221,6 +224,9 @@ export const CottonCandyContextProvider: React.FC<
 
     currentSummonedEggAnimationConfig,
     setCurrentSummonedEggAnimationConfig,
+
+    nftImageToReveal,
+    setNftImageToReveal,
   };
 
   return (

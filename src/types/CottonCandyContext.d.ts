@@ -78,4 +78,7 @@ export interface CottonCandyContextType {
 
   setNfts: StateSetter<Token[] | null>;
   setEggs: StateSetter<Token[] | null>;
+
+  nftImageToReveal: HTMLImageElement | null;
+  setNftImageToReveal: StateSetter<HTMLImageElement | null>;
 }

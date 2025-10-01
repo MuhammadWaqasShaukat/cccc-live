@@ -9,7 +9,7 @@ const Nav: React.FC<NavProps> = ({ className }) => {
   return (
     <div
       id="tombstone"
-      className={`${className} w-[45%] max-w-[420px] left-1/2 -translate-x-1/2 h-full max-h-[450px] z-30`}
+      className={`${className} w-[45%] max-w-[420px] left-1/2 -translate-x-1/2 h-full max-h-[450px] sm:z-30 z-100`}
     >
       <nav
         className={`relative grid place-content-end gap-4 md:gap-8 pointer-events-none w-full h-full`}

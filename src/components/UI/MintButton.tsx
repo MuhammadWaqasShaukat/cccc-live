@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { CottonCandyContext } from "../../providers/ContextProvider";
@@ -6,7 +6,12 @@ import useProgramInstructions from "../../hooks/useProgramInstructions";
 import { Token } from "../../types/Nft";
 import { useGetAllNfts } from "../../hooks/useGetAllNFTs";
 
-const MintButton = () => {
+interface MintButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  mintCount?: number;
+}
+
+const MintButton: React.FC<MintButtonProps> = ({ className, mintCount }) => {
   const ctx = useContext(CottonCandyContext);
   const { BuyNFT } = useProgramInstructions();
 
@@ -50,6 +55,33 @@ const MintButton = () => {
     }
   };
 
+  const preloadNftImage = async (
+    uri: string
+  ): Promise<HTMLImageElement | null> => {
+    try {
+      const res = await fetch(uri, { mode: "cors" });
+      const data = await res.json();
+      if (data && data.external_url) {
+        return new Promise((resolve) => {
+          const imgReveal = new Image();
+          imgReveal.crossOrigin = "anonymous";
+          imgReveal.src = data.external_url;
+
+          imgReveal.onload = () => resolve(imgReveal);
+          imgReveal.onerror = (err) => {
+            console.error("Failed to load NFT image", err);
+            resolve(null);
+          };
+        });
+      }
+
+      return null;
+    } catch (err) {
+      console.error("Failed to fetch NFT metadata", err);
+      return null;
+    }
+  };
+
   const handleNFTMintClick = async () => {
     if (!connected) {
       setVisible(true);
@@ -57,12 +89,12 @@ const MintButton = () => {
     }
     try {
       setisMinting(true);
-      await BuyNFT(ctx.count);
+      await BuyNFT(mintCount ?? ctx.count);
       const newNft = await getNewBoughtNft();
       if (newNft.length > 0) {
         ctx.setCollectiable(newNft[0]);
-        ctx.setRevealNFT(true);
-        ctx.setBookmark("nfts");
+        const prloadedImage = await preloadNftImage(newNft[0].metadata.uri);
+        ctx.setNftImageToReveal(prloadedImage);
       }
     } catch (error: any) {
       console.error("Error: ", error.message);
@@ -71,11 +103,17 @@ const MintButton = () => {
       setisMinting(false);
     }
   };
+  useEffect(() => {
+    if (!ctx.nftImageToReveal) return;
+
+    ctx.setRevealNFT(true);
+    ctx.setBookmark("nfts");
+  }, [ctx.nftImageToReveal]);
 
   return (
     <button
       disabled={isMinting}
-      className={`bg-mint-btn  max-h-[90px] max-w-[350px] min-w-64 min-h-14 relative bg-center bg-contain bg-no-repeat group z-10 ${
+      className={`${className} bg-mint-btn  max-h-[90px] max-w-[350px] min-w-64 min-h-14 relative bg-center bg-contain bg-no-repeat group z-10 ${
         isMinting ? " cursor-not-allowed opacity-75" : " opacity-100"
       }`}
       onClick={handleNFTMintClick}

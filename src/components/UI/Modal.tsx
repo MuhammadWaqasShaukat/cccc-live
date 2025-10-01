@@ -33,7 +33,7 @@ const Modal: React.FC<ModalProps> = ({
 
   return (
     <div
-      className={`w-full h-full  flex flex-col justify-center items-center  absolute top-0 left-0 right-0`}
+      className={`w-dvw h-dvh z-100  flex flex-col justify-center items-center  absolute top-0 left-0 right-0 `}
     >
       <div
         onClick={(e) => {
@@ -41,10 +41,10 @@ const Modal: React.FC<ModalProps> = ({
           e.preventDefault();
           handleBackDropClicked();
         }}
-        className={`z-50 w-full bg-black/70 h-full absolute top-0 left-0 ${className}`}
+        className={`z-100 w-full bg-black/70 h-full absolute top-0 left-0 ${className}`}
       ></div>
       <div
-        className={`z-[51] flex flex-col justify-center  items-center md:h-auto md:w-auto h-full w-full ${childContainerStyles}`}
+        className={`z-100 flex flex-col justify-center  items-center md:h-auto md:w-auto h-full w-full ${childContainerStyles}`}
       >
         {children}
       </div>

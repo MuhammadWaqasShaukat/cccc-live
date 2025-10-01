@@ -1,9 +1,23 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Modal from "../UI/Modal";
 import { CottonCandyContext } from "../../providers/ContextProvider";
+import MintButton from "../UI/MintButton";
 
 const SupperOffer = () => {
-  const { setViewSuperOffer, viewSupperOffer } = useContext(CottonCandyContext);
+  const { setViewSuperOffer, viewSupperOffer, setCount } =
+    useContext(CottonCandyContext);
+
+  const closeOfferModal = () => {
+    setViewSuperOffer(false);
+  };
+
+  useEffect(() => {
+    if (viewSupperOffer) {
+      setCount(10);
+    } else {
+      setCount(1);
+    }
+  }, []);
 
   return (
     <>
@@ -15,9 +29,7 @@ const SupperOffer = () => {
       ) : (
         <Modal
           className="justify-start bg-transparent "
-          onBackgroundClick={() => {
-            setViewSuperOffer(false);
-          }}
+          onBackgroundClick={() => {}}
         >
           <div className="md:hidden flex bg-super-offer-sm  bg-contain bg-no-repeat w-[242px] h-[422px]">
             <div className=" w-full flex flex-col items-center gap-6 py-10 px-4">
@@ -31,13 +43,20 @@ const SupperOffer = () => {
                     <span className="lg:text-3xl md:text-lg"> 10 NFT</span>s!
                   </p>
                 </div>
-                <button className="bg-supper-offer-mint-btn w-28 h-10  bg-contain bg-no-repeat relative">
+                {/* <button className="bg-supper-offer-mint-btn w-28 h-10  bg-contain bg-no-repeat relative">
                   <span className="absolute inset-0 z-50 transition duration-200 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20"></span>
                   <span className="absolute inset-0 w-full h-full grid place-content-center font-patrick-hand text-[22px] md:text-4xl leading-none uppercase text-white z-60">
                     Mint
                   </span>
-                </button>
-                <p className="text-white lg:text-lg text-sm justify-center items-center uppercase font-patrick-hand-sc tracking-wide text-center">
+                </button> */}
+                <MintButton
+                  className="bg-supper-offer-mint-btn lg:w-56 lg:h-[4.5rem] md:w-40 md:h-[3.25rem]  bg-contain bg-no-repeat relative"
+                  mintCount={10}
+                ></MintButton>
+                <p
+                  onClick={closeOfferModal}
+                  className="text-white lg:text-lg text-sm justify-center items-center uppercase font-patrick-hand-sc tracking-wide text-center"
+                >
                   <span className="lg:text-xl text-base">No</span>, thanks!{" "}
                   <br />
                   <span className="lg:text-xl text-base">Mama</span> raised no
@@ -57,13 +76,20 @@ const SupperOffer = () => {
                   price <br /> of
                   <span className="lg:text-3xl md:text-lg"> 10 NFT</span>s!
                 </p>
-                <button className="bg-supper-offer-mint-btn lg:w-56 lg:h-[4.5rem] md:w-40 md:h-[3.25rem]  bg-contain bg-no-repeat relative">
+                {/* <button className="bg-supper-offer-mint-btn lg:w-56 lg:h-[4.5rem] md:w-40 md:h-[3.25rem]  bg-contain bg-no-repeat relative">
                   <span className="absolute inset-0 z-50 transition duration-200 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20"></span>
                   <span className="absolute inset-0 w-full h-full grid place-content-center font-patrick-hand text-[22px] md:text-4xl leading-none uppercase text-white z-60">
                     Mint
                   </span>
-                </button>
-                <p className="text-white lg:text-lg text-sm justify-center items-center uppercase font-patrick-hand-sc tracking-wide">
+                </button> */}
+                <MintButton
+                  className="bg-supper-offer-mint-btn lg:w-56 lg:h-[4.5rem] md:w-40 md:h-[3.25rem]  bg-contain bg-no-repeat relative"
+                  mintCount={10}
+                ></MintButton>
+                <p
+                  onClick={closeOfferModal}
+                  className="text-white lg:text-lg text-sm justify-center items-center uppercase font-patrick-hand-sc tracking-wide"
+                >
                   <span className="lg:text-xl text-base">No</span>, thanks!{" "}
                   <span className="lg:text-xl text-base">Mama</span> raised no
                   fool
