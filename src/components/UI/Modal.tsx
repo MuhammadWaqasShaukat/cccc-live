@@ -33,7 +33,7 @@ const Modal: React.FC<ModalProps> = ({
 
   return (
     <div
-      className={`w-dvw h-dvh z-100  flex flex-col justify-center items-center  absolute top-0 left-0 right-0 `}
+      className={`w-full h-full z-100  flex flex-col justify-center items-center  absolute top-0 left-0 right-0 `}
     >
       <div
         onClick={(e) => {
