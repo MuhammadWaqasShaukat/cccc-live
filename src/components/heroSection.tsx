@@ -218,15 +218,15 @@ const HeroSection = () => {
 
       if (redSpriteRef.current) {
         heroesDimensions.current.set(redSpriteRef, {
-          width: castleRect.width * 0.7,
-          height: castleRect.width * 0.7,
+          width: castleRect.width * 0.6,
+          height: castleRect.width * 0.6,
         });
       }
 
       if (blueSpriteRef.current) {
         heroesDimensions.current.set(blueSpriteRef, {
-          width: castleRect.width * 0.7,
-          height: castleRect.width * 0.7,
+          width: castleRect.width * 0.6,
+          height: castleRect.width * 0.6,
         });
       }
 
@@ -559,7 +559,7 @@ const HeroSection = () => {
                 backgroundSize: "100% 100%",
                 backgroundPosition: "0% 0%",
               }}
-              className="sprite-container  bg-no-repeat  absolute max-w-56 max-h-56 min-h-24 min-w-24 bg-left-bottom -bottom-[13%]  z-40 aspect-square -left-[10%] "
+              className="sprite-container  bg-no-repeat  absolute max-w-56 max-h-56 min-h-24 min-w-24 bg-left-bottom -bottom-[13%]  z-40 aspect-square sm:-left-[10%] -left-[25%] "
             />
 
             {/* Archer: red */}
@@ -617,7 +617,7 @@ const HeroSection = () => {
                   onMouseEnter={playLighteningArcherAnimation}
                   onMouseLeave={stopLighteningArcherAnimation}
                   ref={redSpriteRef}
-                  className="absolute bottom-0 max-w-48 max-h-48  z-100"
+                  className="absolute bottom-0 max-w-48 max-h-48  min-h-36 min-w-36 z-100"
                   style={{
                     width: `${
                       heroesDimensions.current.get(redSpriteRef)?.width
@@ -685,7 +685,7 @@ const HeroSection = () => {
             backgroundSize: "100% 100%",
             backgroundPosition: "0% 0%",
           }}
-          className="sprite-container  bg-left-bottom absolute left-[15%] md:left-[15%] z-40 bg-contain bg-no-repeat  max-w-80 max-h-80 min-h-48 min-w-48 bottom-0  aspect-square "
+          className="sprite-container  bg-left-bottom absolute left-[15%] md:left-[15%] z-40 bg-contain bg-no-repeat  max-w-80 max-h-80 sm:min-h-64 sm:min-w-64  min-h-52 min-w-52 bottom-0  aspect-square "
         ></div>
 
         <div
@@ -722,7 +722,7 @@ const HeroSection = () => {
             backgroundSize: "100% 100%",
             backgroundPosition: "0% 0%",
           }}
-          className="sprite-container  bg-left-bottom absolute left-[5%] md:left-[8%] z-40 bg-contain bg-no-repeat max-w-80 max-h-80  min-h-48 min-w-48 -bottom-[5%]  aspect-square "
+          className="sprite-container  bg-left-bottom absolute left-[5%] md:left-[8%] z-40 bg-contain bg-no-repeat max-w-80 max-h-80 sm:min-h-64 sm:min-w-64  min-h-52 min-w-52 -bottom-[5%]  aspect-square "
         >
           <div className=" h-full w-full relative">
             <div ref={catContainerRef} className=" absolute -top-[35%]">
@@ -772,7 +772,7 @@ const HeroSection = () => {
                 backgroundSize: "100% 100%",
                 backgroundPosition: "0% 0%",
               }}
-              className="sprite-container  absolute max-w-56 max-h-56 min-h-24 min-w-24 -bottom-[13%] -right-[10%]  z-40 aspect-square "
+              className="sprite-container  absolute max-w-56 max-h-56 min-h-24 min-w-24 -bottom-[13%] md:-right-[10%] -right-[20%]  z-40 aspect-square "
             />
 
             <div
@@ -828,7 +828,7 @@ const HeroSection = () => {
                   onMouseEnter={playCandleArcherAnimation}
                   onMouseLeave={stopCandleArcherAnimation}
                   ref={blueSpriteRef}
-                  className="absolute bottom-0 max-w-48 max-h-48 z-100"
+                  className="absolute bottom-0  max-w-48 max-h-48 min-h-36 min-w-36 z-100"
                   style={{
                     width: `${
                       heroesDimensions.current.get(blueSpriteRef)?.width
@@ -874,7 +874,7 @@ const HeroSection = () => {
             backgroundSize: "100% 100%",
             backgroundPosition: "0% 0%",
           }}
-          className="sprite-container absolute max-w-80 max-h-80 min-w-40 min-h-40 bottom-0 sm:right-[4%] right-0 z-40 aspect-square "
+          className="sprite-container absolute max-w-80 max-h-80 min-w-56 min-h-56 sm:min-h-64 sm:min-w-64  bottom-0 sm:right-[4%] right-0 z-40 aspect-square "
         />
 
         <div
@@ -899,7 +899,7 @@ const HeroSection = () => {
         <div
           id="fire"
           ref={animations.fire.ref}
-          className="sprite-container absolute right-[30%] max-w-48 max-h-24 z-40 "
+          className="sprite-container absolute right-[30%] max-w-48 max-h-24 min-w-24 min-h-12 z-40 "
           style={{
             width: `${
               heroesDimensions.current.get(animations.fire.ref)?.width
@@ -913,7 +913,7 @@ const HeroSection = () => {
         <div
           id="candle"
           ref={animations.candle.ref}
-          className="sprite-container absolute bg-bottom max-h-64 max-w-64 min-w-36 min-h-36 right-[13%] bottom-0  z-40 "
+          className="sprite-container absolute bg-bottom max-h-64 max-w-64 sm:min-h-48 sm:min-w-48  min-w-44 min-h-44 right-[13%] bottom-0  z-40 "
           style={{
             width: `${
               heroesDimensions.current.get(animations.candle.ref)?.width
