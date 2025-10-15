@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useEffect } from "react";
 import { CottonCandyContext } from "../../providers/ContextProvider";
+import { createPortal } from "react-dom";
 
 interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
   onBackgroundClick: () => void;
@@ -31,7 +32,7 @@ const Modal: React.FC<ModalProps> = ({
     }
   };
 
-  return (
+  return createPortal(
     <div
       className={`w-full h-full z-100  flex flex-col justify-center items-center  absolute top-0 left-0 right-0 `}
     >
@@ -48,7 +49,8 @@ const Modal: React.FC<ModalProps> = ({
       >
         {children}
       </div>
-    </div>
+    </div>,
+    document.getElementById("modal") as HTMLElement
   );
 };
 

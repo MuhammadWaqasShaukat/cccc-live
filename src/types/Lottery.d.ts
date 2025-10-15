@@ -7,6 +7,10 @@ export type Lottery = {
   egg: string;
   nft: string;
   startTime: number;
+  winnersDeclared: number;
+  totalMintedEgg: number;
+  totalCrackedEgg: number;
+  maxWinners: number;
 };
 
 export type MintStatus = {

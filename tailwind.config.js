@@ -145,6 +145,93 @@ export default {
         "url('/images/section-mint/supper-offer-title.webp')",
       "supper-offer-mint-btn":
         "url('/images/section-mint/supper-offer-mint-btn.webp')",
+
+      // my mints
+      "total-minted-knights-1":
+        "url('/images/section-mint/my-mints/total-minted-1.png')",
+      "total-minted-knights-2":
+        "url('/images/section-mint/my-mints/total-minted-2.png')",
+      "total-minted-knights-3":
+        "url('/images/section-mint/my-mints/total-minted-3.png')",
+      "total-minted-knights-4":
+        "url('/images/section-mint/my-mints/total-minted-4.png')",
+      "total-minted-knights-5":
+        "url('/images/section-mint/my-mints/total-minted-5.png')",
+
+      "minted-eggs-1": "url('/images/section-mint/my-mints/minted-eggs-1.png')",
+      "minted-eggs-2": "url('/images/section-mint/my-mints/minted-eggs-2.png')",
+      "minted-eggs-3": "url('/images/section-mint/my-mints/minted-eggs-3.png')",
+      "minted-eggs-4": "url('/images/section-mint/my-mints/minted-eggs-4.png')",
+      "minted-eggs-5": "url('/images/section-mint/my-mints/minted-eggs-5.png')",
+      "minted-eggs-6": "url('/images/section-mint/my-mints/minted-eggs-6.png')",
+      "minted-eggs-7": "url('/images/section-mint/my-mints/minted-eggs-7.png')",
+      "minted-eggs-8": "url('/images/section-mint/my-mints/minted-eggs-8.png')",
+      "minted-eggs-9": "url('/images/section-mint/my-mints/minted-eggs-9.png')",
+      "minted-eggs-10":
+        "url('/images/section-mint/my-mints/minted-eggs-10.png')",
+
+      "cracked-eggs-1":
+        "url('/images/section-mint/my-mints/cracked-eggs-1.png')",
+      "cracked-eggs-2":
+        "url('/images/section-mint/my-mints/cracked-eggs-2.png')",
+      "cracked-eggs-3":
+        "url('/images/section-mint/my-mints/cracked-eggs-3.png')",
+      "cracked-eggs-4":
+        "url('/images/section-mint/my-mints/cracked-eggs-4.png')",
+      "cracked-eggs-5":
+        "url('/images/section-mint/my-mints/cracked-eggs-5.png')",
+      "cracked-eggs-6":
+        "url('/images/section-mint/my-mints/cracked-eggs-6.png')",
+      "cracked-eggs-7":
+        "url('/images/section-mint/my-mints/cracked-eggs-7.png')",
+      "cracked-eggs-8":
+        "url('/images/section-mint/my-mints/cracked-eggs-8.png')",
+      "cracked-eggs-9":
+        "url('/images/section-mint/my-mints/cracked-eggs-9.png')",
+      "cracked-eggs-10":
+        "url('/images/section-mint/my-mints/cracked-eggs-10.png')",
+
+      "win-chance-1": "url('/images/section-mint/my-mints/win-chance-1.png')",
+      "win-chance-2": "url('/images/section-mint/my-mints/win-chance-2.png')",
+      "win-chance-3": "url('/images/section-mint/my-mints/win-chance-3.png')",
+
+      "prize-pool-1": "url('/images/section-mint/my-mints/prize-pool-1.png')",
+      "prize-pool-2": "url('/images/section-mint/my-mints/prize-pool-2.png')",
+      "prize-pool-3": "url('/images/section-mint/my-mints/prize-pool-3.png')",
+      "prize-pool-4": "url('/images/section-mint/my-mints/prize-pool-4.png')",
+      "prize-pool-5": "url('/images/section-mint/my-mints/prize-pool-5.png')",
+      "prize-pool-6": "url('/images/section-mint/my-mints/prize-pool-6.png')",
+
+      "sol-btn": "url('/images/sol-bg-btn.png')",
+
+      "whitelist-countdown-not-whitelisted":
+        "url('images/whitelist/countdown-not-whitelisted.png')",
+      "whitelist-countdown-whitelisted":
+        "url('images/whitelist/countdown-whitelisted.png')",
+      "notify-me-btn": "url('images/whitelist/notify-me-btn.png')",
+      "white-listing-open": "url('images/whitelist/gold-plate.png')",
+      "white-listing-blue": "url('images/whitelist/blue-plate.png')",
+      "white-listing-connect": "url('images/whitelist/connect-wallet.png')",
+      "white-listing-connect-btn":
+        "url('images/whitelist/whitelist-connect-btn.png')",
+
+      "whitelisted-success": "url('images/whitelist/success-whitelisted.png')",
+      "whitelisted-failed": "url('images/whitelist/failed-whitelisted.png')",
+
+      collection: "url('images/collection/bg-collection.png')",
+      "collection-keys": "url('images/collection/keys.png')",
+      "collection-ipods": "url('images/collection/ipods.png')",
+      "collection-chips": "url('images/collection/potato.png')",
+      "collection-coins": "url('images/collection/coins.png')",
+
+      "sidebar-filter": "url('images/collection/filter-bg.png')",
+
+      "sidebar-filter-icon": "url('images/collection/filter.png')",
+      "sidebar-search-icon": "url('images/collection/search.png')",
+
+      "sidebar-raider-class": "url('images/collection/raider-icon.png')",
+      "sidebar-warrior-class": "url('images/collection/warrior-icon.png')",
+      "sidebar-archer-class": "url('images/collection/archer-icon.png')",
     },
   },
   plugins: [],

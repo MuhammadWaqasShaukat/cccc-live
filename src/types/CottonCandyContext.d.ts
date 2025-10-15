@@ -1,9 +1,19 @@
 import { MultiSpriteConfig } from "./animations";
+import { Modals } from "./modalProps";
+import { Nav } from "./Nav";
 import { Token } from "./Nft";
+import { LotteryPhase } from "./NotifyMe";
 
 export type LotteryState = {
   status: "in-progress" | "ended" | "not-started";
 };
+
+export interface TimeParts {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
 
 type StateSetter<T> = React.Dispatch<React.SetStateAction<T>>;
 
@@ -81,4 +91,32 @@ export interface CottonCandyContextType {
 
   nftImageToReveal: HTMLImageElement | null;
   setNftImageToReveal: StateSetter<HTMLImageElement | null>;
+
+  whitelistCountdown: number;
+  setWhitelistCountdown: StateSetter<number>;
+
+  whitelistingCDOver: boolean;
+  setWhiteListingCDOver: StateSetter<boolean>;
+
+  isWhitelisted: boolean;
+  setIsWhitelisted: StateSetter<boolean>;
+
+  saleCountdown: number;
+  setSaleCountdown: StateSetter<number>;
+
+  saleCDOver: boolean;
+  setSaleCDOver: StateSetter<boolean>;
+
+  shallBeNotified: boolean;
+  setShallBeNotified: StateSetter<boolean>;
+
+  mintBtnTxt: string;
+  setMintBtnTxt: stateSetter<string>;
+
+  lotteryPhase: LotteryPhase;
+  setLotteryPhase: StateSetter<LotteryPhase>;
+
+  timeRemaining: TimeParts;
+
+  onExpire: (callback: () => void) => void;
 }

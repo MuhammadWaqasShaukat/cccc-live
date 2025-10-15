@@ -42,7 +42,7 @@ const NFTBox: React.FC<{ nft: Token; nftIndex: number }> = ({
       className={`bg-transparent rounded-xl md:shadow-md flex flex-col items-center overflow-hidden relative md:h-fit lg:min-h-[130px] md:min-h-[100px] min-w-[33%] md:p-0 aspect-[1000/1400] border-black border-2`}
     >
       <img
-        src={metadata?.external_url ?? "./images/section-mint/nfts/nft1.jpg"}
+        src={metadata?.external_url}
         alt={`NFT`}
         className="rounded-md w-[-webkit-fill-available]"
       />

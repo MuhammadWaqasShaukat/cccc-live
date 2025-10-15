@@ -26,7 +26,10 @@ const Home = () => {
 
   return (
     <>
+      {/* <EmailForm /> */}
+      {/* <WhitelistingOpen /> */}
       {/* <NFTGenerator /> */}
+      {/* <WhiteListed /> */}
       <HeroSection />
       {ctx.activeMenu === "about" && <AboutSection />}
       {ctx.activeMenu === "mint" && <MintSection />}

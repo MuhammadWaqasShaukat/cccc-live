@@ -107,7 +107,7 @@ const NFTSwiper = () => {
       <button
         className="absolute top-10 left-10 bg-back-btn size-8 aspect-square sm:size-12 bg-contain bg-no-repeat z-100"
         onClick={() => {
-          ctx.setCurrentModal("none");
+          ctx.setCurrentModal(null);
           ctx.setActiveMenu("mint");
         }}
       ></button>

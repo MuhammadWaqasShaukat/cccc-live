@@ -10,6 +10,7 @@ import {
   VIDEO_SOURCES,
 } from "./constants/preloadingAssestList";
 import { usePreloader } from "./hooks/usePreloader";
+import Collection from "./pages/Collection";
 
 function App() {
   const ctx = useContext(CottonCandyContext);
@@ -67,7 +68,7 @@ function App() {
       {loading && <SnakeLoader className="!bg-[#848484]" />}
 
       <div className="overflow-x-hidden">
-        <Home />
+        {ctx.activeMenu === "collection" ? <Collection /> : <Home />}
       </div>
     </>
   );

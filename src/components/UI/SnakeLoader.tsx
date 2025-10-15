@@ -1,9 +1,11 @@
 import Modal from "./Modal";
 import { motion } from "framer-motion";
 
-const SnakeLoader: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
-  className,
-}) => {
+type SnakeLoaderProps = {
+  message?: string;
+} & React.HTMLAttributes<HTMLDivElement>;
+
+const SnakeLoader: React.FC<SnakeLoaderProps> = ({ className, message }) => {
   return (
     <Modal onBackgroundClick={() => {}} className={className}>
       <motion.img
@@ -22,6 +24,9 @@ const SnakeLoader: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
           },
         }}
       />
+      <span className=" text-white font-patrick-hand-sc text-3xl uppercase">
+        {message}
+      </span>
     </Modal>
   );
 };

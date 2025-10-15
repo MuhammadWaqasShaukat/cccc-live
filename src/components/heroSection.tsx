@@ -12,6 +12,7 @@ import { useArcherSpriteAnimation } from "../hooks/useArcherSpriteAnimation";
 import usePopCat from "../hooks/usePopCat";
 import { useSpritePreloader } from "../hooks/useSpritePreloader";
 import { useAnimationConfigs } from "../hooks/useAnimationConfigs";
+import WhitelistCountDown from "./whitelist/WhitelistCountDown";
 
 type Dimensions = { width: number; height: number };
 
@@ -249,7 +250,6 @@ const HeroSection = () => {
     anchorElement(anchor_2_Ref, animations.lightSabre.ref, { bottom: true });
     anchorElement(anchor_1_Ref, animations.whale.ref, { bottom: true });
     anchorElement(anchor_2_Ref, animations.magic.ref, { bottom: true });
-
     positionCastleTop(topRed, roofRed);
     positionCastleTop(topBlue, roofBlue);
   };
@@ -344,6 +344,41 @@ const HeroSection = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, [ctx.assestsPreloaded]);
+
+  useEffect(() => {
+    const updatePositions = () => {
+      const tombstoneEl = tombstoneRef.current;
+      const logoEl = animations.logo.ref.current;
+      const countdownEl = document.getElementById("whitelist-countdown");
+
+      if (tombstoneEl && logoEl) {
+        const tombstoneRect = tombstoneEl.getBoundingClientRect();
+        logoEl.style.bottom = `${
+          window.innerHeight - tombstoneRect.top + 20
+        }px`;
+      }
+
+      if (logoEl && countdownEl) {
+        const logoRect = logoEl.getBoundingClientRect();
+
+        countdownEl.style.top = `${logoRect.bottom + 10}px`;
+
+        countdownEl.style.left = `${
+          logoRect.left + logoRect.width / 2 - countdownEl.offsetWidth / 2
+        }px`;
+        countdownEl.style.position = "absolute"; // ensures it sticks visually
+      }
+    };
+
+    updatePositions();
+    window.addEventListener("resize", updatePositions);
+    window.addEventListener("scroll", updatePositions);
+
+    return () => {
+      window.removeEventListener("resize", updatePositions);
+      window.removeEventListener("scroll", updatePositions);
+    };
+  }, [positionElement]);
 
   const handleConnect = async () => {
     if (!connected) {
@@ -496,7 +531,6 @@ const HeroSection = () => {
             </span>
           </button>
         </div>
-
         <Nav className={"absolute  pointer-events-none"} style={{}} />
         <div
           ref={animations.gold.ref}
@@ -513,8 +547,7 @@ const HeroSection = () => {
           }}
           className="hidden md:block pointer-events-none  max-h-[400px] max-w-[400px] min-w-[200px] min-h-[200px] bg-no-repeat bg-contain bg-bottom absolute left-[50%] -translate-x-[50%] -bottom-[10%] z-40"
         ></div>
-        <div className="bg-hero-section-lower  bg-no-repeat bg-cover h-[20%] bg-end absolute bottom-0 left-0 right-0"></div>
-
+        <div className="bg-hero-section-lower bg-no-repeat bg-cover h-[20%] bg-end absolute bottom-0 left-0 right-0"></div>
         <div
           id="logo"
           ref={animations.logo.ref}
@@ -531,9 +564,9 @@ const HeroSection = () => {
             backgroundSize: "100% 100%",
             backgroundPosition: "0% 0%",
           }}
-          className="sprite-container  max-h-[350px] max-w-[350px] min-w-[200px] min-h-[200px] bg-no-repeat bg-contain bg-bottom absolute left-[50%] -translate-x-[50%] z-40"
+          className="sprite-container max-h-[350px] max-w-[350px] md:min-h-[260px] md:min-w-[260px] min-w-[200px] min-h-[200px] bg-no-repeat bg-contain bg-bottom absolute left-[50%] -translate-x-[50%] z-40"
         ></div>
-
+        <WhitelistCountDown />
         {/* Heroes */}
         {/* casltes  red*/}
         <div className="block relative md:static top-[75%] md:top-auto ">
@@ -647,7 +680,6 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
-
         {/* Light Saber: red */}
         <div
           id="lightSabre"
@@ -668,7 +700,6 @@ const HeroSection = () => {
           }}
           className="sprite-container  bg-left-bottom hidden md:block absolute left-[0%] min-w-32 min-h-32 z-40 bg-contain bg-no-repeat  max-w-48 max-h-48 bottom-0  aspect-square "
         ></div>
-
         <div
           id="magic"
           ref={animations.magic.ref}
@@ -687,7 +718,6 @@ const HeroSection = () => {
           }}
           className="sprite-container  bg-left-bottom absolute left-[15%] md:left-[15%] z-40 bg-contain bg-no-repeat  max-w-80 max-h-80 sm:min-h-64 sm:min-w-64  min-h-52 min-w-52 bottom-0  aspect-square "
         ></div>
-
         <div
           ref={candleOneRef}
           className=" bg-hero-section-red-1 lg:w-[96px] lg:h-[88px] w-[50px] h-[54px]  bg-contain bg-no-repeat  absolute  bottom-[5%] lg:left-[30%] left-[5%] z-10"
@@ -705,7 +735,6 @@ const HeroSection = () => {
           className="bg-hero-section-shark-2 w-[64px] h-[63px] absolute top-[86%] right-[20%] hidden lg:block bg-contain z-10"
         ></div>
         {/* Cavlary : red */}
-
         <div
           id="sheep"
           ref={animations.sheep.ref}
@@ -744,9 +773,7 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
-
         {/* Wizard: red */}
-
         <div className=" bg-hero-section-distant  lg:h-[68%] md:h-[65%] w-[100%] min-w-[300px] min-h-[200px] bg-contain sm:bg-repeat-x bg-no-repeat bg-bottom absolute sm:bottom-[16%] bottom-[18%] z-0"></div>
         {/* castle-blue */}
         <div className="block relative md:static top-[75%] md:top-auto">
@@ -857,7 +884,6 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
-
         <div
           id="whale"
           ref={animations.whale.ref}
@@ -876,7 +902,6 @@ const HeroSection = () => {
           }}
           className="sprite-container absolute max-w-80 max-h-80 min-w-56 min-h-56 sm:min-h-64 sm:min-w-64  bottom-0 sm:right-[4%] right-0 z-40 aspect-square "
         />
-
         <div
           id="swordman"
           ref={animations.swordman.ref}
@@ -895,7 +920,6 @@ const HeroSection = () => {
             backgroundPosition: "0% 0%",
           }}
         ></div>
-
         <div
           id="fire"
           ref={animations.fire.ref}
@@ -909,7 +933,6 @@ const HeroSection = () => {
             }px`,
           }}
         />
-
         <div
           id="candle"
           ref={animations.candle.ref}
@@ -928,25 +951,21 @@ const HeroSection = () => {
             backgroundPosition: "0% 0%",
           }}
         />
-
         {/*anchor-2*/}
         <div
           ref={anchor_2_Ref}
           className="w-full h-0.5 absolute sm:bottom-[10%] bottom-[15%] "
         ></div>
-
         {/*anchor-1*/}
         <div
           ref={anchor_1_Ref}
           className="w-full h-0.5 absolute sm:bottom-[7%] bottom-[12%]  "
         ></div>
-
         {/*anchor-0*/}
         <div
           ref={anchor_0_Ref}
           className="w-full h-0.5 absolute bottom-[4%]  "
         ></div>
-
         <div
           ref={anchor_Ref}
           className="w-full h-0.5 absolute bottom-[1%]  "
