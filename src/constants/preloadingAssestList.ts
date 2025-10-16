@@ -201,6 +201,24 @@ export const CRITICAL_ASSETS = [
   "/images/cow-face.webp",
   "/images/logo-header.webp",
   "/images/sheep-face.webp",
+
+  "images/whitelist/success-whitelisted.png",
+  "images/whitelist/failed-whitelisted.png",
+  "images/collection/bg-collection.png",
+
+  "images/collection/keys.png",
+  "images/collection/ipods.png",
+  "images/collection/potato.png",
+  "images/collection/coins.png",
+
+  "images/collection/filter-bg.png",
+
+  "images/collection/filter.png",
+  "images/collection/search.png",
+
+  "images/collection/raider-icon.png",
+  "images/collection/warrior-icon.png",
+  "images/collection/archer-icon.png",
 ];
 
 export const AUDIO_SOURCES = ["/sound/pop-cat.mp3"];
