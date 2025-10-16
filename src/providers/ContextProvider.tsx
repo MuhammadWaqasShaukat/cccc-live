@@ -200,10 +200,11 @@ export const CottonCandyContextProvider: React.FC<
 
   useEffect(() => {
     if (!timersRef.current) {
-      setSaleCountdown(Date.now() + 30000);
-      setWhitelistCountdown(Date.now());
+      setSaleCountdown(Date.now() + 60000);
+      setWhitelistCountdown(Date.now() + +30000);
       timersRef.current = true;
     }
+    
   }, []);
 
   //
