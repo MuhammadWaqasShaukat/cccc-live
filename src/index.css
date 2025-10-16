@@ -469,7 +469,7 @@ body * {
   aspect-ratio: 264 / 251;
   max-width: 264px;
   max-height: 251px;
-  background: url('/images/whitelist/pepe-writes.png');
+  background: url('/images/whitelist/pepe-writes.webp');
   background-size: contain;
   transform: translateX(-50%);
   background-position: center;
@@ -485,13 +485,13 @@ body * {
 
 .horns::after {
   right: 93%;
-  background: url('/images/whitelist/horns.png');
+  background: url('/images/whitelist/horns.webp');
   /* background-position: left; */
 }
 
 .horns::before {
   left: 93%;
-  background: url('/images/whitelist/horns.png');
+  background: url('/images/whitelist/horns.webp');
   transform: scaleX(-1);
 
 }
