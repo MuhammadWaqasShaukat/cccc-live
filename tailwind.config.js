@@ -8,7 +8,7 @@ export default {
   ],
   theme: {
     extend: {
-      zIndex: {
+      zIndex: {/
         60: "60",
         70: "70",
         80: "80",
@@ -205,33 +205,34 @@ export default {
       "sol-btn": "url('/images/sol-bg-btn.png')",
 
       "whitelist-countdown-not-whitelisted":
-        "url('images/whitelist/countdown-not-whitelisted.webp')",
+        "url('/images/whitelist/countdown-not-whitelisted.webp')",
       "whitelist-countdown-whitelisted":
-        "url('images/whitelist/countdown-whitelisted.webp')",
-      "notify-me-btn": "url('images/whitelist/notify-me-btn.webp')",
-      "white-listing-open": "url('images/whitelist/gold-plate.webp')",
-      "white-listing-blue": "url('images/whitelist/blue-plate.webp')",
-      "white-listing-connect": "url('images/whitelist/connect-wallet.webp')",
+        "url('/images/whitelist/countdown-whitelisted.webp')",
+      "notify-me-btn": "url('/images/whitelist/notify-me-btn.webp')",
+      "white-listing-open": "url('/images/whitelist/gold-plate.webp')",
+      "white-listing-blue": "url('/images/whitelist/blue-plate.webp')",
+      "white-listing-connect": "url('/images/whitelist/connect-wallet.webp')",
       "white-listing-connect-btn":
-        "url('images/whitelist/whitelist-connect-btn.webp')",
+        "url('/images/whitelist/whitelist-connect-btn.webp')",
 
-      "whitelisted-success": "url('images/whitelist/success-whitelisted.webp')",
-      "whitelisted-failed": "url('images/whitelist/failed-whitelisted.webp')",
+      "whitelisted-success":
+        "url('/images/whitelist/success-whitelisted.webp')",
+      "whitelisted-failed": "url('/images/whitelist/failed-whitelisted.webp')",
 
-      collection: "url('images/collection/bg-collection.png')",
-      "collection-keys": "url('images/collection/keys.png')",
-      "collection-ipods": "url('images/collection/ipods.png')",
-      "collection-chips": "url('images/collection/potato.png')",
-      "collection-coins": "url('images/collection/coins.png')",
+      collection: "url('/images/collection/bg-collection.png')",
+      "collection-keys": "url('/images/collection/keys.png')",
+      "collection-ipods": "url('/images/collection/ipods.png')",
+      "collection-chips": "url('/images/collection/potato.png')",
+      "collection-coins": "url('/images/collection/coins.png')",
 
-      "sidebar-filter": "url('images/collection/filter-bg.png')",
+      "sidebar-filter": "url('/images/collection/filter-bg.png')",
 
-      "sidebar-filter-icon": "url('images/collection/filter.png')",
-      "sidebar-search-icon": "url('images/collection/search.png')",
+      "sidebar-filter-icon": "url('/images/collection/filter.png')",
+      "sidebar-search-icon": "url('/images/collection/search.png')",
 
-      "sidebar-raider-class": "url('images/collection/raider-icon.png')",
-      "sidebar-warrior-class": "url('images/collection/warrior-icon.png')",
-      "sidebar-archer-class": "url('images/collection/archer-icon.png')",
+      "sidebar-raider-class": "url('/images/collection/raider-icon.png')",
+      "sidebar-warrior-class": "url('/images/collection/warrior-icon.png')",
+      "sidebar-archer-class": "url('/images/collection/archer-icon.png')",
     },
   },
   plugins: [],
