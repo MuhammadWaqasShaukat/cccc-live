@@ -8,7 +8,7 @@ export default {
   ],
   theme: {
     extend: {
-      zIndex: {/
+      zIndex: {
         60: "60",
         70: "70",
         80: "80",
