@@ -205,18 +205,18 @@ export default {
       "sol-btn": "url('/images/sol-bg-btn.png')",
 
       "whitelist-countdown-not-whitelisted":
-        "url('images/whitelist/countdown-not-whitelisted.png')",
+        "url('images/whitelist/countdown-not-whitelisted.webp')",
       "whitelist-countdown-whitelisted":
-        "url('images/whitelist/countdown-whitelisted.png')",
-      "notify-me-btn": "url('images/whitelist/notify-me-btn.png')",
-      "white-listing-open": "url('images/whitelist/gold-plate.png')",
-      "white-listing-blue": "url('images/whitelist/blue-plate.png')",
-      "white-listing-connect": "url('images/whitelist/connect-wallet.png')",
+        "url('images/whitelist/countdown-whitelisted.webp')",
+      "notify-me-btn": "url('images/whitelist/notify-me-btn.webp')",
+      "white-listing-open": "url('images/whitelist/gold-plate.webp')",
+      "white-listing-blue": "url('images/whitelist/blue-plate.webp')",
+      "white-listing-connect": "url('images/whitelist/connect-wallet.webp')",
       "white-listing-connect-btn":
-        "url('images/whitelist/whitelist-connect-btn.png')",
+        "url('images/whitelist/whitelist-connect-btn.webp')",
 
-      "whitelisted-success": "url('images/whitelist/success-whitelisted.png')",
-      "whitelisted-failed": "url('images/whitelist/failed-whitelisted.png')",
+      "whitelisted-success": "url('images/whitelist/success-whitelisted.webp')",
+      "whitelisted-failed": "url('images/whitelist/failed-whitelisted.webp')",
 
       collection: "url('images/collection/bg-collection.png')",
       "collection-keys": "url('images/collection/keys.png')",

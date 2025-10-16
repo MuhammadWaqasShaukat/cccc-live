@@ -202,23 +202,23 @@ export const CRITICAL_ASSETS = [
   "/images/logo-header.webp",
   "/images/sheep-face.webp",
 
-  "/images/whitelist/success-whitelisted.png",
-  "/images/whitelist/failed-whitelisted.png",
-  "/images/collection/bg-collection.png",
+  "/images/whitelist/success-whitelisted.webp",
+  "/images/whitelist/failed-whitelisted.webp",
+  "/images/collection/bg-collection.webp",
 
-  "/images/collection/keys.png",
-  "/images/collection/ipods.png",
-  "/images/collection/potato.png",
-  "/images/collection/coins.png",
+  "/images/collection/keys.webp",
+  "/images/collection/ipods.webp",
+  "/images/collection/potato.webp",
+  "/images/collection/coins.webp",
 
-  "/images/collection/filter-bg.png",
+  "/images/collection/filter-bg.webp",
 
-  "/images/collection/filter.png",
-  "/images/collection/search.png",
+  "/images/collection/filter.webp",
+  "/images/collection/search.webp",
 
-  "/images/collection/raider-icon.png",
-  "/images/collection/warrior-icon.png",
-  "/images/collection/archer-icon.png",
+  "/images/collection/raider-icon.webp",
+  "/images/collection/warrior-icon.webp",
+  "/images/collection/archer-icon.webp",
 ];
 
 export const AUDIO_SOURCES = ["/sound/pop-cat.mp3"];
