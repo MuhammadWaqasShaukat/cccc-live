@@ -119,4 +119,7 @@ export interface CottonCandyContextType {
   timeRemaining: TimeParts;
 
   onExpire: (callback: () => void) => void;
+
+  selectedOptions: Record<string, Set<string>>;
+  setSelectedOptions: StateSetter<Record<string, Set<string>>>;
 }

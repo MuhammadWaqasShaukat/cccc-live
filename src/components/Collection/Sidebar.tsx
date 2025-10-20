@@ -1,9 +1,11 @@
 import Filters from "./Filters";
 import { FILTERS } from "../../constants/filters";
+import Search from "./Search";
+import WarriorClass from "./WarriorClass";
 
 const Sidebar = () => {
   return (
-    <div className="flex flex-col justify-start items-center w-1/5 p-4 bg-[#F4E1C5]">
+    <div className="flex flex-col justify-start items-center w-1/5 p-4 bg-[#F4E1C5] border-r-4 border-[#B39776]">
       <div className="">
         <img src="/images/section-hero/logo-lg.webp" className="" />
       </div>
@@ -18,40 +20,11 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <div className=" w-full flex flex-row justify-start items-center gap-2 bg-[#D9CBB7] p-2  border border-[#8B806F]">
-        <div className=" bg-sidebar-search-icon bg-contain bg-no-repeat size-6 aspect-square "></div>
-        <input
-          type="search"
-          placeholder="sort by serial"
-          className=" bg-transparent text-xl text-[#8B806F] placeholder:uppercase placeholder:text-[#8B806F]  flex-1"
-        />
-      </div>
+      <Search />
 
-      <div className=" flex flex-col gap-1 w-full justify-start items-start">
-        <p className="text-black  font-patrick-hand-sc text-3xl">
-          warrior class:
-        </p>
-        <div className=" flex flex-row w-full justify-between items-center gap-4">
-          <div className=" flex-1 px-1 py-3 flex-col flex justify-center items-center rounded-sm hover:bg-[#C3B29A] border border-[#6D5A40]">
-            <p className=" font-patrick-hand-sc text-black text-2xl uppercase">
-              Knight
-            </p>
-            <div className="bg-contain bg-no-repeat size-16 bg-sidebar-warrior-class"></div>
-          </div>
-          <div className=" flex-1 px-1 py-3 flex-col flex justify-center items-center rounded-sm hover:bg-[#C3B29A] border border-[#6D5A40]">
-            <p className=" font-patrick-hand-sc text-black text-2xl uppercase">
-              Archer
-            </p>
-            <div className="bg-contain bg-no-repeat size-16 bg-sidebar-archer-class"></div>
-          </div>
-          <div className=" flex-1 px-1 py-3 flex-col flex justify-center items-center rounded-sm hover:bg-[#C3B29A] border border-[#6D5A40]">
-            <p className=" font-patrick-hand-sc text-black text-2xl uppercase">
-              Raider
-            </p>
-            <div className="bg-contain bg-no-repeat size-16 bg-sidebar-raider-class"></div>
-          </div>
-        </div>
-      </div>
+      <WarriorClass />
+
+      <div className="h-[1px] w-full bg-[#A89272] opacity-60 mt-4" />
 
       <Filters filters={FILTERS} />
     </div>

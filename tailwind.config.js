@@ -233,6 +233,8 @@ export default {
       "sidebar-raider-class": "url('/images/collection/raider-icon.png')",
       "sidebar-warrior-class": "url('/images/collection/warrior-icon.png')",
       "sidebar-archer-class": "url('/images/collection/archer-icon.png')",
+
+      "remove-filter": "url('/images/collection/remove.png')",
     },
   },
   plugins: [],

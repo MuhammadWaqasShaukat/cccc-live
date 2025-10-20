@@ -63,6 +63,10 @@ export const CottonCandyContextProvider: React.FC<
 
   const [estimate, setEstimate] = useState<number | null>(null);
 
+  const [selectedOptions, setSelectedOptions] = useState<
+    Record<string, Set<string>>
+  >({});
+
   const [
     currentSummonedEggAnimationConfig,
     setCurrentSummonedEggAnimationConfig,
@@ -200,11 +204,10 @@ export const CottonCandyContextProvider: React.FC<
 
   useEffect(() => {
     if (!timersRef.current) {
-      setSaleCountdown(Date.now() + 60000);
-      setWhitelistCountdown(Date.now() + +30000);
+      setSaleCountdown(Date.now() + 30000);
+      setWhitelistCountdown(Date.now());
       timersRef.current = true;
     }
-    
   }, []);
 
   //
@@ -386,6 +389,9 @@ export const CottonCandyContextProvider: React.FC<
 
     timeRemaining,
     onExpire,
+
+    selectedOptions,
+    setSelectedOptions,
   };
 
   return (

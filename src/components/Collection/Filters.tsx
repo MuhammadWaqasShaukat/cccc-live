@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import { useContext, useState } from "react";
+import Icon from "../UI/Icon";
+import { CottonCandyContext } from "../../providers/ContextProvider";
 
 type FilterOption = {
   label: string;
@@ -8,7 +10,6 @@ type FilterOption = {
 type FilterSection = {
   id: string;
   name: string;
-  icon: React.ReactNode;
   options: FilterOption[];
 };
 
@@ -18,9 +19,8 @@ type FiltersProps = {
 
 const Filters = ({ filters }: FiltersProps) => {
   const [openSections, setOpenSections] = useState<string[]>([]);
-  const [selectedOptions, setSelectedOptions] = useState<
-    Record<string, Set<string>>
-  >({});
+  const { selectedOptions, setSelectedOptions } =
+    useContext(CottonCandyContext);
 
   const toggleSection = (id: string) => {
     setOpenSections((prev) =>
@@ -42,7 +42,7 @@ const Filters = ({ filters }: FiltersProps) => {
     selectedOptions[sectionId]?.size || 0;
 
   return (
-    <div className="w-full overflow-hidden ">
+    <div className="w-full overflow-auto filter-list pr-4 ">
       {filters.map((section: any) => {
         const isOpen = openSections.includes(section.id);
         const selectedCount = getSelectedCount(section.id);
@@ -50,28 +50,32 @@ const Filters = ({ filters }: FiltersProps) => {
         return (
           <div
             key={section.id}
-            className="border-b border-[#d8c7a7] divide-y-2 divide-[#6D5A41]"
+            className="border-b border-[#d8c7a7] divide-y-2 divide-[#6D5A41] overflow-auto"
           >
             {/* Header */}
             <button
+              data-filter-icon={section.id}
               onClick={() => toggleSection(section.id)}
               className="w-full flex justify-between items-center px-4 py-3 text-left font-semibold text-[#3a2f1b]"
             >
-              <div className="flex items-center gap-2">
-                {section.icon}
-                <span>{section.name}</span>
-                {selectedCount > 0 && (
-                  <span className="ml-2 bg-green-600 text-white text-xs rounded-full px-2 py-0.5">
-                    {selectedCount}
-                  </span>
-                )}
+              <div className="flex flex-row justify-start items-center gap-2">
+                <Icon name={section.id} />
+                <div className="flex items-center gap-2">
+                  {section.icon}
+                  <span>{section.name}</span>
+                  {selectedCount > 0 && (
+                    <span className="ml-2 bg-green-600 text-white text-xs rounded-full size-6 p-2 aspect-square grid place-content-center">
+                      {selectedCount}
+                    </span>
+                  )}
+                </div>
               </div>
-              {isOpen ? "-" : "+"}
+              <span className=" text-3xl">{isOpen ? "-" : "+"}</span>
             </button>
 
             {/* Options */}
             {isOpen && (
-              <div className="max-h-52 overflow-auto divide-y-2 divide-[#6D5A41] bg-[#D9CBB7]">
+              <div className="max-h-52 overflow-auto divide-y-2 divide-[#6D5A41] bg-[#D9CBB7] filter-list">
                 {section.options.map((opt: any) => {
                   const isChecked = selectedOptions[section.id]?.has(opt.label);
                   return (

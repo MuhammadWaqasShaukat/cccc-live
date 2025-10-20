@@ -14,6 +14,10 @@
 }
 
 
+html {
+  overflow: hidden;
+}
+
 html,
 body,
 *,
@@ -429,6 +433,35 @@ body * {
     background-repeat: no-repeat;
     background-size: contain;
   }
+
+  ::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+
+  .filter-list {
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
+
+  .filter-list::-webkit-scrollbar,
+  .filter-list::-webkit-scrollbar-track,
+  .filter-list::-webkit-scrollbar-thumb {
+    all: unset;
+  }
+
+  .filter-list::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .filter-list::-webkit-scrollbar-thumb {
+    background: #6D5A40;
+    border-radius: 4px;
+  }
+
+
+
+
+
 }
 
 
@@ -497,6 +530,10 @@ body * {
 }
 
 
+.nfts-card-shadow {
+  box-shadow: 0px 1.88px 3.77px 0px #00000080;
+}
+
 .horns::after,
 .horns::before {
   content: "";
@@ -511,6 +548,7 @@ body * {
   background-repeat: no-repeat;
   top: 0
 }
+
 
 @media (max-width: 640px) {
   .pepe-write::before {

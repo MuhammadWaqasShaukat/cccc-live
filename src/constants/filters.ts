@@ -1,3 +1,14 @@
+import { Filters } from "../types/Filters";
+
+export const ICONS: Record<Filters, string> = {
+  background: "/images/collection/bg-icon.png",
+  transport: "/images/collection/transport-icon.png",
+  shield: "/images/collection/shield-icon.png",
+  armor: "/images/collection/armor-icon.png",
+  type: "/images/collection/type-icon.png",
+  dildopon: "/images/collection/dildopon-icon.png",
+};
+
 export const FILTERS = [
   {
     id: "type",
@@ -18,6 +29,46 @@ export const FILTERS = [
   {
     id: "armor",
     name: "ARMOR",
+    icon: "",
+    options: [
+      { label: "IRON", count: 120 },
+      { label: "STEEL", count: 90 },
+      { label: "GOLD", count: 45 },
+    ],
+  },
+  {
+    id: "dildopon",
+    name: "DILDOPON",
+    icon: "",
+    options: [
+      { label: "IRON", count: 120 },
+      { label: "STEEL", count: 90 },
+      { label: "GOLD", count: 45 },
+    ],
+  },
+  {
+    id: "shield",
+    name: "SHIELD",
+    icon: "",
+    options: [
+      { label: "IRON", count: 120 },
+      { label: "STEEL", count: 90 },
+      { label: "GOLD", count: 45 },
+    ],
+  },
+  {
+    id: "transport",
+    name: "TRANSPORT",
+    icon: "",
+    options: [
+      { label: "IRON", count: 120 },
+      { label: "STEEL", count: 90 },
+      { label: "GOLD", count: 45 },
+    ],
+  },
+  {
+    id: "background",
+    name: "BACKGROUND",
     icon: "",
     options: [
       { label: "IRON", count: 120 },
