@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useState,
-  ReactNode,
-  useEffect,
-  useRef,
-} from "react";
+import React, { createContext, useState, ReactNode, useEffect } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Modals } from "../types/modalProps";
 import { BookMark } from "../types/BookMarks";
