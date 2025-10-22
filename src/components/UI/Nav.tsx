@@ -67,6 +67,7 @@ const Nav: React.FC<NavProps> = ({ className }) => {
               </li>
               <li className="space-y-1 bg-menu-btn  w-[60%] min-w-40 max-w-60 min-h-14 h-16 max-h-20 bg-center  bg-no-repeat bg-contain  pointer-events-auto">
                 <button
+                  disabled={true}
                   onClick={() => handleMenuClick("collection")}
                   className="relative w-full h-full mx-auto text-2xl text-white uppercase font-patrick-hand disabled:cursor-not-allowed md:text-3xl lg:text-4xl group text-outline-0 text-fake-bold"
                 >

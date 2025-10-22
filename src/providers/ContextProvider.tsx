@@ -23,6 +23,7 @@ import { NftState } from "../types/NFTCardTypes";
 import { MultiSpriteConfig } from "../types/animations";
 import { LotteryPhase } from "../types/NotifyMe";
 
+const apiUrl = import.meta.env.VITE_API_URL;
 // Date.now() + minutes * 60 * 1000;
 
 const defaultLotteryState: LotteryState = {
@@ -38,6 +39,12 @@ export const CottonCandyContext =
 interface CottonCandyContextProviderProps {
   children: ReactNode;
 }
+
+const fetchData = async (url: string) => {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Failed to fetch: ${url}`);
+  return res.json();
+};
 
 export const CottonCandyContextProvider: React.FC<
   CottonCandyContextProviderProps
@@ -100,10 +107,9 @@ export const CottonCandyContextProvider: React.FC<
 
   const [saleCDOver, setSaleCDOver] = useState<boolean>(false);
 
-  const [whitelistCountdown, setWhitelistCountdown] =
-    useState<number>(1760424979148);
+  const [whitelistCountdown, setWhitelistCountdown] = useState<number>(0);
 
-  const [saleCountdown, setSaleCountdown] = useState<number>(1760082461791);
+  const [saleCountdown, setSaleCountdown] = useState<number>(0);
 
   const [timeRemaining, setTimeRemaining] = useState<TimeParts>({
     days: 0,
@@ -121,8 +127,20 @@ export const CottonCandyContextProvider: React.FC<
 
   const [now, setNow] = useState(Date.now());
 
+  const fetchLotteryInfo = async () => {
+    const url = `${apiUrl}/lottery/lottery-info`;
+    const status = await fetchData(url);
+    if (status) {
+      setWhitelistCountdown(status.whitelistDeadline);
+      setSaleCountdown(status.saleStartDate);
+    }
+  };
+
   useEffect(() => {
     const id = setInterval(() => setNow(Date.now()), 1000);
+
+    fetchLotteryInfo();
+
     return () => clearInterval(id);
   }, []);
 
@@ -200,15 +218,15 @@ export const CottonCandyContextProvider: React.FC<
 
   // temporray
 
-  const timersRef = useRef<boolean>();
+  // const timersRef = useRef<boolean>();
 
-  useEffect(() => {
-    if (!timersRef.current) {
-      setSaleCountdown(Date.now() + 30000);
-      setWhitelistCountdown(Date.now());
-      timersRef.current = true;
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!timersRef.current) {
+  //     setSaleCountdown(Date.now() + 30000);
+  //     setWhitelistCountdown(Date.now());
+  //     timersRef.current = true;
+  //   }
+  // }, []);
 
   //
 
@@ -221,15 +239,15 @@ export const CottonCandyContextProvider: React.FC<
       const now = Date.now();
 
       if (lotteryPhase === "white-listing") {
-        if (now >= whitelistCountdown) {
+        if (now >= Number(whitelistCountdown)) {
           setLotteryPhase("minting-start");
           setShallBeNotified(false);
-          expireCallback?.(); // notify whitelist end
+          expireCallback?.();
         } else {
           setTimeRemaining(calculateRemaining(whitelistCountdown));
         }
       } else if (lotteryPhase === "minting-start") {
-        if (now >= saleCountdown) {
+        if (now >= Number(saleCountdown)) {
           expireCallback?.(); // notify sale end
           clearInterval(interval);
         } else {

@@ -18,7 +18,7 @@ const WhiteListedSuccess = () => {
       </div>
       <div className="w-full">
         <img
-          src="./images/whitelist/whitelisted.png"
+          src="./images/whitelist/whitelisted.webp"
           alt=""
           className=" w-[100%]"
         />
@@ -42,7 +42,7 @@ const WhiteListedFailed: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         not whitelisted
       </h2>
       <img
-        src="./images/whitelist/not-whitelisted.png"
+        src="./images/whitelist/not-whitelisted.webp"
         alt=""
         className=" w-[70%]"
       />

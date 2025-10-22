@@ -42,7 +42,7 @@ const Filters = ({ filters }: FiltersProps) => {
     selectedOptions[sectionId]?.size || 0;
 
   return (
-    <div className="w-full overflow-auto filter-list pr-4 ">
+    <div className="w-full scroll-hidden  pr-4 ">
       {filters.map((section: any) => {
         const isOpen = openSections.includes(section.id);
         const selectedCount = getSelectedCount(section.id);
@@ -50,7 +50,7 @@ const Filters = ({ filters }: FiltersProps) => {
         return (
           <div
             key={section.id}
-            className="border-b border-[#d8c7a7] divide-y-2 divide-[#6D5A41] overflow-auto"
+            className="border-b border-[#d8c7a7] divide-y-2 divide-[#6D5A41] "
           >
             {/* Header */}
             <button

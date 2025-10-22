@@ -509,7 +509,19 @@ body * {
   background-repeat: no-repeat;
 }
 
+.scroll-hidden {
+  overflow: auto;
+  /* enable scrolling */
+  scrollbar-width: none;
+  /* for Firefox */
+  -ms-overflow-style: none;
+  /* for IE/Edge */
+}
 
+.scroll-hidden::-webkit-scrollbar {
+  display: none;
+  /* for Chrome, Safari, Opera */
+}
 
 
 .horns {
