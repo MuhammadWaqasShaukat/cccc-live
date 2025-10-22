@@ -46,8 +46,12 @@ const Nav: React.FC<NavProps> = ({ className }) => {
           className={`relative grid place-content-end gap-4 md:gap-8 pointer-events-none w-full h-full`}
         >
           <div className="absolute   md:bg-hero-section-tombstone h-full w-full bg-contain bg-center bg-no-repeat">
-            <ul className="flex flex-col items-center justify-center h-full space-y-2 sm:mt-5 lg:space-y-3">
-              <li className="space-y-1 bg-menu-btn hover:bg-menu-btn-hovered w-[60%] min-w-40 max-w-60 min-h-14 h-16 max-h-20 bg-center  bg-no-repeat bg-contain  pointer-events-auto">
+            <ul className="flex flex-col items-center justify-center h-full space-y-2 sm:mt-5 lg:space-y-3 ">
+              <li
+                className={`${
+                  ctx.shallBeNotified ? "bg-menu-btn-disabled" : "bg-menu-btn"
+                }  hover:bg-menu-btn-hovered space-y-1  w-[60%] min-w-40 max-w-60 min-h-14 h-16 max-h-20 bg-center  bg-no-repeat bg-contain  pointer-events-auto`}
+              >
                 <button
                   onClick={() => handleMenuClick("mint")}
                   className="relative w-full h-full mx-auto text-2xl text-white uppercase font-patrick-hand md:text-3xl lg:text-3xl group text-outline-0 text-fake-bold"
@@ -65,9 +69,8 @@ const Nav: React.FC<NavProps> = ({ className }) => {
                   About
                 </button>
               </li>
-              <li className="space-y-1 bg-menu-btn  w-[60%] min-w-40 max-w-60 min-h-14 h-16 max-h-20 bg-center  bg-no-repeat bg-contain  pointer-events-auto">
+              <li className="space-y-1  bg-menu-btn-disabled  w-[60%] min-w-40 max-w-60 min-h-14 h-16 max-h-20 bg-center  bg-no-repeat bg-contain  pointer-events-auto">
                 <button
-                  disabled={true}
                   onClick={() => handleMenuClick("collection")}
                   className="relative w-full h-full mx-auto text-2xl text-white uppercase font-patrick-hand disabled:cursor-not-allowed md:text-3xl lg:text-4xl group text-outline-0 text-fake-bold"
                 >

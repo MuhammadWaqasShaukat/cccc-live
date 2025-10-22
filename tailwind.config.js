@@ -71,8 +71,10 @@ export default {
 
       "menu-btn-hovered":
         "url('/images/section-hero/menu-button-hovered.webp')",
+
       "menu-btn-disabled":
         "url('/images/section-hero/menu-button-disabled.webp')",
+
       "hero-connect": "url('/images/section-hero/connect.webp')",
       "top-bar-cow-face": "url('/images/cow-face.webp')",
       "top-bar-sheep-face": "url('/images/sheep-face.webp')",

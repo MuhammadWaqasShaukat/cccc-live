@@ -138,7 +138,7 @@ export const CottonCandyContextProvider: React.FC<
     return () => clearInterval(id);
   }, []);
 
-  const { connected } = useWallet();
+  const { connected, publicKey } = useWallet();
 
   const getNftToEggMap = (nfts: Token[]) => {
     const map: Record<string, string> = {};
@@ -160,6 +160,10 @@ export const CottonCandyContextProvider: React.FC<
       setActiveMenu("none");
       setLotteryState(defaultLotteryState);
     }
+
+    if (connected && publicKey) {
+      checkWhiteLisingStatus();
+    }
   }, [connected]);
 
   React.useEffect(() => {
@@ -174,6 +178,14 @@ export const CottonCandyContextProvider: React.FC<
       })();
     }
   }, [connected, lottery, eggs]);
+
+  const checkWhiteLisingStatus = async () => {
+    const url = `${apiUrl}/whitelist/whitelist-status/${publicKey}`;
+    const status = await fetchData(url);
+    if (status) {
+      setIsWhitelisted(status.isWhitelisted);
+    }
+  };
 
   React.useEffect(() => {
     if (!connected || !lottery) return;
@@ -278,7 +290,7 @@ export const CottonCandyContextProvider: React.FC<
 
     if (lotteryPhase === "white-listing") {
       text = shallBeNotified ? "You are on the list" : "Notify Me";
-    } else if (lotteryPhase === "minting-start") {
+    } else if (lotteryPhase === "minting-start" && connected) {
       if (!isWhitelisted && !isSaleOver) text = "Sign Me Up";
       else if (isWhitelisted && !shallBeNotified && !isSaleOver)
         text = "Notify Me";
@@ -287,7 +299,7 @@ export const CottonCandyContextProvider: React.FC<
       else if (isSaleOver && isWhitelisted) text = "Mint Now";
       else if (isSaleOver && !isWhitelisted) text = "Not Whitelisted";
     } else {
-      text = "Coming Soon";
+      text = "connect";
     }
 
     setMintBtnTxt(text);
