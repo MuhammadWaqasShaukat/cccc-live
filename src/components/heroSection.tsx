@@ -390,7 +390,7 @@ const HeroSection = () => {
       ctx.setNftToEggMap({});
       ctx.setCurrentModal(null);
       ctx.setBookmark("mint");
-      ctx.setIsWhitelisted(false);
+      // ctx.setIsWhitelisted(false);
     }
   };
 
