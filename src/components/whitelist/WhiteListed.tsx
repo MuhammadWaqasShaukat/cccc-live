@@ -36,7 +36,7 @@ const WhiteListedSuccess = () => {
 
 const WhiteListedFailed: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
-    <div className="bg-whitelisted-failed bg-cover bg-no-repeat bg-center max-w-[350px] flex flex-col items-center p-4 gap-9 rounded-3xl guide">
+    <div className="bg-whitelisted-failed bg-cover bg-no-repeat bg-center max-w-[350px] flex flex-col items-center p-4 gap-9 rounded-3xl">
       <h2 className=" text-black font-patrick-hand-sc text-5xl text-center font-medium leading-none">
         Sorry, <br />
         not whitelisted
