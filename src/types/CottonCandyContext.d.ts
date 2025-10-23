@@ -15,7 +15,7 @@ export interface TimeParts {
   seconds: number;
 }
 
-type StateSetter<T> = React.Dispatch<React.SetStateAction<T>>;
+export type StateSetter<T> = React.Dispatch<React.SetStateAction<T>>;
 
 export interface CottonCandyContextType {
   price: number;

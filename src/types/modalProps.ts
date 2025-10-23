@@ -5,4 +5,5 @@ export type Modals =
   | "nfts"
   | "email-form"
   | "white-listing-results"
-  | "whitelisting";
+  | "whitelisting"
+  | "connect-wallet-modal";

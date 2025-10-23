@@ -2,7 +2,6 @@ import { RefObject, useContext, useEffect, useRef, useState } from "react";
 import { CottonCandyContext } from "../providers/ContextProvider";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Nav from "./UI/Nav";
-import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import TopBar from "./topbar";
 import { motion } from "framer-motion";
 import anchorElement from "../utils/anchorELement";
@@ -13,6 +12,7 @@ import usePopCat from "../hooks/usePopCat";
 import { useSpritePreloader } from "../hooks/useSpritePreloader";
 import { useAnimationConfigs } from "../hooks/useAnimationConfigs";
 import WhitelistCountDown from "./whitelist/WhitelistCountDown";
+import { useWalletModal } from "../hooks/useWalletModal";
 
 type Dimensions = { width: number; height: number };
 
@@ -382,16 +382,15 @@ const HeroSection = () => {
 
   const handleConnect = async () => {
     if (!connected) {
-      if (!connected) {
-        setVisible(true);
-        return;
-      }
+      setVisible(true);
+      return;
     } else {
       await disconnect();
       ctx.setCollectiable(null);
       ctx.setNftToEggMap({});
       ctx.setCurrentModal(null);
       ctx.setBookmark("mint");
+      ctx.setIsWhitelisted(false);
     }
   };
 

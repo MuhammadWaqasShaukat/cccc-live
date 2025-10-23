@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { CottonCandyContext } from "../../providers/ContextProvider";
 import useProgramInstructions from "../../hooks/useProgramInstructions";
 import { Token } from "../../types/Nft";
 import { useGetAllNfts } from "../../hooks/useGetAllNFTs";
+import { useWalletModal } from "../../hooks/useWalletModal";
 
 interface MintButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {

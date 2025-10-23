@@ -91,7 +91,7 @@ export const CottonCandyContextProvider: React.FC<
   const { refetch: fetchEggs } = useGetAllEggs();
 
   const [lotteryPhase, setLotteryPhase] =
-    useState<LotteryPhase>("white-listing");
+    useState<LotteryPhase>("pre-whitelisting");
 
   const [isWhitelisted, setIsWhitelisted] = useState<boolean>(false);
 
@@ -244,13 +244,19 @@ export const CottonCandyContextProvider: React.FC<
     const interval = setInterval(() => {
       const now = Date.now();
 
-      if (lotteryPhase === "white-listing") {
+      if (lotteryPhase === "pre-whitelisting") {
         if (now >= Number(whitelistCountdown)) {
-          setLotteryPhase("minting-start");
+          setLotteryPhase("whitelisting");
           setShallBeNotified(false);
           expireCallback?.();
         } else {
           setTimeRemaining(calculateRemaining(whitelistCountdown));
+        }
+      } else if (lotteryPhase === "whitelisting") {
+        if (now >= Number(saleCountdown)) {
+          setLotteryPhase("minting-start");
+        } else if (isWhitelisted) {
+          setTimeRemaining(calculateRemaining(saleCountdown));
         }
       } else if (lotteryPhase === "minting-start") {
         if (now >= Number(saleCountdown)) {
@@ -288,18 +294,20 @@ export const CottonCandyContextProvider: React.FC<
 
     let text = "";
 
-    if (lotteryPhase === "white-listing") {
-      text = shallBeNotified ? "You are on the list" : "Notify Me";
-    } else if (lotteryPhase === "minting-start" && connected) {
-      if (!isWhitelisted && !isSaleOver) text = "Sign Me Up";
-      else if (isWhitelisted && !shallBeNotified && !isSaleOver)
+    if (lotteryPhase === "pre-whitelisting") {
+      text = shallBeNotified ? "you'll be notified" : "Notify Me";
+    } else if (lotteryPhase === "whitelisting") {
+      if (!connected) text = "connect";
+      if (!isWhitelisted && connected) text = "Whitelist Me";
+      else if (isWhitelisted && !shallBeNotified && connected)
         text = "Notify Me";
-      else if (isWhitelisted && shallBeNotified && !isSaleOver)
-        text = "You are on the list";
-      else if (isSaleOver && isWhitelisted) text = "Mint Now";
+      else if (isWhitelisted && shallBeNotified && connected)
+        text = "you'll be notified";
+    } else if (lotteryPhase === "minting-start") {
+      if (isSaleOver && isWhitelisted) text = "Mint Now";
       else if (isSaleOver && !isWhitelisted) text = "Not Whitelisted";
     } else {
-      text = "connect";
+      text = "";
     }
 
     setMintBtnTxt(text);

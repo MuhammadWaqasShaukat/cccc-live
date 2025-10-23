@@ -2,11 +2,17 @@ import { useContext, useState } from "react";
 import Modal from "../UI/Modal";
 import { CottonCandyContext } from "../../providers/ContextProvider";
 import { useMutation } from "react-query";
+import { useWalletModal } from "../../hooks/useWalletModal";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const EmailForm = () => {
   const [email, setEmail] = useState("");
+
+  const { publicKey } = useWallet();
+
+  const { visible } = useWalletModal();
 
   const ctx = useContext(CottonCandyContext);
 
@@ -19,7 +25,11 @@ const EmailForm = () => {
       const response = await fetch(`${apiUrl}/whitelist/notify-me`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, notifyFor: ctx.lotteryPhase }),
+        body: JSON.stringify({
+          email,
+          notifyFor: ctx.lotteryPhase,
+          walletAddress: publicKey?.toBase58(),
+        }),
       });
       if (!response.ok) {
         const error = await response.text();
@@ -46,6 +56,8 @@ const EmailForm = () => {
     if (!email.trim()) return;
     notifyMutation.mutate();
   };
+
+  if (visible) return;
 
   return (
     <Modal onBackgroundClick={() => ctx.setCurrentModal(null)} className="">

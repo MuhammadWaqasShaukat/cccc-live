@@ -2,7 +2,6 @@ import {
   ConnectionProvider,
   WalletProvider,
 } from "@solana/wallet-adapter-react";
-import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 
 import "@solana/wallet-adapter-react-ui/styles.css";
 import { CottonCandyContextProvider } from "./ContextProvider";
@@ -13,6 +12,7 @@ import {
 } from "@solana/wallet-adapter-wallets";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { clusterApiUrl } from "@solana/web3.js";
+import { WalletModalProvider } from "./WalletModalProvider";
 
 export const Web3ModalProvider: React.FC<{ children: React.ReactNode }> = ({
   children,

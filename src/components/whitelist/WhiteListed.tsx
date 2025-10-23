@@ -52,7 +52,7 @@ const WhiteListedFailed: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       >
         <span className="absolute inset-0 z-50 transition duration-200 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20"></span>
         <span className=" absolute inset-0 w-full h-full grid place-content-center font-patrick-hand text-[42px] uppercase leading-none text-white z-60">
-          Back
+          Change Wallet
         </span>
       </button>
     </div>
@@ -60,7 +60,7 @@ const WhiteListedFailed: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 };
 
 const WhiteListed: React.FC<{
-  status: WhiteListTypes;
+  status: WhiteListTypes | null;
   setStatus: React.Dispatch<React.SetStateAction<WhiteListTypes | null>>;
 }> = ({ status, setStatus }) => {
   const ctx = useContext(CottonCandyContext);

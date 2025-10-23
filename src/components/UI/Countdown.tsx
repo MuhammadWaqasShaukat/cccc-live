@@ -13,7 +13,7 @@ const DatePart = ({
   return (
     <div className="flex flex-col items-center justify-center gap-1">
       <span className=" text-xl md:text-3xl font-patrick-hand-sc font-bold aspect-square bg-white rounded  grid place-content-center">
-        {value}
+        {String(Math.floor(value)).padStart(2, "0")}
       </span>
       <span
         className={`text-sm uppercase font-patrick-hand-sc ${

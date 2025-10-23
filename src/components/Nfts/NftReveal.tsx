@@ -3,6 +3,7 @@ import { IParticle } from "../Eggs/EggRevealAnimation";
 import { CottonCandyContext } from "../../providers/ContextProvider";
 import { nftRevealAnimation } from "../../constants/animationsConfig";
 import { useNFTRevealAnimator } from "../../hooks/useNFTRevealAnimator";
+import Modal from "../UI/Modal";
 
 const NftReveal = () => {
   const ctx = useContext(CottonCandyContext);
@@ -153,24 +154,26 @@ const NftReveal = () => {
   }, [scanComplete]);
 
   return (
-    <div className="absolute top-0 left-0">
-      <div className="relative h-screen w-screen flex justify-center items-center bg-black z-100">
-        {/* sprite stays behind */}
-        {startSpinning && (
-          <div
-            ref={spriteRef}
-            className="absolute z-0 pointer-events-none max-h-[682px] max-w-[682px] aspect-square"
-            style={{
-              width: "682px",
-              height: "682px",
-              backgroundRepeat: "no-repeat",
-            }}
-          ></div>
-        )}
-        {/* canvas stays in front */}
-        <canvas ref={canvasRef} className="z-10 w-[20%] aspect-[1000/1400]" />
+    <Modal onBackgroundClick={() => {}}>
+      <div className="absolute top-0 left-0">
+        <div className="relative h-screen w-screen flex justify-center items-center bg-black z-100">
+          {/* sprite stays behind */}
+          {startSpinning && (
+            <div
+              ref={spriteRef}
+              className="absolute z-0 pointer-events-none max-h-[682px] max-w-[682px] aspect-square"
+              style={{
+                width: "682px",
+                height: "682px",
+                backgroundRepeat: "no-repeat",
+              }}
+            ></div>
+          )}
+          {/* canvas stays in front */}
+          <canvas ref={canvasRef} className="z-10 w-[20%] aspect-[1000/1400]" />
+        </div>
       </div>
-    </div>
+    </Modal>
   );
 };
 

@@ -3,11 +3,25 @@ import { CottonCandyContext } from "../../providers/ContextProvider";
 import { Nav as NavType } from "../../types/Nav";
 import EmailForm from "../whitelist/EmailForm";
 import WhitelistingOpen from "../whitelist/WhitelistingOpen";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useWalletModal } from "../../hooks/useWalletModal";
+import WalletConnectModal from "../whitelist/WalletConnectModal";
 
 interface NavProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const Nav: React.FC<NavProps> = ({ className }) => {
   const ctx = useContext(CottonCandyContext);
+
+  const { connected } = useWallet();
+  const { setVisible, visible } = useWalletModal();
+
+  const handleSubscription = () => {
+    if (!connected) {
+      ctx.setCurrentModal("connect-wallet-modal");
+    } else {
+      ctx.setCurrentModal("email-form");
+    }
+  };
 
   const handleMenuClick = (menu: NavType) => {
     const isWhiteListCountdownOver =
@@ -18,12 +32,17 @@ const Nav: React.FC<NavProps> = ({ className }) => {
 
     if (menu === "mint") {
       if (!isWhiteListCountdownOver) {
-        ctx.shallBeNotified ? null : ctx.setCurrentModal("email-form");
-      } else if (!ctx.isWhitelisted && !isSaleCountdownOver) {
-        ctx.setCurrentModal("whitelisting");
-      } else if (!isSaleCountdownOver && ctx.isWhitelisted) {
-        ctx.shallBeNotified ? null : ctx.setCurrentModal("email-form");
-      } else if (!ctx.isWhitelisted) {
+        ctx.shallBeNotified ? null : handleSubscription();
+      } else if (!isSaleCountdownOver) {
+        if (!ctx.isWhitelisted && !connected) setVisible(true);
+        else if (!ctx.isWhitelisted && connected)
+          ctx.setCurrentModal("whitelisting");
+        else {
+          ctx.shallBeNotified ? null : handleSubscription();
+        }
+      } else if (!ctx.isWhitelisted && isSaleCountdownOver && !connected) {
+        setVisible(!visible);
+      } else if (connected && !ctx.isWhitelisted) {
         return;
       } else {
         ctx.setActiveMenu(menu);
@@ -36,8 +55,8 @@ const Nav: React.FC<NavProps> = ({ className }) => {
   return (
     <>
       {ctx.currentModal === "email-form" && <EmailForm />}
-
       {ctx.currentModal === "whitelisting" && <WhitelistingOpen />}
+      {ctx.currentModal === "connect-wallet-modal" && <WalletConnectModal />}
       <div
         id="tombstone"
         className={`${className} w-[45%] max-w-[420px] left-1/2 -translate-x-1/2 max-h-[450px] sm:z-30 z-90 h-full`}
