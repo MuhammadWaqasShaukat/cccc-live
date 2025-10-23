@@ -15,7 +15,6 @@ const WhitelistingOpen = () => {
   const { mutate, data, isLoading } = useWhitelistVerification(setChecking);
 
   useEffect(() => {
-    console.log(isLoading, data);
     if (!isLoading) {
       mutate();
     }

@@ -36,7 +36,7 @@ const WhiteListedSuccess = () => {
 
 const WhiteListedFailed: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
-    <div className="bg-whitelisted-failed bg-cover bg-no-repeat bg-center max-w-[350px] flex flex-col items-center p-4 gap-9 rounded-3xl">
+    <div className="bg-whitelisted-failed bg-cover bg-no-repeat bg-center max-w-[350px] flex flex-col items-center p-4 gap-9 rounded-3xl guide">
       <h2 className=" text-black font-patrick-hand-sc text-5xl text-center font-medium leading-none">
         Sorry, <br />
         not whitelisted
@@ -48,10 +48,10 @@ const WhiteListedFailed: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       />
       <button
         onClick={onClose}
-        className="bg-notify-me-btn ml-2 h-20 w-64 relative bg-contain bg-no-repeat group z-40"
+        className="bg-notify-me-btn ml-2 h-20 w-60 relative bg-contain bg-no-repeat group z-40"
       >
         <span className="absolute inset-0 z-50 transition duration-200 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20"></span>
-        <span className=" absolute inset-0 w-full h-full grid place-content-center font-patrick-hand text-[42px] uppercase leading-none text-white z-60">
+        <span className=" absolute inset-0 w-full h-full grid place-content-center font-patrick-hand text-3xl uppercase leading-none text-white z-60">
           Change Wallet
         </span>
       </button>
@@ -62,7 +62,7 @@ const WhiteListedFailed: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 const WhiteListed: React.FC<{
   status: WhiteListTypes | null;
   setStatus: React.Dispatch<React.SetStateAction<WhiteListTypes | null>>;
-}> = ({ status, setStatus }) => {
+}> = ({ status }) => {
   const ctx = useContext(CottonCandyContext);
 
   return (
@@ -70,7 +70,7 @@ const WhiteListed: React.FC<{
       {status === "whitelist" ? (
         <WhiteListedSuccess />
       ) : (
-        <WhiteListedFailed onClose={() => setStatus(null)} />
+        <WhiteListedFailed onClose={() => ctx.setCurrentModal(null)} />
       )}
     </Modal>
   );
