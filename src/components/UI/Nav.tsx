@@ -1,16 +1,40 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CottonCandyContext } from "../../providers/ContextProvider";
 import { Nav as NavType } from "../../types/Nav";
 import EmailForm from "../whitelist/EmailForm";
-import WhitelistingOpen from "../whitelist/WhitelistingOpen";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "../../hooks/useWalletModal";
 import WalletConnectModal from "../whitelist/WalletConnectModal";
+import WhiteListed, { WhiteListTypes } from "../whitelist/WhiteListed";
+import useWhitelistVerification from "../../hooks/useWhitelistVerification";
+import SnakeLoader from "./SnakeLoader";
 
 interface NavProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const Nav: React.FC<NavProps> = ({ className }) => {
   const ctx = useContext(CottonCandyContext);
+  const [whitelistStatus, setWhiteListStatus] = useState<WhiteListTypes | null>(
+    null
+  );
+
+  const { mutate, data } = useWhitelistVerification();
+
+  const handleWhitelistMe = () => {
+    ctx.setCurrentModal("whitelisting");
+    mutate();
+  };
+
+  useEffect(() => {
+    if (data) {
+      ctx.setIsWhitelisted(data.isWhitelisted);
+      ctx.setCurrentModal("white-listing-results");
+      if (data.isWhitelisted) {
+        setWhiteListStatus("whitelist");
+      } else {
+        setWhiteListStatus("not-whitelist");
+      }
+    }
+  }, [data]);
 
   const { connected } = useWallet();
   const { setVisible, visible } = useWalletModal();
@@ -35,8 +59,7 @@ const Nav: React.FC<NavProps> = ({ className }) => {
         ctx.shallBeNotified ? null : handleSubscription();
       } else if (!isSaleCountdownOver) {
         if (!ctx.isWhitelisted && !connected) setVisible(true);
-        else if (!ctx.isWhitelisted && connected)
-          ctx.setCurrentModal("whitelisting");
+        else if (!ctx.isWhitelisted && connected) handleWhitelistMe();
         else {
           ctx.shallBeNotified ? null : handleSubscription();
         }
@@ -55,8 +78,13 @@ const Nav: React.FC<NavProps> = ({ className }) => {
   return (
     <>
       {ctx.currentModal === "email-form" && <EmailForm />}
-      {ctx.currentModal === "whitelisting" && <WhitelistingOpen />}
+      {ctx.currentModal === "whitelisting" && (
+        <SnakeLoader className="" message="Checking Your Wallet..." />
+      )}
       {ctx.currentModal === "connect-wallet-modal" && <WalletConnectModal />}
+      {ctx.currentModal === "white-listing-results" && (
+        <WhiteListed status={whitelistStatus} setStatus={setWhiteListStatus} />
+      )}
       <div
         id="tombstone"
         className={`${className} w-[45%] max-w-[420px] left-1/2 -translate-x-1/2 max-h-[450px] sm:z-30 z-90 h-full`}

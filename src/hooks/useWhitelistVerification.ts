@@ -1,11 +1,14 @@
 import { useMutation } from "react-query";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { TERMS_AND_CONDITIONS } from "../constants/message";
+import { useContext } from "react";
+import { CottonCandyContext } from "../providers/ContextProvider";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-const useWhitelistVerification = (setChecking: (v: boolean) => void) => {
+const useWhitelistVerification = () => {
   const { publicKey, signMessage } = useWallet();
+  const { setCurrentModal } = useContext(CottonCandyContext);
 
   const mutation = useMutation({
     mutationFn: async () => {
@@ -17,7 +20,7 @@ const useWhitelistVerification = (setChecking: (v: boolean) => void) => {
 
         const encodedMessage = new TextEncoder().encode(TERMS_AND_CONDITIONS);
 
-        setChecking(true);
+        setCurrentModal("whitelisting");
 
         const signature = await signMessage(encodedMessage);
 
@@ -40,7 +43,7 @@ const useWhitelistVerification = (setChecking: (v: boolean) => void) => {
         console.error("Whitelist verification failed:", error.message);
         throw error;
       } finally {
-        setChecking(false);
+        setCurrentModal(null);
       }
     },
   });

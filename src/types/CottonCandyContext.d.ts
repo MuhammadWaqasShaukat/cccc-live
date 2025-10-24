@@ -117,6 +117,9 @@ export interface CottonCandyContextType {
   setLotteryPhase: StateSetter<LotteryPhase>;
 
   timeRemaining: TimeParts;
+  setTimeRemaining: StateSetter<TimeParts>;
+
+  calculateRemaining: (target: number) => TimeParts;
 
   onExpire: (callback: () => void) => void;
 

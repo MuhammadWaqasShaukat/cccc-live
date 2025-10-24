@@ -125,7 +125,9 @@ export const CottonCandyContextProvider: React.FC<
     const url = `${apiUrl}/lottery/lottery-info`;
     const status = await fetchData(url);
     if (status) {
-      setWhitelistCountdown(status.whitelistDeadline);
+      setWhitelistCountdown(1761280679000);
+      // setWhitelistCountdown(status.whitelistDeadline);
+
       setSaleCountdown(status.saleStartDate);
     }
   };
@@ -240,6 +242,8 @@ export const CottonCandyContextProvider: React.FC<
     null
   );
 
+  console.log("Sales", saleCountdown, whitelistCountdown, lotteryPhase);
+
   useEffect(() => {
     const interval = setInterval(() => {
       const now = Date.now();
@@ -269,7 +273,13 @@ export const CottonCandyContextProvider: React.FC<
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [lotteryPhase, whitelistCountdown, saleCountdown, expireCallback]);
+  }, [
+    lotteryPhase,
+    whitelistCountdown,
+    saleCountdown,
+    expireCallback,
+    isWhitelisted,
+  ]);
 
   // ---- Remaining Time ----
   const calculateRemaining = (target: number): TimeParts => {
@@ -424,6 +434,10 @@ export const CottonCandyContextProvider: React.FC<
 
     selectedOptions,
     setSelectedOptions,
+
+    calculateRemaining,
+
+    setTimeRemaining,
   };
 
   return (

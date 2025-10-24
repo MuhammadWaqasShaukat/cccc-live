@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Modal from "../UI/Modal";
 import Countdown from "../UI/Countdown";
 import { CottonCandyContext } from "../../providers/ContextProvider";
@@ -36,7 +36,7 @@ const WhiteListedSuccess = () => {
 
 const WhiteListedFailed: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
-    <div className="bg-whitelisted-failed bg-cover bg-no-repeat bg-center max-w-[350px] flex flex-col items-center p-4 gap-9 rounded-3xl">
+    <div className="bg-whitelisted-failed bg-cover bg-no-repeat bg-center max-w-[350px] flex flex-col items-center p-4 gap-9 rounded-3xl guide">
       <h2 className=" text-black font-patrick-hand-sc text-5xl text-center font-medium leading-none">
         Sorry, <br />
         not whitelisted
@@ -62,15 +62,28 @@ const WhiteListedFailed: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 const WhiteListed: React.FC<{
   status: WhiteListTypes | null;
   setStatus: React.Dispatch<React.SetStateAction<WhiteListTypes | null>>;
-}> = ({ status }) => {
-  const ctx = useContext(CottonCandyContext);
+}> = ({ status, setStatus }) => {
+  const {
+    setTimeRemaining,
+    calculateRemaining,
+    saleCountdown,
+    setCurrentModal,
+  } = useContext(CottonCandyContext);
+
+  useEffect(() => {
+    if (saleCountdown && status == "whitelist") {
+      setTimeRemaining(calculateRemaining(saleCountdown));
+    }
+
+    return () => setStatus(null);
+  }, []);
 
   return (
-    <Modal onBackgroundClick={() => ctx.setCurrentModal(null)} className="">
+    <Modal onBackgroundClick={() => setCurrentModal(null)} className="">
       {status === "whitelist" ? (
         <WhiteListedSuccess />
       ) : (
-        <WhiteListedFailed onClose={() => ctx.setCurrentModal(null)} />
+        <WhiteListedFailed onClose={() => setCurrentModal(null)} />
       )}
     </Modal>
   );

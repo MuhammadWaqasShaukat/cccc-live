@@ -7,12 +7,12 @@ import useWhitelistVerification from "../../hooks/useWhitelistVerification";
 const WhitelistingOpen = () => {
   const ctx = useContext(CottonCandyContext);
 
-  const [checking, setChecking] = useState<boolean>(true);
+  const [checking] = useState<boolean>(true);
   const [whitelistStatus, setWhiteListStatus] = useState<WhiteListTypes | null>(
     null
   );
 
-  const { mutate, data, isLoading } = useWhitelistVerification(setChecking);
+  const { mutate, data, isLoading } = useWhitelistVerification();
 
   useEffect(() => {
     if (!isLoading) {
