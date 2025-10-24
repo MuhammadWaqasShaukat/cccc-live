@@ -61,7 +61,7 @@ const WalletModal = memo(() => {
           </h2>
         </div>
 
-        <div className="space-y-3 px-4 flex flex-col w-full min-h-40 max-h-60">
+        <div className="space-y-3 px-4 flex flex-col w-full min-h-40 max-h-60 overflow-scroll filter-list">
           {walletButtons}
         </div>
 

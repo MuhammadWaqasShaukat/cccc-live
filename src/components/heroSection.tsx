@@ -391,6 +391,7 @@ const HeroSection = () => {
       ctx.setCurrentModal(null);
       ctx.setBookmark("mint");
       // ctx.setIsWhitelisted(false);
+      ctx.setShallBeNotified(false);
     }
   };
 

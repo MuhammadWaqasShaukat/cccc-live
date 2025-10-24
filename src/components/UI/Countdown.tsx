@@ -17,7 +17,7 @@ const DatePart = ({
       </span>
       <span
         className={`text-sm uppercase font-patrick-hand-sc ${
-          lotteryPhase === "minting-start" ? "text-white" : "text-black"
+          lotteryPhase === "minting" ? "text-white" : "text-black"
         }`}
       >
         {label}

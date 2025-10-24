@@ -22,12 +22,18 @@ const EmailForm = () => {
 
   const notifyMutation = useMutation({
     mutationFn: async () => {
+      const notifyFor =
+        ctx.lotteryPhase === "pre-whitelisting" ||
+        ctx.lotteryPhase === "whitelisting"
+          ? "whitelisting"
+          : "minting";
+
       const response = await fetch(`${apiUrl}/whitelist/notify-me`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email,
-          notifyFor: ctx.lotteryPhase,
+          notifyFor,
           walletAddress: publicKey?.toBase58(),
         }),
       });

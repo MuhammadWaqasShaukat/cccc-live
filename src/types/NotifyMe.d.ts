@@ -1,4 +1,1 @@
-export type LotteryPhase =
-  | "pre-whitelisting"
-  | "whitelisting"
-  | "minting-start";
+export type LotteryPhase = "pre-whitelisting" | "whitelisting" | "minting";

@@ -163,6 +163,7 @@ export const CottonCandyContextProvider: React.FC<
 
     if (connected && publicKey) {
       checkWhiteLisingStatus();
+      checkEmailSubscription();
     }
   }, [connected]);
 
@@ -184,6 +185,20 @@ export const CottonCandyContextProvider: React.FC<
     const status = await fetchData(url);
     if (status) {
       setIsWhitelisted(status.isWhitelisted);
+    }
+  };
+
+  const checkEmailSubscription = async () => {
+    let notificationType: LotteryPhase = "whitelisting";
+
+    if (lotteryPhase === "whitelisting") {
+      notificationType = "minting";
+    }
+
+    const url = `${apiUrl}/lottery/subscription/${publicKey}?notificationType=${notificationType}`;
+    const status = await fetchData(url);
+    if (status) {
+      setShallBeNotified(status.success);
     }
   };
 
@@ -240,8 +255,6 @@ export const CottonCandyContextProvider: React.FC<
     null
   );
 
-  console.log("Sales", saleCountdown, whitelistCountdown, lotteryPhase);
-
   useEffect(() => {
     const interval = setInterval(() => {
       const now = Date.now();
@@ -256,11 +269,11 @@ export const CottonCandyContextProvider: React.FC<
         }
       } else if (lotteryPhase === "whitelisting") {
         if (now >= Number(saleCountdown)) {
-          setLotteryPhase("minting-start");
+          setLotteryPhase("minting");
         } else if (isWhitelisted) {
           setTimeRemaining(calculateRemaining(saleCountdown));
         }
-      } else if (lotteryPhase === "minting-start") {
+      } else if (lotteryPhase === "minting") {
         if (now >= Number(saleCountdown)) {
           expireCallback?.(); // notify sale end
           clearInterval(interval);
@@ -311,7 +324,7 @@ export const CottonCandyContextProvider: React.FC<
         text = "Notify Me";
       else if (isWhitelisted && shallBeNotified && connected)
         text = "you'll be notified";
-    } else if (lotteryPhase === "minting-start") {
+    } else if (lotteryPhase === "minting") {
       if (isSaleOver && isWhitelisted) text = "Mint Now";
       else if (isSaleOver && !isWhitelisted) text = "Not Whitelisted";
     } else {

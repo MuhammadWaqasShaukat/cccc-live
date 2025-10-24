@@ -9,7 +9,7 @@ const WalletConnectModal = () => {
 
   const handleConnect = () => {
     setVisible(true);
-    setCurrentModal("email-form");
+    setCurrentModal(null);
   };
 
   return (
