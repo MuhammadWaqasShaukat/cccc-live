@@ -96,8 +96,10 @@ const Nav: React.FC<NavProps> = ({ className }) => {
             <ul className="flex flex-col items-center justify-center h-full space-y-2 sm:mt-5 lg:space-y-3 ">
               <li
                 className={`${
-                  ctx.shallBeNotified ? "bg-menu-btn-disabled" : "bg-menu-btn"
-                }  hover:bg-menu-btn-hovered space-y-1  w-[60%] min-w-40 max-w-60 min-h-14 h-16 max-h-20 bg-center  bg-no-repeat bg-contain  pointer-events-auto`}
+                  ctx.shallBeNotified
+                    ? "bg-menu-btn-disabled hover:bg-menu-btn-disabled"
+                    : "bg-menu-btn hover:bg-menu-btn-hovered"
+                }   space-y-1  w-[60%] min-w-40 max-w-60 min-h-14 h-16 max-h-20 bg-center  bg-no-repeat bg-contain  pointer-events-auto`}
               >
                 <button
                   onClick={() => handleMenuClick("mint")}

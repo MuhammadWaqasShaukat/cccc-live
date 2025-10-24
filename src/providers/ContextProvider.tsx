@@ -105,6 +105,8 @@ export const CottonCandyContextProvider: React.FC<
 
   const [saleCountdown, setSaleCountdown] = useState<number>(0);
 
+  const [showLoadingTxt, setShowLoadingTxt] = useState<boolean>(false);
+
   const [timeRemaining, setTimeRemaining] = useState<TimeParts>({
     days: 0,
     hours: 0,
@@ -195,10 +197,17 @@ export const CottonCandyContextProvider: React.FC<
       notificationType = "minting";
     }
 
-    const url = `${apiUrl}/lottery/subscription/${publicKey}?notificationType=${notificationType}`;
-    const status = await fetchData(url);
-    if (status) {
-      setShallBeNotified(status.success);
+    setShowLoadingTxt(true);
+
+    try {
+      const url = `${apiUrl}/lottery/subscription/${publicKey}?notificationType=${notificationType}`;
+      const status = await fetchData(url);
+      if (status) {
+        setShallBeNotified(status.success);
+      }
+    } catch (error: any) {
+    } finally {
+      setShowLoadingTxt(false);
     }
   };
 
@@ -315,6 +324,11 @@ export const CottonCandyContextProvider: React.FC<
 
     let text = "";
 
+    if (showLoadingTxt) {
+      setMintBtnTxt("Please Wait");
+      return;
+    }
+
     if (lotteryPhase === "pre-whitelisting") {
       text = shallBeNotified ? "you'll be notified" : "Notify Me";
     } else if (lotteryPhase === "whitelisting") {
@@ -339,6 +353,7 @@ export const CottonCandyContextProvider: React.FC<
     saleCountdown,
     timeRemaining,
     now,
+    showLoadingTxt,
   ]);
 
   const value: CottonCandyContextType = {
