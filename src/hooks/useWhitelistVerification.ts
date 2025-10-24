@@ -3,6 +3,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { TERMS_AND_CONDITIONS } from "../constants/message";
 import { useContext } from "react";
 import { CottonCandyContext } from "../providers/ContextProvider";
+import { Buffer } from "buffer";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
