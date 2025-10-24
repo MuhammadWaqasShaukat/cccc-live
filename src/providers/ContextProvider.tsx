@@ -125,9 +125,7 @@ export const CottonCandyContextProvider: React.FC<
     const url = `${apiUrl}/lottery/lottery-info`;
     const status = await fetchData(url);
     if (status) {
-      setWhitelistCountdown(1761280679000);
-      // setWhitelistCountdown(status.whitelistDeadline);
-
+      setWhitelistCountdown(status.whitelistDeadline);
       setSaleCountdown(status.saleStartDate);
     }
   };
