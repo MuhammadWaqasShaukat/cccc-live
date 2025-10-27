@@ -35,7 +35,8 @@ const WalletConnectModal = () => {
             </button>
 
             <span className=" block underline font-patrick-hand-sc text-base">
-              DESCRIPTION OF THE CONDITION
+              &nbsp; &nbsp; &nbsp; &nbsp; Terms And Conditions &nbsp; &nbsp;
+              &nbsp; &nbsp;
             </span>
           </div>
         </div>
