@@ -58,15 +58,18 @@ const AboutSection = () => {
 
           <div className="flex flex-col items-center justify-between mt-10">
             <h2 className="font-patrick-hand text-center  text-[22px] pb-2">
-              About memenfts
+              About CCCC
             </h2>
             <p className="px-10 text-sm leading-6 text-center xs:px-12 font-patrick-hand md:text-base lg:text-lg ">
-              It is a long established fact that a reader will be distracted by
-              the readable content of a page when looking at its layout.
+              Cotton Candy Crusader Club is a degenerate club created by
+              degenerates for degenerates, Why pretend otherwise? At least we
+              have some giggles along the way.TL:DR - 100% of the minting SOL
+              goes straight into 20 mystery eggs. Every NFT you mint gives you
+              the right to mint one egg for free. Will you be one of the lucky
+              ones to get a completely useless image of an eggshell?
               <br />
-              The point of using Lorem Ipsum is that it has a more-or-less
-              normal distribution of letters, as opposed to using 'Content here,
-              content here', making it look like readable English.
+              Or will you (highly unlikely) get a useless image of a golden
+              eggshell and some SOL?
             </p>
 
             <button
@@ -94,28 +97,31 @@ const AboutSection = () => {
             duration: 0.3,
           },
         }}
-        className={`hidden sm:bg-about-section-castle bg-about-section-castle-sm w-[530px] h-[580px]   md:w-[650px] md:h-[700px] xl:w-[700px] xl:h-[750px] xl:max-w-[1163px]  bg-no-repeat sm:flex flex-col justify-end  bg-contain md:bg-center bg-bottom`}
+        className={`hidden sm:bg-about-section-castle bg-about-section-castle-sm w-[530px] h-[580px] md:w-[725px] md:h-[775px] xl:w-[800px] xl:h-[850px] xl:max-w-[1163px]  bg-no-repeat sm:flex flex-col justify-end  bg-contain md:bg-center bg-bottom`}
       >
         <div className="relative h-[40%] text-center w-[47.5%] min-w-[150px] mx-auto pt-8 flex flex-col justify-end items-center sm:mb-8 mb-16">
           <AboutVideoPlay />
         </div>
 
-        <div className=" sm:h-[55%] h-[60%] bg-no-repeat bg-center md:px-16 xl:px-20 px-14 pt-4 text-center sm:w-[90%] w-[70%] mx-auto sm:pt-12">
-          <h2 className="font-patrick-hand text-center lg:text-4xl md:text-3xl sm:text-2xl text-[22px] pb-4">
-            About memenfts
+        <div className=" sm:h-[55%] h-[60%] bg-no-repeat bg-center md:px-16 xl:px-20 px-14 pt-4 text-center lg:w-[84%] w-[90%] mx-auto sm:pt-12 ">
+          <h2 className="font-patrick-hand text-center lg:text-4xl md:text-3xl sm:text-2xl text-[22px] pb-1">
+            About CCCC
           </h2>
           <p className="text-sm text-center font-patrick-hand md:text-base lg:text-lg md:leading-7 lg:leading-8">
-            It is a long established fact that a reader will be distracted by
-            the readable content of a page when looking at its layout.
+            Cotton Candy Crusader Club is a degenerate club created by
+            degenerates for degenerates, Why pretend otherwise? At least we have
+            some giggles along the way.TL:DR - 100% of the minting SOL goes
+            straight into 20 mystery eggs. Every NFT you mint gives you the
+            right to mint one egg for free. Will you be one of the lucky ones to
+            get a completely useless image of an eggshell ?
             <br />
-            The point of using Lorem Ipsum is that it has a more-or-less normal
-            distribution of letters, as opposed to using 'Content here, content
-            here', making it look like readable English.
+            Or will you (highly unlikely) get a useless image of a golden
+            eggshell and some SOL ?
           </p>
 
           <button
             onClick={() => ctx.setActiveMenu("none")}
-            className="bg-about-ok-btn h-[38px] w-[71px] relative bg-contain bg-no-repeat group z-40 mt-4"
+            className="bg-about-ok-btn h-[38px] w-[71px] relative bg-contain bg-no-repeat group z-40 mt-2"
           >
             <span className="absolute inset-0 z-50 transition duration-200 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20"></span>
             <span className=" absolute inset-0 w-full h-full grid place-content-center font-patrick-hand text-[22px] leading-none text-white z-60">
