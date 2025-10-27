@@ -60,18 +60,24 @@ const AboutSection = () => {
             <h2 className="font-patrick-hand text-center  text-[22px] pb-2">
               About CCCC
             </h2>
-            <p className="px-10 text-sm leading-6 text-center xs:px-12 font-patrick-hand md:text-base lg:text-lg ">
-              Cotton Candy Crusader Club is a degenerate club created by
-              degenerates for degenerates, Why pretend otherwise? At least we
-              have some giggles along the way.TL:DR - 100% of the minting SOL
-              goes straight into 20 mystery eggs. Every NFT you mint gives you
-              the right to mint one egg for free. Will you be one of the lucky
-              ones to get a completely useless image of an eggshell?
-              <br />
-              Or will you (highly unlikely) get a useless image of a golden
-              eggshell and some SOL?
-            </p>
-
+            <section className="px-10 text-sm leading-6 text-center xs:px-12 font-patrick-hand md:text-base lg:text-lg ">
+              <article>
+                Cotton Candy Crusader Club is a degenerate club created by
+                degenerates for degenerates, Why pretend otherwise? At least we
+                have some giggles along the way.
+              </article>
+              <article>
+                TL:DR - 100% of the minting SOL goes straight into 20 mystery
+                eggs. Every NFT you mint gives you the right to mint one egg for
+                free. Will you be one of the lucky ones to get a completely
+                useless image of an eggshell ?{" "}
+                <span className="block sr-only">text-block</span>
+              </article>
+              <article>
+                Or will you (highly unlikely) get a useless image of a golden
+                eggshell and some SOL ?
+              </article>
+            </section>
             <button
               onClick={() => ctx.setActiveMenu("none")}
               className="bg-about-ok-btn sm:hidden block h-[38px] w-[71px] relative bg-contain bg-no-repeat group z-40 mt-4"
@@ -97,27 +103,34 @@ const AboutSection = () => {
             duration: 0.3,
           },
         }}
-        className={`hidden sm:bg-about-section-castle bg-about-section-castle-sm w-[530px] h-[580px] md:w-[725px] md:h-[775px] xl:w-[800px] xl:h-[850px] xl:max-w-[1163px]  bg-no-repeat sm:flex flex-col justify-end  bg-contain md:bg-center bg-bottom`}
+        className={`hidden sm:bg-about-section-castle bg-about-section-castle-sm w-[650px] h-[700px] md:w-[800px] md:h-[850px] xl:w-[850px] xl:h-[900px] xl:max-w-[1163px]  bg-no-repeat sm:flex flex-col justify-end  bg-contain md:bg-center bg-bottom`}
       >
         <div className="relative h-[40%] text-center w-[47.5%] min-w-[150px] mx-auto pt-8 flex flex-col justify-end items-center sm:mb-8 mb-16">
           <AboutVideoPlay />
         </div>
 
-        <div className=" sm:h-[55%] h-[60%] bg-no-repeat bg-center md:px-16 xl:px-20 px-14 pt-4 text-center lg:w-[84%] w-[90%] mx-auto sm:pt-12 ">
+        <div className=" sm:h-[55%] h-[60%] bg-no-repeat bg-center md:px-20 pr-20 px-14 pt-4 text-center lg:w-[84%] w-[90%] mx-auto sm:pt-12 ">
           <h2 className="font-patrick-hand text-center lg:text-4xl md:text-3xl sm:text-2xl text-[22px] pb-1">
             About CCCC
           </h2>
-          <p className="text-sm text-center font-patrick-hand md:text-base lg:text-lg md:leading-7 lg:leading-8">
-            Cotton Candy Crusader Club is a degenerate club created by
-            degenerates for degenerates, Why pretend otherwise? At least we have
-            some giggles along the way.TL:DR - 100% of the minting SOL goes
-            straight into 20 mystery eggs. Every NFT you mint gives you the
-            right to mint one egg for free. Will you be one of the lucky ones to
-            get a completely useless image of an eggshell ?
-            <br />
-            Or will you (highly unlikely) get a useless image of a golden
-            eggshell and some SOL ?
-          </p>
+          <section className="text-sm text-center font-patrick-hand md:text-lg md:leading-7 lg:leading-9 space-y-2  justify-center">
+            <article>
+              Cotton Candy Crusader Club is a degenerate club created by
+              degenerates for degenerates, Why pretend otherwise? At least we
+              have some giggles along the way.
+            </article>
+            <article>
+              TL:DR - 100% of the minting SOL goes straight into 20 mystery
+              eggs. Every NFT you mint gives you the right to mint one egg for
+              free. Will you be one of the lucky ones to get a completely
+              useless image of an eggshell ?{" "}
+              <span className="block sr-only">text-block</span>
+            </article>
+            <article>
+              Or will you (highly unlikely) get a useless image of a golden
+              eggshell and some SOL ?
+            </article>
+          </section>
 
           <button
             onClick={() => ctx.setActiveMenu("none")}
