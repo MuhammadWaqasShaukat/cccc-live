@@ -70,12 +70,11 @@ const AboutSection = () => {
                 TL:DR - 100% of the minting SOL goes straight into 20 mystery
                 eggs. Every NFT you mint gives you the right to mint one egg for
                 free. Will you be one of the lucky ones to get a completely
-                useless image of an eggshell ?{" "}
-                <span className="block sr-only">text-block</span>
+                useless image of an eggshell?
               </article>
               <article>
                 Or will you (highly unlikely) get a useless image of a golden
-                eggshell and some SOL ?
+                eggshell and some SOL?
               </article>
             </section>
             <button
@@ -109,11 +108,11 @@ const AboutSection = () => {
           <AboutVideoPlay />
         </div>
 
-        <div className=" sm:h-[55%] h-[60%] bg-no-repeat bg-center md:px-20 pr-20 px-14 pt-4 text-center lg:w-[84%] w-[90%] mx-auto sm:pt-12 ">
+        <div className=" sm:h-[55%] h-[60%] bg-no-repeat bg-center lg:px-20 px-[5.75rem]  pt-6 text-center lg:w-[84%] w-[90%] mx-auto sm:pt-16 ">
           <h2 className="font-patrick-hand text-center lg:text-4xl md:text-3xl sm:text-2xl text-[22px] pb-1">
             About CCCC
           </h2>
-          <section className="text-sm text-center font-patrick-hand md:text-lg md:leading-7 lg:leading-9 space-y-2  justify-center">
+          <section className="text-sm text-center font-patrick-hand md:text-lg md:leading-8 lg:leading-9 space-y-2  justify-center">
             <article>
               Cotton Candy Crusader Club is a degenerate club created by
               degenerates for degenerates, Why pretend otherwise? At least we
@@ -123,18 +122,17 @@ const AboutSection = () => {
               TL:DR - 100% of the minting SOL goes straight into 20 mystery
               eggs. Every NFT you mint gives you the right to mint one egg for
               free. Will you be one of the lucky ones to get a completely
-              useless image of an eggshell ?{" "}
-              <span className="block sr-only">text-block</span>
+              useless image of an eggshell?
             </article>
             <article>
               Or will you (highly unlikely) get a useless image of a golden
-              eggshell and some SOL ?
+              eggshell and some SOL?
             </article>
           </section>
 
           <button
             onClick={() => ctx.setActiveMenu("none")}
-            className="bg-about-ok-btn h-[38px] w-[71px] relative bg-contain bg-no-repeat group z-40 mt-2"
+            className="bg-about-ok-btn h-[38px] w-[71px] relative bg-contain bg-no-repeat group z-40 mt-4"
           >
             <span className="absolute inset-0 z-50 transition duration-200 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20"></span>
             <span className=" absolute inset-0 w-full h-full grid place-content-center font-patrick-hand text-[22px] leading-none text-white z-60">
