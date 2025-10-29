@@ -85,7 +85,7 @@ const WalletModal = memo(() => {
 
   return (
     <Modal onBackgroundClick={() => setVisible(false)}>
-      <div className="bg-sm-mint-section-book bg-cover bg-no-repeat h-max p-2 flex flex-col justify-center items-center md:gap-6 gap-4 rounded-2xl w-[350px] md:w-[355px]">
+      <div className="bg-sm-mint-section-book bg-cover bg-no-repeat h-max p-2 flex flex-col justify-center items-center gap-4 rounded-2xl w-[350px] md:w-[355px]">
         <h2 className="text-[28px]  uppercase text-black font-patrick-hand-sc text-center leading-[52px]">
           Connect Wallet
         </h2>
