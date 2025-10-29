@@ -50,7 +50,7 @@ const AboutSection = () => {
       >
         {/* for mobile screens */}
         <div className="bg-center bg-no-repeat xs:w-[350px] xs:h-[475px]  h-[435px] w-[300px] bg-contain sm:hidden bg-about-section-castle-sm relative  flex flex-col justify-center items-center">
-          <div className="h-[40%] text-center w-[63%] -top-[30%] min-w-[150px] flex flex-col justify-end items-center absolute">
+          <div className="h-[40%] text-center w-[63%] -top-[30%] min-w-[150px]  flex flex-col justify-end items-center absolute">
             <div className="relative ">
               <AboutVideoPlay />
             </div>
@@ -60,7 +60,7 @@ const AboutSection = () => {
             <h2 className="font-patrick-hand text-center  text-[22px] pb-2">
               About CCCC
             </h2>
-            <section className="px-10 text-sm leading-6 text-center xs:px-12 font-patrick-hand md:text-base lg:text-lg ">
+            <section className="text-base text-center font-patrick-hand about-section mx-12  max-h-52">
               <article>
                 Cotton Candy Crusader Club is a degenerate club created by
                 degenerates for degenerates, Why pretend otherwise? At least we
@@ -102,17 +102,17 @@ const AboutSection = () => {
             duration: 0.3,
           },
         }}
-        className={`hidden sm:bg-about-section-castle bg-about-section-castle-sm w-[650px] h-[700px] md:w-[800px] md:h-[850px] xl:w-[850px] xl:h-[900px] xl:max-w-[1163px]  bg-no-repeat sm:flex flex-col justify-end  bg-contain md:bg-center bg-bottom`}
+        className={`hidden sm:bg-about-section-castle bg-about-section-castle-sm w-[650px] h-[700px] md:w-[750px] md:h-[825px] xl:w-[850px] xl:h-[900px] xl:max-w-[1163px]  bg-no-repeat sm:flex flex-col justify-end  bg-contain md:bg-center bg-bottom`}
       >
         <div className="relative h-[40%] text-center w-[47.5%] min-w-[150px] mx-auto pt-8 flex flex-col justify-end items-center sm:mb-8 mb-16">
           <AboutVideoPlay />
         </div>
 
         <div className=" sm:h-[55%] h-[60%] bg-no-repeat bg-center lg:px-20 px-[5.75rem]  pt-6 text-center lg:w-[84%] w-[90%] mx-auto sm:pt-16 ">
-          <h2 className="font-patrick-hand text-center lg:text-4xl md:text-3xl sm:text-2xl text-[22px] pb-1">
+          <h2 className="font-patrick-hand text-center md:text-[48px] text-3xl leading-none pb-1">
             About CCCC
           </h2>
-          <section className="text-sm text-center font-patrick-hand md:text-lg md:leading-8 lg:leading-9 space-y-2  justify-center">
+          <section className="text-sm text-center font-patrick-hand md:text-lg space-y-2  justify-center about-section xl:max-h-40 max-h-36 ">
             <article>
               Cotton Candy Crusader Club is a degenerate club created by
               degenerates for degenerates, Why pretend otherwise? At least we
@@ -132,10 +132,10 @@ const AboutSection = () => {
 
           <button
             onClick={() => ctx.setActiveMenu("none")}
-            className="bg-about-ok-btn h-[38px] w-[71px] relative bg-contain bg-no-repeat group z-40 mt-4"
+            className="bg-about-ok-btn xl:h-[82px] xl:w-[154px] md:h-[60px] md:w-[112px]  h-[46px] w-[86px] relative bg-contain bg-no-repeat group z-40 mt-4"
           >
             <span className="absolute inset-0 z-50 transition duration-200 bg-black/0 group-hover:bg-black/10 group-active:bg-black/20"></span>
-            <span className=" absolute inset-0 w-full h-full grid place-content-center font-patrick-hand text-[22px] leading-none text-white z-60">
+            <span className=" absolute inset-0 w-full h-full grid place-content-center font-patrick-hand xl:text-[48px] md:text-[36px] text-[22px]  leading-none text-white z-60">
               OK
             </span>
           </button>
